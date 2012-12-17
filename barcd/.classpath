@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-7-openjdk-amd64"/>
+	<classpathentry kind="lib" path="/home/ewie/workspace/barcd/lib/jjmpeg.jar"/>
+	<classpathentry kind="lib" path="/home/ewie/workspace/barcd/lib/zxing.jar"/>
+	<classpathentry kind="lib" path="/home/ewie/workspace/barcd/lib/BoofCV.jar"/>
+	<classpathentry kind="lib" path="/home/ewie/workspace/barcd/lib/BoofCVAndroid.jar"/>
+	<classpathentry kind="lib" path="/home/ewie/workspace/barcd/lib/BoofCVXuggler.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
