@@ -1,75 +1,37 @@
 package de.tu_chemnitz.mi.barcd.video;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.awt.image.BufferedImage;
 
-import au.notzed.jjmpeg.AVCodec;
-import au.notzed.jjmpeg.AVCodecContext;
-import au.notzed.jjmpeg.AVFormatContext;
 import au.notzed.jjmpeg.AVFrame;
-import au.notzed.jjmpeg.AVInputFormat;
-import au.notzed.jjmpeg.AVPacket;
-import au.notzed.jjmpeg.AVStream;
-import au.notzed.jjmpeg.exception.AVDecodingError;
+import au.notzed.jjmpeg.PixelFormat;
 import au.notzed.jjmpeg.exception.AVIOException;
-import au.notzed.jjmpeg.io.JJFileInputStream;
+import au.notzed.jjmpeg.exception.AVInvalidCodecException;
+import au.notzed.jjmpeg.exception.AVInvalidStreamException;
+import au.notzed.jjmpeg.io.JJMediaReader;
+import au.notzed.jjmpeg.io.JJMediaReader.JJReaderVideo;
 
 /**
- * 
  * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
  */
 public class FrameReader {
-    private final int PROBE_SIZE = 4096;
-    
     private String sourcePath;
-    private AVFormatContext formatContext;
-
-    private AVCodecContext codecContext;
-
-    private AVStream stream;
+    private JJMediaReader mediaReader;
+    private JJReaderVideo videoReader;
     
     public FrameReader(String sourcePath)
         throws FrameReaderException
     {
         this.sourcePath = sourcePath;
-        
-        FileInputStream fis = null;
         try {
-            fis = new FileInputStream(sourcePath);
-        } catch (FileNotFoundException ex) {
-            throw new FrameReaderException("could not open input stream", ex);
-        }
-        
-        JJFileInputStream jjfis = JJFileInputStream.create(fis);
-        AVInputFormat inputFormat = jjfis.probeInput(sourcePath, 0, PROBE_SIZE);
-        if (inputFormat == null) {
-            throw new FrameReaderException("could not probe input stream");
-        }
-        this.formatContext = AVFormatContext.openInputStream(jjfis, sourcePath, inputFormat);
-        int streamCount = this.formatContext.getNBStreams();
-        for (int i = 0; i < streamCount; ++i) {
-            AVStream s = this.formatContext.getStreamAt(i);
-            this.codecContext = s.getCodec();
-            if (this.codecContext.getCodecType() == AVCodecContext.AVMEDIA_TYPE_VIDEO) {
-                this.stream = s;
-                break;
-            }
-        }
-        
-        if (this.stream == null) {
-            throw new FrameReaderException("could not find a video stream");
-        }
-        
-        AVCodec codec = AVCodec.findDecoder(this.codecContext.getCodecID());
-        
-        if (codec == null) {
-            throw new FrameReaderException("could not find the required video codec");
-        }
-        
-        try {
-            this.codecContext.open(codec);
+            this.mediaReader = new JJMediaReader(sourcePath);
+            this.videoReader = this.mediaReader.openFirstVideoStream();
+            this.videoReader.setOutputFormat(PixelFormat.PIX_FMT_BGRA);
         } catch (AVIOException ex) {
-            throw new FrameReaderException("could not open codec", ex);
+            throw new FrameReaderException(ex);
+        } catch (AVInvalidStreamException ex) {
+            throw new FrameReaderException(ex);
+        } catch (AVInvalidCodecException ex) {
+            throw new FrameReaderException(ex);
         }
     }
     
@@ -78,106 +40,59 @@ public class FrameReader {
     }
     
     public int getWidth() {
-        return this.codecContext.getWidth();
+        return this.videoReader.getWidth();
     }
     
     public int getHeight() {
-        return this.codecContext.getHeight();
+        return this.videoReader.getHeight();
     }
     
     public int getFrameNumber() {
-        return this.codecContext.getFrameNumber();
+        return this.videoReader.getFrame().getCodedPictureNumber();
     }
     
     public double getFrameRateNumerator() {
-        return this.stream.getRFrameRate().getNum();
+        return this.videoReader.getStream().getRFrameRate().getNum();
     }
     
     public double getFrameRateDenominator() {
-        return this.stream.getRFrameRate().getNum();
+        return this.videoReader.getStream().getRFrameRate().getDen();
     }
     
     public long getFrameCount() {
-        return this.stream.getNBFrames();
+        return this.videoReader.getStream().getNBFrames();
     }
     
     public long getDuration() {
-        return this.stream.getDuration();
-    }
-    
-    public void seekFrame(long frameNumber) {
-        this.formatContext.seekFrame(this.stream.getIndex(), frameNumber, AVFormatContext.AVSEEK_FLAG_FRAME);
-    }
-    
-    public long getStartTime() {
-        return this.stream.getStartTime();
+        return this.videoReader.getStream().getDuration();
     }
     
     public void skipFrame()
-        throws FrameReaderException
     {
-        try {
-            decodeNextFrame();
-        } catch (AVDecodingError ex) {
-            throw new FrameReaderException("could not decode next frame", ex);
-        }
+        readNextFrame();
     }
     
-    public void skipKeyFrame()
-        throws FrameReaderException
-    {
-        try {
-            AVFrame frame = null;
-            do {
-                frame = decodeNextFrame();
-            } while (!frame.isKeyFrame());
-        } catch (AVDecodingError ex) {
-            throw new FrameReaderException("could not decode next frame", ex);
-        }
+    public void skipFrame(int count) {
+        while (count-- != 0) skipFrame();
     }
     
-    public Frame nextFrame()
-        throws FrameReaderException
+    public BufferedImage nextFrame()
     {
-        AVFrame frame = null;
-        
-        try {
-            frame = decodeNextFrame();
-        } catch (AVDecodingError ex) {
-            throw new FrameReaderException("could not decode next frame", ex);
-        }
-        
-        return new Frame(frame, this.codecContext);
+        readNextFrame();
+        return currentFrameToBufferedImage();
     }
     
-    public Frame nextKeyFrame()
-        throws FrameReaderException
-    {
-        AVFrame frame = null;
-        
-        try {
-            do {
-                frame = decodeNextFrame();
-            } while (!frame.isKeyFrame());
-        } catch (AVDecodingError ex) {
-            throw new FrameReaderException("could not decode next frame", ex);
+    private AVFrame readNextFrame() {
+        if (this.mediaReader.readFrame() == null) {
+            return null;
         }
-        
-        return new Frame(frame, this.codecContext);
+        return this.videoReader.getOutputFrame();
     }
     
-    private AVFrame decodeNextFrame()
-        throws AVDecodingError
+    private BufferedImage currentFrameToBufferedImage()
     {
-        AVPacket packet = AVPacket.create();
-        AVFrame frame = AVFrame.create();
-        while (this.formatContext.readFrame(packet) >= 0) {
-            if (packet.getStreamIndex() == this.stream.getIndex()) {
-                if (this.codecContext.decodeVideo(frame, packet)) {
-                    break;
-                }
-            }
-        }
-        return frame;
+        BufferedImage image = this.videoReader.createImage();
+        this.videoReader.getOutputFrame(image);
+        return image;
     }
 }

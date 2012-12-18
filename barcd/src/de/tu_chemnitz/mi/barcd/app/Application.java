@@ -1,3 +1,5 @@
+package de.tu_chemnitz.mi.barcd.app;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +21,13 @@ import de.tu_chemnitz.mi.barcd.Extractor;
 import de.tu_chemnitz.mi.barcd.image.GammaDenoisingOperator;
 import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
 import de.tu_chemnitz.mi.barcd.video.Frame;
+import de.tu_chemnitz.mi.barcd.video.FrameReaderSlow;
 import de.tu_chemnitz.mi.barcd.video.FrameReader;
 import de.tu_chemnitz.mi.barcd.video.FrameReaderException;
 
+import au.notzed.jjmpeg.PixelFormat;
+import au.notzed.jjmpeg.io.JJMediaReader;
+import au.notzed.jjmpeg.io.JJMediaReader.JJReaderVideo;
 import boofcv.gui.image.ShowImages;
 
 import sun.misc.BASE64Encoder;
@@ -111,22 +117,27 @@ public class Application {
         try {
             FrameReader fg = new FrameReader("/media/midori/videos/rumble1_1080p.mp4");
 
-            LuminanceImage im = new LuminanceImage(fg.getWidth(), fg.getHeight());
-            
             GammaDenoisingOperator g = new GammaDenoisingOperator(10);
 
-            fg.skipKeyFrame();
-            fg.skipKeyFrame();
-            fg.skipKeyFrame();
-            fg.skipKeyFrame();
-            fg.skipKeyFrame();
-            fg.skipKeyFrame();
-            Frame fr = fg.nextKeyFrame();
-            fr.toLuminanceImage(im);
-            im = g.apply(im);
+            fg.skipFrame(180);
+            System.out.println(fg.getFrameNumber());
+            BufferedImage fr = fg.nextFrame();
+            System.out.println(fg.getFrameNumber());
+            
+            LuminanceImage im = LuminanceImage.fromBufferedImage(fr,  new LuminanceImage.Grayscaler() {
+                @Override
+                public int convert(int argb) {
+                    int r = (argb >> 16) & 0xff;
+                    int g = (argb >> 8) & 0xff;
+                    int b = argb & 0xff;
+                    return (r + g + g + b) / 4;
+                }
+            });
+            LuminanceImage im2 = g.apply(im);
 
-            ShowImages.showWindow(fr.toLuminanceImage().toBufferedImage(), "fr");
+            ShowImages.showWindow(fr, "fr");
             ShowImages.showWindow(im.toBufferedImage(), "im");
+            ShowImages.showWindow(im2.toBufferedImage(), "im2");
         } catch (FrameReaderException ex) {
             System.err.println(ex.getMessage());
         }
