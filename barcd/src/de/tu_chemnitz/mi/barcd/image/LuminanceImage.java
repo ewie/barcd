@@ -55,14 +55,14 @@ public class LuminanceImage {
     /**
      * @return the image's width
      */
-    public int getWidth() {
+    public int width() {
         return this.width;
     }
     
     /**
      * @return the image's height
      */
-    public int getHeight() {
+    public int height() {
         return this.height;
     }
     
@@ -74,7 +74,7 @@ public class LuminanceImage {
      * 
      * @return the luminance of the pixel at (x, y)
      */
-    public int getValueAt(int x, int y) {
+    public int valueAt(int x, int y) {
         return this.values[x][y] & MAX_VALUE;
     }
     
@@ -102,7 +102,7 @@ public class LuminanceImage {
         for (int y = 0; y < this.height; ++y) {
             int offset = y * this.width ;
             for (int x = 0; x < this.width; ++x) {
-                pixels[offset + x] = this.getValueAt(x, y);
+                pixels[offset + x] = this.valueAt(x, y);
             }
         }
         raster.setPixels(0, 0, this.width, this.height, pixels);

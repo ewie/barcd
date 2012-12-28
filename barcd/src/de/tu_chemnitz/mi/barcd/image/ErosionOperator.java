@@ -5,7 +5,7 @@ package de.tu_chemnitz.mi.barcd.image;
  * 
  * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
  */
-public class ErosionOperator implements KernelOperator {
+public class ErosionOperator implements KernelOperation {
     private boolean[][] weights;
     int width;
     int height;
@@ -44,8 +44,8 @@ public class ErosionOperator implements KernelOperator {
 
     @Override
     public LuminanceImage apply(LuminanceImage input) {
-        int width = input.getWidth();
-        int height = input.getHeight();
+        int width = input.width();
+        int height = input.height();
         int a = this.width - this.width / 2 + 1;
         int b = this.height - this.height / 2 + 1;
         
@@ -60,7 +60,7 @@ public class ErosionOperator implements KernelOperator {
                             int u = x + i - a;
                             int v = y + j - b;
                             if (u >= 0 && u < width && v >= 0 && v < height) {
-                                int t = input.getValueAt(u, v);
+                                int t = input.valueAt(u, v);
                                 if (t < k) k = t;
                             }
                         }

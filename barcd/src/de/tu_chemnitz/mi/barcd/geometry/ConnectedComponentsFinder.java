@@ -1,5 +1,8 @@
-package de.tu_chemnitz.mi.barcd;
+package de.tu_chemnitz.mi.barcd.geometry;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,9 +24,9 @@ public class ConnectedComponentsFinder {
      * @param input
      * @return the extracted regions
      */
-    public RectangularRegion[] process(LuminanceImage input) {
-        int width = input.getWidth();
-        int height = input.getHeight();
+    public Region[] process(LuminanceImage input, BufferedImage c) {
+        int width = input.width();
+        int height = input.height();
         
         int label = 0;
         
@@ -36,14 +39,14 @@ public class ConnectedComponentsFinder {
         // both are to be considered equivalent.
         Map<Integer, Integer> eq = new HashMap<Integer, Integer>();
         
-        if (input.getValueAt(0, 0) > 0) {
+        if (input.valueAt(0, 0) > 0) {
             labels[0][0] = ++label;
         }
         
         for (int x = 1; x < width; ++x) {
-            int v = input.getValueAt(x, 0);
+            int v = input.valueAt(x, 0);
             if (v > 0) {
-                if (v == input.getValueAt(x-1, 0)) {
+                if (v == input.valueAt(x-1, 0)) {
                     labels[x][0] = labels[x-1][0];
                 } else {
                     labels[x][0] = ++label;
@@ -52,9 +55,9 @@ public class ConnectedComponentsFinder {
         }
         
         for (int y = 1; y < height; ++y) {
-            int v = input.getValueAt(0, y);
+            int v = input.valueAt(0, y);
             if (v > 0) {
-                if (v == input.getValueAt(0, y-1)) {
+                if (v == input.valueAt(0, y-1)) {
                     labels[0][y] = labels[0][y-1];
                 } else {
                     labels[0][y] = ++label;
@@ -62,13 +65,13 @@ public class ConnectedComponentsFinder {
             }
             for (int x = 1; x < width; ++x) {
                 // The current pixel.
-                int p = input.getValueAt(x, y);
+                int p = input.valueAt(x, y);
                 
                 // The pixel left of the current pixel.
-                int s = input.getValueAt(x-1, y);
+                int s = input.valueAt(x-1, y);
                 
                 // The pixel above the current pixel.
-                int t = input.getValueAt(x, y-1);
+                int t = input.valueAt(x, y-1);
                 
                 if (p == s) {
                     if (p == t) {
@@ -93,7 +96,7 @@ public class ConnectedComponentsFinder {
             }
         }
         
-        Map<Integer, List<Coordinate>> regions = new HashMap<Integer, List<Coordinate>>();
+        Map<Integer, List<Point>> regions = new HashMap<Integer, List<Point>>();
         
         // Resolve equivalent regions by relabelling all pixels whose label is
         // marked as equivalent to some other label.
@@ -109,21 +112,29 @@ public class ConnectedComponentsFinder {
                 labels[x][y] = l;
                 
                 // Skip the background region.
-                if (input.getValueAt(x, y) == 0) continue;
+                if (input.valueAt(x, y) == 0) continue;
                 
                 if (!regions.containsKey(labels[x][y])) {
-                    regions.put(labels[x][y], new ArrayList<Coordinate>());
+                    regions.put(labels[x][y], new ArrayList<Point>());
                 }
-                regions.get(labels[x][y]).add(new Coordinate(x, y));
+                regions.get(labels[x][y]).add(new Point(x, y));
             }
         }
         
-        RectangularRegion[] finalRegions = new RectangularRegion[regions.size()];
+        Region[] finalRegions = new Region[regions.size()];
+        
+        Graphics g = c.getGraphics();
+        Color[] colors = new Color[] { Color.RED, Color.GREEN, Color.BLUE };
         
         // Finally construct the region objects from each set of coordinates.
         int i = 0;
         for (int l : regions.keySet()) {
-            finalRegions[i++] = RectangularRegion.fromCoordinates(regions.get(l));
+            finalRegions[i++] = new Region(regions.get(l));
+            List<Point> coords = regions.get(l);
+            g.setColor(colors[l % colors.length]);
+            for (Point p : coords) {
+                g.drawLine(p.x(), p.y(), p.x(), p.y());
+            }
         }
         
         return finalRegions;

@@ -31,12 +31,12 @@ public class OtsuThresholdSelector implements GlobalThresholdSelector {
     
     private int[] getHistogram(final LuminanceImage input) {
         int[] hist = new int[256];
-        int width = input.getWidth();
-        int height = input.getHeight();
+        int width = input.width();
+        int height = input.height();
         
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                hist[input.getValueAt(x, y)] += 1;
+                hist[input.valueAt(x, y)] += 1;
             }
         }
         

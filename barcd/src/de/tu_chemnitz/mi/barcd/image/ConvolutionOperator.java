@@ -5,7 +5,7 @@ package de.tu_chemnitz.mi.barcd.image;
  * 
  * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
  */
-public class ConvolutionOperator implements KernelOperator {
+public class ConvolutionOperator implements KernelOperation {
     private double[][] weights;
     private int width;
     private int height;
@@ -50,8 +50,8 @@ public class ConvolutionOperator implements KernelOperator {
      */
     @Override
     public LuminanceImage apply(LuminanceImage input) {
-        int width = input.getWidth();
-        int height = input.getHeight();
+        int width = input.width();
+        int height = input.height();
         
         LuminanceImage output = new LuminanceImage(width, height);
         int a = this.width - this.width / 2 + 1;
@@ -67,7 +67,7 @@ public class ConvolutionOperator implements KernelOperator {
                         int u = x + i - a;
                         int v = y + j - b;
                         if (u >= 0 && u < width && v >= 0 && v < height) {
-                            int p = input.getValueAt(u, v);
+                            int p = input.valueAt(u, v);
                             k += p * this.weights[i][j];
                             c += this.weights[i][j];
                         }

@@ -1,9 +1,14 @@
 package de.tu_chemnitz.mi.barcd.app;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
@@ -16,33 +21,21 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.xuggle.xuggler.demos.VideoImage;
+
 import de.tu_chemnitz.mi.barcd.Extraction;
 import de.tu_chemnitz.mi.barcd.Extractor;
+import de.tu_chemnitz.mi.barcd.HighFrequenceRegionFinder;
+import de.tu_chemnitz.mi.barcd.geometry.Point;
+import de.tu_chemnitz.mi.barcd.geometry.Rectangle;
+import de.tu_chemnitz.mi.barcd.geometry.Region;
 import de.tu_chemnitz.mi.barcd.image.GammaDenoisingOperator;
 import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
-import de.tu_chemnitz.mi.barcd.video.Frame;
-import de.tu_chemnitz.mi.barcd.video.FrameReaderSlow;
+import de.tu_chemnitz.mi.barcd.image.LuminanceImage.Grayscaler;
 import de.tu_chemnitz.mi.barcd.video.FrameReader;
 import de.tu_chemnitz.mi.barcd.video.FrameReaderException;
 
-import au.notzed.jjmpeg.PixelFormat;
-import au.notzed.jjmpeg.io.JJMediaReader;
-import au.notzed.jjmpeg.io.JJMediaReader.JJReaderVideo;
-import boofcv.gui.image.ShowImages;
-
 import sun.misc.BASE64Encoder;
-
-class ApplicationException extends Exception {
-    private static final long serialVersionUID = 1L;
-
-    public ApplicationException(String message) {
-        super(message);
-    }
-
-    public ApplicationException(String message, Throwable cause) {
-        super(message, cause);
-    }
-}
 
 public class Application {
     private String inputPath;
@@ -114,37 +107,215 @@ public class Application {
     }
     
     public static void main(String[] args) {
+        /**/
         try {
-            FrameReader fg = new FrameReader("/media/midori/videos/rumble1_1080p.mp4");
-
-            GammaDenoisingOperator g = new GammaDenoisingOperator(10);
-
-            fg.skipFrame(180);
-            System.out.println(fg.getFrameNumber());
-            BufferedImage fr = fg.nextFrame();
-            System.out.println(fg.getFrameNumber());
-            
-            LuminanceImage im = LuminanceImage.fromBufferedImage(fr,  new LuminanceImage.Grayscaler() {
-                @Override
-                public int convert(int argb) {
-                    int r = (argb >> 16) & 0xff;
-                    int g = (argb >> 8) & 0xff;
-                    int b = argb & 0xff;
-                    return (r + g + g + b) / 4;
+            BufferedImage image = null;
+            VideoImage screen = new VideoImage();
+            FrameReader fr = FrameReader.openDevice("/dev/video0", "video4linux2");
+            //FrameReader fr = FrameReader.open("/media/midori/videos/rumble1_1080p.mp4");
+            //fr.setOutputSize(fr.outputWidth() / 5, fr.outputHeight() / 5);
+            GammaDenoisingOperator gamma = new GammaDenoisingOperator(10);
+            HighFrequenceRegionFinder hfr = new HighFrequenceRegionFinder();
+            LuminanceImage lum = null;
+            List<BufferedImage> images = new LinkedList<BufferedImage>();
+            BufferedImage all = new BufferedImage(fr.outputWidth() * 5, fr.outputHeight() * 3, BufferedImage.TYPE_INT_ARGB);
+            while (true) {
+                image = fr.nextFrame();
+                
+                Graphics g = all.getGraphics();
+                
+                images.clear();
+                
+                lum = LuminanceImage.fromBufferedImage(image, new Grayscaler() {
+                    public int convert(int argb) {
+                        int r = (argb >> 16) & 0xff;
+                        int g = (argb >> 8) & 0xff;
+                        int b = argb & 0xff;
+                        return (r + g + g + b) / 4;
+                    }
+                });
+                
+                g.drawImage(lum.toBufferedImage(), fr.outputWidth(), 0, null);
+                
+                //lum = gamma.apply(lum);
+                
+                g.drawImage(lum.toBufferedImage(), fr.outputWidth() * 2, 0, null);
+                
+                Region[] regions = hfr.detect(lum, new HighFrequenceRegionFinder.RegionFilter() {
+                    @Override
+                    public boolean filter(Region region) {
+                        Rectangle rr = region.orientedRectangle();
+                        if (rr.width() < 50 || rr.height() < 50) return false;
+                        return true;
+                    }
+                }, images);
+                
+                g.drawImage(image, 0, 0, null);
+                
+                int x = 3;
+                int y = 0;
+                
+                for (BufferedImage im : images) {
+                    g.drawImage(im, x * fr.outputWidth(), y * fr.outputHeight(), null);
+                    x = (x + 1) % 5;
+                    if (x == 0) y += 1;
                 }
-            });
-            LuminanceImage im2 = g.apply(im);
-
-            ShowImages.showWindow(fr, "fr");
-            ShowImages.showWindow(im.toBufferedImage(), "im");
-            ShowImages.showWindow(im2.toBufferedImage(), "im2");
+                
+                for (int i = 0; i < regions.length; ++i) {
+                    Region r = regions[i];
+                    
+                    double cov = (r.coverage(Region.BoundType.CONVEX_POLYGON) * 1
+                                + r.coverage(Region.BoundType.ORIENTED_RECTANGLE) * 2
+                                + r.coverage(Region.BoundType.AXIS_ALIGNED_RECTANGLE) * 3) / 6;
+                    
+                    Polygon p;
+                    Point[] coords;
+                    
+                    p = new Polygon();
+                    coords = r.axisAlignedRectangle().points();
+                    for (int j = 0; j < coords.length; ++j) {
+                        p.addPoint(coords[j].x(), coords[j].y());
+                    }
+                    g.setColor(new Color(0f, 0f, 1f, (float) cov));
+                    g.fillPolygon(p);
+                    
+                    /**/
+                    p = new Polygon();
+                    coords = r.orientedRectangle().points();
+                    for (int j = 0; j < coords.length; ++j) {
+                        p.addPoint(coords[j].x(), coords[j].y());
+                    }
+                    g.setColor(new Color(0f, 1f, 0f, (float) cov));
+                    g.fillPolygon(p);
+                    
+                    p = new Polygon();
+                    coords = r.convexPolygon().points();
+                    for (int j = 0; j < coords.length; ++j) {
+                        p.addPoint(coords[j].x(), coords[j].y());
+                    }
+                    g.setColor(new Color(1f, 0f, 0f, (float) cov));
+                    g.fillPolygon(p);
+                    /**/
+                }
+                
+                screen.setImage(all);
+            }
         } catch (FrameReaderException ex) {
             System.err.println(ex.getMessage());
         }
+        /**/
         
         /*
         try {
-            for (int k = 16; k <= 17; ++k) {
+            GammaDenoisingOperator gamma = new GammaDenoisingOperator(10);
+            BinDCT bindct = new BinDCT();
+            Binarizer bin = new GlobalBinarizer(new MeanValueThresholdSelector());
+            DilationOperator dilate = new DilationOperator(5, 5);
+            ConnectedComponentsFinder ccf = new ConnectedComponentsFinder();
+            DownsamplingOperator down = new DownsamplingOperator(2);
+            
+            for (int k = 1; k <= 21; ++k) {
+                long t = System.currentTimeMillis();
+                
+                BufferedImage image = ImageIO.read(new File(String.format("/home/ewie/workspace/Barcode/images/camera/%d.jpg", k)));
+                
+                LuminanceImage lum1 = LuminanceImage.fromBufferedImage(image, new Grayscaler() {
+                    @Override
+                    public int convert(int argb) {
+                        int r = (argb >> 16 ) & 0xff;
+                        int g = (argb >> 8) & 0xff;
+                        int b = argb & 0xff;
+                        return (r + g + g + b) / 4;
+                    }
+                });
+                
+                LuminanceImage lum2 = down.apply(gamma.apply(lum1));
+                LuminanceImage lum4 = bindct.process(lum2);
+                LuminanceImage lum6 = bin.apply(lum4);
+                LuminanceImage lum8 = dilate.apply(lum6);
+                
+                Region[] regions = ccf.process(lum8);
+                
+                Graphics g = image.getGraphics();
+                
+                for (int i = 0; i < regions.length; ++i) {
+                    Region r = regions[i];
+                    
+                    {
+                        Rectangle rr = r.orientedRectangle();
+                        if (rr.width() < 66 || rr.height() < 66) {
+                            continue;
+                        }
+                    }
+                    
+                    double cov = (r.coverage(Region.BoundType.CONVEX_POLYGON) * 1
+                                + r.coverage(Region.BoundType.ORIENTED_RECTANGLE) * 2
+                                + r.coverage(Region.BoundType.AXIS_ALIGNED_RECTANGLE) * 3) / 6;
+                    
+                    if (cov < 0.5) {
+                        continue;
+                    }
+                    
+                    Polygon p;
+                    Point[] coords;
+                    
+                    p = new Polygon();
+                    coords = r.axisAlignedRectangle().points();
+                    for (int j = 0; j < coords.length; ++j) {
+                        p.addPoint(coords[j].x() * down.getFactor(), coords[j].y() * down.getFactor());
+                    }
+                    g.setColor(new Color(0f, 0f, 1f, (float) cov));
+                    g.fillPolygon(p);
+                    
+                    p = new Polygon();
+                    coords = r.orientedRectangle().points();
+                    for (int j = 0; j < coords.length; ++j) {
+                        p.addPoint(coords[j].x() * down.getFactor(), coords[j].y() * down.getFactor());
+                    }
+                    g.setColor(new Color(0f, 1f, 0f, (float) cov));
+                    g.fillPolygon(p);
+                    
+                    p = new Polygon();
+                    coords = r.convexPolygon().points();
+                    int x = 0;
+                    int y = 0;
+                    for (int j = 0; j < coords.length; ++j) {
+                        p.addPoint(coords[j].x() * down.getFactor(), coords[j].y() * down.getFactor());
+                        x += coords[j].x() * down.getFactor();
+                        y += coords[j].y() * down.getFactor();
+                    }
+                    x /= coords.length;
+                    y /= coords.length;
+                    g.setColor(new Color(1f, 0f, 0f, (float) cov));
+                    g.fillPolygon(p);
+                    g.setColor(Color.WHITE);
+                    g.drawString(String.format("%g", cov), x, y);
+                }
+                
+                ShowImages.showWindow(image, String.format("dct-%d", k));
+                
+                t = System.currentTimeMillis() - t;
+                
+                System.out.println(t);
+            }
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+        */
+        
+        /*
+        try {
+            final int downFactor = 2;
+            
+            GammaDenoisingOperator gamma = new GammaDenoisingOperator(10.0);
+            DownsamplingOperator down = new DownsamplingOperator(downFactor);
+            HighFrequenceRegionFinder brd = new HighFrequenceRegionFinder();
+            
+            //MedianFilter median = new MedianFilter(3);
+                
+            for (int k = 1; k <= 21; ++k) {
+                long t = System.currentTimeMillis();
+
                 BufferedImage image = ImageIO.read(new File(String.format("/home/ewie/workspace/Barcode/images/camera/%d.jpg", k)));
                 LuminanceImage lum = LuminanceImage.fromBufferedImage(image, new LuminanceImage.Grayscaler() {
                     @Override
@@ -156,27 +327,27 @@ public class Application {
                     }
                 });
                 
-                //MedianFilter median = new MedianFilter(3);
-                GammaDenoisingOperator gamma = new GammaDenoisingOperator(10.0);
     
-                final int downFactor = 2;
-                DownsamplingOperator down = new DownsamplingOperator(downFactor);
-
                 LuminanceImage lum2 = down.apply(gamma.apply(lum));
                 
-                ShowImages.showWindow(lum.toBufferedImage(), "lum");
-                ShowImages.showWindow(lum2.toBufferedImage(), "lum2");
-                
-                HighFrequenceRegionFinder brd = new HighFrequenceRegionFinder();
-                RectangularRegion[] regions = brd.detect(lum2, new HighFrequenceRegionFinder.RegionFilter() {
+                Region[] regions = brd.detect(lum2, new RegionFilter() {
                     @Override
-                    public boolean filter(RectangularRegion r) {
-                        // Exclude regions less than 50 pixels wide or high.
-                        if (r.getWidth() < 50 / downFactor || r.getHeight() < 50 / downFactor) return false;
+                    public boolean filter(Region r) {
+                        {
+                            Rectangle rr = r.orientedRectangle();
+                            // Exclude regions less than 50 pixels wide or high.
+                            if (rr.width() < 50 / downFactor || rr.height() < 50 / downFactor) return false;
+                        }
                         // Exclude sparse regions. That are regions which are spanned by
                         // less than a certain percentage of all pixels that make up the
                         // region.
-                        if (r.getCoverage() < 0.5) return false;
+                        if (r.coverage(Region.BoundType.CONVEX_POLYGON) < 0.5) return false;
+                        
+                        //System.out.printf("%g %g %g\n",
+                        //    r.coverage(Region.BoundType.CONVEX_POLYGON),
+                        //    r.coverage(Region.BoundType.ORIENTED_RECTANGLE),
+                        //    r.coverage(Region.BoundType.AXIS_ALIGNED_RECTANGLE));
+                        
                         return true;
                     }
                 });
@@ -184,26 +355,48 @@ public class Application {
                 Graphics g = image.getGraphics();
                 
                 for (int i = 0; i < regions.length; ++i) {
-                    int x = regions[i].getX() * downFactor;
-                    int y = regions[i].getY() * downFactor;
-                    int w = regions[i].getWidth() * downFactor;
-                    int h = regions[i].getHeight() * downFactor;
+                    Region r = regions[i];
                     
-                    g.setColor(new Color(1f, 0f, 1f, (float) (regions[i].getCoverage() * regions[i].getCoverage())));
-                    g.fillRect(x, y, w, h);
-                    g.setColor(Color.WHITE);
-                    g.drawRect(x, y, w, h);
-                    g.drawString(String.format("%g", regions[i].getCoverage()), x + 5, y + h - 5);
+                    double cov = (r.coverage(Region.BoundType.CONVEX_POLYGON) * 1
+                                + r.coverage(Region.BoundType.ORIENTED_RECTANGLE) * 2
+                                + r.coverage(Region.BoundType.AXIS_ALIGNED_RECTANGLE) * 3) / 6;
+                    
+                    Polygon p;
+                    Point[] coords;
+                    
+                    p = new Polygon();
+                    coords = r.axisAlignedRectangle().points();
+                    for (int j = 0; j < coords.length; ++j) {
+                        p.addPoint(coords[j].x() * downFactor, coords[j].y() * downFactor);
+                    }
+                    g.setColor(new Color(0f, 0f, 1f, (float) cov));
+                    g.fillPolygon(p);
+                    
+                    p = new Polygon();
+                    coords = r.orientedRectangle().points();
+                    for (int j = 0; j < coords.length; ++j) {
+                        p.addPoint(coords[j].x() * downFactor, coords[j].y() * downFactor);
+                    }
+                    g.setColor(new Color(0f, 1f, 0f, (float) cov));
+                    g.fillPolygon(p);
+                    
+                    p = new Polygon();
+                    coords = r.convexPolygon().points();
+                    for (int j = 0; j < coords.length; ++j) {
+                        p.addPoint(coords[j].x() * downFactor, coords[j].y() * downFactor);
+                    }
+                    g.setColor(new Color(1f, 0f, 0f, (float) cov));
+                    g.fillPolygon(p);
                 }
                 
-                ShowImages.showWindow(image, "image");
+                //ShowImages.showWindow(image, "image");
+                
+                System.out.println(System.currentTimeMillis() - t);
             }
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
         */
-        
-        
         
         /*
         Application app = new Application();

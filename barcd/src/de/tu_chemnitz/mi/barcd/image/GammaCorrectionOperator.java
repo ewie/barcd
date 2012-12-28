@@ -8,7 +8,7 @@ package de.tu_chemnitz.mi.barcd.image;
  * 
  * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
  */
-public class GammaCorrectionOperator implements Operator {
+public class GammaCorrectionOperator implements Operation {
     private double gamma;
     
     /**
@@ -27,13 +27,13 @@ public class GammaCorrectionOperator implements Operator {
 
     @Override
     public LuminanceImage apply(LuminanceImage in) {
-        int w = in.getWidth();
-        int h = in.getHeight();
+        int w = in.width();
+        int h = in.height();
         double g = 1 / this.gamma;
         LuminanceImage out = new LuminanceImage(w, h);
         for (int x = 0; x < w; ++x) {
             for (int y = 0; y < h; ++y) {
-                double value = Math.pow(in.getValueAt(x, y) / (double) LuminanceImage.MAX_VALUE, g) * LuminanceImage.MAX_VALUE;
+                double value = Math.pow(in.valueAt(x, y) / (double) LuminanceImage.MAX_VALUE, g) * LuminanceImage.MAX_VALUE;
                 out.setValueAt(x, y, (int) value);
             }
         }

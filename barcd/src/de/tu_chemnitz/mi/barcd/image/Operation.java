@@ -1,6 +1,6 @@
 package de.tu_chemnitz.mi.barcd.image;
 
-public interface Operator {
+public interface Operation {
     /**
      * Apply the operator to an input image.
      * 

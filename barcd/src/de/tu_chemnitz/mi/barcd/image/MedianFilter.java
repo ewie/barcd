@@ -1,6 +1,6 @@
 package de.tu_chemnitz.mi.barcd.image;
 
-public class MedianFilter implements Operator {
+public class MedianFilter implements Operation {
     private int size;
     
     public MedianFilter(int size) {
@@ -9,8 +9,8 @@ public class MedianFilter implements Operator {
 
     @Override
     public LuminanceImage apply(LuminanceImage in) {
-        int w = in.getWidth();
-        int h = in.getHeight();
+        int w = in.width();
+        int h = in.height();
         LuminanceImage out = new LuminanceImage(w, h);
         int[] neighbours;
         for (int x = 0; x < w; ++x) {
@@ -29,13 +29,13 @@ public class MedianFilter implements Operator {
         int yMax = y + size / 2;
         if (xMin < 0) xMin = 0;
         if (yMin < 0) yMin = 0;
-        if (xMax >= in.getWidth()) xMax = in.getWidth() - 1;
-        if (yMax >= in.getHeight()) yMax = in.getHeight() - 1;
+        if (xMax >= in.width()) xMax = in.width() - 1;
+        if (yMax >= in.height()) yMax = in.height() - 1;
         int[] neighbours = new int[(xMax - xMin) * (yMax - yMin)];
         int k = 0;
         for (int i = xMin; i <= xMax; ++i) {
             for (int j = yMin; j <= yMax; ++j) {
-                neighbours[k] = in.getValueAt(i, j);
+                neighbours[k] = in.valueAt(i, j);
             }
         }
         return neighbours;

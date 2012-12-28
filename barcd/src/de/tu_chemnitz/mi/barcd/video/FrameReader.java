@@ -2,97 +2,203 @@ package de.tu_chemnitz.mi.barcd.video;
 
 import java.awt.image.BufferedImage;
 
-import au.notzed.jjmpeg.AVFrame;
-import au.notzed.jjmpeg.PixelFormat;
-import au.notzed.jjmpeg.exception.AVIOException;
-import au.notzed.jjmpeg.exception.AVInvalidCodecException;
-import au.notzed.jjmpeg.exception.AVInvalidStreamException;
-import au.notzed.jjmpeg.io.JJMediaReader;
-import au.notzed.jjmpeg.io.JJMediaReader.JJReaderVideo;
+import com.xuggle.xuggler.ICodec;
+import com.xuggle.xuggler.IContainer;
+import com.xuggle.xuggler.IContainerFormat;
+import com.xuggle.xuggler.IPacket;
+import com.xuggle.xuggler.IPixelFormat;
+import com.xuggle.xuggler.IStream;
+import com.xuggle.xuggler.IStreamCoder;
+import com.xuggle.xuggler.IVideoPicture;
+import com.xuggle.xuggler.IVideoResampler;
+import com.xuggle.xuggler.video.ConverterFactory;
+import com.xuggle.xuggler.video.IConverter;
 
-/**
- * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
- */
 public class FrameReader {
-    private String sourcePath;
-    private JJMediaReader mediaReader;
-    private JJReaderVideo videoReader;
+    private IContainer container;
+    private int streamIndex = -1;
+    private IStreamCoder decoder = null;
+    private IPacket packet;
+    private IConverter converter;
+    private IVideoResampler resampler;
+    private int outputHeight;
+    private int outputWidth;
     
-    public FrameReader(String sourcePath)
+    public static FrameReader openDevice(String deviceName, String driverName)
         throws FrameReaderException
     {
-        this.sourcePath = sourcePath;
-        try {
-            this.mediaReader = new JJMediaReader(sourcePath);
-            this.videoReader = this.mediaReader.openFirstVideoStream();
-            this.videoReader.setOutputFormat(PixelFormat.PIX_FMT_BGRA);
-        } catch (AVIOException ex) {
-            throw new FrameReaderException(ex);
-        } catch (AVInvalidStreamException ex) {
-            throw new FrameReaderException(ex);
-        } catch (AVInvalidCodecException ex) {
-            throw new FrameReaderException(ex);
+        IContainer container = IContainer.make();
+        IContainerFormat format = IContainerFormat.make();
+        if (format.setInputFormat(driverName) < 0) {
+            throw new FrameReaderException(String.format("could not open device %s with driver %s", deviceName, driverName));
+        }
+        if (container.open(deviceName, IContainer.Type.READ, format) < 0) {
+            throw new FrameReaderException("could not open device: " + deviceName);
+        }
+        return new FrameReader(container);
+    }
+    
+    public static FrameReader open(String url)
+        throws FrameReaderException
+    {
+        IContainer container = IContainer.make();
+        if (container.open(url, IContainer.Type.READ, null) < 0) {
+            throw new FrameReaderException("could not open URL: " + url);
+        }
+        return new FrameReader(container);
+    }
+    
+    private FrameReader(IContainer container)
+        throws FrameReaderException
+    {
+        this.container = container;
+        findVideoStream();
+        this.packet = IPacket.make();
+        setOutputSize(this.decoder.getWidth(), this.decoder.getHeight());
+        if (this.decoder.getPixelType() != IPixelFormat.Type.BGR24) {
+            this.resampler = IVideoResampler.make(
+                this.decoder.getWidth(),
+                this.decoder.getHeight(),
+                IPixelFormat.Type.BGR24,
+                this.decoder.getWidth(),
+                this.decoder.getHeight(),
+                this.decoder.getPixelType());
+            if (this.resampler == null) {
+                throw new FrameReaderException("could not create video resampler");
+            }
+        }
+    }
+        
+    private void findVideoStream()
+        throws FrameReaderException
+    {
+        int numStreams = this.container.getNumStreams();
+        for (int i = 0; i < numStreams; ++i) {
+            IStream stream = this.container.getStream(i);
+            IStreamCoder decoder = stream.getStreamCoder();
+            if (decoder.getCodecType() == ICodec.Type.CODEC_TYPE_VIDEO) {
+                this.streamIndex = i;
+                this.decoder = decoder;
+                break;
+            }
+        }
+        
+        if (this.streamIndex == -1) {
+            throw new FrameReaderException("could not find video stream");
+        }
+        
+        if (this.decoder.open(null, null) < 0) {
+            throw new FrameReaderException("could not open video decoder");
         }
     }
     
-    public String getSourcePath() {
-        return this.sourcePath;
-    }
-    
-    public int getWidth() {
-        return this.videoReader.getWidth();
-    }
-    
-    public int getHeight() {
-        return this.videoReader.getHeight();
-    }
-    
-    public int getFrameNumber() {
-        return this.videoReader.getFrame().getCodedPictureNumber();
-    }
-    
-    public double getFrameRateNumerator() {
-        return this.videoReader.getStream().getRFrameRate().getNum();
-    }
-    
-    public double getFrameRateDenominator() {
-        return this.videoReader.getStream().getRFrameRate().getDen();
-    }
-    
-    public long getFrameCount() {
-        return this.videoReader.getStream().getNBFrames();
-    }
-    
-    public long getDuration() {
-        return this.videoReader.getStream().getDuration();
-    }
-    
-    public void skipFrame()
+    private void createResampler()
+        throws FrameReaderException
     {
-        readNextFrame();
+        if (!IVideoResampler.isSupported(IVideoResampler.Feature.FEATURE_COLORSPACECONVERSION)) {
+            throw new FrameReaderException("you must install the GPL version of Xuggler");
+        }
+        
+        this.resampler = IVideoResampler.make(
+            this.outputWidth,
+            this.outputHeight,
+            IPixelFormat.Type.BGR24,
+            this.decoder.getWidth(),
+            this.decoder.getHeight(),
+            this.decoder.getPixelType());
+        
+        if (this.resampler == null) {
+            throw new FrameReaderException("could not create video resampler");
+        }
     }
     
-    public void skipFrame(int count) {
-        while (count-- != 0) skipFrame();
+    /**
+     * @param width
+     * @param height
+     * @throws FrameReaderException
+     */
+    public void setOutputSize(int width, int height)
+        throws FrameReaderException
+    {
+        if (this.outputHeight != height || this.outputWidth != width) {
+            this.outputHeight = height;
+            this.outputWidth = width;
+            createResampler();
+        }
+    }
+    
+    public int outputWidth() {
+        return this.outputWidth;
+    }
+    
+    public int outputHeight() {
+        return this.outputHeight;
     }
     
     public BufferedImage nextFrame()
+        throws FrameReaderException
     {
-        readNextFrame();
-        return currentFrameToBufferedImage();
-    }
-    
-    private AVFrame readNextFrame() {
-        if (this.mediaReader.readFrame() == null) {
-            return null;
+        IVideoPicture picture = resamplePicture(readFrame());
+        if (picture.getPixelType() != IPixelFormat.Type.BGR24) {
+            throw new FrameReaderException("could not decode video as BGR24");
         }
-        return this.videoReader.getOutputFrame();
+        return convertToImage(picture);
     }
     
-    private BufferedImage currentFrameToBufferedImage()
+    public void skipFrames(int count)
+        throws FrameReaderException
     {
-        BufferedImage image = this.videoReader.createImage();
-        this.videoReader.getOutputFrame(image);
-        return image;
+        while (count --> 0) readFrame();
+    }
+    
+    private IVideoPicture readFrame()
+        throws FrameReaderException
+    {
+        while (this.container.readNextPacket(this.packet) >= 0) {
+            if (packet.getStreamIndex() == this.streamIndex) {
+                int offset = 0;
+                IVideoPicture picture = IVideoPicture.make(
+                    this.decoder.getPixelType(),
+                    this.decoder.getWidth(),
+                    this.decoder.getHeight());
+                
+                while (offset < packet.getSize()) {
+                    int bytesDecoded = this.decoder.decodeVideo(picture, packet, offset);
+                    
+                    if (bytesDecoded < 0) {
+                        throw new FrameReaderException("error while decoding video");
+                    }
+                    offset += bytesDecoded;
+                    
+                    if (picture.isComplete()) {
+                        return picture;
+                    }
+                }
+            }
+        }
+        
+        throw new FrameReaderException("no more frames");
+    }
+    
+    private BufferedImage convertToImage(IVideoPicture picture) {
+        if (this.converter == null) {
+            this.converter = ConverterFactory.createConverter(
+                ConverterFactory.XUGGLER_BGR_24, picture);
+        }
+        return this.converter.toImage(picture);
+    }
+    
+    private IVideoPicture resamplePicture(IVideoPicture picture)
+        throws FrameReaderException
+    {
+        if (this.resampler == null) return picture;
+        IVideoPicture resampledPicture = IVideoPicture.make(
+            resampler.getOutputPixelFormat(),
+            resampler.getOutputWidth(),
+            resampler.getOutputHeight());
+        if (this.resampler.resample(resampledPicture, picture) < 0) {
+            throw new FrameReaderException("could not resample video picture");
+        }
+        return resampledPicture;
     }
 }

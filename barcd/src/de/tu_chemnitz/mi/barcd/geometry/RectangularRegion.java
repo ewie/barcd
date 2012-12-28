@@ -1,4 +1,4 @@
-package de.tu_chemnitz.mi.barcd;
+package de.tu_chemnitz.mi.barcd.geometry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,21 +13,21 @@ public class RectangularRegion {
     /**
      * @param coords the coordinates spanning the region
      */
-    public static RectangularRegion fromCoordinates(Coordinate[] coords) {
+    public static RectangularRegion fromCoordinates(Point[] coords) {
         return fromCoordinates(Arrays.asList(coords));
     }
     
     /**
      * @param coords the coordinates spanning the region
      */
-    public static RectangularRegion fromCoordinates(List<Coordinate> coords) {
+    public static RectangularRegion fromCoordinates(List<Point> coords) {
         int minX = Integer.MAX_VALUE;
         int minY = Integer.MAX_VALUE;
         int maxX = Integer.MIN_VALUE;
         int maxY = Integer.MIN_VALUE;
-        for (Coordinate coord : coords) {
-            int x = coord.getX();
-            int y = coord.getY();
+        for (Point coord : coords) {
+            int x = coord.x();
+            int y = coord.y();
             if (x < minX) minX = x;
             if (x > maxX) maxX = x;
             if (y < minY) minY = y;
@@ -79,6 +79,19 @@ public class RectangularRegion {
         return this.height;
     }
     
+    public int getSize() {
+        return 4;
+    }
+
+    public Point[] getCoordinates() {
+        Point[] coords = new Point[4];
+        coords[0] = new Point(this.x, this.y);
+        coords[1] = new Point(this.x + width, this.y);
+        coords[2] = new Point(this.x + width, this.y + height);
+        coords[3] = new Point(this.x, this.y + height);
+        return coords;
+    }
+    
     /**
      * The ratio between the region's area and the number of coordinates
      * spanning the region.
@@ -99,8 +112,8 @@ public class RectangularRegion {
         return x >= this.x && x <= (this.x + this.width) && y >= this.y && y <= (this.y + this.height);
     }
     
-    public boolean contains(Coordinate p) {
-        return contains(p.getX(), p.getY());
+    public boolean contains(Point p) {
+        return contains(p.x(), p.y());
     }
     
     public boolean intersects(RectangularRegion other) {

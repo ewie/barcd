@@ -1,6 +1,6 @@
 package de.tu_chemnitz.mi.barcd.image;
 
-public interface KernelOperator extends Operator {
+public interface KernelOperation extends Operation {
     /**
      * @return the kernel's width
      */

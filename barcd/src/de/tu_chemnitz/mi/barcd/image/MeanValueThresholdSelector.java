@@ -8,12 +8,12 @@ package de.tu_chemnitz.mi.barcd.image;
 public class MeanValueThresholdSelector implements GlobalThresholdSelector {
     @Override
     public int getThreshold(LuminanceImage input) {
-        int width = input.getWidth();
-        int height = input.getHeight();
+        int width = input.width();
+        int height = input.height();
         long mean = 0;
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                mean += input.getValueAt(x, y);
+                mean += input.valueAt(x, y);
             }
         }
         return (int) (mean / (width * height));

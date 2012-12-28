@@ -5,7 +5,7 @@ package de.tu_chemnitz.mi.barcd.image;
  * 
  * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
  */
-public class GaussianFilter implements KernelOperator {
+public class GaussianFilter implements KernelOperation {
     private ConvolutionOperator kernel;
     
     /**

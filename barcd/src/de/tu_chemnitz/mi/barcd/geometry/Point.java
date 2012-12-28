@@ -1,19 +1,19 @@
-package de.tu_chemnitz.mi.barcd;
+package de.tu_chemnitz.mi.barcd.geometry;
 
-public class Coordinate {
+public class Point {
     private int x;
     private int y;
     
-    public Coordinate(int x, int y) {
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
     
-    public int getX() {
+    public int x() {
         return this.x;
     }
     
-    public int getY() {
+    public int y() {
         return this.y;
     }
 }
