@@ -37,7 +37,7 @@
   	<dependency>
       <groupId>xuggle</groupId>
       <artifactId>xuggle-xuggler</artifactId>
-      <version>5.2</version>
+      <version>5.4</version>
     </dependency>
   	<dependency>
   		<groupId>org.slf4j</groupId>
@@ -48,6 +48,13 @@
   		<groupId>org.boofcv</groupId>
   		<artifactId>boofcv</artifactId>
   		<version>0.12</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>de.humatic</groupId>
+  		<artifactId>dsj</artifactId>
+  		<version>0.8.64</version>
+  		<scope>system</scope>
+  		<systemPath>${project.basedir}/lib/dsj.jar</systemPath>
   	</dependency>
   </dependencies>
 </project>

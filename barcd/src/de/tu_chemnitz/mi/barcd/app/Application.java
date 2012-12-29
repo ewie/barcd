@@ -21,8 +21,14 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import boofcv.gui.image.ShowImages;
+
 import com.xuggle.xuggler.demos.VideoImage;
 
+import de.humatic.dsj.DSCapture;
+import de.humatic.dsj.DSFilterInfo;
+import de.humatic.dsj.DSFiltergraph;
+import de.humatic.dsj.DSMovie;
 import de.tu_chemnitz.mi.barcd.Extraction;
 import de.tu_chemnitz.mi.barcd.Extractor;
 import de.tu_chemnitz.mi.barcd.HighFrequenceRegionFinder;
@@ -106,14 +112,22 @@ public class Application {
         }
     }
     
-    public static void main(String[] args) {
-        /**/
+    private static void directShowFrameReaderTest() {
+    	DSFilterInfo[][] dsi = DSCapture.queryDevices();
+    	DSCapture graph = new DSCapture(DSFiltergraph.DD7, dsi[0][0], false, DSFilterInfo.doNotRender(), null);
+    	VideoImage screen = new VideoImage();
+    	while (true) {
+            BufferedImage image = graph.getImage();
+    		screen.setImage(image);
+    	}
+    }
+    
+    private static void xugglerFrameReaderTest() {
         try {
             BufferedImage image = null;
             VideoImage screen = new VideoImage();
-            FrameReader fr = FrameReader.openDevice("/dev/video0", "video4linux2");
-            //FrameReader fr = FrameReader.open("/media/midori/videos/rumble1_1080p.mp4");
-            //fr.setOutputSize(fr.outputWidth() / 5, fr.outputHeight() / 5);
+            FrameReader fr = FrameReader.openDevice("0", "vfwcap");
+            fr.setOutputSize(fr.outputWidth() / 2, fr.outputHeight() / 2);
             GammaDenoisingOperator gamma = new GammaDenoisingOperator(10);
             HighFrequenceRegionFinder hfr = new HighFrequenceRegionFinder();
             LuminanceImage lum = null;
@@ -179,7 +193,6 @@ public class Application {
                     g.setColor(new Color(0f, 0f, 1f, (float) cov));
                     g.fillPolygon(p);
                     
-                    /**/
                     p = new Polygon();
                     coords = r.orientedRectangle().points();
                     for (int j = 0; j < coords.length; ++j) {
@@ -195,7 +208,6 @@ public class Application {
                     }
                     g.setColor(new Color(1f, 0f, 0f, (float) cov));
                     g.fillPolygon(p);
-                    /**/
                 }
                 
                 screen.setImage(all);
@@ -203,7 +215,11 @@ public class Application {
         } catch (FrameReaderException ex) {
             System.err.println(ex.getMessage());
         }
-        /**/
+    }
+    
+    public static void main(String[] args) {
+    	//directShowFrameReaderTest();
+    	xugglerFrameReaderTest();
         
         /*
         try {

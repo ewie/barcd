@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import com.xuggle.xuggler.ICodec;
 import com.xuggle.xuggler.IContainer;
 import com.xuggle.xuggler.IContainerFormat;
+import com.xuggle.xuggler.IError;
+import com.xuggle.xuggler.IMetaData;
 import com.xuggle.xuggler.IPacket;
 import com.xuggle.xuggler.IPixelFormat;
 import com.xuggle.xuggler.IStream;
@@ -32,8 +34,12 @@ public class FrameReader {
         if (format.setInputFormat(driverName) < 0) {
             throw new FrameReaderException(String.format("could not open device %s with driver %s", deviceName, driverName));
         }
-        if (container.open(deviceName, IContainer.Type.READ, format) < 0) {
-            throw new FrameReaderException("could not open device: " + deviceName);
+
+        int retval = container.open(deviceName, IContainer.Type.READ, format);
+        
+        if (retval < 0) {
+        	IError error = IError.make(retval);
+            throw new FrameReaderException("could not open device: " + deviceName + " ; Error: " + error.getDescription());
         }
         return new FrameReader(container);
     }
