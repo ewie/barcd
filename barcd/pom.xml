@@ -27,6 +27,10 @@
 	  <id>xuggle repo</id>
 	  <url>http://xuggle.googlecode.com/svn/trunk/repo/share/java/</url>
 	</repository>
+	<repository>
+	  <id>javacv repo</id>
+	  <url>http://maven2.javacv.googlecode.com/git/</url>
+	</repository>
   </repositories>
   <dependencies>
   	<dependency>
@@ -55,6 +59,18 @@
   		<version>0.8.64</version>
   		<scope>system</scope>
   		<systemPath>${project.basedir}/lib/dsj.jar</systemPath>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.googlecode.javacv</groupId>
+  		<artifactId>javacv-windows-x86_64</artifactId>
+  		<version>0.3</version>
+  		<scope>system</scope>
+  		<systemPath>${project.basedir}/lib/javacv-0.3-windows-x86_64.jar</systemPath>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.googlecode.javacv</groupId>
+  		<artifactId>javacv</artifactId>
+  		<version>0.3</version>
   	</dependency>
   </dependencies>
 </project>

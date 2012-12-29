@@ -23,6 +23,9 @@ import org.w3c.dom.Element;
 
 import boofcv.gui.image.ShowImages;
 
+import com.googlecode.javacv.FrameGrabber;
+import com.googlecode.javacv.OpenCVFrameGrabber;
+import com.googlecode.javacv.cpp.opencv_core.IplImage;
 import com.xuggle.xuggler.demos.VideoImage;
 
 import de.humatic.dsj.DSCapture;
@@ -217,9 +220,29 @@ public class Application {
         }
     }
     
+    private static void javacvFrameReaderTest() {
+    	OpenCVFrameGrabber fg = new OpenCVFrameGrabber(0);
+
+        VideoImage screen = new VideoImage();
+        
+    	try {
+    		fg.start();
+    		while (true) {
+	            IplImage img = fg.grab();
+	            if (img != null) {
+	            	BufferedImage image = img.getBufferedImage();
+	                screen.setImage(image);
+	            }
+    		}
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+    
     public static void main(String[] args) {
     	//directShowFrameReaderTest();
     	xugglerFrameReaderTest();
+    	//javacvFrameReaderTest();
         
         /*
         try {
