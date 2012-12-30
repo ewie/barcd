@@ -37,6 +37,8 @@ import de.tu_chemnitz.mi.barcd.image.GammaDenoisingOperator;
 import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
 import de.tu_chemnitz.mi.barcd.image.LuminanceImage.Grayscaler;
 import de.tu_chemnitz.mi.barcd.video.FrameReader;
+import de.tu_chemnitz.mi.barcd.video.OpenCVFrameReader;
+import de.tu_chemnitz.mi.barcd.video.XugglerFrameReader;
 import de.tu_chemnitz.mi.barcd.video.FrameReaderException;
 
 import sun.misc.BASE64Encoder;
@@ -110,17 +112,16 @@ public class Application {
         }
     }
     
-    private static void xugglerFrameReaderTest() {
+    private static void frameReaderTest(FrameReader fr) {
         try {
             BufferedImage image = null;
             VideoImage screen = new VideoImage();
-            FrameReader fr = FrameReader.openDevice("/dev/video0", "video4linux2");
-            fr.setOutputSize(fr.outputWidth() / 2, fr.outputHeight() / 2);
+            fr.setWidthAndHeight(fr.width() / 2, fr.height() / 2);
             GammaDenoisingOperator gamma = new GammaDenoisingOperator(10);
             HighFrequenceRegionFinder hfr = new HighFrequenceRegionFinder();
             LuminanceImage lum = null;
             List<BufferedImage> images = new LinkedList<BufferedImage>();
-            BufferedImage all = new BufferedImage(fr.outputWidth() * 5, fr.outputHeight() * 3, BufferedImage.TYPE_INT_ARGB);
+            BufferedImage all = new BufferedImage(fr.width() * 5, fr.height() * 3, BufferedImage.TYPE_INT_ARGB);
             while (true) {
                 image = fr.nextFrame();
                 
@@ -137,11 +138,11 @@ public class Application {
                     }
                 });
                 
-                g.drawImage(lum.toBufferedImage(), fr.outputWidth(), 0, null);
+                g.drawImage(lum.toBufferedImage(), fr.width(), 0, null);
                 
                 //lum = gamma.apply(lum);
                 
-                g.drawImage(lum.toBufferedImage(), fr.outputWidth() * 2, 0, null);
+                g.drawImage(lum.toBufferedImage(), fr.width() * 2, 0, null);
                 
                 Region[] regions = hfr.detect(lum, new HighFrequenceRegionFinder.RegionFilter() {
                     @Override
@@ -158,7 +159,7 @@ public class Application {
                 int y = 0;
                 
                 for (BufferedImage im : images) {
-                    g.drawImage(im, x * fr.outputWidth(), y * fr.outputHeight(), null);
+                    g.drawImage(im, x * fr.width(), y * fr.height(), null);
                     x = (x + 1) % 5;
                     if (x == 0) y += 1;
                 }
@@ -205,28 +206,14 @@ public class Application {
         }
     }
     
-    private static void javacvFrameReaderTest() {
-    	OpenCVFrameGrabber fg = new OpenCVFrameGrabber(0);
-
-        VideoImage screen = new VideoImage();
-        
-    	try {
-    		fg.start();
-    		while (true) {
-	            IplImage img = fg.grab();
-	            if (img != null) {
-	            	BufferedImage image = img.getBufferedImage();
-	                screen.setImage(image);
-	            }
-    		}
-        } catch (Exception ex) {
+    public static void main(String[] args) {
+        try {
+            //FrameReader fr = XugglerFrameReader.openDevice("/dev/video0", "video4linux2");
+            FrameReader fr = OpenCVFrameReader.openDevice(0);
+        	frameReaderTest(fr);
+        } catch (FrameReaderException ex) {
             System.err.println(ex.getMessage());
         }
-    }
-    
-    public static void main(String[] args) {
-    	//xugglerFrameReaderTest();
-    	javacvFrameReaderTest();
         
         /*
         try {
