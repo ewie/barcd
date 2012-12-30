@@ -37,7 +37,7 @@ public class FrameReader {
 
         int retval = container.open(deviceName, IContainer.Type.READ, format);
         
-        if (retval < 0) {
+        if (container.open(deviceName, IContainer.Type.READ, format) < 0) {
         	IError error = IError.make(retval);
             throw new FrameReaderException("could not open device: " + deviceName + " ; Error: " + error.getDescription());
         }

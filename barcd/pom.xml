@@ -53,24 +53,22 @@
   		<artifactId>boofcv</artifactId>
   		<version>0.12</version>
   	</dependency>
-  	<dependency>
-  		<groupId>de.humatic</groupId>
-  		<artifactId>dsj</artifactId>
-  		<version>0.8.64</version>
-  		<scope>system</scope>
-  		<systemPath>${project.basedir}/lib/dsj.jar</systemPath>
-  	</dependency>
-  	<dependency>
-  		<groupId>com.googlecode.javacv</groupId>
-  		<artifactId>javacv-windows-x86_64</artifactId>
-  		<version>0.3</version>
-  		<scope>system</scope>
-  		<systemPath>${project.basedir}/lib/javacv-0.3-windows-x86_64.jar</systemPath>
-  	</dependency>
-  	<dependency>
-  		<groupId>com.googlecode.javacv</groupId>
-  		<artifactId>javacv</artifactId>
-  		<version>0.3</version>
-  	</dependency>
+    <dependency>
+        <groupId>com.googlecode.javacv</groupId>
+        <artifactId>javacv</artifactId>
+        <version>0.3</version>
+    </dependency>
+    <dependency>
+        <groupId>com.googlecode.javacv</groupId>
+        <artifactId>javacv</artifactId>
+        <classifier>windows-x86_64</classifier>
+        <version>0.3</version>
+    </dependency>
+    <dependency>
+        <groupId>com.googlecode.javacv</groupId>
+        <artifactId>javacv</artifactId>
+        <classifier>linux-x86_64</classifier>
+        <version>0.3</version>
+    </dependency>
   </dependencies>
 </project>

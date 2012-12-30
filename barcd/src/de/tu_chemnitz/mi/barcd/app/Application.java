@@ -23,15 +23,10 @@ import org.w3c.dom.Element;
 
 import boofcv.gui.image.ShowImages;
 
-import com.googlecode.javacv.FrameGrabber;
 import com.googlecode.javacv.OpenCVFrameGrabber;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 import com.xuggle.xuggler.demos.VideoImage;
 
-import de.humatic.dsj.DSCapture;
-import de.humatic.dsj.DSFilterInfo;
-import de.humatic.dsj.DSFiltergraph;
-import de.humatic.dsj.DSMovie;
 import de.tu_chemnitz.mi.barcd.Extraction;
 import de.tu_chemnitz.mi.barcd.Extractor;
 import de.tu_chemnitz.mi.barcd.HighFrequenceRegionFinder;
@@ -115,21 +110,11 @@ public class Application {
         }
     }
     
-    private static void directShowFrameReaderTest() {
-    	DSFilterInfo[][] dsi = DSCapture.queryDevices();
-    	DSCapture graph = new DSCapture(DSFiltergraph.DD7, dsi[0][0], false, DSFilterInfo.doNotRender(), null);
-    	VideoImage screen = new VideoImage();
-    	while (true) {
-            BufferedImage image = graph.getImage();
-    		screen.setImage(image);
-    	}
-    }
-    
     private static void xugglerFrameReaderTest() {
         try {
             BufferedImage image = null;
             VideoImage screen = new VideoImage();
-            FrameReader fr = FrameReader.openDevice("0", "vfwcap");
+            FrameReader fr = FrameReader.openDevice("/dev/video0", "video4linux2");
             fr.setOutputSize(fr.outputWidth() / 2, fr.outputHeight() / 2);
             GammaDenoisingOperator gamma = new GammaDenoisingOperator(10);
             HighFrequenceRegionFinder hfr = new HighFrequenceRegionFinder();
@@ -240,9 +225,8 @@ public class Application {
     }
     
     public static void main(String[] args) {
-    	//directShowFrameReaderTest();
-    	xugglerFrameReaderTest();
-    	//javacvFrameReaderTest();
+    	//xugglerFrameReaderTest();
+    	javacvFrameReaderTest();
         
         /*
         try {
