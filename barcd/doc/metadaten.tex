@@ -1,0 +1,48 @@
+%======================================================================
+%	Metadaten
+%======================================================================
+%	$Id$
+%	Matthias Kupfer
+%======================================================================
+
+\newcommand{\dcsubject}{Teamorientierte Projektarbeit}
+% z.B. (Diplom/Studien/Haus)arbeit, Praktikumsbericht, Studie, Beleg, 
+% (Pro/Haupt/Ober)seminar, Seminar usw.
+\newcommand{\dctitle}{Entwurf und Implementation von Verfahren zum Auffinden und Lesen von Strichcodes in Videodaten}
+\newcommand{\dcsubtitle}{~} % Untertitel, falls erforderlich
+
+\newcommand{\dcauthornameewie}{Erik Wienhold}
+\newcommand{\dcauthornameriren}{René Richter}
+\newcommand{\dcauthoremailewie}{ewie@hrz.tu-chemnitz.de}
+\newcommand{\dcauthoremailriren}{riren@hrz.tu-chemnitz.de}
+\newcommand{\dcauthors}{%
+    René Richter \normalsize\texttt{riren@hrz.tu-chemnitz.de} \\
+    Erik Wienhold \normalsize\texttt{ewie@hrz.tu-chemnitz.de} \\
+}
+\newcommand{\dcdate}{\today} 
+
+\newcommand{\dcplace}{Chemnitz} % Ort, kann an der TU meist so bleiben
+\newcommand{\dcuni}{Technische Universität \dcplace}
+\newcommand{\dcdepart}{Informatik} % Fakultätsangabe
+\newcommand{\dcprof}{Medieninformatik} % Angabe der Professur
+
+\newcommand{\dcpruefer}{}% Prüfer der Arbeit
+\newcommand{\dcadvisor}{Robert Manthey}% Betreuer der Arbeit
+
+\newcommand{\dckeywords}{Liste,von,Stichworten,die,als,Schlagworte,geeignet,
+sind}
+
+%%======================================================================
+% Einstellungen des Hyperref-Paketes
+\hypersetup{%    
+	pdftitle	= {\dctitle}, %
+	pdfsubject	= {\dcsubject, \dcdate}, %
+	pdfauthor	= {\dcauthornameriren \dcauthoremailriren \dcauthornameewie
+	\dcauthoremailewie},
+	%
+	pdfkeywords	= {\dckeywords}, %
+	pdfcreator	= {pdfTeX with Hyperref and Thumbpdf}, %
+	pdfproducer	= {LaTeX, hyperref, thumbpdf}, %
+	% weitere PDF-Einstellungen in hyperref.cfg
+}
+%%======================================================================

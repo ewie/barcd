@@ -1,0 +1,354 @@
+%======================================================================
+%   Vorlage
+%======================================================================
+%   $Id$
+%   Matthias Kupfer
+%======================================================================
+%   Documentclass
+%======================================================================
+\documentclass[
+%   draft,          % Entwurfsmodus: Bilder als Rahmen,
+                % Überlängen werden deutlich markiert
+%   10pt,           % 
+    11pt,           % KOMA default
+%   12pt,           % 
+    a4paper,        % DIN A4
+    twoside,        % Zweiseitig
+    german,         %
+%----------------------------------------------------------------------
+% Die folgenden Befehle stammen aus dem KOMA Paket
+    headsepline,        % Linie unter der Kopfzeile 
+%   headnosepline,      %
+%   foodsepline,        % Linie über Fussnote   
+    footnosepline=false,        %
+    automark,       % Kolumnentitel lebendig
+%   bigheadings,        % default: Überschriften gross setzen
+    normalheadings,     % Überschriften normal setzen
+%   smallheadings,      % Überschriften eher klein setzen
+%   pointlessnumbers,   % Keinen Punkt hinter die letzte Zahl 
+                % eines Kapitels (auch bei Anhang)
+%   chapterprefix,      % Kapiteluberschriften "Kapitel"
+%   appendixprefix,     % Anhang
+%   openright,      % Kapitel auf der rechten (ungeraden) Seite 
+                % anfangen lassen
+    openany,        % 
+%   cleardoublestandard,    %
+    cleardoubleplain,   %
+%   cleardoubleempty,   %
+    abstracton,     %
+    idxtotoc,       % Index soll im Inhaltsverzeichnis auftauchen
+    liststotoc,     %
+    bibtotoc,       %
+%   parskip,        % parskip-, parskip*, parskip+
+%   halfparskip,        % halfparskip-, halfparskip* und halfparskip+
+%   DIVclassic,
+    BCOR8mm,        %%?? Bindungskorrektur: 
+                % BCOR<Breite des Bindungsverlustes> 
+]{scrreprt} 
+
+%======================================================================
+%   Bearbeitung sowohl mit LaTeX als auch mit pdfLaTeX ermoeglichen
+%======================================================================
+%\newif\ifpdf 
+    %\ifx\pdfoutput\undefined 
+    %\pdffalse          % we are not running pdflatex 
+%\else 
+    %\pdfoutput=1           % we are running pdflatex 
+    %\pdftrue 
+%\fi
+
+
+%======================================================================
+%   Verwendete Pakete
+%======================================================================
+
+\usepackage[ngerman]{babel}     % Sprachen
+
+%% Latex mit deutschen Umlauten:
+%% http://www.cs.albany.edu/~herrmann/latex_umlaute/
+\usepackage[T1]{fontenc}    % EC-Schriften verwenden (vs. DC) da 8-Bit
+                % EC-Schriften als T1-kodierten CM-Schriften
+                % European/Ext.-Computer-Modern-(EC)-Schriften
+                % Umlaute, Anführungszeichen ...
+                % => Umlauten koennen richtig getrennt werden
+                % FAQ 5.3.2
+
+%\usepackage{ucs}       % Eingabe von ü,ö,ä,ß mit UTF-8 erlaubt
+\usepackage[utf8]{inputenc} % (auch in Include-Dateien)
+                % ! Zeichensatz der Dateien als UTF-8 !
+                                
+\usepackage{ae,aecompl}     % virtuelle-CM-Fonts
+                % da EC nicht als PostScript-(Type-1) verfuegbar
+                % => keine echten Umlaute im PDF-Dokumen 
+                %(Problem bei Suche)
+                % By loading the ae package (\usepackage{ae}), 
+                % you loose some characters as mentioned in 
+                % README. 
+                % The package aecompl by Denis Roegel restores
+                % these characters which are taken from the ec 
+                % fonts. If you use pdftex, you will get these 
+                % characters as bitmaps, but this might be 
+                % better than not having them at all.
+
+%\usepackage{times, mathptm}    % TimesNewRoman Schrift (Acrobat Reader Fonts), 
+                % dazu braucht man auch den entsprechenden 
+                % Zeichensatz für den Math-Mode
+%\usepackage{pslatex}       % ? mathematische Formeln mit Standard 
+                % Postscript Fonts gesetzt
+            % Paket     Roman         Serifenlos  Typewriter
+%\usepackage{times} % -----------------------------------------------
+            % times     Times         Helvetica   Courier
+            % palatino  Palatino      Helvetica   Courier
+            % newcent   NewCenturySch AvantGarde  Courier
+            % bookman   Bookman       AvantGarde  Courier
+            % Diese Schriften sind die Standard-PostScript-Schriften
+            % und in jedem Drucker verfügbar
+
+\usepackage{
+%   german,         % Deutsche Trennungen (ALTE Rechtschreibung), 
+                % Anführungsstriche und mehr 
+%   ngerman,        % Deutsche Trennungen (NEUE Rechtschreibung), 
+                % Anführungsstriche und mehr
+                %
+%   acronym,        % Verwaltung von Abkuerzungen
+%   bibgerm,        % Deutsche Bibliographie 
+    calc,           % Erweiterung der arithmetischen Funktionen in 
+                % LaTeX
+                % wird verwendet um Titelseite zu zentrieren
+    color,          % im Laufenden Text einfach mit \color{Farbe) zwischen den 
+                % Farben umschalten, wobei Farbe einfach 
+                % durch z.B. red, blue, black etc. ersetzt wird
+                % \textcolor{farbe){Text)
+%   epigraph,       % Zitat am Kapitelanfang
+%   fancyhdr,       % Kopf- und Fußzeilen von Dokumenten frei 
+                % gestalten
+    fancybox,       % shadowbox, doublebox, ovalbox, Ovalbox 
+    fancyvrb,       % verbatim Erweiterung:
+    float,          % Positionierung von Gleitobjekten genau an der Stelle, wo man
+                % 'figure'- oder 'table'-Umgebung die 
+                % Positionierung [H] gesetzt werden
+%   glosstex,       % Glossar und Abkürzungsverzeichnis
+    mdwlist,        % compact list: itemize* ..
+    scrdate,        % \todaysname 
+    scrtime,        % \thistime
+    scrpage2,       % Kopf- und Fußzeilen flexibel gestalten
+                %
+%   moreverb,       % verbatim-ähnlich: boxedverbatim, listing
+%   verbatim,       % Darstellung von "Text, wie er eingegeben wird"
+                %
+%   lscape,         % Erstellt eine um 90% gedrehte *neue* Seite
+%   textcomp,       % Sonderzeichen
+%   booktabs,       % Tabellenlinien
+%   longtable,      % Tabellen > 1 Seite
+%   supertabular,       % Tabellen > 1 Seite
+    tabularx,       % Blocksatzspalten
+%   ltxtable,       % tabularx + longtable
+%   multicol,       % mehrspaltige Zeilen
+%   varioref,       % einheitliche Verweise
+%   endnotes,       % Fussnoten -> Endnoten
+%   rotating,       % sidewaystable und sidewaysfigure
+%   natbib,         % Bibliographie ohne Klammer etc.
+%   marvosym,       % Euro etc.
+}
+
+%\usepackage{pstricks}
+%\usepackage{listings}
+%\usepackage{wasysym}
+
+%\usepackage[german, first, bottomafter]{draftcopy}
+
+%\usepackage{setspace}  % Durchschuß, Zeilenabstand
+%\doublespace       % doppelzeilig oder
+%\onehalfspacing    % anderthalbzeilig
+
+% Für schöne Darstellung von Algorithmen
+%\usepackage[german, algoruled, algochapter]{algorithm2e}
+%\usepackage{algorithmic}
+%\usepackage[chapter]{algorithm}
+%\floatname{algorithm}{Algorithmus}
+
+%======================================================================
+%   Bilder, Links
+%======================================================================
+
+\usepackage{graphicx}
+%\graphicspath{{../img/}}   % Angabe der Pfade, wo die Grafiken liegen; 
+                % mehrere Pfade sind möglich
+
+\usepackage{thumbpdf}
+\usepackage{hyperref}
+
+
+%======================================================================
+%   user.sty
+%======================================================================
+
+\usepackage{user}   % Makros in user.sty 
+            % \epsinc{bild.eps}{scale=1}{Bildunterschrift}
+            % \missing{Beweis fehlt noch}
+            % \comment{Ein Kommentar}
+
+%======================================================================
+%   Einstellungen
+%======================================================================
+
+%\typearea{11}      % Satzspiegel neu konstruieren (KOMA)
+            %      10pt 11pt 12pt 
+            % DIV : 8   10   12  
+
+\pagestyle{scrheadings} % Standart  Kopf- und Fußzeile
+\setkomafont{pagehead}{\small\scshape}
+
+% ---------------------------------------------------------------------
+%\setcounter{secnumdepth}{2}
+%\setcounter{chapter}{-1}
+\setcounter{tocdepth}{3}
+
+% ---------------------------------------------------------------------
+%\sloppy        % weniger Worttrennungen, größere Wortabstände
+\fussy          % viele Worttrennungen, "schönere" Wortabstände
+
+% ---------------------------------------------------------------------
+%\flushbottom           % Ausrichtung der Seitenenden jeweils auf 
+                % gleicher Höhe
+
+% ---------------------------------------------------------------------
+%\sloppypar     % Das hier relaxt die Einstellungen zum Wortabstand 
+            % extrem. Damit ragen keine Worte über den rechten 
+            % Zeilenabstand hinaus. Dafür muß stärker auf
+            % Wortabstand geachtet werden, der kann dann ziemlich 
+            % groß werden. Man erhält aber keine Meldung mehr 
+            % über underfull boxes.
+
+%Hiermit kann man das gleiche mit weniger Holzhammer erreichen:
+%\setlength{\tolerance}{2000}           % Strafpunkt für Zeilenumbruch
+%\setlength{\emergencystretch}{3pt}     % Soweit dürfen einzelne Worte mehr 
+                    % auseinandergezogen werden
+%\setlength{\hfuzz}{1pt}                % Macht den rechten Rand um bis zu 1pt 
+                    % flatterig.
+
+% ---------------------------------------------------------------------
+%Vermeiden einzelner Zeilen am Ende einer Seite oder oben auf einer neuen Seite
+%\clubpenalty10000
+%\widowpenalty10000
+
+% ----------------------------------------------------------------------
+% neue Umgebungen für verwendete Sätze und Beispiele
+\newtheorem{bsp}{Beispiel}[chapter]
+\newtheorem{satz}{Satz}[chapter]
+
+%======================================================================
+%   includeonly
+%======================================================================
+
+\includeonly{       % Gibt an, welche Dateien der include-Befehl 
+            % tatsächlich einfuegen darf.
+  metadaten     % Variablen setzen
+  ,titel        % Titelseite, Zusammenfassung und Inhaltsverzeichnis
+% Alle per include einzulesenden Dateien müssen hier angegeben sein!
+%  ,anleitung        % Anleitung zur Nutzung der Vorlage
+}
+
+% Aufteilung der Arbeit in folgende Bestandteile in angeg. Reihenfolge
+%
+% Titelseite
+% Bibliographische Beschreibung (Rückseite der Titelseite)
+% (Aufgabenstellung)
+% Danksagung
+% Abstract
+% Inhaltsverzeichnis
+% Tabellenverzeichnis
+% Abbildungsverzeichnis
+% Einleitung
+% Inhalt
+% Zusammenfassung/Ausblick
+% (Verzeichnis verwendeter Terme)
+% Glossar (Abkürzungsverzeichnis)
+% (Index)
+% Literaturverzeichnis
+% (Thesen)
+% (Selbstständigkeitserklärung)
+% Anhänge
+
+
+%======================================================================
+% * *   T E X T    S T A R T S    H E R E   * * * * * * * * * * * * * *
+%======================================================================
+
+\begin{document}
+\include{metadaten} % Variablen, \hypersetup, etc.
+
+%======================================================================
+%   Titelseite (Zusammenfassung und Inhaltsverzeichnis)
+%======================================================================
+
+\include{titel} % Titelseite, Zusammenfassung 
+        % Inhaltsverzeichnis
+        % Abkuerzungsverzeichnis
+        % -> danach Seitennummerierung bei 1
+
+%======================================================================
+%   Inhalt per include
+%======================================================================
+
+\include{anleitung} % Datei, welche die Anleitung zur Nutzung der 
+            % Vorlage enthält
+
+
+%======================================================================
+%   Glossar
+%======================================================================
+
+%\manualmark
+%\addcontentsline{toc}{chapter}{Glossar}
+%\markboth{Glossar}{Glossar}
+%\def\glossaryname{Glossar}
+%\printglosstex(glo)
+%\cleardoublepage
+
+%======================================================================
+%   Literaturverzeichnis
+%======================================================================
+\manualmark
+\markboth{Literaturverzeichnis}{Literaturverzeichnis}
+\bibliographystyle{user}
+\bibliography{literatur}
+\cleardoublepage
+
+%======================================================================
+%   Thesen
+%======================================================================
+%\chapter{Thesen}
+%\include{thesen}
+
+%======================================================================
+%   Selbstständigkeitserklärung
+%======================================================================
+\chapter*{Selbstständigkeitserklärung}
+
+Hiermit erkläre ich, daß ich die vorliegende Arbeit
+selbstständig angefertigt, nicht anderweitig zu Prüfungszwecken vorgelegt und
+keine anderen als die angegebenen Hilfsmittel verwendet habe. Sämtliche 
+wissentlich verwendete Textausschnitte, Zitate oder Inhalte anderer Verfasser 
+wurden ausdrücklich als solche gekennzeichnet.\\[2ex]
+\dcplace, den \dcdate\\[6ex]
+\flushleft
+\begin{tabular}{p{5cm} p{5cm}}\hline
+\footnotesize \dcauthornameriren &
+\footnotesize \dcauthornameewie
+\end{tabular}
+
+%======================================================================
+%   Anhang
+%======================================================================
+
+
+%\part*{Anhang}
+\cleardoublepage
+\begin{appendix}
+    
+%\include{anhanga}
+
+\end{appendix}
+
+\end{document}

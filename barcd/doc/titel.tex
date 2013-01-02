@@ -1,0 +1,175 @@
+%======================================================================
+%	Titelseite 
+%======================================================================
+%	$Date:$
+%	$Revision:$
+%	Matthias Kupfer
+%======================================================================
+
+%%======================================================================
+%% Schmutztitel
+%%======================================================================
+%\extratitle{
+%	\usekomafont{sectioning}\mdseries 
+%	\begin{center}
+%		\Huge \dcsubject\\[1.5ex]
+%		\hrule
+%		\vspace*{\fill}
+%		\includegraphics{TUC_deutsch_einzeile_CMYK}
+%	\end{center}
+%}
+
+%%======================================================================
+%% Titelkopf
+%%======================================================================
+\titlehead{
+	\vspace*{-1.5cm}
+	% Schriftfamilie wie alle Überschriften, aber nicht fett
+	\usekomafont{sectioning}\mdseries 
+	\begin{center}
+		\raisebox{-1ex}{\includegraphics[scale=1.4]{TUC_deutsch_einzeile_CMYK}}\\
+		\hrulefill \\[1em]
+		{\Large\dcdepart}\\[0.5em] 
+		\dcprof
+	\end{center}
+	\vspace*{1.5cm}
+}
+
+%%======================================================================
+%% Subjekt
+%%======================================================================
+\subject{\bf\Huge\dcsubject}
+
+
+%%======================================================================
+%% Titel
+%%======================================================================
+\title{\sf\Large
+	\dctitle
+	\\
+	\dcsubtitle
+}
+
+%%======================================================================
+%% Autor des Dokumentes
+%%======================================================================
+%\author{\dcauthorfirstname~\dcauthorlastname}
+\author{%
+    \dcauthornameriren \\
+    \texttt\dcauthoremailriren
+    \and
+    \dcauthornameewie \\
+    \texttt\dcauthoremailewie
+}
+	
+%%======================================================================
+%% Ort, Datum
+%%======================================================================
+\date{\dcplace, den \dcdate
+}
+
+%%======================================================================
+%% Publishers
+%%======================================================================
+\publishers{
+	{\parbox{\textwidth-8em}{
+		\begin{tabbing}
+			{\bf Betreuer:}\quad\=\kill
+			{\bf Prüfer:}	\>\dcpruefer\\
+			{\bf Betreuer:}	\>\dcadvisor
+		\end{tabbing}	
+	}}
+}
+
+%%======================================================================
+%% bibliografische Angaben
+%%======================================================================
+\lowertitleback{
+%\textbf{\dcauthorlastname, \dcauthorfirstname}\\
+\textbf{\dcauthornameriren\quad\dcauthornameewie}\\
+\dctitle\\
+\dcsubject,~\dcdepart\\
+\dcuni,~\ifcase\month\or
+  Januar\or Februar\or März\or April\or Mai\or Juni\or
+    Juli\or August\or September\or Oktober\or November\or Dezember\fi
+    ~\number\year
+}
+
+%%======================================================================
+%% maketitle
+%%======================================================================
+
+\maketitle
+
+%%======================================================================
+%% Danksagung
+%%======================================================================
+\thispagestyle{empty}
+\null\vfil
+\begin{center}
+\usekomafont{sectioning}\textbf{Danksagung}
+\vspace{-.5em}\vspace{\parsep}
+%%
+%% Hier steht der Text für die Danksagung
+%%
+\end{center}
+\par\vfil\null
+\cleardoubleemptypage
+  
+%%======================================================================
+%%      Kurzfassung / Abstract
+%%======================================================================
+\def\abstractname{Abstract} 	% Wenn der Text "Zusammenfassung" erscheinen 
+				% soll, dann muß dies auskommentiert werden
+				
+\begin{abstract}
+%%
+%% Inhalt der Arbeit
+%%
+\end{abstract}
+
+%%======================================================================
+%%      Inhaltsverzeichnis
+%%======================================================================
+\cleardoubleemptypage
+\pagenumbering{roman}
+%\pdfbookmark{Inhaltsverzeichnis}{Inhaltsverzeichnis}
+\tableofcontents
+
+%%======================================================================
+%%      Abbildungsverzeichnis
+%%======================================================================
+\cleardoublepage
+\markboth{Abbildungsverzeichnis}{Abbildungsverzeichnis}
+\listoffigures
+
+%%======================================================================
+%%      Tabellenverzeichnis
+%%======================================================================
+\cleardoublepage
+\markboth{Tabellenverzeichnis}{Tabellenverzeichnis}
+\listoftables
+
+%%======================================================================
+%%      Algorithmenverzeichnis
+%%======================================================================
+%\renewcommand{\listalgorithmname}{Algorithmenverzeichnis}
+%\cleardoublepage
+%\addcontentsline{toc}{chapter}{Algorithmenverzeichnis}
+%\listofalgorithms
+
+%%======================================================================
+%%      Abkuerzungsverzeichnis
+%%======================================================================
+%\cleardoublepage
+%\addcontentsline{toc}{chapter}{Abkürzungsverzeichnis}
+%\markboth{Abk"urzungsverzeichnis}{Abk"urzungsverzeichnis}
+%\def\listacronymname{Abk"urzungsverzeichnis}
+%\printglosstex(acr)
+
+%%======================================================================
+%%      Ende
+%%======================================================================
+\cleardoublepage
+\pagenumbering{arabic}
+\setcounter{page}{1}
