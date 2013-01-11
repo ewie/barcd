@@ -1,7 +1,6 @@
 package de.tu_chemnitz.mi.barcd.image;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
 
 /**
  * A gray-scale representation of an image.
@@ -72,14 +71,16 @@ public class LuminanceImage {
      * @param x
      * @param y
      * 
-     * @return the luminance of the pixel at (x, y)
+     * @return the luminance of the pixel at (x, y) in the range of [MIN_VALUE,
+     *         MAX_VALUE]
      */
     public int valueAt(int x, int y) {
         return this.values[x][y] & MAX_VALUE;
     }
     
     /**
-     * Set a pixel's luminance value.
+     * Set a pixel's luminance value. Ensures the value is in the range of
+     * [MIN_VALUE, MAX_VALUE].
      * 
      * @param x
      * @param y
@@ -90,25 +91,32 @@ public class LuminanceImage {
     }
     
     /**
-     * Convert the image to a {@link BufferedImage} with type {@link
-     * BufferedImage.TYPE_BYTE_GRAY}.
+     * Convert the image to a {@link BufferedImage} with type TYPE_INT_ARGB.
      * 
      * @return
      */
     public BufferedImage toBufferedImage() {
-        BufferedImage image = new BufferedImage(this.width, this.height, BufferedImage.TYPE_BYTE_GRAY);
-        WritableRaster raster = image.getRaster();
+        BufferedImage image = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
         int[] pixels = new int[this.width * this.height];
+        int offset = 0;
         for (int y = 0; y < this.height; ++y) {
-            int offset = y * this.width ;
             for (int x = 0; x < this.width; ++x) {
-                pixels[offset + x] = this.valueAt(x, y);
+                int v = this.valueAt(x, y);
+                pixels[offset++] = 0xff000000 | (v << 16) | (v << 8) | v;
             }
         }
-        raster.setPixels(0, 0, this.width, this.height, pixels);
+        image.setRGB(0, 0, this.width, this.height, pixels, 0, this.width);
         return image;
     }
     
+    /**
+     * Convert a {@link BufferedImage} to its gray-scale representation.
+     * 
+     * @param image
+     * @param grayscaler
+     * 
+     * @return
+     */
     public static LuminanceImage fromBufferedImage(BufferedImage image, Grayscaler grayscaler) {
         int width = image.getWidth();
         int height = image.getHeight();
