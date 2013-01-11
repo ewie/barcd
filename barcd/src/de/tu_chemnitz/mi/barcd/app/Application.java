@@ -20,12 +20,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import sun.misc.BASE64Encoder;
-
-import com.xuggle.xuggler.demos.VideoImage;
-
 import de.tu_chemnitz.mi.barcd.Extraction;
 import de.tu_chemnitz.mi.barcd.Extractor;
 import de.tu_chemnitz.mi.barcd.HighFrequenceRegionFinder;
+import de.tu_chemnitz.mi.barcd.VideoImageDisplay;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.geometry.Rectangle;
 import de.tu_chemnitz.mi.barcd.geometry.Region;
@@ -112,7 +110,7 @@ public class Application {
     private static void frameReaderTest(FrameReader fr) {
         try {
             BufferedImage image = null;
-            VideoImage video = new VideoImage();
+            VideoImageDisplay video = new VideoImageDisplay();
             //fr.setWidthAndHeight(fr.width() * 2, fr.height() * 2);
             GammaDenoisingOperator gamma = new GammaDenoisingOperator(10);
             HighFrequenceRegionFinder hfr = new HighFrequenceRegionFinder();
@@ -208,7 +206,7 @@ public class Application {
         
         fr.setWidthAndHeight(fr.width() * 3, fr.height() * 3);
         
-        VideoImage vimage1 = new VideoImage();
+        VideoImageDisplay vimage1 = new VideoImageDisplay();
         
         BlockMatchingMotionEstimator me =
             new ThreeStepSearchMotionEstimator(16);

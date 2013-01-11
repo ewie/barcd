@@ -24,10 +24,6 @@
   </organization>
   <repositories>
 	<repository>
-	  <id>xuggle repo</id>
-	  <url>http://xuggle.googlecode.com/svn/trunk/repo/share/java/</url>
-	</repository>
-	<repository>
 	  <id>javacv repo</id>
 	  <url>http://maven2.javacv.googlecode.com/git/</url>
 	</repository>
@@ -38,11 +34,6 @@
   		<artifactId>core</artifactId>
   		<version>2.1</version>
   	</dependency>
-  	<dependency>
-      <groupId>xuggle</groupId>
-      <artifactId>xuggle-xuggler</artifactId>
-      <version>5.4</version>
-    </dependency>
   	<dependency>
   		<groupId>org.slf4j</groupId>
   		<artifactId>slf4j-api</artifactId>
