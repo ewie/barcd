@@ -1,17 +1,11 @@
 package de.tu_chemnitz.mi.barcd.image;
 
-import java.awt.image.BufferedImage;
-
 /**
  * A gray-scale representation of an image.
  * 
  * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
  */
 public class BufferedLuminanceImage implements LuminanceImage {
-    public static interface Grayscaler {
-        public int convert(int argb);
-    }
-    
     private int width;
     private int height;
     private byte[][] values;
@@ -99,43 +93,5 @@ public class BufferedLuminanceImage implements LuminanceImage {
     @Override
     public void setValueAt(int x, int y, int value) {
         values[x][y] = (byte) value;
-    }
-    
-    /**
-     * Convert the image to a {@link BufferedImage} with type TYPE_INT_ARGB.
-     * 
-     * @return
-     */
-    public BufferedImage toBufferedImage() {
-        BufferedImage image = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
-        int[] pixels = new int[this.width * this.height];
-        int offset = 0;
-        for (int y = 0; y < this.height; ++y) {
-            for (int x = 0; x < this.width; ++x) {
-                int v = this.intensityAt(x, y);
-                pixels[offset++] = 0xff000000 | (v << 16) | (v << 8) | v;
-            }
-        }
-        image.setRGB(0, 0, this.width, this.height, pixels, 0, this.width);
-        return image;
-    }
-    
-    /**
-     * Convert a {@link BufferedImage} to its gray-scale representation.
-     * 
-     * @param image
-     * @param grayscaler
-     * 
-     * @return
-     */
-    public static BufferedLuminanceImage fromBufferedImage(BufferedImage image, Grayscaler grayscaler) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        int[] pixels = image.getRGB(0, 0, width, height, new int[width * height], 0, width);
-        int[] values = new int[pixels.length];
-        for (int i = 0; i < pixels.length; ++i) {
-            values[i] = grayscaler.convert(pixels[i]);
-        }
-        return new BufferedLuminanceImage(width, height, values);
     }
 }
