@@ -5,15 +5,39 @@ import java.awt.image.BufferedImage;
 import com.googlecode.javacv.OpenCVFrameGrabber;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
+/**
+ * A frame reader using OpenCV (through JavaCV) as backend. Allows capturing
+ * frames from a device (e.g. a webcam) or a file (local and remote (e.g. via
+ * HTTP)).
+ * 
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class OpenCVFrameReader implements FrameReader {
     private OpenCVFrameGrabber frameGrabber;
     
+    /**
+     * Create a frame reader using a device.
+     * 
+     * @param deviceId the number denoting the device (0 = 1st device, 1 = 2nd device, etc.)
+     * @return
+     * 
+     * @throws FrameReaderException
+     */
     public static OpenCVFrameReader openDevice(int deviceId)
         throws FrameReaderException
     {
         return new OpenCVFrameReader(new OpenCVFrameGrabber(deviceId));
     }
     
+    /**
+     * Open a local or remote file.
+     *
+     * @param url the file's URL
+     * 
+     * @return
+     * 
+     * @throws FrameReaderException
+     */
     public static OpenCVFrameReader open(String url)
         throws FrameReaderException
     {
@@ -27,6 +51,22 @@ public class OpenCVFrameReader implements FrameReader {
         try {
             this.frameGrabber.start();
         } catch(Exception ex) {
+            throw new FrameReaderException(ex);
+        }
+    }
+    
+    @Override
+    public int frameNumber() {
+        return frameGrabber.getFrameNumber();
+    }
+    
+    @Override
+    public void setFrameNumber(int frameNumber)
+        throws FrameReaderException
+    {
+        try {
+            frameGrabber.setFrameNumber(frameNumber);
+        } catch (Exception ex) {
             throw new FrameReaderException(ex);
         }
     }
@@ -81,7 +121,7 @@ public class OpenCVFrameReader implements FrameReader {
     public void skipFrames(int count)
         throws FrameReaderException
     {
-        while (count --> 0) readFrame();
+        setFrameNumber(frameNumber() + count);
     }
     
     private IplImage readFrame()

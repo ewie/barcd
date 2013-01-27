@@ -61,5 +61,15 @@
         <classifier>linux-x86_64</classifier>
         <version>0.3</version>
     </dependency>
+    <dependency>
+    	<groupId>org.apache.directory.studio</groupId>
+    	<artifactId>org.apache.commons.codec</artifactId>
+    	<version>1.6</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.mahout.commons</groupId>
+    	<artifactId>commons-cli</artifactId>
+    	<version>2.0-mahout</version>
+    </dependency>
   </dependencies>
 </project>

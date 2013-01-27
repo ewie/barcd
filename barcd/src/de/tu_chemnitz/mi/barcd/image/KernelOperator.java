@@ -1,6 +1,9 @@
 package de.tu_chemnitz.mi.barcd.image;
 
-public interface KernelOperation extends Operation {
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
+public interface KernelOperator extends Operator {
     /**
      * @return the kernel's width
      */

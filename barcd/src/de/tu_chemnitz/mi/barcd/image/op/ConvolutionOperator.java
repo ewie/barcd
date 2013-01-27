@@ -1,11 +1,15 @@
-package de.tu_chemnitz.mi.barcd.image;
+package de.tu_chemnitz.mi.barcd.image.op;
+
+import de.tu_chemnitz.mi.barcd.image.BufferedLuminanceImage;
+import de.tu_chemnitz.mi.barcd.image.KernelOperator;
+import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
 
 /**
  * A generic kernel operator.
  * 
  * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
  */
-public class ConvolutionOperator implements KernelOperation {
+public class ConvolutionOperator implements KernelOperator {
     private double[][] weights;
     private int width;
     private int height;
@@ -18,7 +22,7 @@ public class ConvolutionOperator implements KernelOperation {
     /**
      * @param width the kernel width
      * @param height the kernel height
-     * @param kernel the kernel weights in row-major order
+     * @param weights the kernel weights in row-major order
      */
     public ConvolutionOperator(int width, int height, double[] weights) {
         this.width = width;
@@ -53,7 +57,7 @@ public class ConvolutionOperator implements KernelOperation {
         int width = input.width();
         int height = input.height();
         
-        LuminanceImage output = new LuminanceImage(width, height);
+        BufferedLuminanceImage output = new BufferedLuminanceImage(width, height);
         int a = this.width - this.width / 2 + 1;
         int b = this.height - this.height / 2 + 1;
 
@@ -67,7 +71,7 @@ public class ConvolutionOperator implements KernelOperation {
                         int u = x + i - a;
                         int v = y + j - b;
                         if (u >= 0 && u < width && v >= 0 && v < height) {
-                            int p = input.valueAt(u, v);
+                            int p = input.intensityAt(u, v);
                             k += p * this.weights[i][j];
                             c += this.weights[i][j];
                         }
@@ -76,9 +80,10 @@ public class ConvolutionOperator implements KernelOperation {
                 
                 if (c != 0) k /= c;
                 
-                output.setValueAt(x, y, (int) Math.round(k));
+                output.setValueAt(x, y, (int) k);
             }
         }
+        
         return output;
     }
 }

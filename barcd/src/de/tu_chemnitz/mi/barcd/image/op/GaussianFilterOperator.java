@@ -1,11 +1,14 @@
-package de.tu_chemnitz.mi.barcd.image;
+package de.tu_chemnitz.mi.barcd.image.op;
+
+import de.tu_chemnitz.mi.barcd.image.KernelOperator;
+import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
 
 /**
  * A kernel realizing a Gaussian filter.
  * 
  * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
  */
-public class GaussianFilter implements KernelOperation {
+public class GaussianFilterOperator implements KernelOperator {
     private ConvolutionOperator kernel;
     
     /**
@@ -14,7 +17,7 @@ public class GaussianFilter implements KernelOperation {
      * @param size the kernel's width and height
      * @param sigma the standard deviation of the Gaussian distribution
      */
-    public GaussianFilter(int size, double sigma) {
+    public GaussianFilterOperator(int size, double sigma) {
         double kernel[][] = new double[size][size];
         double d = 1.0 / Math.sqrt(2 * Math.PI * sigma * sigma);
         int tx = -size / 2;

@@ -1,7 +1,77 @@
 package de.tu_chemnitz.mi.barcd.image;
 
-
+/**
+ * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
+ */
 public class ConnectedComponentLabeler {
+    private static final int BACKGROUND_VALUE = LuminanceImage.MIN_INTENSITY;
+    
+    public int[][] process(LuminanceImage image) {
+        return process(image, BACKGROUND_VALUE);
+    }
+    
+    public int[][] process(LuminanceImage image, int backgroundValue) {
+        int width = image.width();
+        int height = image.height();
+        int[][] labels = new int[width][height];
+        int nextLabel = 1;
+        UnionFind eq = new UnionFind(width * height);
+        
+        for (int x = 1; x < width; ++x) {
+            int v = image.intensityAt(x, 0);
+            if (v == backgroundValue) continue;
+            if (v == image.intensityAt(x - 1, 0)) {
+                labels[x][0] = labels[x - 1][0];
+            } else {
+                labels[x][0] = nextLabel++;
+            }
+        }
+        
+        for (int y = 1; y < height; ++y) {
+            int v = image.intensityAt(0, y);
+            if (v == backgroundValue) continue;
+            if (v == image.intensityAt(0, y - 1)) {
+                labels[0][y] = labels[0][y - 1];
+            } else {
+                labels[0][y] = nextLabel++;
+            }
+        }
+        
+        for (int y = 1; y < height; ++y) {
+            for (int x = 1; x < width; ++x) {
+                int v = image.intensityAt(x, y);
+                if (v == backgroundValue) continue;
+                
+                int vn = image.intensityAt(x, y - 1);
+                int vw = image.intensityAt(x - 1, y);
+                
+                if (v == vn && v == vw) {
+                    int ln = labels[x][y - 1];
+                    int lw = labels[x - 1][y];
+                    labels[x][y] = Math.min(ln, lw);
+                    eq.union(lw, ln);
+                    eq.union(ln, lw);
+                } else if (v == vn) {
+                    labels[x][y] = labels[x][y - 1];
+                } else if (v == vw) {
+                    labels[x][y] = labels[x - 1][y];
+                } else {
+                    labels[x][y] = nextLabel++;
+                }
+            }
+        }
+        
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                if (image.intensityAt(x, y) == backgroundValue) continue;
+                int label = eq.find(labels[x][y]);
+                labels[x][y] = label;
+            }
+        }
+        
+        return labels;
+    }
+    
     private static class UnionFind {
         private int[] parent;
         private int[] rank;
@@ -35,68 +105,5 @@ public class ConnectedComponentLabeler {
                 rank[p] += 1;
             }
         }
-    }
-    
-    public int[][] process(LuminanceImage image) {
-        int width = image.width();
-        int height = image.height();
-        int[][] labels = new int[width][height];
-        int nextLabel = 1;
-        UnionFind eq = new UnionFind(width * height);
-        int bg = 0;
-        
-        for (int x = 1; x < width; ++x) {
-            int v = image.valueAt(x, 0);
-            if (v == bg) continue;
-            if (v == image.valueAt(x - 1, 0)) {
-                labels[x][0] = labels[x - 1][0];
-            } else {
-                labels[x][0] = nextLabel++;
-            }
-        }
-        
-        for (int y = 1; y < height; ++y) {
-            int v = image.valueAt(0, y);
-            if (v == bg) continue;
-            if (v == image.valueAt(0, y - 1)) {
-                labels[0][y] = labels[0][y - 1];
-            } else {
-                labels[0][y] = nextLabel++;
-            }
-        }
-        
-        for (int y = 1; y < height; ++y) {
-            for (int x = 1; x < width; ++x) {
-                int v = image.valueAt(x, y);
-                if (v == bg) continue;
-                
-                int vn = image.valueAt(x, y - 1);
-                int vw = image.valueAt(x - 1, y);
-                
-                if (v == vn && v == vw) {
-                    int ln = labels[x][y - 1];
-                    int lw = labels[x - 1][y];
-                    labels[x][y] = Math.min(ln, lw);
-                    eq.union(lw, ln);
-                    eq.union(ln, lw);
-                } else if (v == vn) {
-                    labels[x][y] = labels[x][y - 1];
-                } else if (v == vw) {
-                    labels[x][y] = labels[x - 1][y];
-                } else {
-                    labels[x][y] = nextLabel++;
-                }
-            }
-        }
-        
-        for (int y = 0; y < height; ++y) {
-            for (int x = 0; x < width; ++x) {
-                if (image.valueAt(x, y) == bg) continue;
-                int label = eq.find(labels[x][y]);
-                labels[x][y] = label;
-            }
-        }
-        
-        return labels;
     }
 }

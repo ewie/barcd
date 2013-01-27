@@ -4,6 +4,9 @@ import de.tu_chemnitz.mi.barcd.geometry.Vector;
 import de.tu_chemnitz.mi.barcd.geometry.VectorField;
 import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public abstract class BlockMatchingMotionEstimator {
     private int blockSize;
     

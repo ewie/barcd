@@ -3,6 +3,9 @@ package de.tu_chemnitz.mi.barcd.geometry;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class RectangularRegion {
     private int x;
     private int y;

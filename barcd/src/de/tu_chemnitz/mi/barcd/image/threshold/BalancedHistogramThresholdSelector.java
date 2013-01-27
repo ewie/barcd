@@ -1,5 +1,11 @@
-package de.tu_chemnitz.mi.barcd.image;
+package de.tu_chemnitz.mi.barcd.image.threshold;
 
+import de.tu_chemnitz.mi.barcd.image.GlobalThresholdSelector;
+import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
+
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class BalancedHistogramThresholdSelector implements GlobalThresholdSelector {
     @Override
     public int getThreshold(LuminanceImage input) {
@@ -9,7 +15,7 @@ public class BalancedHistogramThresholdSelector implements GlobalThresholdSelect
         
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                hist[input.valueAt(x, y)] += 1;
+                hist[input.intensityAt(x, y)] += 1;
             }
         }
         
@@ -18,7 +24,7 @@ public class BalancedHistogramThresholdSelector implements GlobalThresholdSelect
         
         for (int i = 0; i < 0x100; ++i) {
             if (hist[i] > 0 && start == 0) start = i;
-            if (hist[i] > 0) end = hist[i];
+            if (hist[i] > 0) end = i;
         }
         
         int middle = (start + end) / 2;

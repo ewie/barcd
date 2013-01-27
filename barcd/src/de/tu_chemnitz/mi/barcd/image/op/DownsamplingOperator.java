@@ -1,6 +1,13 @@
-package de.tu_chemnitz.mi.barcd.image;
+package de.tu_chemnitz.mi.barcd.image.op;
 
-public class DownsamplingOperator implements Operation {
+import de.tu_chemnitz.mi.barcd.image.BufferedLuminanceImage;
+import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
+import de.tu_chemnitz.mi.barcd.image.Operator;
+
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
+public class DownsamplingOperator implements Operator {
     private int factor;
 
     public DownsamplingOperator(int factor) {
@@ -17,10 +24,11 @@ public class DownsamplingOperator implements Operation {
     public LuminanceImage apply(LuminanceImage in) {
         int width = in.width() / this.factor;
         int height = in.height() / this.factor;
-        LuminanceImage out = new LuminanceImage(width, height);
+        BufferedLuminanceImage out = new BufferedLuminanceImage(width, height);
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                out.setValueAt(x, y, in.valueAt(x * this.factor, y * this.factor));
+                //out.setLuminanceAt(x, y, in.luminanceAt(x * this.factor, y * this.factor));
+                out.setValueAt(x, y, in.valueAt(x * factor, y * factor));
             }
         }
         return out;

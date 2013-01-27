@@ -1,5 +1,11 @@
-package de.tu_chemnitz.mi.barcd.image;
+package de.tu_chemnitz.mi.barcd.image.threshold;
 
+import de.tu_chemnitz.mi.barcd.image.GlobalThresholdSelector;
+import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
+
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class OtsuThresholdSelector implements GlobalThresholdSelector {
     @Override
     public int getThreshold(LuminanceImage input) {
@@ -36,7 +42,7 @@ public class OtsuThresholdSelector implements GlobalThresholdSelector {
         
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                hist[input.valueAt(x, y)] += 1;
+                hist[input.intensityAt(x, y)] += 1;
             }
         }
         

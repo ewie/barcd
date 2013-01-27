@@ -1,4 +1,7 @@
-package de.tu_chemnitz.mi.barcd.image;
+package de.tu_chemnitz.mi.barcd.image.threshold;
+
+import de.tu_chemnitz.mi.barcd.image.GlobalThresholdSelector;
+import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
 
 /**
  * A threshold selector using the mean of all pixel values.
@@ -13,7 +16,7 @@ public class MeanValueThresholdSelector implements GlobalThresholdSelector {
         long mean = 0;
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                mean += input.valueAt(x, y);
+                mean += input.intensityAt(x, y);
             }
         }
         return (int) (mean / (width * height));

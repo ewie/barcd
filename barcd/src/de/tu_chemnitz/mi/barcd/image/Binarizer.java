@@ -1,4 +1,7 @@
 package de.tu_chemnitz.mi.barcd.image;
 
-public interface Binarizer extends Operation {
+/**
+ * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
+ */
+public interface Binarizer extends Operator {
 }

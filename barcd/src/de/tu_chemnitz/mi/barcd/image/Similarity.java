@@ -1,7 +1,10 @@
 package de.tu_chemnitz.mi.barcd.image;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class Similarity {
-    public static double getSimilarity(LuminanceImage a, LuminanceImage b) {
+    public static double getSimilarity(BufferedLuminanceImage a, BufferedLuminanceImage b) {
         double sim = 0;
         int width = a.width();
         int height = b.height();
@@ -9,15 +12,15 @@ public class Similarity {
             long sum = 0;
             for (int x = 0; x < width; ++x) {
                 for (int y = 0; y < height; ++y) {
-                    sum += Math.abs(a.valueAt(x, y) - b.valueAt(x, y));
+                    sum += Math.abs(a.intensityAt(x, y) - b.intensityAt(x, y));
                 }
             }
-            sim = 1 - (double) sum / (LuminanceImage.MAX_VALUE * width * height);
+            sim = 1 - (double) sum / (BufferedLuminanceImage.MAX_INTENSITY * width * height);
         }
         return sim;
     }
     
-    public static double getSimilarity2(LuminanceImage a, LuminanceImage b) {
+    public static double getSimilarity2(BufferedLuminanceImage a, BufferedLuminanceImage b) {
         double sim = 0;
         int width = a.width();
         int height = b.height();
@@ -25,7 +28,7 @@ public class Similarity {
             long sum = 0;
             for (int x = 0; x < width; ++x) {
                 for (int y = 0; y < height; ++y) {
-                    if (a.valueAt(x, y) != b.valueAt(x, y)) {
+                    if (a.intensityAt(x, y) != b.intensityAt(x, y)) {
                         sum += 1;
                     }
                 }

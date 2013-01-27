@@ -1,9 +1,16 @@
-package de.tu_chemnitz.mi.barcd.image;
+package de.tu_chemnitz.mi.barcd.image.op;
 
-public class MedianFilter implements Operation {
+import de.tu_chemnitz.mi.barcd.image.BufferedLuminanceImage;
+import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
+import de.tu_chemnitz.mi.barcd.image.Operator;
+
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
+public class MedianFilterOperator implements Operator {
     private int size;
     
-    public MedianFilter(int size) {
+    public MedianFilterOperator(int size) {
         this.size = size;
     }
 
@@ -11,12 +18,12 @@ public class MedianFilter implements Operation {
     public LuminanceImage apply(LuminanceImage in) {
         int w = in.width();
         int h = in.height();
-        LuminanceImage out = new LuminanceImage(w, h);
+        BufferedLuminanceImage out = new BufferedLuminanceImage(w, h);
         int[] neighbours;
         for (int x = 0; x < w; ++x) {
             for (int y = 0; y < h; ++y) {
                 neighbours = getNeighbours(in, x, y);
-                out.setValueAt(x, y, getMedian(neighbours));
+                out.setIntensityAt(x, y, getMedian(neighbours));
             }
         }
         return out;
@@ -35,7 +42,7 @@ public class MedianFilter implements Operation {
         int k = 0;
         for (int i = xMin; i <= xMax; ++i) {
             for (int j = yMin; j <= yMax; ++j) {
-                neighbours[k] = in.valueAt(i, j);
+                neighbours[k] = in.intensityAt(i, j);
             }
         }
         return neighbours;

@@ -1,5 +1,8 @@
 package de.tu_chemnitz.mi.barcd.image;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class DCT {
     private final int SIZE = 8;
     
@@ -14,7 +17,7 @@ public class DCT {
         double[][] dct = new double[width][height];
         double pi = Math.PI / (2 * SIZE);
         
-        LuminanceImage out = new LuminanceImage(width, height);
+        BufferedLuminanceImage out = new BufferedLuminanceImage(width, height);
         
         for (int x = 0; x < width; x += SIZE) {
             for (int y = 0; y < height; y += SIZE) {
@@ -26,13 +29,13 @@ public class DCT {
                         for (int i = x; i < x + SIZE; ++i) {
                             for (int j = y; j < y + SIZE; ++j) {
                                 //System.out.printf("%d %d\n", i, j);
-                                sum += (in.valueAt(i, j) - 128)
+                                sum += (in.intensityAt(i, j) - 128)
                                      * Math.cos((2 * (i-x) + 1) * (u-x) * pi)
                                      * Math.cos((2 * (j-y) + 1) * (v-y) * pi);
                             }
                         }
                         dct[u][v] = au * av * sum;
-                        out.setValueAt(u, v, (int) dct[u][v]);
+                        out.setIntensityAt(u, v, (int) dct[u][v]);
                         //if ((u-x) > (SIZE/2) && (v-y) > (SIZE/2)) {
                             sum2[x/SIZE][y/SIZE] += dct[u][v] * (u-x) * (v-y);
                         //}
@@ -54,7 +57,7 @@ public class DCT {
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
                 double d = sum2[x/SIZE][y/SIZE];
-                out.setValueAt(x, y, Math.abs((int) ((d - min) / (max - min) * LuminanceImage.MAX_VALUE) - 128));
+                out.setIntensityAt(x, y, Math.abs((int) ((d - min) / (max - min) * LuminanceImage.MAX_INTENSITY) - 128));
             }
         }
         

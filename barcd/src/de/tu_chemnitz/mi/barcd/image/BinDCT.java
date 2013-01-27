@@ -1,5 +1,10 @@
 package de.tu_chemnitz.mi.barcd.image;
 
+import de.tu_chemnitz.mi.barcd.image.threshold.MeanValueThresholdSelector;
+
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class BinDCT {
     private final int SIZE = 8;
     
@@ -13,16 +18,16 @@ public class BinDCT {
     private final int S6 = 15137;
     
     public LuminanceImage process(LuminanceImage in) {
-        long t = System.currentTimeMillis();
-        
         int width = (in.width() / SIZE) * SIZE;
         int height = (in.height() / SIZE) * SIZE;
         
-        LuminanceImage out = new LuminanceImage(width, height);
+        LuminanceImage out = new BufferedLuminanceImage(width, height);
         
         int[][] block = new int[SIZE][SIZE];
         long[][] dc = new long[width/SIZE][height/SIZE];
         long[][] ac = new long[width/SIZE][height/SIZE];
+        long[][] sum = new long[width/SIZE][height/SIZE];
+        long sumMax = 0;
         
         for (int x = 0; x < width; x += SIZE) {
             for (int y = 0; y < height; y += SIZE) {
@@ -31,14 +36,14 @@ public class BinDCT {
                     int d07, d12, d34, d56;
                     int a, b;
 
-                    s07 = in.valueAt(x + 0, y + j) + in.valueAt(x + 7, y + j);
-                    d07 = in.valueAt(x + 0, y + j) - in.valueAt(x + 7, y + j);
-                    s12 = in.valueAt(x + 1, y + j) + in.valueAt(x + 2, y + j);
-                    d12 = in.valueAt(x + 1, y + j) - in.valueAt(x + 2, y + j);
-                    s34 = in.valueAt(x + 3, y + j) + in.valueAt(x + 4, y + j);
-                    d34 = in.valueAt(x + 3, y + j) - in.valueAt(x + 4, y + j);
-                    s56 = in.valueAt(x + 5, y + j) + in.valueAt(x + 6, y + j);
-                    d56 = in.valueAt(x + 5, y + j) - in.valueAt(x + 6, y + j);
+                    s07 = in.intensityAt(x + 0, y + j) + in.intensityAt(x + 7, y + j);
+                    d07 = in.intensityAt(x + 0, y + j) - in.intensityAt(x + 7, y + j);
+                    s12 = in.intensityAt(x + 1, y + j) + in.intensityAt(x + 2, y + j);
+                    d12 = in.intensityAt(x + 1, y + j) - in.intensityAt(x + 2, y + j);
+                    s34 = in.intensityAt(x + 3, y + j) + in.intensityAt(x + 4, y + j);
+                    d34 = in.intensityAt(x + 3, y + j) - in.intensityAt(x + 4, y + j);
+                    s56 = in.intensityAt(x + 5, y + j) + in.intensityAt(x + 6, y + j);
+                    d56 = in.intensityAt(x + 5, y + j) - in.intensityAt(x + 6, y + j);
                     
                     a = s07 + s34;
                     b = s12 + s56;
@@ -96,6 +101,7 @@ public class BinDCT {
                     block[i][7] = (S1 * a - C1 * b) >> 15;
                 }
                 
+                /*
                 dc[x/SIZE][y/SIZE] = block[0][0] / (SIZE * SIZE);
                 
                 for (int i = 0; i < SIZE; ++i) {
@@ -108,10 +114,23 @@ public class BinDCT {
                 ac[x/SIZE][y/SIZE] -= dc[x/SIZE][y/SIZE];
                 
                 out.setValueAt(x, y, (int) ac[x/SIZE][y/SIZE]);
+                */
+                
+                
+                for (int i = 0; i < SIZE; ++i) {
+                    for (int j = 0; j < SIZE; ++j) {
+                        sum[x/SIZE][y/SIZE] += Math.abs(block[i][j]) * i * j;
+                    }
+                }
+                
+                if (sum[x/SIZE][y/SIZE] > sumMax) {
+                    sumMax = sum[x/SIZE][y/SIZE];
+                }
                 
             }
         }
-
+        
+        /*
         long min = Long.MAX_VALUE;
         long max = Long.MIN_VALUE;
         
@@ -129,10 +148,50 @@ public class BinDCT {
                 out.setValueAt(i, j, Math.abs((int) (((double) (d-min) / (max-min)) * LuminanceImage.MAX_VALUE)));
             }
         }
+        */
         
-        t = System.currentTimeMillis() - t;
+        for (int x = 0; x < width; x += SIZE) {
+            for (int y = 0; y < height; y += SIZE) {
+                int v = (int) (((double) sum[x/SIZE][y/SIZE] / sumMax) * BufferedLuminanceImage.MAX_INTENSITY);
+                for (int i = 0; i < SIZE; ++i) {
+                    for (int j = 0; j < SIZE; ++j) {
+                        out.setIntensityAt(x + i, y + j, v);
+                    }
+                }
+                //out.setValueAt(x, y, (int) (((double) sum[x/SIZE][y/SIZE] / sumMax) * LuminanceImage.MAX_VALUE));
+            }
+        }
         
-        System.out.printf("BinDCT: %d\n", t);
+        MeanValueThresholdSelector mvt = new MeanValueThresholdSelector();
+        GlobalThresholdSelector gt = new GlobalThresholdSelector() {
+            @Override
+            public int getThreshold(LuminanceImage source) {
+                int[] vv = new int[256];
+                for (int x = 0; x < source.width(); ++x) {
+                    for (int y = 0; y < source.height(); ++y) {
+                        int v = source.intensityAt(x, y);
+                        vv[v] += 1;
+                    }
+                }
+                int vmax = 0;
+                int k = 0;
+                for (int i = 64; i < 256; ++i) {
+                    if (vv[i] > vmax) {
+                        vmax = vv[i];
+                        k = i;
+                    }
+                }
+                return k;
+            }
+        };
+            
+        //System.out.printf("%d %d\n", mvt.getThreshold(out), gt.getThreshold(out));
+        
+        
+        //out = new GaussianFilter(5, 0.5).apply(out);
+        
+        Binarizer bin = new GlobalBinarizer(mvt);
+        out = bin.apply(out);
         
         return out;
     }

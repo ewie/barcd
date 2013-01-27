@@ -3,6 +3,9 @@ package de.tu_chemnitz.mi.barcd.video;
 import de.tu_chemnitz.mi.barcd.geometry.Vector;
 import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class ThreeStepSearchMotionEstimator extends BlockMatchingMotionEstimator {
     public ThreeStepSearchMotionEstimator(int blockSize) {
         super(blockSize);
@@ -44,7 +47,7 @@ public class ThreeStepSearchMotionEstimator extends BlockMatchingMotionEstimator
         int bdm = 0;
         for (int i = 0; i < blockSize(); ++i) {
             for (int j = 0; j < blockSize(); ++j) {
-                bdm += Math.abs(image.valueAt(x + i, y + j) - referenceImage.valueAt(x + dx + i, y + dy + j));
+                bdm += Math.abs(image.intensityAt(x + i, y + j) - referenceImage.intensityAt(x + dx + i, y + dy + j));
             }
         }
         return bdm / (blockSize() * blockSize());

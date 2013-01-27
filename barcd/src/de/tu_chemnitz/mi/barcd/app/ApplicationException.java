@@ -1,5 +1,8 @@
 package de.tu_chemnitz.mi.barcd.app;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 class ApplicationException extends Exception {
     private static final long serialVersionUID = 1L;
 

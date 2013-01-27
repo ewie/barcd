@@ -7,7 +7,29 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class ConvexPolygon {
+    /**
+     * A comparator to order a collection of points in lexicographical order.
+     *    (x, y) <= (u, v) iff x < u or (x = u and y <= v)
+     */
+    private static Comparator<Point> lexicalPointOrder = new Comparator<Point>() {
+        @Override
+        public int compare(Point p, Point q) {
+            int px = p.x();
+            int py = p.y();
+            int qx = q.x();
+            int qy = q.y();
+            if (px < qx) return -1;
+            if (px > qx) return 1;
+            if (py < qy) return -1;
+            if (py > qy) return 1;
+            return 0;
+        }
+    };
+    
     private Point[] points;
     
     public ConvexPolygon(Point[] points) {
@@ -33,20 +55,7 @@ public class ConvexPolygon {
     }
     
     public static ConvexPolygon fromPoints(List<Point> points) {
-        Collections.sort(points, new Comparator<Point>() {
-            @Override
-            public int compare(Point p, Point q) {
-                int px = p.x();
-                int py = p.y();
-                int qx = q.x();
-                int qy = q.y();
-                if (px < qx) return -1;
-                if (px > qx) return 1;
-                if (py < qy) return -1;
-                if (py > qy) return 1;
-                return 0;
-            }
-        });
+        Collections.sort(points, lexicalPointOrder);
         
         LinkedList<Point> lower = new LinkedList<Point>();
         LinkedList<Point> upper = new LinkedList<Point>();

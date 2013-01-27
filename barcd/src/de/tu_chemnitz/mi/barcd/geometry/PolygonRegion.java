@@ -7,6 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 class PolygonRegion {
     private Point[] coords;
     private double coverage;

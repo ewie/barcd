@@ -1,6 +1,9 @@
 package de.tu_chemnitz.mi.barcd.image;
 
-public interface Operation {
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
+public interface Operator {
     /**
      * Apply the operator to an input image.
      * 

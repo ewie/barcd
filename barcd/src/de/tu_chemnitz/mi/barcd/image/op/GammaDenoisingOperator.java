@@ -1,6 +1,13 @@
-package de.tu_chemnitz.mi.barcd.image;
+package de.tu_chemnitz.mi.barcd.image.op;
 
-public class GammaDenoisingOperator implements Operation {
+import de.tu_chemnitz.mi.barcd.image.BufferedLuminanceImage;
+import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
+import de.tu_chemnitz.mi.barcd.image.Operator;
+
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
+public class GammaDenoisingOperator implements Operator {
     private double gamma;
     private double[] directLookup;
     private double[] inverseLookup;
@@ -18,20 +25,20 @@ public class GammaDenoisingOperator implements Operation {
         int width = in.width();
         int height = in.height();
         
-        LuminanceImage out = new LuminanceImage(width, height);
+        BufferedLuminanceImage out = new BufferedLuminanceImage(width, height);
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                int v = (int) (lookupDirect(in.valueAt(x, y)) * LuminanceImage.MAX_VALUE);
-                int w = (int) (lookupInverse(v) * LuminanceImage.MAX_VALUE);
-                out.setValueAt(x, y, w);
+                int v = (int) (lookupDirect(in.intensityAt(x, y)) * LuminanceImage.MAX_INTENSITY);
+                int w = (int) (lookupInverse(v) * LuminanceImage.MAX_INTENSITY);
+                out.setIntensityAt(x, y, w);
             }
         }
         return out;
     }
     
     private void createLookupTable() {
-        double max = LuminanceImage.MAX_VALUE;
-        int size = LuminanceImage.MAX_VALUE - LuminanceImage.MIN_VALUE + 1;
+        double max = LuminanceImage.MAX_INTENSITY;
+        int size = LuminanceImage.MAX_INTENSITY - LuminanceImage.MIN_INTENSITY + 1;
         this.directLookup = new double[size];
         this.inverseLookup = new double[size];
         double igamma = 1 / this.gamma;

@@ -1,5 +1,8 @@
 package de.tu_chemnitz.mi.barcd.geometry;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class Rectangle extends ConvexPolygon {
     public Rectangle(Point a, Point b, Point c, Point d) {
         this(new Point[] { a, b, c, d });
@@ -62,14 +65,14 @@ public class Rectangle extends ConvexPolygon {
             int dx = q.x() - p.x();
             int dy = q.y() - p.y();
             double angle = Math.acos(dx / (Math.sqrt(dx*dx + dy*dy)));
+            double c = Math.cos(angle);
+            double s = Math.sin(angle);
             double minX = Double.MAX_VALUE;
             double minY = Double.MAX_VALUE;
             double maxX = Double.MIN_VALUE;
             double maxY = Double.MIN_VALUE;
             for (int j = 0; j < hull.length; ++j) {
                 Point r = hull[j];
-                double c = Math.cos(angle);
-                double s = Math.sin(angle);
                 double x = r.x() * c + r.y() * -s;
                 double y = r.x() * s + r.y() * c;
                 if (x < minX) minX = x;

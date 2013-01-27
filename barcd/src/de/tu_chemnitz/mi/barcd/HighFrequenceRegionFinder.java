@@ -8,14 +8,18 @@ import java.util.Map;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.geometry.Region;
 import de.tu_chemnitz.mi.barcd.image.Binarizer;
+import de.tu_chemnitz.mi.barcd.image.BufferedLuminanceImage;
 import de.tu_chemnitz.mi.barcd.image.ConnectedComponentLabeler;
-import de.tu_chemnitz.mi.barcd.image.ConvolutionOperator;
-import de.tu_chemnitz.mi.barcd.image.DilationOperator;
-import de.tu_chemnitz.mi.barcd.image.GaussianFilter;
 import de.tu_chemnitz.mi.barcd.image.GlobalBinarizer;
 import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
-import de.tu_chemnitz.mi.barcd.image.MeanValueThresholdSelector;
+import de.tu_chemnitz.mi.barcd.image.op.ConvolutionOperator;
+import de.tu_chemnitz.mi.barcd.image.op.DilationOperator;
+import de.tu_chemnitz.mi.barcd.image.op.GaussianFilterOperator;
+import de.tu_chemnitz.mi.barcd.image.threshold.MeanValueThresholdSelector;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class HighFrequenceRegionFinder {
     public static interface RegionFilter {
         public boolean filter(Region region);
@@ -23,25 +27,25 @@ public class HighFrequenceRegionFinder {
 
     private ConvolutionOperator sobelx;
     private ConvolutionOperator sobely;
-    private GaussianFilter gaussian;
+    private GaussianFilterOperator gaussian;
     private DilationOperator dilation;
-    
+
     public HighFrequenceRegionFinder() {
         /*
         this.sobelx = new ConvolutionOperator(3, 3, new double[] {
-            -3,  0,  3,
-            -10,  0,  10,
-            -3,  0,  3
+            -1,  0,  1,
+            -1,  0,  1,
+            -1,  0,  1
         });
         
         this.sobely = new ConvolutionOperator(3, 3, new double[] {
-            -3, -10, -3,
+            -1, -1, -1,
              0,  0,  0,
-             3,  10,  3
+             1,  1,  1
         });
         */
         
-        /**/
+        /*
         this.sobelx = new ConvolutionOperator(3, 1, new double[] {
             -1,  0,  1
         });
@@ -51,36 +55,61 @@ public class HighFrequenceRegionFinder {
              0,
              1
         });
+        */
+        
+        /**/
+        this.sobelx = new ConvolutionOperator(2, 2, new double[] {
+            1,  0,
+            0, -1
+        });
+        
+        this.sobely = new ConvolutionOperator(2, 2, new double[] {
+             0, 1,
+            -1, 0
+        });
         /**/
 
-        this.dilation = new DilationOperator(3, 3);
+        this.dilation = new DilationOperator(5, 5);
         
-        this.gaussian = new GaussianFilter(3, 10);
+        this.gaussian = new GaussianFilterOperator(9, 10);
     }
     
     public Region[] detect(LuminanceImage input, RegionFilter filter) {
+        return regions(segment(gradient(input)), filter);
+    }
+    
+    private LuminanceImage gradient(LuminanceImage input) {
         int width = input.width();
         int height = input.height();
         
-        LuminanceImage gx = this.sobelx.apply(input);
-        LuminanceImage gy = this.sobely.apply(input);
+        LuminanceImage gx = sobelx.apply(input);
+        LuminanceImage gy = sobely.apply(input);
         
-        LuminanceImage gxy = new LuminanceImage(width, height);
+        LuminanceImage gxy = new BufferedLuminanceImage(width, height);
         
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                gxy.setValueAt(x, y, gx.valueAt(x, y) + gy.valueAt(x, y));
+                int vx = gx.valueAt(x, y);
+                int vy = gy.valueAt(x, y);
+                gxy.setIntensityAt(x, y, Math.abs(vx) + Math.abs(vy));
             }
         }
-        
-        LuminanceImage dxy = this.gaussian.apply(this.dilation.apply(gxy));
-        
+        return gxy;
+    }
+    
+    private LuminanceImage segment(LuminanceImage in) {
+        LuminanceImage dxy = dilation.apply(in);
         Binarizer bin = new GlobalBinarizer(new MeanValueThresholdSelector());
+        LuminanceImage b = bin.apply(dxy);
+        return b;
+    }
+    
+    private Region[] regions(LuminanceImage input, RegionFilter filter) {
+        int width = input.width();
+        int height = input.height();
         
-        LuminanceImage bxy = bin.apply(dxy);
-        
-        ConnectedComponentLabeler cc = new ConnectedComponentLabeler();
-        int[][] labels = cc.process(bxy);
+        ConnectedComponentLabeler ccl = new ConnectedComponentLabeler();
+        int[][] labels = ccl.process(input);
         
         Map<Integer, List<Point>> regions = new HashMap<Integer, List<Point>>();
         
@@ -103,7 +132,7 @@ public class HighFrequenceRegionFinder {
                 filteredRegions.add(region);
             }
         }
-        
+
         return filteredRegions.toArray(new Region[filteredRegions.size()]);
     }
 }
