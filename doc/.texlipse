@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Sun Jan 27 20:07:50 CET 2013
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=main.tex
+outputFile=barcd.pdf
+langSpell=de
+markDer=true
+srcDir=

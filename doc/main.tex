@@ -1,0 +1,93 @@
+\documentclass[
+  11pt,
+  a4paper,
+  twoside,
+  german,
+  headsepline,
+  footnosepline=false,
+  automark,
+  normalheadings,
+  openany,
+  cleardoubleplain,
+  abstracton, 
+  idxtotoc,
+  liststotoc,
+  bibtotoc,
+  BCOR8mm
+]{scrreprt}
+
+% The following is needed in order to make the code compatible
+% with both latex/dvips and pdflatex.
+\ifx\pdftexversion\undefined
+\usepackage[dvips]{graphicx}
+\else
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\fi
+
+\usepackage{ae}
+\usepackage{aecompl}
+\usepackage{amsmath}
+\usepackage[ngerman]{babel}
+\usepackage{calc}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{fancybox}
+\usepackage{fancyvrb}
+\usepackage{float}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{mdwlist}
+\usepackage{natbib}
+\usepackage{scrdate}
+\usepackage{scrtime}
+\usepackage{scrpage2}
+\usepackage{tabularx}
+\usepackage{thumbpdf}
+
+\usepackage{user}
+
+\pagestyle{scrheadings}
+\setkomafont{pagehead}{\small\scshape}
+
+\setcounter{tocdepth}{3}
+
+\fussy
+
+\newtheorem{bsp}{Beispiel}[chapter]
+\newtheorem{satz}{Satz}[chapter]
+
+\includeonly{meta,title}
+
+\begin{document}
+\include{meta}
+
+\include{title}
+
+\manualmark
+\markboth{Literaturverzeichnis}{Literaturverzeichnis}
+\bibliographystyle{user}
+\bibliography{literature}
+\cleardoublepage
+
+\chapter*{Selbstständigkeitserklärung}
+
+Hiermit erkläre ich, daß ich die vorliegende Arbeit
+selbstständig angefertigt, nicht anderweitig zu Prüfungszwecken vorgelegt und
+keine anderen als die angegebenen Hilfsmittel verwendet habe. Sämtliche 
+wissentlich verwendete Textausschnitte, Zitate oder Inhalte anderer Verfasser 
+wurden ausdrücklich als solche gekennzeichnet.\\[2ex]
+\dcplace, den \dcdate\\[6ex]
+\flushleft
+\begin{tabular}{p{5cm} p{5cm}}\hline
+\footnotesize \dcauthornameriren &
+\footnotesize \dcauthornameewie
+\end{tabular}
+
+\cleardoublepage
+\begin{appendix}
+\end{appendix}
+
+\end{document}

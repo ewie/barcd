@@ -1,0 +1,99 @@
+\titlehead{
+    \vspace*{-1.5cm}
+    \usekomafont{sectioning}\mdseries
+    \begin{center}
+        \raisebox{-1ex}{\includegraphics[scale=1.4]{img/TUC_deutsch_einzeile_CMYK}}\\
+        \hrulefill \\[1em]
+        {\Large\dcdepart}\\[0.5em]
+        \dcprof
+    \end{center}
+    \vspace*{1.5cm}
+}
+
+\subject{\bf\Huge\dcsubject}
+
+
+\title{\sf\Large
+    \dctitle
+    \\
+    \dcsubtitle
+}
+
+\author{%
+    \dcauthornameriren \\
+    \texttt\dcauthoremailriren
+    \and
+    \dcauthornameewie \\
+    \texttt\dcauthoremailewie
+}
+
+\date{\dcplace, den \dcdate}
+
+\publishers{
+    {\parbox{\textwidth-8em}{
+        \begin{tabbing}
+            {\bf Betreuer:}\quad\=\kill
+            {\bf Prüfer:}   \>\dcpruefer\\
+            {\bf Betreuer:} \>\dcadvisor
+        \end{tabbing}
+    }}
+}
+
+\lowertitleback{
+\textbf{\dcauthornameriren\quad\dcauthornameewie}\\
+\dctitle\\
+\dcsubject,~\dcdepart\\
+\dcuni,~\ifcase\month\or
+  Januar\or Februar\or März\or April\or Mai\or Juni\or
+    Juli\or August\or September\or Oktober\or November\or Dezember\fi
+    ~\number\year
+}
+
+\maketitle
+
+\thispagestyle{empty}
+\null\vfil
+\begin{center}
+\usekomafont{sectioning}\textbf{Danksagung}
+\vspace{-.5em}\vspace{\parsep}
+%%
+%% TODO
+%%
+\end{center}
+\par\vfil\null
+\cleardoubleemptypage
+  
+\def\abstractname{Abstract}
+\begin{abstract}
+%%
+%% TODO
+%%
+\end{abstract}
+
+\cleardoubleemptypage
+\pagenumbering{roman}
+%\pdfbookmark{Inhaltsverzeichnis}{Inhaltsverzeichnis}
+\tableofcontents
+
+\cleardoublepage
+\markboth{Abbildungsverzeichnis}{Abbildungsverzeichnis}
+\listoffigures
+
+\cleardoublepage
+\markboth{Tabellenverzeichnis}{Tabellenverzeichnis}
+\listoftables
+
+%\renewcommand{\listalgorithmname}{Algorithmenverzeichnis}
+%\cleardoublepage
+%\addcontentsline{toc}{chapter}{Algorithmenverzeichnis}
+%\listofalgorithms
+
+%\cleardoublepage
+%\addcontentsline{toc}{chapter}{Abkürzungsverzeichnis}
+%\markboth{Abk"urzungsverzeichnis}{Abk"urzungsverzeichnis}
+%\def\listacronymname{Abk"urzungsverzeichnis}
+%\printglosstex(acr)
+
+\cleardoublepage
+\pagenumbering{arabic}
+\setcounter{page}{1}
