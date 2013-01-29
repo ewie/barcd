@@ -39,7 +39,7 @@ public class Region {
      * @param points the points that should make up a region
      */
     public Region(List<Point> points) {
-        this.polygon = ConvexPolygon.fromPoints(points);
+        this.polygon = ConvexPolygon.createFromConvexHull(points);
         this.generatingPointCount = points.size();
     }
     
