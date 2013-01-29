@@ -197,11 +197,6 @@ public class Application {
     {
         LuminanceImageConverter conv = new LuminanceImageConverter();
         
-        /*
-        IplImage i1 = null, i2 = null;
-        float[] f1buf = null, f2buf = null;
-        */
-        
         fr.setWidthAndHeight(fr.width() * 3, fr.height() * 3);
         
         VideoImageDisplay vimage1 = new VideoImageDisplay();
@@ -224,28 +219,6 @@ public class Application {
             BufferedImage image = fr.nextFrame();
             
             LuminanceImage lum = gamma.apply(conv.toLuminanceImage(image));
-    
-            /*
-            if (i1 == null) i1 = IplImage.create(lastLum.width(), lastLum.height(), opencv_core.IPL_DEPTH_32F, 1);
-            if (i2 == null) i2 = IplImage.create(lum.width(), lum.height(), opencv_core.IPL_DEPTH_32F, 1);
-    
-            if (f1buf == null) f1buf = new float[lastLum.width() * lastLum.height()];
-            if (f2buf == null) f2buf = new float[lum.width() * lum.height()];
-            
-            for (int y = 0, i = 0; y < lastLum.height(); ++y) {
-                for (int x = 0; x < lastLum.width(); ++x) {
-                    f1buf[i] = lastLum.valueAt(x, y);// / (float) LuminanceImage.MAX_VALUE;
-                    f2buf[i++] = lastLum.valueAt(x, y);// / (float) LuminanceImage.MAX_VALUE;
-                }
-            }
-    
-            i1.getFloatBuffer().put(f1buf);
-            i2.getFloatBuffer().put(f2buf);
-            
-            CvPoint2D64f dp = opencv_imgproc.phaseCorrelate(i1, i2, null);
-    
-            System.out.printf("%g %g\n", dp.x(), dp.y());
-            */
             
             Region[] regions = hfr.detect(lum, new HighFrequenceRegionFinder.RegionFilter() {
                 @Override
