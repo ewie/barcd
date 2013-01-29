@@ -36,15 +36,15 @@ public class ConvexPolygon {
         this.points = points;
     }
 
-    public int size() { return this.points.length; }
-
-    public Point[] points() { return this.points; }
+    public Point[] points() {
+        return points;
+    }
     
     public long area() {
         long area = 0;
-        for (int i = 0; i < this.points.length; ++i) {
-            Point p = this.points[i];
-            Point q = this.points[(i+1) % this.points.length];
+        for (int i = 0; i < points.length; ++i) {
+            Point p = points[i];
+            Point q = points[(i+1) % points.length];
             area += q.x() * p.y() - p.x() * q.y();
         }
         return Math.abs(area / 2);
