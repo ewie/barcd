@@ -3,7 +3,7 @@ package de.tu_chemnitz.mi.barcd.image;
 /**
  * A gray-scale representation of an image.
  * 
- * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class BufferedLuminanceImage implements LuminanceImage {
     private int width;

@@ -3,7 +3,7 @@ package de.tu_chemnitz.mi.barcd.image;
 import java.awt.Rectangle;
 
 /**
- * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class DelegatedLuminanceImage implements LuminanceImage {
     private LuminanceImage image;

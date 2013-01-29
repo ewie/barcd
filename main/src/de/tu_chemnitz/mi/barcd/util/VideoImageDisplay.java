@@ -8,6 +8,9 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class VideoImageDisplay extends JFrame {
     private static final long serialVersionUID = -5184274079279042989L;
     

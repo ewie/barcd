@@ -1,5 +1,8 @@
 package de.tu_chemnitz.mi.barcd;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class Extraction {
     public enum Type {
         CODE39,

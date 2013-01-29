@@ -18,6 +18,9 @@ import com.google.zxing.multi.MultipleBarcodeReader;
 
 import de.tu_chemnitz.mi.barcd.Extraction.Type;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class Extractor {
     private MultipleBarcodeReader reader;
     

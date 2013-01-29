@@ -6,7 +6,7 @@ import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
 /**
  * A kernel realizing a Gaussian filter.
  * 
- * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class GaussianFilterOperator implements KernelOperator {
     private ConvolutionOperator kernel;

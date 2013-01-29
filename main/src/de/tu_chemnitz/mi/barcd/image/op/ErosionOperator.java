@@ -7,7 +7,7 @@ import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
 /**
  * An operator to perform image erosion.
  * 
- * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class ErosionOperator implements KernelOperator {
     private boolean[][] weights;

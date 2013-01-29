@@ -10,7 +10,7 @@ import de.tu_chemnitz.mi.barcd.image.Operator;
  * Depending on the gamma value an image is either darkened (gamma < 1) or
  * brightened (gamma > 1).
  * 
- * @author Erik Wienhold <erik.wienhold@informatik.tu-chemnitz.de>
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class GammaCorrectionOperator implements Operator {
     private double gamma;
