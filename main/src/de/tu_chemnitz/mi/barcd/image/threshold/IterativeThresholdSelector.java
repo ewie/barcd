@@ -11,8 +11,8 @@ public class IterativeThresholdSelector implements GlobalThresholdSelector {
     
     @Override
     public int getThreshold(LuminanceImage input) {
-        int width = input.width();
-        int height = input.height();
+        int width = input.getWidth();
+        int height = input.getHeight();
         
         int threshold = 128;
         
@@ -23,7 +23,7 @@ public class IterativeThresholdSelector implements GlobalThresholdSelector {
             int bgCount = 0;
             for (int x = 0; x < width; ++x) {
                 for (int y = 0; y < height; ++y) {
-                    int p = input.intensityAt(x, y);
+                    int p = input.getIntensityAt(x, y);
                     if (p < threshold) {
                         bgAvg += p;
                         bgCount += 1;

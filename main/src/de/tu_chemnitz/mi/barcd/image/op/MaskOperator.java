@@ -16,14 +16,14 @@ public class MaskOperator implements Operator {
 
     @Override
     public LuminanceImage apply(LuminanceImage input) {
-        int width = input.width();
-        int height = input.height();
+        int width = input.getWidth();
+        int height = input.getHeight();
         
         BufferedLuminanceImage output = new BufferedLuminanceImage(width, height);
         
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                output.setIntensityAt(x, y, input.intensityAt(x, y) & mask.intensityAt(x, y));
+                output.setIntensityAt(x, y, input.getIntensityAt(x, y) & mask.getIntensityAt(x, y));
             }
         }
         

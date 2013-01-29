@@ -123,17 +123,17 @@ public class Application {
         try {
             BufferedImage image = null, im = null;
             VideoImageDisplay video = new VideoImageDisplay();
-            fr.setWidthAndHeight(fr.width() * 2, fr.height() * 2);
+            fr.setWidthAndHeight(fr.getWidth() * 2, fr.getHeight() * 2);
             HighFrequenceRegionFinder hfr = new HighFrequenceRegionFinder();
             LuminanceImage lum = null;
             LuminanceImageConverter conv = new LuminanceImageConverter();
             RegionFilter regionFilter = new RegionFilter() {
                 @Override
                 public boolean filter(Region region) {
-                    Rectangle rr = region.orientedRectangle();
+                    Rectangle rr = region.getOrientedRectangle();
                     
-                    if (rr.width() < 20 || rr.height() < 20) return false;
-                    if (region.coverage(Region.BoundType.CONVEX_POLYGON) < 0.5) return false;
+                    if (rr.getWidth() < 20 || rr.getHeight() < 20) return false;
+                    if (region.getCoverage(Region.BoundType.CONVEX_POLYGON) < 0.5) return false;
                     
                     return true;
                 }
@@ -141,7 +141,7 @@ public class Application {
             int k = 2;
             fr.skipFrames(8000);
             while (true) {
-                image = fr.nextFrame();
+                image = fr.getNextFrame();
                 
                 im = scaleImage(image, image.getWidth() / k, image.getHeight() / k);
                 
@@ -154,32 +154,32 @@ public class Application {
                 for (int i = 0; i < regions.length; ++i) {
                     Region r = regions[i];
                     
-                    double cov = r.coverage(Region.BoundType.CONVEX_POLYGON) * 1;
+                    double cov = r.getCoverage(Region.BoundType.CONVEX_POLYGON) * 1;
                     //            + r.coverage(Region.BoundType.ORIENTED_RECTANGLE) * 2
                     //            + r.coverage(Region.BoundType.AXIS_ALIGNED_RECTANGLE) * 3) / 6;
                     Polygon p;
                     Point[] coords;
                     
                     p = new Polygon();
-                    coords = r.axisAlignedRectangle().points();
+                    coords = r.getAxisAlignedRectangle().getPoints();
                     for (int j = 0; j < coords.length; ++j) {
-                        p.addPoint(coords[j].x(), coords[j].y());
+                        p.addPoint(coords[j].getX(), coords[j].getY());
                     }
                     g.setColor(new Color(0f, 0f, 1f, (float) cov));
                     g.fillPolygon(p);
                     
                     p = new Polygon();
-                    coords = r.orientedRectangle().points();
+                    coords = r.getOrientedRectangle().getPoints();
                     for (int j = 0; j < coords.length; ++j) {
-                        p.addPoint(coords[j].x(), coords[j].y());
+                        p.addPoint(coords[j].getX(), coords[j].getY());
                     }
                     g.setColor(new Color(0f, 1f, 0f, (float) cov));
                     g.fillPolygon(p);
                     
                     p = new Polygon();
-                    coords = r.convexPolygon().points();
+                    coords = r.getConvexPolygon().getPoints();
                     for (int j = 0; j < coords.length; ++j) {
-                        p.addPoint(coords[j].x(), coords[j].y());
+                        p.addPoint(coords[j].getX(), coords[j].getY());
                     }
                     g.setColor(new Color(1f, 0f, 0f, (float) cov));
                     g.fillPolygon(p);
@@ -197,7 +197,7 @@ public class Application {
     {
         LuminanceImageConverter conv = new LuminanceImageConverter();
         
-        fr.setWidthAndHeight(fr.width() * 3, fr.height() * 3);
+        fr.setWidthAndHeight(fr.getWidth() * 3, fr.getHeight() * 3);
         
         VideoImageDisplay vimage1 = new VideoImageDisplay();
         
@@ -207,7 +207,7 @@ public class Application {
         GammaDenoisingOperator gamma = new GammaDenoisingOperator(10);
         HighFrequenceRegionFinder hfr = new HighFrequenceRegionFinder();
         
-        BufferedImage lastImage = fr.nextFrame();
+        BufferedImage lastImage = fr.getNextFrame();
         LuminanceImage lastLum = gamma.apply(conv.toLuminanceImage(lastImage));
         
         while (true) {
@@ -216,18 +216,18 @@ public class Application {
             //} catch (InterruptedException ex) {
             //}
             
-            BufferedImage image = fr.nextFrame();
+            BufferedImage image = fr.getNextFrame();
             
             LuminanceImage lum = gamma.apply(conv.toLuminanceImage(image));
             
             Region[] regions = hfr.detect(lum, new HighFrequenceRegionFinder.RegionFilter() {
                 @Override
                 public boolean filter(Region region) {
-                    Rectangle rr = region.orientedRectangle();
-                    if (rr.width() < 50 || rr.height() < 50) {
+                    Rectangle rr = region.getOrientedRectangle();
+                    if (rr.getWidth() < 50 || rr.getHeight() < 50) {
                         return false;
                     }
-                    if (region.coverage(Region.BoundType.CONVEX_POLYGON) < 0.3) {
+                    if (region.getCoverage(Region.BoundType.CONVEX_POLYGON) < 0.3) {
                         return false;
                     }
                     return true;
@@ -238,21 +238,21 @@ public class Application {
             Graphics g = im.getGraphics();
             
             for (Region region : regions) {
-                Point[] points = region.convexPolygon().points();
+                Point[] points = region.getConvexPolygon().getPoints();
                 Polygon poly = new Polygon();
                 for (Point p : points) {
-                    poly.addPoint(p.x(), p.y());
+                    poly.addPoint(p.getX(), p.getY());
                 }
-                g.setColor(new Color(1, 0, 0, (float) region.coverage(Region.BoundType.CONVEX_POLYGON)));
+                g.setColor(new Color(1, 0, 0, (float) region.getCoverage(Region.BoundType.CONVEX_POLYGON)));
                 g.fillPolygon(poly);
             }
             
             VectorField vf = me.estimateMotionVectors(lum, lastLum);
             g.setColor(Color.GREEN);
-            for (int x = vf.blockSize() / 2; x < vf.width(); x += vf.blockSize()) {
-                for (int y = vf.blockSize() / 2; y < vf.height(); y += vf.blockSize()) {
-                    Vector v = vf.vectorAt(x, y);
-                    g.drawLine(x, y, x + v.x(), y + v.y());
+            for (int x = vf.getBlockSize() / 2; x < vf.getWidth(); x += vf.getBlockSize()) {
+                for (int y = vf.getBlockSize() / 2; y < vf.getHeight(); y += vf.getBlockSize()) {
+                    Vector v = vf.getVectorAt(x, y);
+                    g.drawLine(x, y, x + v.getX(), y + v.getY());
                 }
             }
             

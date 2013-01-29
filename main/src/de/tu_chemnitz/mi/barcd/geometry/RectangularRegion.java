@@ -29,8 +29,8 @@ public class RectangularRegion {
         int maxX = Integer.MIN_VALUE;
         int maxY = Integer.MIN_VALUE;
         for (Point coord : coords) {
-            int x = coord.x();
-            int y = coord.y();
+            int x = coord.getX();
+            int y = coord.getY();
             if (x < minX) minX = x;
             if (x > maxX) maxX = x;
             if (y < minY) minY = y;
@@ -116,7 +116,7 @@ public class RectangularRegion {
     }
     
     public boolean contains(Point p) {
-        return contains(p.x(), p.y());
+        return contains(p.getX(), p.getY());
     }
     
     public boolean intersects(RectangularRegion other) {

@@ -14,13 +14,13 @@ public abstract class BlockMatchingMotionEstimator {
         this.blockSize = blockSize;
     }
     
-    public int blockSize() {
+    public int getBlockSize() {
         return blockSize;
     }
     
     public VectorField estimateMotionVectors(LuminanceImage image, LuminanceImage referenceImage) {
-        int width = image.width();
-        int height = image.height();
+        int width = image.getWidth();
+        int height = image.getHeight();
         
         Vector[] vectors = new Vector[(width * height) / (blockSize * blockSize)];
         

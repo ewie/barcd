@@ -12,15 +12,15 @@ public interface LuminanceImage {
     
     public static final int MAX_INTENSITY = 0xff;
     
-    public int width();
+    public int getWidth();
     
-    public int height();
+    public int getHeight();
 
-    public int intensityAt(int x, int y);
+    public int getIntensityAt(int x, int y);
 
     public void setIntensityAt(int x, int y, int v);
     
-    public int valueAt(int x, int y);
+    public int getValueAt(int x, int y);
     
     public void setValueAt(int x, int y, int v);
 }

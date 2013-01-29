@@ -6,13 +6,13 @@ package de.tu_chemnitz.mi.barcd.image;
 public class Similarity {
     public static double getSimilarity(BufferedLuminanceImage a, BufferedLuminanceImage b) {
         double sim = 0;
-        int width = a.width();
-        int height = b.height();
-        if (b.width() == width || b.height() == height) {
+        int width = a.getWidth();
+        int height = b.getHeight();
+        if (b.getWidth() == width || b.getHeight() == height) {
             long sum = 0;
             for (int x = 0; x < width; ++x) {
                 for (int y = 0; y < height; ++y) {
-                    sum += Math.abs(a.intensityAt(x, y) - b.intensityAt(x, y));
+                    sum += Math.abs(a.getIntensityAt(x, y) - b.getIntensityAt(x, y));
                 }
             }
             sim = 1 - (double) sum / (BufferedLuminanceImage.MAX_INTENSITY * width * height);
@@ -22,13 +22,13 @@ public class Similarity {
     
     public static double getSimilarity2(BufferedLuminanceImage a, BufferedLuminanceImage b) {
         double sim = 0;
-        int width = a.width();
-        int height = b.height();
-        if (b.width() == width || b.height() == height) {
+        int width = a.getWidth();
+        int height = b.getHeight();
+        if (b.getWidth() == width || b.getHeight() == height) {
             long sum = 0;
             for (int x = 0; x < width; ++x) {
                 for (int y = 0; y < height; ++y) {
-                    if (a.intensityAt(x, y) != b.intensityAt(x, y)) {
+                    if (a.getIntensityAt(x, y) != b.getIntensityAt(x, y)) {
                         sum += 1;
                     }
                 }

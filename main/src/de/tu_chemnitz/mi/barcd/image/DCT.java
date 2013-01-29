@@ -7,8 +7,8 @@ public class DCT {
     private final int SIZE = 8;
     
     public LuminanceImage process(LuminanceImage in) {
-        int width = (in.width() / SIZE) * SIZE;
-        int height = (in.height() / SIZE) * SIZE;
+        int width = (in.getWidth() / SIZE) * SIZE;
+        int height = (in.getHeight() / SIZE) * SIZE;
         
         double n1 = Math.sqrt(1.0 / SIZE);
         double n2 = Math.sqrt(2.0 / SIZE);
@@ -29,7 +29,7 @@ public class DCT {
                         for (int i = x; i < x + SIZE; ++i) {
                             for (int j = y; j < y + SIZE; ++j) {
                                 //System.out.printf("%d %d\n", i, j);
-                                sum += (in.intensityAt(i, j) - 128)
+                                sum += (in.getIntensityAt(i, j) - 128)
                                      * Math.cos((2 * (i-x) + 1) * (u-x) * pi)
                                      * Math.cos((2 * (j-y) + 1) * (v-y) * pi);
                             }

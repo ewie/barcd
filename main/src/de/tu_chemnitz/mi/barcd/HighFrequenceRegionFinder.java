@@ -79,8 +79,8 @@ public class HighFrequenceRegionFinder {
     }
     
     private LuminanceImage gradient(LuminanceImage input) {
-        int width = input.width();
-        int height = input.height();
+        int width = input.getWidth();
+        int height = input.getHeight();
         
         LuminanceImage gx = sobelx.apply(input);
         LuminanceImage gy = sobely.apply(input);
@@ -89,8 +89,8 @@ public class HighFrequenceRegionFinder {
         
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                int vx = gx.valueAt(x, y);
-                int vy = gy.valueAt(x, y);
+                int vx = gx.getValueAt(x, y);
+                int vy = gy.getValueAt(x, y);
                 gxy.setIntensityAt(x, y, Math.abs(vx) + Math.abs(vy));
             }
         }
@@ -105,8 +105,8 @@ public class HighFrequenceRegionFinder {
     }
     
     private Region[] regions(LuminanceImage input, RegionFilter filter) {
-        int width = input.width();
-        int height = input.height();
+        int width = input.getWidth();
+        int height = input.getHeight();
         
         ConnectedComponentLabeler ccl = new ConnectedComponentLabeler();
         int[][] labels = ccl.process(input);

@@ -16,14 +16,14 @@ public class GlobalBinarizer implements Binarizer {
     public LuminanceImage apply(LuminanceImage input) {
         int threshold = this.thresholder.getThreshold(input);
         
-        int width = input.width();
-        int height = input.height();
+        int width = input.getWidth();
+        int height = input.getHeight();
         
         LuminanceImage output = new BufferedLuminanceImage(width, height);
         
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                output.setIntensityAt(x, y, input.intensityAt(x, y) > threshold ? VALUE : 0);
+                output.setIntensityAt(x, y, input.getIntensityAt(x, y) > threshold ? VALUE : 0);
             }
         }
         

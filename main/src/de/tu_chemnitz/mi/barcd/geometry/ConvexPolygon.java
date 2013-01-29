@@ -14,16 +14,16 @@ public class ConvexPolygon {
         this.points = points;
     }
 
-    public Point[] points() {
+    public Point[] getPoints() {
         return points;
     }
     
-    public long area() {
+    public long computeArea() {
         long area = 0;
         for (int i = 0; i < points.length; ++i) {
             Point p = points[i];
             Point q = points[(i+1) % points.length];
-            area += q.x() * p.y() - p.x() * q.y();
+            area += q.getX() * p.getY() - p.getX() * q.getY();
         }
         return Math.abs(area / 2);
     }

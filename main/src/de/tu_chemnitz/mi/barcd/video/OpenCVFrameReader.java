@@ -56,7 +56,7 @@ public class OpenCVFrameReader implements FrameReader {
     }
     
     @Override
-    public int frameNumber() {
+    public int getCurrentFrameNumber() {
         return frameGrabber.getFrameNumber();
     }
     
@@ -75,14 +75,14 @@ public class OpenCVFrameReader implements FrameReader {
     public void setWidth(int width)
         throws FrameReaderException
     {
-        setWidthAndHeight(width, height());
+        setWidthAndHeight(width, getHeight());
     }
 
     @Override
     public void setHeight(int height)
         throws FrameReaderException
     {
-        setWidthAndHeight(width(), height);
+        setWidthAndHeight(getWidth(), height);
     }
     
     @Override
@@ -100,17 +100,17 @@ public class OpenCVFrameReader implements FrameReader {
     }
 
     @Override
-    public int width() {
+    public int getWidth() {
         return this.frameGrabber.getImageWidth();
     }
 
     @Override
-    public int height() {
+    public int getHeight() {
         return this.frameGrabber.getImageHeight();
     }
 
     @Override
-    public BufferedImage nextFrame()
+    public BufferedImage getNextFrame()
         throws FrameReaderException
     {
         IplImage image = readFrame();
@@ -121,7 +121,7 @@ public class OpenCVFrameReader implements FrameReader {
     public void skipFrames(int count)
         throws FrameReaderException
     {
-        setFrameNumber(frameNumber() + count);
+        setFrameNumber(getCurrentFrameNumber() + count);
     }
     
     private IplImage readFrame()

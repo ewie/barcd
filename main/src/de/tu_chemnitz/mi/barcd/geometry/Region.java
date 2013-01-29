@@ -43,17 +43,17 @@ public class Region {
         this.generatingPointCount = points.size();
     }
     
-    public double coverage(BoundType type) {
+    public double getCoverage(BoundType type) {
         double cov;
         switch (type) {
         case AXIS_ALIGNED_RECTANGLE:
-            cov = this.generatingPointCount / (double) axisAlignedRectangle().area();
+            cov = this.generatingPointCount / (double) getAxisAlignedRectangle().computeArea();
             break;
         case CONVEX_POLYGON:
-            cov = this.generatingPointCount / (double) this.polygon.area();
+            cov = this.generatingPointCount / (double) this.polygon.computeArea();
             break;
         case ORIENTED_RECTANGLE:
-            cov = this.generatingPointCount / (double) orientedRectangle().area();
+            cov = this.generatingPointCount / (double) getOrientedRectangle().computeArea();
             break;
         default:
             throw new IllegalArgumentException("unknown region bound type");
@@ -64,7 +64,7 @@ public class Region {
     /**
      * @return the convex polygon containing the points spanning this region
      */
-    public ConvexPolygon convexPolygon() {
+    public ConvexPolygon getConvexPolygon() {
         return this.polygon;
     }
     
@@ -72,9 +72,9 @@ public class Region {
      * @return the minimum area rectangle enclosing the points spanning this
      *         region
      */
-    public Rectangle orientedRectangle() {
+    public Rectangle getOrientedRectangle() {
         if (this.orientedRectangle == null) {
-            this.orientedRectangle = Rectangle.oriented(this.polygon);
+            this.orientedRectangle = Rectangle.createOriented(this.polygon);
         }
         return this.orientedRectangle;
     }
@@ -83,9 +83,9 @@ public class Region {
      * @return the minimum area axis aligned rectangle enclosing the points
      *         spanning this region
      */
-    public Rectangle axisAlignedRectangle() {
+    public Rectangle getAxisAlignedRectangle() {
         if (this.axisAlignedRectangle == null) {
-            this.axisAlignedRectangle = Rectangle.axisAligned(this.polygon);
+            this.axisAlignedRectangle = Rectangle.createAxisAligned(this.polygon);
         }
         return this.axisAlignedRectangle;
     }

@@ -9,12 +9,12 @@ public interface FrameReader {
     /**
      * @return the frame width
      */
-    public int width();
+    public int getWidth();
     
     /**
      * @return the frame height
      */
-    public int height();
+    public int getHeight();
 
     public void setWidth(int width) throws FrameReaderException;
     
@@ -29,7 +29,7 @@ public interface FrameReader {
      * 
      * @throws FrameReaderException
      */
-    public BufferedImage nextFrame() throws FrameReaderException;
+    public BufferedImage getNextFrame() throws FrameReaderException;
     
     /**
      * Skip the next frames.
@@ -43,7 +43,7 @@ public interface FrameReader {
     /**
      * @return the current frame number
      */
-    public int frameNumber();
+    public int getCurrentFrameNumber();
     
     /**
      * Set the frame number of the next frame to be read.

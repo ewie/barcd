@@ -48,8 +48,8 @@ public class ErosionOperator implements KernelOperator {
 
     @Override
     public LuminanceImage apply(LuminanceImage input) {
-        int width = input.width();
-        int height = input.height();
+        int width = input.getWidth();
+        int height = input.getHeight();
         int a = this.width - this.width / 2 + 1;
         int b = this.height - this.height / 2 + 1;
         
@@ -64,7 +64,7 @@ public class ErosionOperator implements KernelOperator {
                             int u = x + i - a;
                             int v = y + j - b;
                             if (u >= 0 && u < width && v >= 0 && v < height) {
-                                int t = input.intensityAt(u, v);
+                                int t = input.getIntensityAt(u, v);
                                 if (t < k) k = t;
                             }
                         }

@@ -17,18 +17,18 @@ public class GammaDenoisingOperator implements Operator {
         createLookupTable();
     }
     
-    public double gamma() {
+    public double getGamma() {
         return this.gamma;
     }
     
     public LuminanceImage apply(LuminanceImage in) {
-        int width = in.width();
-        int height = in.height();
+        int width = in.getWidth();
+        int height = in.getHeight();
         
         BufferedLuminanceImage out = new BufferedLuminanceImage(width, height);
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                int v = (int) (lookupDirect(in.intensityAt(x, y)) * LuminanceImage.MAX_INTENSITY);
+                int v = (int) (lookupDirect(in.getIntensityAt(x, y)) * LuminanceImage.MAX_INTENSITY);
                 int w = (int) (lookupInverse(v) * LuminanceImage.MAX_INTENSITY);
                 out.setIntensityAt(x, y, w);
             }

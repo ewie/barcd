@@ -31,13 +31,13 @@ public class GammaCorrectionOperator implements Operator {
 
     @Override
     public LuminanceImage apply(LuminanceImage in) {
-        int w = in.width();
-        int h = in.height();
+        int w = in.getWidth();
+        int h = in.getHeight();
         double g = 1 / this.gamma;
         BufferedLuminanceImage out = new BufferedLuminanceImage(w, h);
         for (int x = 0; x < w; ++x) {
             for (int y = 0; y < h; ++y) {
-                double value = Math.pow(in.intensityAt(x, y) / (double) LuminanceImage.MAX_INTENSITY, g) * LuminanceImage.MAX_INTENSITY;
+                double value = Math.pow(in.getIntensityAt(x, y) / (double) LuminanceImage.MAX_INTENSITY, g) * LuminanceImage.MAX_INTENSITY;
                 out.setIntensityAt(x, y, (int) value);
             }
         }

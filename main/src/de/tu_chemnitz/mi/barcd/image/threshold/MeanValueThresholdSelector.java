@@ -11,12 +11,12 @@ import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
 public class MeanValueThresholdSelector implements GlobalThresholdSelector {
     @Override
     public int getThreshold(LuminanceImage input) {
-        int width = input.width();
-        int height = input.height();
+        int width = input.getWidth();
+        int height = input.getHeight();
         long mean = 0;
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                mean += input.intensityAt(x, y);
+                mean += input.getIntensityAt(x, y);
             }
         }
         return (int) (mean / (width * height));

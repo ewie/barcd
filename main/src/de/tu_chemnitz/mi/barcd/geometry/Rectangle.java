@@ -13,33 +13,33 @@ public class Rectangle extends ConvexPolygon {
         // TODO check if rectangular
     }
     
-    public int width() {
-        Point p = this.points()[0];
-        Point q = this.points()[1];
-        int dx = p.x() - q.x();
-        int dy = p.y() - q.y();
+    public int getWidth() {
+        Point p = this.getPoints()[0];
+        Point q = this.getPoints()[1];
+        int dx = p.getX() - q.getX();
+        int dy = p.getY() - q.getY();
         return (int) Math.sqrt(dx * dx + dy * dy);
     }
     
-    public int height() {
-        Point p = this.points()[1];
-        Point q = this.points()[2];
-        int dx = p.x() - q.x();
-        int dy = p.y() - q.y();
+    public int getHeight() {
+        Point p = this.getPoints()[1];
+        Point q = this.getPoints()[2];
+        int dx = p.getX() - q.getX();
+        int dy = p.getY() - q.getY();
         return (int) Math.sqrt(dx * dx + dy * dy);
     }
     
-    public static Rectangle axisAligned(ConvexPolygon polygon) {
+    public static Rectangle createAxisAligned(ConvexPolygon polygon) {
         int minX = Integer.MAX_VALUE;
         int minY = Integer.MAX_VALUE;
         int maxX = Integer.MIN_VALUE;
         int maxY = Integer.MIN_VALUE;
         
-        Point[] coords = polygon.points();
+        Point[] coords = polygon.getPoints();
         
         for (int i = 0; i < coords.length; ++i) {
-            int x = coords[i].x();
-            int y = coords[i].y();
+            int x = coords[i].getX();
+            int y = coords[i].getY();
             if (x < minX) minX = x;
             if (x > maxX) maxX = x;
             if (y < minY) minY = y;
@@ -53,8 +53,8 @@ public class Rectangle extends ConvexPolygon {
             new Point(minX, minY));
     }
     
-    public static Rectangle oriented(ConvexPolygon polygon) {
-        Point[] hull = polygon.points();
+    public static Rectangle createOriented(ConvexPolygon polygon) {
+        Point[] hull = polygon.getPoints();
         double[] boxx = new double[4];
         double[] boxy = new double[4];
         double minArea = Integer.MAX_VALUE;
@@ -62,8 +62,8 @@ public class Rectangle extends ConvexPolygon {
         for (int i = 0; i < hull.length; ++i) {
             Point p = hull[i];
             Point q = hull[(i+1) % hull.length];
-            int dx = q.x() - p.x();
-            int dy = q.y() - p.y();
+            int dx = q.getX() - p.getX();
+            int dy = q.getY() - p.getY();
             double angle = Math.acos(dx / (Math.sqrt(dx*dx + dy*dy)));
             double c = Math.cos(angle);
             double s = Math.sin(angle);
@@ -73,8 +73,8 @@ public class Rectangle extends ConvexPolygon {
             double maxY = Double.MIN_VALUE;
             for (int j = 0; j < hull.length; ++j) {
                 Point r = hull[j];
-                double x = r.x() * c + r.y() * -s;
-                double y = r.x() * s + r.y() * c;
+                double x = r.getX() * c + r.getY() * -s;
+                double y = r.getX() * s + r.getY() * c;
                 if (x < minX) minX = x;
                 if (x > maxX) maxX = x;
                 if (y < minY) minY = y;

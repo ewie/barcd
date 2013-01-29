@@ -11,16 +11,16 @@ public class ConnectedComponentLabeler {
     }
     
     public int[][] process(LuminanceImage image, int backgroundValue) {
-        int width = image.width();
-        int height = image.height();
+        int width = image.getWidth();
+        int height = image.getHeight();
         int[][] labels = new int[width][height];
         int nextLabel = 1;
         UnionFind eq = new UnionFind(width * height);
         
         for (int x = 1; x < width; ++x) {
-            int v = image.intensityAt(x, 0);
+            int v = image.getIntensityAt(x, 0);
             if (v == backgroundValue) continue;
-            if (v == image.intensityAt(x - 1, 0)) {
+            if (v == image.getIntensityAt(x - 1, 0)) {
                 labels[x][0] = labels[x - 1][0];
             } else {
                 labels[x][0] = nextLabel++;
@@ -28,9 +28,9 @@ public class ConnectedComponentLabeler {
         }
         
         for (int y = 1; y < height; ++y) {
-            int v = image.intensityAt(0, y);
+            int v = image.getIntensityAt(0, y);
             if (v == backgroundValue) continue;
-            if (v == image.intensityAt(0, y - 1)) {
+            if (v == image.getIntensityAt(0, y - 1)) {
                 labels[0][y] = labels[0][y - 1];
             } else {
                 labels[0][y] = nextLabel++;
@@ -39,11 +39,11 @@ public class ConnectedComponentLabeler {
         
         for (int y = 1; y < height; ++y) {
             for (int x = 1; x < width; ++x) {
-                int v = image.intensityAt(x, y);
+                int v = image.getIntensityAt(x, y);
                 if (v == backgroundValue) continue;
                 
-                int vn = image.intensityAt(x, y - 1);
-                int vw = image.intensityAt(x - 1, y);
+                int vn = image.getIntensityAt(x, y - 1);
+                int vw = image.getIntensityAt(x - 1, y);
                 
                 if (v == vn && v == vw) {
                     int ln = labels[x][y - 1];
@@ -63,7 +63,7 @@ public class ConnectedComponentLabeler {
         
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
-                if (image.intensityAt(x, y) == backgroundValue) continue;
+                if (image.getIntensityAt(x, y) == backgroundValue) continue;
                 int label = eq.find(labels[x][y]);
                 labels[x][y] = label;
             }

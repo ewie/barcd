@@ -46,7 +46,7 @@ public class BufferedLuminanceImage implements LuminanceImage {
      * @return the image's width
      */
     @Override
-    public int width() {
+    public int getWidth() {
         return this.width;
     }
     
@@ -54,7 +54,7 @@ public class BufferedLuminanceImage implements LuminanceImage {
      * @return the image's height
      */
     @Override
-    public int height() {
+    public int getHeight() {
         return this.height;
     }
     
@@ -68,12 +68,12 @@ public class BufferedLuminanceImage implements LuminanceImage {
      *         MAX_VALUE]
      */
     @Override
-    public int intensityAt(int x, int y) {
+    public int getIntensityAt(int x, int y) {
         return this.values[x][y] & MAX_INTENSITY;
     }
 
     @Override
-    public int valueAt(int x, int y) {
+    public int getValueAt(int x, int y) {
         return values[x][y];
     }
     

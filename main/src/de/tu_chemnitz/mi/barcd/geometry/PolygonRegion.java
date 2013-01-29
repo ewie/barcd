@@ -17,14 +17,14 @@ class PolygonRegion {
     private static int area(Point[] coords) {
         int area = 0;
         for (int i = 0; i < coords.length - 1; ++i) {
-            area += coords[i].x() * coords[i+1].y()
-                  - coords[i+1].x() * coords[i].y();
+            area += coords[i].getX() * coords[i+1].getY()
+                  - coords[i+1].getX() * coords[i].getY();
         }
         return area / 2;
     }
     
     private static double cross(Point p, Point a, Point b) {
-        return (a.x() - p.x()) * (b.y() - p.y()) - (a.y() - p.y()) * (b.x() - p.x());
+        return (a.getX() - p.getX()) * (b.getY() - p.getY()) - (a.getY() - p.getY()) * (b.getX() - p.getX());
     }
     
     public static PolygonRegion fromCoordinates(Point[] coords) {
@@ -35,10 +35,10 @@ class PolygonRegion {
         Collections.sort(coords, new Comparator<Point>() {
             @Override
             public int compare(Point p, Point q) {
-                if (p.x() < q.x()) return -1;
-                if (p.x() > q.x()) return 1;
-                if (p.y() < q.y()) return -1;
-                if (p.y() > q.y()) return 1;
+                if (p.getX() < q.getX()) return -1;
+                if (p.getX() > q.getX()) return 1;
+                if (p.getY() < q.getY()) return -1;
+                if (p.getY() > q.getY()) return 1;
                 return 0;
             }
         });

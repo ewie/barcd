@@ -15,9 +15,9 @@ public class ThreeStepSearchMotionEstimator extends BlockMatchingMotionEstimator
     public Vector processBlock(int x, int y, LuminanceImage image, LuminanceImage referenceImage) {
         int x0 = x;
         int y0 = y;
-        int width = image.width();
-        int height = image.height();
-        for (int size = this.blockSize(); size > 1; size /= 2) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        for (int size = this.getBlockSize(); size > 1; size /= 2) {
             int minCost = bdm(image, x, y, referenceImage, 0, 0);
             int dx = 0;
             int dy = 0;
@@ -26,7 +26,7 @@ public class ThreeStepSearchMotionEstimator extends BlockMatchingMotionEstimator
                 for (int j = -d; j <= d; j += d) {
                     int u = x + i;
                     int v = y + j;
-                    if (u < 0 || v < 0 || (u + blockSize()) >= width || (v + blockSize()) >= height) {
+                    if (u < 0 || v < 0 || (u + getBlockSize()) >= width || (v + getBlockSize()) >= height) {
                         continue;
                     }
                     int cost = bdm(image, x, y, referenceImage, i, j);
@@ -45,11 +45,11 @@ public class ThreeStepSearchMotionEstimator extends BlockMatchingMotionEstimator
     
     private int bdm(LuminanceImage image, int x, int y, LuminanceImage referenceImage, int dx, int dy) {
         int bdm = 0;
-        for (int i = 0; i < blockSize(); ++i) {
-            for (int j = 0; j < blockSize(); ++j) {
-                bdm += Math.abs(image.intensityAt(x + i, y + j) - referenceImage.intensityAt(x + dx + i, y + dy + j));
+        for (int i = 0; i < getBlockSize(); ++i) {
+            for (int j = 0; j < getBlockSize(); ++j) {
+                bdm += Math.abs(image.getIntensityAt(x + i, y + j) - referenceImage.getIntensityAt(x + dx + i, y + dy + j));
             }
         }
-        return bdm / (blockSize() * blockSize());
+        return bdm / (getBlockSize() * getBlockSize());
     }
 }

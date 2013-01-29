@@ -49,16 +49,16 @@ public class LuminanceImageConverter {
      * @return the {@link BufferedImage} with image type {@link BufferedImage#TYPE_INT_ARGB}
      */
     public BufferedImage toBufferedImage(LuminanceImage in) {
-        BufferedImage out = new BufferedImage(in.width(), in.height(), BufferedImage.TYPE_INT_ARGB);
-        int[] pixels = new int[in.width() * in.height()];
+        BufferedImage out = new BufferedImage(in.getWidth(), in.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        int[] pixels = new int[in.getWidth() * in.getHeight()];
         int offset = 0;
-        for (int y = 0; y < in.height(); ++y) {
-            for (int x = 0; x < in.width(); ++x) {
-                int v = in.intensityAt(x, y);
+        for (int y = 0; y < in.getHeight(); ++y) {
+            for (int x = 0; x < in.getWidth(); ++x) {
+                int v = in.getIntensityAt(x, y);
                 pixels[offset++] = converter.lum2rgb(v);
             }
         }
-        out.setRGB(0, 0, in.width(), in.height(), pixels, 0, in.width());
+        out.setRGB(0, 0, in.getWidth(), in.getHeight(), pixels, 0, in.getWidth());
         return out;
     }
     

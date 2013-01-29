@@ -18,8 +18,8 @@ public class BinDCT {
     private final int S6 = 15137;
     
     public LuminanceImage process(LuminanceImage in) {
-        int width = (in.width() / SIZE) * SIZE;
-        int height = (in.height() / SIZE) * SIZE;
+        int width = (in.getWidth() / SIZE) * SIZE;
+        int height = (in.getHeight() / SIZE) * SIZE;
         
         LuminanceImage out = new BufferedLuminanceImage(width, height);
         
@@ -36,14 +36,14 @@ public class BinDCT {
                     int d07, d12, d34, d56;
                     int a, b;
 
-                    s07 = in.intensityAt(x + 0, y + j) + in.intensityAt(x + 7, y + j);
-                    d07 = in.intensityAt(x + 0, y + j) - in.intensityAt(x + 7, y + j);
-                    s12 = in.intensityAt(x + 1, y + j) + in.intensityAt(x + 2, y + j);
-                    d12 = in.intensityAt(x + 1, y + j) - in.intensityAt(x + 2, y + j);
-                    s34 = in.intensityAt(x + 3, y + j) + in.intensityAt(x + 4, y + j);
-                    d34 = in.intensityAt(x + 3, y + j) - in.intensityAt(x + 4, y + j);
-                    s56 = in.intensityAt(x + 5, y + j) + in.intensityAt(x + 6, y + j);
-                    d56 = in.intensityAt(x + 5, y + j) - in.intensityAt(x + 6, y + j);
+                    s07 = in.getIntensityAt(x + 0, y + j) + in.getIntensityAt(x + 7, y + j);
+                    d07 = in.getIntensityAt(x + 0, y + j) - in.getIntensityAt(x + 7, y + j);
+                    s12 = in.getIntensityAt(x + 1, y + j) + in.getIntensityAt(x + 2, y + j);
+                    d12 = in.getIntensityAt(x + 1, y + j) - in.getIntensityAt(x + 2, y + j);
+                    s34 = in.getIntensityAt(x + 3, y + j) + in.getIntensityAt(x + 4, y + j);
+                    d34 = in.getIntensityAt(x + 3, y + j) - in.getIntensityAt(x + 4, y + j);
+                    s56 = in.getIntensityAt(x + 5, y + j) + in.getIntensityAt(x + 6, y + j);
+                    d56 = in.getIntensityAt(x + 5, y + j) - in.getIntensityAt(x + 6, y + j);
                     
                     a = s07 + s34;
                     b = s12 + s56;
@@ -167,9 +167,9 @@ public class BinDCT {
             @Override
             public int getThreshold(LuminanceImage source) {
                 int[] vv = new int[256];
-                for (int x = 0; x < source.width(); ++x) {
-                    for (int y = 0; y < source.height(); ++y) {
-                        int v = source.intensityAt(x, y);
+                for (int x = 0; x < source.getWidth(); ++x) {
+                    for (int y = 0; y < source.getHeight(); ++y) {
+                        int v = source.getIntensityAt(x, y);
                         vv[v] += 1;
                     }
                 }

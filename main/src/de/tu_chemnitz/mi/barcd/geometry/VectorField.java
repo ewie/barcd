@@ -19,20 +19,20 @@ public class VectorField {
         this.vectors = vectors;
     }
     
-    public Vector vectorAt(int x, int y) {
+    public Vector getVectorAt(int x, int y) {
         int at = (x / blockSize) + (y / blockSize) * (width / blockSize);
         return vectors[at];
     }
     
-    public int blockSize() {
+    public int getBlockSize() {
         return blockSize;
     }
     
-    public int width() {
+    public int getWidth() {
         return width;
     }
     
-    public int height() {
+    public int getHeight() {
         return height;
     }
 }

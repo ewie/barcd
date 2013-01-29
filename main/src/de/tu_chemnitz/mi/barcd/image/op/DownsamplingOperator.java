@@ -22,13 +22,13 @@ public class DownsamplingOperator implements Operator {
     }
     
     public LuminanceImage apply(LuminanceImage in) {
-        int width = in.width() / this.factor;
-        int height = in.height() / this.factor;
+        int width = in.getWidth() / this.factor;
+        int height = in.getHeight() / this.factor;
         BufferedLuminanceImage out = new BufferedLuminanceImage(width, height);
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
                 //out.setLuminanceAt(x, y, in.luminanceAt(x * this.factor, y * this.factor));
-                out.setValueAt(x, y, in.valueAt(x * factor, y * factor));
+                out.setValueAt(x, y, in.getValueAt(x * factor, y * factor));
             }
         }
         return out;

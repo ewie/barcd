@@ -11,7 +11,7 @@ public class DelegatedLuminanceImage implements LuminanceImage {
     private Rectangle roi;
     
     public DelegatedLuminanceImage(LuminanceImage image) {
-        this(image, 0, 0, image.width(), image.height());
+        this(image, 0, 0, image.getWidth(), image.getHeight());
     }
     
     public DelegatedLuminanceImage(LuminanceImage image, int x, int y, int width, int height) {
@@ -19,32 +19,32 @@ public class DelegatedLuminanceImage implements LuminanceImage {
         this.roi = new Rectangle(x, y, width, height);
     }
     
-    public LuminanceImage image() {
+    public LuminanceImage getDelegatedImage() {
         return image;
     }
     
-    public Rectangle roi() {
+    public Rectangle getROI() {
         return new Rectangle(roi);
     }
     
     @Override
-    public int width() {
+    public int getWidth() {
         return roi.width;
     }
 
     @Override
-    public int height() {
+    public int getHeight() {
         return roi.height;
     }
 
     @Override
-    public int intensityAt(int x, int y) {
-        return image.intensityAt(x + roi.x, y + roi.y);
+    public int getIntensityAt(int x, int y) {
+        return image.getIntensityAt(x + roi.x, y + roi.y);
     }
     
     @Override
-    public int valueAt(int x, int y) {
-        return image.valueAt(x + roi.x, y + roi.y);
+    public int getValueAt(int x, int y) {
+        return image.getValueAt(x + roi.x, y + roi.y);
     }
 
     @Override
