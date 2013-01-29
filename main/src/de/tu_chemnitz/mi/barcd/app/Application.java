@@ -123,7 +123,6 @@ public class Application {
         try {
             BufferedImage image = null, im = null;
             VideoImageDisplay video = new VideoImageDisplay();
-            fr.setWidthAndHeight(fr.getWidth() * 2, fr.getHeight() * 2);
             HighFrequenceRegionFinder hfr = new HighFrequenceRegionFinder();
             LuminanceImage lum = null;
             LuminanceImageConverter conv = new LuminanceImageConverter();
@@ -196,8 +195,6 @@ public class Application {
         throws FrameReaderException
     {
         LuminanceImageConverter conv = new LuminanceImageConverter();
-        
-        fr.setWidthAndHeight(fr.getWidth() * 3, fr.getHeight() * 3);
         
         VideoImageDisplay vimage1 = new VideoImageDisplay();
         

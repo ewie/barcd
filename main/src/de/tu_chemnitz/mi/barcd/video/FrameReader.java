@@ -15,12 +15,6 @@ public interface FrameReader {
      * @return the frame height
      */
     public int getHeight();
-
-    public void setWidth(int width) throws FrameReaderException;
-    
-    public void setHeight(int height) throws FrameReaderException;
-    
-    public void setWidthAndHeight(int width, int height) throws FrameReaderException;
     
     /**
      * Read the next frame.

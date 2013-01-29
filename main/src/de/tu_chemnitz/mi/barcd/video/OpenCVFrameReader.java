@@ -72,34 +72,6 @@ public class OpenCVFrameReader implements FrameReader {
     }
 
     @Override
-    public void setWidth(int width)
-        throws FrameReaderException
-    {
-        setWidthAndHeight(width, getHeight());
-    }
-
-    @Override
-    public void setHeight(int height)
-        throws FrameReaderException
-    {
-        setWidthAndHeight(getWidth(), height);
-    }
-    
-    @Override
-    public void setWidthAndHeight(int width, int height)
-        throws FrameReaderException
-    {
-        this.frameGrabber.setImageWidth(width);
-        this.frameGrabber.setImageHeight(height);
-        try {
-            // Restart the stream so the new width and height take effect.
-            this.frameGrabber.restart();
-        } catch(Exception ex) {
-            throw new FrameReaderException(ex);
-        }
-    }
-
-    @Override
     public int getWidth() {
         return this.frameGrabber.getImageWidth();
     }
