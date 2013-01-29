@@ -19,7 +19,8 @@ public class OpenCVFrameReader implements FrameReader {
      * Create a frame reader using a device.
      * 
      * @param deviceId the number denoting the device (0 = 1st device, 1 = 2nd device, etc.)
-     * @return
+     * 
+     * @return the frame reader using the specified device
      * 
      * @throws FrameReaderException
      */
@@ -30,11 +31,11 @@ public class OpenCVFrameReader implements FrameReader {
     }
     
     /**
-     * Open a local or remote file.
+     * Open a local or remote resource.
      *
-     * @param url the file's URL
+     * @param url the resource URL
      * 
-     * @return
+     * @return the frame reader using the specified resource
      * 
      * @throws FrameReaderException
      */

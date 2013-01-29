@@ -19,7 +19,7 @@ public interface FrameReader {
     /**
      * Read the next frame.
      * 
-     * @return
+     * @return the image of the next frame
      * 
      * @throws FrameReaderException
      */
