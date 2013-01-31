@@ -1,4 +1,4 @@
-package de.tu_chemnitz.mi.barcd.util;
+package de.tu_chemnitz.mi.barcd.app;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

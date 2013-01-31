@@ -35,7 +35,6 @@ import de.tu_chemnitz.mi.barcd.geometry.VectorField;
 import de.tu_chemnitz.mi.barcd.image.LuminanceImage;
 import de.tu_chemnitz.mi.barcd.image.LuminanceImageConverter;
 import de.tu_chemnitz.mi.barcd.image.op.GammaDenoisingOperator;
-import de.tu_chemnitz.mi.barcd.util.VideoImageDisplay;
 import de.tu_chemnitz.mi.barcd.video.BlockMatchingMotionEstimator;
 import de.tu_chemnitz.mi.barcd.video.FrameReader;
 import de.tu_chemnitz.mi.barcd.video.FrameReaderException;
