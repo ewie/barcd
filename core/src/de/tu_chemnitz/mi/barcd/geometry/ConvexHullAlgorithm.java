@@ -17,10 +17,10 @@ public class ConvexHullAlgorithm {
     private static Comparator<Point> lexicalPointComparator = new Comparator<Point>() {
         @Override
         public int compare(Point p, Point q) {
-            int px = p.getX();
-            int py = p.getY();
-            int qx = q.getX();
-            int qy = q.getY();
+            double px = p.getX();
+            double py = p.getY();
+            double qx = q.getX();
+            double qy = q.getY();
             if (px < qx) return -1;
             if (px > qx) return 1;
             if (py < qy) return -1;
@@ -80,7 +80,7 @@ public class ConvexHullAlgorithm {
      * 
      * @return the 2D cross product
      */
-    private static long cross(Point origin, Point p, Point q) {
+    private static double cross(Point origin, Point p, Point q) {
         return (p.getX() - origin.getX()) * (q.getY() - origin.getY()) - (p.getY() - origin.getY()) * (q.getX() - origin.getX());
     }
 }

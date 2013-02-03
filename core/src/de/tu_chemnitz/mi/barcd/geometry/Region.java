@@ -14,10 +14,10 @@ public class Region {
     };
     
     private ConvexPolygon polygon;
-    
-    private Rectangle orientedRectangle;
-    
-    private Rectangle axisAlignedRectangle;
+
+    private OrientedRectangle orientedRectangle;
+
+    private AxisAlignedRectangle axisAlignedRectangle;
     
     /**
      * The number of points used to create this region.
@@ -72,9 +72,9 @@ public class Region {
      * @return the minimum area rectangle enclosing the points spanning this
      *         region
      */
-    public Rectangle getOrientedRectangle() {
+    public OrientedRectangle getOrientedRectangle() {
         if (this.orientedRectangle == null) {
-            this.orientedRectangle = Rectangle.createOriented(this.polygon);
+            this.orientedRectangle = OrientedRectangle.createFromPolygon(this.polygon);
         }
         return this.orientedRectangle;
     }
@@ -83,9 +83,9 @@ public class Region {
      * @return the minimum area axis aligned rectangle enclosing the points
      *         spanning this region
      */
-    public Rectangle getAxisAlignedRectangle() {
+    public AxisAlignedRectangle getAxisAlignedRectangle() {
         if (this.axisAlignedRectangle == null) {
-            this.axisAlignedRectangle = Rectangle.createAxisAligned(this.polygon);
+            this.axisAlignedRectangle = AxisAlignedRectangle.createFromPolygon(this.polygon);
         }
         return this.axisAlignedRectangle;
     }

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class ConvexPolygon {
+public class ConvexPolygon implements Polygon {
     
     private Point[] points;
     
@@ -14,12 +14,14 @@ public class ConvexPolygon {
         this.points = points;
     }
 
+    @Override
     public Point[] getPoints() {
         return points;
     }
     
-    public long computeArea() {
-        long area = 0;
+    @Override
+    public double computeArea() {
+        int area = 0;
         for (int i = 0; i < points.length; ++i) {
             Point p = points[i];
             Point q = points[(i+1) % points.length];
