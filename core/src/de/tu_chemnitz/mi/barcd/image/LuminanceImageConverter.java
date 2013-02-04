@@ -1,6 +1,7 @@
 package de.tu_chemnitz.mi.barcd.image;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
@@ -41,24 +42,52 @@ public class LuminanceImageConverter {
     }
     
     /**
-     * Convert a {@link LuminanceImage} to a {@link BufferedImage} using
-     * {@link ColorConverter#lum2rgb(int)}.
+     * Convert a {@link LuminanceImage} to a true color {@link BufferedImage}
+     * using {@link ColorConverter#lum2rgb(int)}.
      * 
      * @param in the image to convert
      * 
-     * @return the {@link BufferedImage} with image type {@link BufferedImage#TYPE_INT_ARGB}
+     * @return the {@link BufferedImage} with image type
+     *   {@link BufferedImage#TYPE_INT_ARGB}
      */
-    public BufferedImage toBufferedImage(LuminanceImage in) {
-        BufferedImage out = new BufferedImage(in.getWidth(), in.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        int[] pixels = new int[in.getWidth() * in.getHeight()];
+    public BufferedImage toTrueColorBufferedImage(LuminanceImage in) {
+        int w = in.getWidth();
+        int h = in.getHeight();
+        BufferedImage out = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        int[] pixels = new int[w * h];
         int offset = 0;
-        for (int y = 0; y < in.getHeight(); ++y) {
-            for (int x = 0; x < in.getWidth(); ++x) {
+        for (int y = 0; y < h; ++y) {
+            for (int x = 0; x < w; ++x) {
                 int v = in.getIntensityAt(x, y);
                 pixels[offset++] = converter.lum2rgb(v);
             }
         }
-        out.setRGB(0, 0, in.getWidth(), in.getHeight(), pixels, 0, in.getWidth());
+        out.setRGB(0, 0, w, h, pixels, 0, w);
+        return out;
+    }
+    
+    /**
+     * Convert a {@link LuminanceImage} to a gray-scale {@link BufferedImage}
+     * using {@link LuminanceImage#getIntensityAt(int, int)}.
+     * 
+     * @param in the image to convert
+     * 
+     * @return the {@link BufferedImage} with image type
+     *   {@link BufferedImage#TYPE_BYTE_GRAY}
+     */
+    public BufferedImage toBufferedImage(LuminanceImage in) {
+        int w = in.getWidth();
+        int h = in.getHeight();
+        BufferedImage out = new BufferedImage(w, h, BufferedImage.TYPE_BYTE_GRAY);
+        WritableRaster raster = out.getRaster();
+        int[] pixels = new int[w * h];
+        int offset = 0;
+        for (int y = 0; y < h; ++y) {
+            for (int x = 0; x < w; ++x) {
+                pixels[offset++] = in.getIntensityAt(x, y);
+            }
+        }
+        raster.setPixels(0, 0, w, h, pixels);
         return out;
     }
     
