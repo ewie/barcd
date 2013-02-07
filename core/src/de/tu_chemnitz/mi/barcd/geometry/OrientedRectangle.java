@@ -52,7 +52,7 @@ public class OrientedRectangle extends Rectangle {
      * 
      * @return the enclosing oriented rectangle
      */
-    public static OrientedRectangle createFromPolygon(Polygon polygon) {
+    public static OrientedRectangle createFromPolygon(ConvexPolygon polygon) {
         Point[] hull = polygon.getPoints();
         double[] boxx = new double[4];
         double[] boxy = new double[4];

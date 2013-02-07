@@ -48,6 +48,14 @@ public class AxisAlignedRectangle extends Rectangle {
         };
     }
     
+    @Override
+    public boolean contains(Point p) {
+        double x = p.getX();
+        double y = p.getY();
+        return x >= min.getX() && x <= max.getX()
+            && y >= min.getY() && y <= max.getY();
+    }
+    
     /**
      * Create an axis aligned rectangle enclosing the given polygon.
      * 
@@ -55,7 +63,7 @@ public class AxisAlignedRectangle extends Rectangle {
      * 
      * @return the enclosing axis aligned rectangle
      */
-    public static AxisAlignedRectangle createFromPolygon(Polygon polygon) {
+    public static AxisAlignedRectangle createFromPolygon(ConvexPolygon polygon) {
         double minX = Double.POSITIVE_INFINITY;
         double minY = Double.POSITIVE_INFINITY;
         double maxX = Double.NEGATIVE_INFINITY;

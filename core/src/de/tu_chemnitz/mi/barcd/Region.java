@@ -1,7 +1,10 @@
-package de.tu_chemnitz.mi.barcd.geometry;
+package de.tu_chemnitz.mi.barcd;
 
-import java.util.Arrays;
-import java.util.List;
+import de.tu_chemnitz.mi.barcd.geometry.AxisAlignedRectangle;
+import de.tu_chemnitz.mi.barcd.geometry.ConvexPolygon;
+import de.tu_chemnitz.mi.barcd.geometry.GenericConvexPolygon;
+import de.tu_chemnitz.mi.barcd.geometry.OrientedRectangle;
+import de.tu_chemnitz.mi.barcd.geometry.Point;
 
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
@@ -19,41 +22,30 @@ public class Region {
 
     private AxisAlignedRectangle axisAlignedRectangle;
     
-    /**
-     * The number of points used to create this region.
-     */
-    private int generatingPointCount;
+    private double coverage;
     
-    /**
-     * Construct a region from an array of points (expects no duplicate points).
-     * 
-     * @param points the points that should make up a region
-     */
-    public Region(Point[] points) {
-        this(Arrays.asList(points));
+    public static Region createFromPoints(Point[] points) {
+        GenericConvexPolygon polygon = GenericConvexPolygon.createFromConvexHull(points);
+        double coverage = polygon.computeArea() / points.length;
+        return new Region(polygon, coverage);
     }
     
-    /**
-     * Construct a region from a list of points (expects no duplicate points).
-     * 
-     * @param points the points that should make up a region
-     */
-    public Region(List<Point> points) {
-        this.polygon = ConvexPolygon.createFromConvexHull(points);
-        this.generatingPointCount = points.size();
+    public Region(ConvexPolygon polygon, double coverage) {
+        this.polygon = polygon;
+        this.coverage = coverage;
     }
     
     public double getCoverage(BoundType type) {
         double cov;
         switch (type) {
         case AXIS_ALIGNED_RECTANGLE:
-            cov = this.generatingPointCount / (double) getAxisAlignedRectangle().computeArea();
+            cov = (coverage * polygon.computeArea()) / getAxisAlignedRectangle().computeArea();
             break;
         case CONVEX_POLYGON:
-            cov = this.generatingPointCount / (double) this.polygon.computeArea();
+            cov = coverage;
             break;
         case ORIENTED_RECTANGLE:
-            cov = this.generatingPointCount / (double) getOrientedRectangle().computeArea();
+            cov = (coverage * polygon.computeArea()) / getOrientedRectangle().computeArea();
             break;
         default:
             throw new IllegalArgumentException("unknown region bound type");
@@ -88,5 +80,27 @@ public class Region {
             this.axisAlignedRectangle = AxisAlignedRectangle.createFromPolygon(this.polygon);
         }
         return this.axisAlignedRectangle;
+    }
+
+    /**
+     * Test if the region contains a certain point.
+     * 
+     * @param p the point to test
+     * 
+     * @return true if the region contains the point
+     */
+    public boolean contains(Point p) {
+        AxisAlignedRectangle ar = getAxisAlignedRectangle();
+        return ar.contains(p) && polygon.contains(p);
+    }
+    
+    /**
+     * Get the ratio of the convex polygon's area and the oriented rectangle's
+     * area.
+     * 
+     * @return the discrepancy in the range (0, 1]
+     */
+    public double getDiscrepancy() {
+        return polygon.computeArea() / getOrientedRectangle().computeArea();
     }
 }

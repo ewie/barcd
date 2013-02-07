@@ -3,7 +3,7 @@ package de.tu_chemnitz.mi.barcd.geometry;
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public abstract class Rectangle implements Polygon {
+public abstract class Rectangle extends ConvexPolygon {
     /**
      * @return
      */

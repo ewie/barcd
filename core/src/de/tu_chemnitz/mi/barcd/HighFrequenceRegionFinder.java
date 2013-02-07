@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import de.tu_chemnitz.mi.barcd.geometry.Point;
-import de.tu_chemnitz.mi.barcd.geometry.Region;
 import de.tu_chemnitz.mi.barcd.image.Binarizer;
 import de.tu_chemnitz.mi.barcd.image.BufferedLuminanceImage;
 import de.tu_chemnitz.mi.barcd.image.ConnectedComponentLabeler;
@@ -127,7 +126,7 @@ public class HighFrequenceRegionFinder {
         List<Region> filteredRegions = new LinkedList<Region>();
 
         for (List<Point> coords : regions.values()) {
-            Region region = new Region(coords);
+            Region region = Region.createFromPoints(coords.toArray(new Point[coords.size()]));
             if (filter == null || filter.filter(region)) {
                 filteredRegions.add(region);
             }
