@@ -26,13 +26,17 @@ public class Region {
     
     public static Region createFromPoints(Point[] points) {
         GenericConvexPolygon polygon = GenericConvexPolygon.createFromConvexHull(points);
-        double coverage = polygon.computeArea() / points.length;
+        double coverage = points.length / polygon.computeArea();
         return new Region(polygon, coverage);
     }
     
     public Region(ConvexPolygon polygon, double coverage) {
         this.polygon = polygon;
         this.coverage = coverage;
+    }
+    
+    public double getCoverage() {
+        return coverage;
     }
     
     public double getCoverage(BoundType type) {
