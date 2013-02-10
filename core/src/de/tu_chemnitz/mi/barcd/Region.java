@@ -1,5 +1,8 @@
 package de.tu_chemnitz.mi.barcd;
 
+import java.util.Arrays;
+import java.util.List;
+
 import de.tu_chemnitz.mi.barcd.geometry.AxisAlignedRectangle;
 import de.tu_chemnitz.mi.barcd.geometry.ConvexPolygon;
 import de.tu_chemnitz.mi.barcd.geometry.GenericConvexPolygon;
@@ -22,11 +25,17 @@ public class Region {
 
     private AxisAlignedRectangle axisAlignedRectangle;
     
+    private Barcode barcode;
+    
     private double coverage;
     
     public static Region createFromPoints(Point[] points) {
+        return createFromPoints(Arrays.asList(points));
+    }
+    
+    public static Region createFromPoints(List<Point> points) {
         GenericConvexPolygon polygon = GenericConvexPolygon.createFromConvexHull(points);
-        double coverage = points.length / polygon.computeArea();
+        double coverage = points.size() / polygon.computeArea();
         return new Region(polygon, coverage);
     }
     
@@ -37,6 +46,14 @@ public class Region {
     
     public double getCoverage() {
         return coverage;
+    }
+    
+    public Barcode getBarcode() {
+        return barcode;
+    }
+    
+    public void setBarcode(Barcode barcode) {
+        this.barcode = barcode;
     }
     
     public double getCoverage(BoundType type) {

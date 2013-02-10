@@ -12,44 +12,15 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
  * 
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class OpenCVFrameReader implements FrameReader {
+public abstract class OpenCVFrameReader implements FrameReader {
     private OpenCVFrameGrabber frameGrabber;
     
-    /**
-     * Create a frame reader using a device.
-     * 
-     * @param deviceId the number denoting the device (0 = 1st device, 1 = 2nd device, etc.)
-     * 
-     * @return the frame reader using the specified device
-     * 
-     * @throws FrameReaderException
-     */
-    public static OpenCVFrameReader openDevice(int deviceId)
-        throws FrameReaderException
-    {
-        return new OpenCVFrameReader(new OpenCVFrameGrabber(deviceId));
-    }
-    
-    /**
-     * Open a local or remote resource.
-     *
-     * @param url the resource URL
-     * 
-     * @return the frame reader using the specified resource
-     * 
-     * @throws FrameReaderException
-     */
-    public static OpenCVFrameReader open(String url)
-        throws FrameReaderException
-    {
-        return new OpenCVFrameReader(new OpenCVFrameGrabber(url));
-    }
-    
-    private OpenCVFrameReader(OpenCVFrameGrabber frameGrabber)
+    protected OpenCVFrameReader(OpenCVFrameGrabber frameGrabber)
         throws FrameReaderException
     {
         this.frameGrabber = frameGrabber;
         try {
+            // TODO start frameGrabber explicitly
             this.frameGrabber.start();
         } catch(Exception ex) {
             throw new FrameReaderException(ex);
@@ -70,6 +41,21 @@ public class OpenCVFrameReader implements FrameReader {
         } catch (Exception ex) {
             throw new FrameReaderException(ex);
         }
+    }
+    
+    @Override
+    public int getLengthInFrames() {
+        return frameGrabber.getLengthInFrames();
+    }
+    
+    @Override
+    public boolean isSeekable() {
+        return isFinite();
+    }
+    
+    @Override
+    public boolean isFinite() {
+        return getLengthInFrames() > -1;
     }
 
     @Override

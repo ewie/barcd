@@ -47,4 +47,10 @@ public interface FrameReader {
      * @throws FrameReaderException
      */
     public void setFrameNumber(int frameNumber) throws FrameReaderException;
+    
+    public int getLengthInFrames();
+
+    public boolean isSeekable();
+
+    public boolean isFinite();
 }
