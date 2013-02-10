@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://www.tu-chemnitz.de/informatik/mi/barcd"
+  xmlns="http://www.tu-chemnitz.de/informatik/mi/barcd"
+  elementFormDefault="qualified">
+  
+  <xs:element name="job" type="JobType"/>
+  <xs:element name="frame" type="FrameType"/>
+  
+  <xs:complexType name="JobType">
+    <xs:all>
+      <xs:element name="source" type="SourceType"/>
+      <xs:element name="next-frame-number" type="xs:nonNegativeInteger" minOccurs="0" default="0"/>
+    </xs:all>
+  </xs:complexType>
+  
+  <xs:complexType name="SourceType">
+    <xs:choice>
+      <xs:element name="device" type="VideoDeviceType"/>
+      <xs:element name="video" type="ResourceType"/>
+      <xs:element name="sequence" type="ImageSequenceType"/>
+      <xs:element name="images" type="ImagesType"/>
+      <xs:element name="snapshot" type="ResourceType"/>
+    </xs:choice>
+  </xs:complexType>
+  
+  <xs:complexType name="VideoDeviceType">
+    <xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="ResourceType">
+    <xs:attribute name="url" type="xs:anyURI" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="ImageSequenceType">
+    <xs:all>
+      <xs:element name="template" type="URLTemplateType"/>
+      <xs:element name="range" type="RangeType"/>
+    </xs:all>
+  </xs:complexType>
+  
+  <xs:complexType name="URLTemplateType">
+    <xs:simpleContent>
+      <xs:extension base="xs:anyURI">
+        <xs:attribute name="tag" type="xs:string" use="required"/>
+        <xs:attribute name="padding" type="xs:nonNegativeInteger" default="0"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="RangeType">
+    <xs:attribute name="start" type="xs:nonNegativeInteger" default="0"/>
+    <xs:attribute name="end" type="xs:nonNegativeInteger"/>
+    <xs:attribute name="step" type="xs:integer" default="1"/>
+  </xs:complexType>
+  
+  <xs:complexType name="ImagesType">
+    <xs:sequence maxOccurs="unbounded">
+      <xs:element name="image" type="ResourceType"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="FrameType">
+    <xs:all>
+      <xs:element name="number" type="xs:nonNegativeInteger"/>
+      <xs:element name="barcodes" type="BarcodesType"/>
+      <xs:element name="regions" type="RegionsType"/>
+    </xs:all>
+  </xs:complexType>
+  
+  <xs:complexType name="BarcodesType">
+    <xs:sequence maxOccurs="unbounded">
+      <xs:element name="barcode" type="BarcodeType"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="RegionsType">
+    <xs:sequence maxOccurs="unbounded">
+      <xs:element name="region" type="RegionType"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="RegionType">
+    <xs:all>
+      <xs:element name="polygon" type="PolygonType"/>
+      <xs:element name="coverage" type="ProbabilityType"/>
+      <xs:element name="barcode" type="xs:IDREF" minOccurs="0"/>
+    </xs:all>
+  </xs:complexType>
+  
+  <xs:simpleType name="PolygonType">
+    <xs:restriction base="CoordinatesListType">
+      <xs:minLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="CoordinatesListType">
+    <xs:list itemType="CoordinatesType"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="CoordinatesType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="-?\d+(\.\d+)?([eE]-?\d+)?,-?\d+(\.\d+)?([eE]-?\d+)?"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="ProbabilityType">
+    <xs:restriction base="xs:double">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="PointType">
+    <xs:attribute name="x" type="xs:double" use="required"/>
+    <xs:attribute name="y" type="xs:double" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="PointsType">
+    <xs:sequence maxOccurs="unbounded">
+      <xs:element name="point" type="PointType"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="BarcodeType">
+    <xs:all>
+      <xs:element name="type" type="BarcodeFormat"/>
+      <xs:element name="text" type="xs:string"/>
+      <xs:element name="raw" type="xs:hexBinary" minOccurs="0"/>
+      <xs:element name="points" type="PointsType"/>
+    </xs:all>
+    <xs:attribute name="id" type="xs:ID" use="required"/>
+  </xs:complexType>
+  
+  <xs:simpleType name="BarcodeFormat">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="aztec-code"/>
+      <xs:enumeration value="codabar"/>
+      <xs:enumeration value="code-39"/>
+      <xs:enumeration value="code-93"/>
+      <xs:enumeration value="code-128"/>
+      <xs:enumeration value="data-matrix"/>
+      <xs:enumeration value="ean-8"/>
+      <xs:enumeration value="ean-13"/>
+      <xs:enumeration value="interleaved-2-of-5"/>
+      <xs:enumeration value="maxicode"/>
+      <xs:enumeration value="pdf417"/>
+      <xs:enumeration value="qr-code"/>
+      <xs:enumeration value="gs1-databar-omnidirectional"/>
+      <xs:enumeration value="gs1-databar-expanded"/>
+      <xs:enumeration value="upc-a"/>
+      <xs:enumeration value="upc-e"/>
+      <xs:enumeration value="unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

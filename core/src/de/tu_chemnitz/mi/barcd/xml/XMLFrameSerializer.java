@@ -1,0 +1,186 @@
+package de.tu_chemnitz.mi.barcd.xml;
+
+import java.math.BigInteger;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map.Entry;
+
+import javax.xml.bind.JAXBElement;
+
+import de.tu_chemnitz.mi.barcd.Barcode;
+import de.tu_chemnitz.mi.barcd.BarcodeType;
+import de.tu_chemnitz.mi.barcd.Frame;
+import de.tu_chemnitz.mi.barcd.Region;
+import de.tu_chemnitz.mi.barcd.geometry.ConvexPolygon;
+import de.tu_chemnitz.mi.barcd.geometry.GenericConvexPolygon;
+import de.tu_chemnitz.mi.barcd.geometry.Point;
+import de.tu_chemnitz.mi.barcd.xml.binding.BarcodeElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.BarcodeFormat;
+import de.tu_chemnitz.mi.barcd.xml.binding.BarcodesElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.FrameElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.ObjectFactory;
+import de.tu_chemnitz.mi.barcd.xml.binding.PointElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.PointsElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.RegionElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.RegionsElement;
+
+public class XMLFrameSerializer extends XMLSerializer<Frame> {
+    private ObjectFactory elements = new ObjectFactory();
+    
+    public XMLFrameSerializer() {
+        super(FrameElement.class.getPackage().getName());
+    }
+
+    @Override
+    protected Frame restoreModel(JAXBElement<?> e)
+        throws XMLSerializerException
+    {
+        FrameElement fe = (FrameElement) e.getValue();
+        int number = fe.getNumber().intValue();
+        Collection<Region> regions = restoreRegions(fe.getRegions());
+        return new Frame(number, regions);
+    }
+
+    @Override
+    protected JAXBElement<?> createRootElement(Frame frame)
+        throws XMLSerializerException
+    {
+        return elements.createFrame(createFrameElement(frame));
+    }
+    
+    private FrameElement createFrameElement(Frame frame) {
+        FrameElement fe = elements.createFrameElement();
+        fe.setRegions(createRegionsElement(frame.getRegions()));
+        fe.setNumber(BigInteger.valueOf(frame.getNumber()));
+        fe.setBarcodes(createBarcodesElement(frame.getRegions()));
+        return fe;
+    }
+    
+    private BarcodesElement createBarcodesElement(Collection<Region> regions) {
+        BarcodesElement be = elements.createBarcodesElement();
+        List<BarcodeElement> bes = be.getBarcode();
+        for (Region region : regions) {
+            Barcode barcode = region.getBarcode();
+            if (barcode == null) continue;
+            bes.add(createBarcodeElement(barcode));
+        }
+        return be;
+    }
+
+    private RegionsElement createRegionsElement(Collection<Region> regions) {
+        RegionsElement re = elements.createRegionsElement();
+        List<RegionElement> res = re.getRegion();
+        for (Region region : regions) {
+            res.add(createRegionElement(region));
+        }
+        return re;
+    }
+    
+    private RegionElement createRegionElement(Region region) {
+        RegionElement re = elements.createRegionElement();
+        re.setCoverage(region.getCoverage());
+        Barcode barcode = region.getBarcode();
+        if (barcode != null) {
+            re.setBarcode(createBarcodeElement(barcode));
+        }
+        List<String> pes = re.getPolygon();
+        ConvexPolygon polygon = region.getConvexPolygon();
+        Point[] points = polygon.getPoints();
+        for (Point p : points) {
+            pes.add(p.getX() + "," + p.getY());
+        }
+        return re;
+    }
+    
+    private BarcodeElement createBarcodeElement(Barcode barcode) {
+        BarcodeElement be = elements.createBarcodeElement();
+        be.setId(barcode.getType().toString() + "_" + barcode.getText());
+        be.setRaw(barcode.getRaw());
+        be.setText(barcode.getText());
+        be.setType(type2format.get(barcode.getType()));
+        be.setPoints(createPointsElement(barcode.getAnchorPoints()));
+        return be;
+    }
+
+    private PointsElement createPointsElement(Point[] points) {
+        PointsElement pe = elements.createPointsElement();
+        List<PointElement> pes = pe.getPoint();
+        for (Point p : points) {
+            pes.add(createPointElement(p));
+        }
+        return pe;
+    }
+
+    private PointElement createPointElement(Point p) {
+        PointElement pe = elements.createPointElement();
+        pe.setX(p.getX());
+        pe.setY(p.getY());
+        return pe;
+    }
+
+    private Collection<Region> restoreRegions(RegionsElement e) {
+        List<RegionElement> res = e.getRegion();
+        LinkedList<Region> regions = new LinkedList<Region>();
+        for (RegionElement re : res) {
+            regions.add(restoreRegion(re));
+        }
+        return regions;
+    }
+    
+    private Region restoreRegion(RegionElement e) {
+        double coverage = e.getCoverage();
+        ConvexPolygon polygon = restorePolygon(e.getPolygon());
+        Region region = new Region(polygon, coverage);
+        region.setBarcode(restoreBarcode((BarcodeElement) e.getBarcode()));
+        return region;
+    }
+    
+    private Barcode restoreBarcode(BarcodeElement e) {
+        String text = e.getText();
+        byte[] raw = e.getRaw();
+        BarcodeType type = format2type.get(e.getType());
+        Point[] points = restorePoints(e.getPoints());
+        return new Barcode(type, text, raw, points);
+    }
+    
+    private Point[] restorePoints(PointsElement e) {
+        List<PointElement> pes = e.getPoint();
+        Point[] points = new Point[pes.size()];
+        int i = 0;
+        for (PointElement pe : pes) {
+            points[i++] = new Point(pe.getX(), pe.getY());
+        }
+        return points;
+    }
+    
+    private GenericConvexPolygon restorePolygon(List<String> ps) {
+        Point[] points = new Point[ps.size()];
+        int i = 0;
+        for (String s : ps) {
+            int p = s.indexOf(',');
+            String sx = s.substring(0, p);
+            String sy = s.substring(p + 1);
+            points[i++] = new Point(Double.valueOf(sx), Double.valueOf(sy));
+        }
+        return new GenericConvexPolygon(points);
+    }
+    
+    private static EnumMap<BarcodeFormat, BarcodeType> format2type;
+    private static EnumMap<BarcodeType, BarcodeFormat> type2format;
+    
+    static {
+        format2type = new EnumMap<BarcodeFormat, BarcodeType>(BarcodeFormat.class);
+        type2format = new EnumMap<BarcodeType, BarcodeFormat>(BarcodeType.class);
+        
+        for (BarcodeType type : BarcodeType.values()) {
+            format2type.put(BarcodeFormat.fromValue(type.value()), type);
+        }
+        
+        for (Entry<BarcodeFormat, BarcodeType> e : format2type.entrySet()) {
+            type2format.put(e.getValue(), e.getKey());
+        }
+    }
+    
+}

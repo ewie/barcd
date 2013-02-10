@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jxb:bindings xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+              xmlns:xs="http://www.w3.org/2001/XMLSchema"
+              jxb:version="2.0">
+  <jxb:bindings schemaLocation="barcd.xsd" node="/xs:schema">
+    <jxb:bindings node="//xs:complexType[@name='BarcodeType']">
+      <jxb:class name="BarcodeElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='BarcodesType']">
+      <jxb:class name="BarcodesElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='ImageSequenceType']">
+      <jxb:class name="ImageSequenceElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='ImagesType']">
+      <jxb:class name="ImagesElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='FrameType']">
+      <jxb:class name="FrameElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='JobType']">
+      <jxb:class name="JobElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='PointType']">
+      <jxb:class name="PointElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='PointsType']">
+      <jxb:class name="PointsElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='RangeType']">
+      <jxb:class name="RangeElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='RegionType']">
+      <jxb:class name="RegionElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='RegionsType']">
+      <jxb:class name="RegionsElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='ResourceType']">
+      <jxb:class name="ResourceElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='SourceType']">
+      <jxb:class name="SourceElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='URLTemplateType']">
+      <jxb:class name="URLTemplateElement"/>
+    </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='VideoDeviceType']">
+      <jxb:class name="VideoDeviceElement"/>
+    </jxb:bindings>
+  </jxb:bindings>
+</jxb:bindings>
