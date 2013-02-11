@@ -79,7 +79,6 @@ public class RegionHash {
 
     private static final long P = 73856093;
     private static final long Q = 19349663;
-    private static final long R = 83492791;
     
     private int getIndex(int x, int y) {
         return (int) (computeHash(x, y) % table.length);

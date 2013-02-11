@@ -29,8 +29,6 @@ public class TemplatedURLSequence implements Iterable<URL> {
      * @param tag
      * @param range
      * @param padding
-     * 
-     * @throws MalformedURLException if the URL is not valid
      */
     public TemplatedURLSequence(URL template, String tag, Range range, int padding)
     {
