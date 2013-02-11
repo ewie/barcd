@@ -54,16 +54,30 @@ public class OrientedRectangle extends Rectangle {
      */
     public static OrientedRectangle createFromPolygon(ConvexPolygon polygon) {
         Point[] hull = polygon.getPoints();
-        double[] boxx = new double[4];
-        double[] boxy = new double[4];
+        
+        // The vertices of the minimum area rectangle.
+        double[] boxx = new double[3];
+        double[] boxy = new double[3];
+        
         double minArea = Double.MAX_VALUE;
+        
+        // The inverse rotation angle of the minimum area rectangle.
         double invAngle = 0;
+        
+        // Compute the minimum area enclosing rectangle using an approach
+        // similar to rotation calipers. But in contrast to rotation a set of
+        // calipers around the polygon we rotate the polygon for each edge so
+        // the current edge coincides with the x-axis. We then compute the
+        // axis-aligned bounding rectangle and remember it as the (rotated)
+        // minimum are rectangle. Because the polygons are usually made up of
+        // just a few (empirical evidence: ~20 vertices) vertices this method is
+        // efficient enough.
         for (int i = 0; i < hull.length; ++i) {
             Point p = hull[i];
             Point q = hull[(i+1) % hull.length];
             double dx = q.getX() - p.getX();
             double dy = q.getY() - p.getY();
-            double angle = Math.acos(dx / (Math.sqrt(dx*dx + dy*dy)));
+            double angle = Math.acos(dx / Math.sqrt(dx*dx + dy*dy));
             double c = Math.cos(angle);
             double s = Math.sin(angle);
             double minX = Double.POSITIVE_INFINITY;
@@ -85,22 +99,23 @@ public class OrientedRectangle extends Rectangle {
                 invAngle = -angle;
                 boxx[0] = minX;
                 boxx[1] = maxX;
-                boxx[2] = maxX;
-                boxx[3] = minX;
+                boxx[2] = minX;
                 boxy[0] = minY;
                 boxy[1] = minY;
                 boxy[2] = maxY;
-                boxy[3] = maxY;
             }
         }
+        
+        // Rotate the minimum area rectangle back using the inverse angle.
         double c = Math.cos(invAngle);
         double s = Math.sin(invAngle);
-        Point[] box = new Point[4];
-        for (int i = 0; i < 4; ++i) {
+        Point[] box = new Point[3];
+        for (int i = 0; i < 3; ++i) {
             box[i] = new Point(
                 boxx[i] * c + boxy[i] * -s,
                 boxx[i] * s + boxy[i] * c);
         }
-        return new OrientedRectangle(box[0], box[1], box[3]);
+        
+        return new OrientedRectangle(box[0], box[1], box[2]);
     }
 }
