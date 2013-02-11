@@ -123,7 +123,7 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
 
     private VideoDeviceElement createVideoDeviceElement(VideoDeviceSource source) {
         VideoDeviceElement vde = elements.createVideoDeviceElement();
-        vde.setId(source.getDeviceId());
+        vde.setNumber(source.getDeviceNumber());
         return vde;
     }
 
@@ -142,7 +142,7 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
         {
             VideoDeviceElement ve = e.getDevice();
             if (ve != null) {
-                return new VideoDeviceSource(ve.getId());
+                return new VideoDeviceSource(ve.getNumber());
             }
         }
         {

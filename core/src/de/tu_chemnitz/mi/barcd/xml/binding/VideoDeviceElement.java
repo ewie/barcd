@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType name="VideoDeviceType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="id" use="required" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}uint" />
+ *       &lt;attribute name="number" use="required" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}uint" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -35,23 +35,23 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "VideoDeviceType")
 public class VideoDeviceElement {
 
-    @XmlAttribute(name = "id", required = true)
-    protected int id;
+    @XmlAttribute(name = "number", required = true)
+    protected int number;
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the number property.
      * 
      */
-    public int getId() {
-        return id;
+    public int getNumber() {
+        return number;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the number property.
      * 
      */
-    public void setId(int value) {
-        this.id = value;
+    public void setNumber(int value) {
+        this.number = value;
     }
 
 }

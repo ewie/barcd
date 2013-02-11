@@ -17,7 +17,7 @@ public class OpenCVFileFrameReader extends OpenCVFrameReader {
     /**
      * @return the URL of the file this frame reader is using
      */
-    public Object getURL() {
+    public URL getURL() {
         return url;
     }
 

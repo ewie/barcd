@@ -8,19 +8,20 @@ import de.tu_chemnitz.mi.barcd.video.FrameReaderException;
 import de.tu_chemnitz.mi.barcd.video.OpenCVDeviceFrameReader;
 
 /**
- * An image source using a camera device addressed through its ID.
+ * An image source using a camera device addressed by its number (0 for the
+ * first device, 1 for the second device, etc).
  * 
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class VideoDeviceSource implements Source {
-    private int deviceId;
+    private int deviceNumber;
     
-    public VideoDeviceSource(int deviceId) {
-        this.deviceId = deviceId;
+    public VideoDeviceSource(int deviceNumber) {
+        this.deviceNumber = deviceNumber;
     }
     
-    public int getDeviceId() {
-        return deviceId;
+    public int getDeviceNumber() {
+        return deviceNumber;
     }
     
     @Override
@@ -28,7 +29,7 @@ public class VideoDeviceSource implements Source {
         throws ImageProviderException
     {
         try {
-            FrameReader fr = OpenCVDeviceFrameReader.open(deviceId);
+            FrameReader fr = OpenCVDeviceFrameReader.open(deviceNumber);
             return new VideoImageProvider(fr);
         } catch (FrameReaderException ex) {
             throw new ImageProviderException("cannot create image provider", ex);
