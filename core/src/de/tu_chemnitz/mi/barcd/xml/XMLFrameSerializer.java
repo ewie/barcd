@@ -1,6 +1,5 @@
 package de.tu_chemnitz.mi.barcd.xml;
 
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.LinkedList;
@@ -38,7 +37,7 @@ public class XMLFrameSerializer extends XMLSerializer<Frame> {
         throws XMLSerializerException
     {
         FrameElement fe = (FrameElement) e.getValue();
-        int number = fe.getNumber().intValue();
+        int number = fe.getNumber();
         Collection<Region> regions = restoreRegions(fe.getRegions());
         return new Frame(number, regions);
     }
@@ -53,7 +52,7 @@ public class XMLFrameSerializer extends XMLSerializer<Frame> {
     private FrameElement createFrameElement(Frame frame) {
         FrameElement fe = elements.createFrameElement();
         fe.setRegions(createRegionsElement(frame.getRegions()));
-        fe.setNumber(BigInteger.valueOf(frame.getNumber()));
+        fe.setNumber(frame.getNumber());
         fe.setBarcodes(createBarcodesElement(frame.getRegions()));
         return fe;
     }

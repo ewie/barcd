@@ -16,6 +16,29 @@
           <target>1.7</target>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.google.code.maven-replacer-plugin</groupId>
+        <artifactId>maven-replacer-plugin</artifactId>
+        <version>1.3.8</version>
+        <executions>
+          <execution> 
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>replace</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <includes>
+            <include>src/de/tu_chemnitz/mi/barcd/xml/binding/*.java</include>
+          </includes>
+          <token>^// Generated on.*$</token>
+          <value>// Generated on: [TEXT REMOVED by com.google.code.maven-replacer-plugin]</value>
+          <regexFlags>
+            <regexFlag>MULTILINE</regexFlag>
+          </regexFlags>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <organization>

@@ -7,10 +7,16 @@
   <xs:element name="job" type="JobType"/>
   <xs:element name="frame" type="FrameType"/>
   
+  <xs:simpleType name="uint">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
   <xs:complexType name="JobType">
     <xs:all>
       <xs:element name="source" type="SourceType"/>
-      <xs:element name="next-frame-number" type="xs:nonNegativeInteger" minOccurs="0" default="0"/>
+      <xs:element name="next-frame-number" type="uint" minOccurs="0" default="0"/>
     </xs:all>
   </xs:complexType>
   
@@ -25,7 +31,7 @@
   </xs:complexType>
   
   <xs:complexType name="VideoDeviceType">
-    <xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+    <xs:attribute name="id" type="uint" use="required"/>
   </xs:complexType>
   
   <xs:complexType name="ResourceType">
@@ -43,15 +49,15 @@
     <xs:simpleContent>
       <xs:extension base="xs:anyURI">
         <xs:attribute name="tag" type="xs:string" use="required"/>
-        <xs:attribute name="padding" type="xs:nonNegativeInteger" default="0"/>
+        <xs:attribute name="padding" type="uint" default="0"/>
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
   
   <xs:complexType name="RangeType">
-    <xs:attribute name="start" type="xs:nonNegativeInteger" default="0"/>
-    <xs:attribute name="end" type="xs:nonNegativeInteger"/>
-    <xs:attribute name="step" type="xs:integer" default="1"/>
+    <xs:attribute name="start" type="uint" default="0"/>
+    <xs:attribute name="end" type="uint"/>
+    <xs:attribute name="step" type="xs:int" default="1"/>
   </xs:complexType>
   
   <xs:complexType name="ImagesType">
@@ -62,7 +68,7 @@
   
   <xs:complexType name="FrameType">
     <xs:all>
-      <xs:element name="number" type="xs:nonNegativeInteger"/>
+      <xs:element name="number" type="uint"/>
       <xs:element name="barcodes" type="BarcodesType"/>
       <xs:element name="regions" type="RegionsType"/>
     </xs:all>

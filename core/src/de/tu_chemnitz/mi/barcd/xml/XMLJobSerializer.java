@@ -1,6 +1,5 @@
 package de.tu_chemnitz.mi.barcd.xml;
 
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
     {
         JobElement je = elements.createJobElement();
         je.setSource(createSourceElement(job.getSource()));
-        je.setNextFrameNumber(BigInteger.valueOf(job.getNextFrameNumber()));
+        je.setNextFrameNumber(job.getNextFrameNumber());
         return je;
     }
     
@@ -108,13 +107,13 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
         String url = relativizeUrl(tus.getTemplate()).toString();
         ute.setValue(url);
         ute.setTag(tus.getTag());
-        ute.setPadding(BigInteger.valueOf(tus.getPadding()));
+        ute.setPadding(tus.getPadding());
 
         RangeElement re = elements.createRangeElement();
         Range r = tus.getRange();
-        re.setStart(BigInteger.valueOf(r.getStart()));
-        re.setEnd(BigInteger.valueOf(r.getEnd()));
-        re.setStep(BigInteger.valueOf(r.getStep()));
+        re.setStart(r.getStart());
+        re.setEnd(r.getEnd());
+        re.setStep(r.getStep());
 
         ImageSequenceElement ise = elements.createImageSequenceElement();
         ise.setTemplate(ute);
@@ -124,7 +123,7 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
 
     private VideoDeviceElement createVideoDeviceElement(VideoDeviceSource source) {
         VideoDeviceElement vde = elements.createVideoDeviceElement();
-        vde.setId(BigInteger.valueOf(source.getDeviceId()));
+        vde.setId(source.getDeviceId());
         return vde;
     }
 
@@ -143,7 +142,7 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
         {
             VideoDeviceElement ve = e.getDevice();
             if (ve != null) {
-                return new VideoDeviceSource(ve.getId().intValue());
+                return new VideoDeviceSource(ve.getId());
             }
         }
         {
@@ -191,10 +190,10 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
                 
                 URL url = resolveUrl(ute.getValue());
                 
-                Range range = new Range(re.getStart().intValue(),
-                    re.getEnd().intValue(), re.getStep().intValue());
+                Range range = new Range(re.getStart(),
+                    re.getEnd().intValue(), re.getStep());
                 TemplatedURLSequence seq = new TemplatedURLSequence(url,
-                    ute.getTag(), range, ute.getPadding().intValue());
+                    ute.getTag(), range, ute.getPadding());
                 return new ImageSequenceSource(seq);
             }
         }
