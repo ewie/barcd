@@ -6,42 +6,67 @@ package de.tu_chemnitz.mi.barcd.geometry;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class OrientedRectangle extends Rectangle {
-    private Point p;
-    private Vector v;
-    private Vector w;
+    private Point origin;
+    private Vector width;
+    private Vector height;
     
-    public OrientedRectangle(Point p, Point q, Point r) {
-        this.p = p;
-        v = new Vector(p, q);
-        w = new Vector(p, r);
-        if (Math.abs(v.getAngle(w)) > 1e-5) {
-            throw new IllegalArgumentException("the given points must form a right angle");
+    /**
+     * Create an oriented rectangle from a vertex and two vectors enclosing a
+     * right angle in vertex {@code origin}.
+     * 
+     * @param origin a vertex of the rectangle
+     * @param width the vector determining the rectangle's width
+     * @param height the vector determining the rectangle's height
+     * 
+     * @throws IllegalArgumentException
+     *   if {@code width} and {@code height} do not enclose a right angle
+     */
+    public OrientedRectangle(Point origin, Vector width, Vector height) {
+        this.origin = origin;
+        this.width = width;
+        this.height = height;
+        if (Math.abs(width.getAngle(height)) > 1e-5) {
+            throw new IllegalArgumentException("the vectors must form a right angle");
         }
+    }
+    
+    /**
+     * Create an oriented rectangle from three vertices.
+     * 
+     * @param origin a vertex of the rectangle
+     * @param q a vertex forming the width vector with {@code origin}
+     * @param r a vertex forming the height vector with {@code origin}
+     * 
+     * @throws IllegalArgumentException
+     *   if the angle at {@code origin} is no right angle
+     */
+    public OrientedRectangle(Point origin, Point q, Point r) {
+        this(origin, new Vector(origin, q), new Vector(origin, r));
     }
     
     /**
      * @return the angle of rotation
      */
     public double getRotationAngle() {
-        return v.getAngle(new Vector(1, 0));
+        return width.getAngle(new Vector(1, 0));
     }
     
     @Override
     public double getWidth() {
-        return v.getLength();
+        return width.getLength();
     }
     
     @Override
     public double getHeight() {
-        return w.getLength();
+        return height.getLength();
     }
     
     @Override
     public Point[] getPoints() {
-        Point q = p.translate(v);
-        Point r = q.translate(w);
-        Point s = p.translate(w);
-        return new Point[] { p, q, r, s };
+        Point p = origin.translate(width);
+        Point q = p.translate(height);
+        Point r = origin.translate(height);
+        return new Point[] { origin, p, q, r };
     }
     
     /**
