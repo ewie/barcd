@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *       &lt;all>
  *         &lt;element name="type" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}BarcodeFormat"/>
  *         &lt;element name="text" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="raw" type="{http://www.w3.org/2001/XMLSchema}hexBinary" minOccurs="0"/>
+ *         &lt;element name="bytes" type="{http://www.w3.org/2001/XMLSchema}hexBinary" minOccurs="0"/>
  *         &lt;element name="points" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}PointsType"/>
  *       &lt;/all>
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" />
@@ -56,7 +56,7 @@ public class BarcodeElement {
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(HexBinaryAdapter.class)
     @XmlSchemaType(name = "hexBinary")
-    protected byte[] raw;
+    protected byte[] bytes;
     @XmlElement(required = true)
     protected PointsElement points;
     @XmlAttribute(name = "id", required = true)
@@ -114,27 +114,27 @@ public class BarcodeElement {
     }
 
     /**
-     * Gets the value of the raw property.
+     * Gets the value of the bytes property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public byte[] getRaw() {
-        return raw;
+    public byte[] getBytes() {
+        return bytes;
     }
 
     /**
-     * Sets the value of the raw property.
+     * Sets the value of the bytes property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setRaw(byte[] value) {
-        this.raw = value;
+    public void setBytes(byte[] value) {
+        this.bytes = value;
     }
 
     /**

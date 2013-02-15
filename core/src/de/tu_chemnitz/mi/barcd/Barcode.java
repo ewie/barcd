@@ -10,14 +10,14 @@ public class Barcode {
     
     private String text;
     
-    private byte[] raw;
+    private byte[] bytes;
     
     private Point[] anchorPoints;
     
-    public Barcode(BarcodeType type, String text, byte[] raw, Point[] anchorPoints) {
+    public Barcode(BarcodeType type, String text, byte[] bytes, Point[] anchorPoints) {
         this.type = type;
         this.text = text;
-        this.raw = raw;
+        this.bytes = bytes;
         this.anchorPoints = anchorPoints;
     }
     
@@ -29,8 +29,8 @@ public class Barcode {
         return text;
     }
     
-    public byte[] getRaw() {
-        return raw;
+    public byte[] getBytes() {
+        return bytes;
     }
     
     public Point[] getAnchorPoints() {

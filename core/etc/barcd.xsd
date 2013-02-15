@@ -132,7 +132,7 @@
     <xs:all>
       <xs:element name="type" type="BarcodeFormat"/>
       <xs:element name="text" type="xs:string"/>
-      <xs:element name="raw" type="xs:hexBinary" minOccurs="0"/>
+      <xs:element name="bytes" type="xs:hexBinary" minOccurs="0"/>
       <xs:element name="points" type="PointsType"/>
     </xs:all>
     <xs:attribute name="id" type="xs:ID" use="required"/>

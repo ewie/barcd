@@ -96,7 +96,7 @@ public class XMLFrameSerializer extends XMLSerializer<Frame> {
     private BarcodeElement createBarcodeElement(Barcode barcode) {
         BarcodeElement be = elements.createBarcodeElement();
         be.setId(barcode.getType().toString() + "_" + barcode.getText());
-        be.setRaw(barcode.getRaw());
+        be.setBytes(barcode.getBytes());
         be.setText(barcode.getText());
         be.setType(type2format.get(barcode.getType()));
         be.setPoints(createPointsElement(barcode.getAnchorPoints()));
@@ -138,7 +138,7 @@ public class XMLFrameSerializer extends XMLSerializer<Frame> {
     
     private Barcode restoreBarcode(BarcodeElement e) {
         String text = e.getText();
-        byte[] raw = e.getRaw();
+        byte[] raw = e.getBytes();
         BarcodeType type = format2type.get(e.getType());
         Point[] points = restorePoints(e.getPoints());
         return new Barcode(type, text, raw, points);
