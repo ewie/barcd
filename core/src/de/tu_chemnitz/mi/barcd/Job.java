@@ -7,6 +7,8 @@ import java.util.LinkedList;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Job {
+    public static final int INITIAL_FRAME_NUMBER = 0;
+    
     private Source source;
     
     private Collection<Frame> frames;
@@ -20,7 +22,7 @@ public class Job {
     }
     
     public Job(Source source) {
-        this(source, 0);
+        this(source, INITIAL_FRAME_NUMBER);
     }
     
     public Source getSource() {
