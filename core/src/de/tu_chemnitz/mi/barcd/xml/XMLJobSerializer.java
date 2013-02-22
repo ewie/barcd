@@ -45,8 +45,12 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
     {
         JobElement je = (JobElement) e.getValue();
         Source source = restoreImageSource(je.getSource());
-        int nextFrameNumber = je.getNextFrameNumber().intValue();
-        return new Job(source, nextFrameNumber);
+        Integer nextFrameNumber = je.getNextFrameNumber();
+        if (nextFrameNumber == null) {
+            return new Job(source);
+        } else {
+            return new Job(source, nextFrameNumber.intValue());
+        }
     }
 
     @Override
