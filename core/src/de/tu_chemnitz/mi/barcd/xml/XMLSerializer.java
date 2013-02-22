@@ -398,12 +398,14 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
         throws XMLSerializerException
     {
         Unmarshaller u = createUnmarshaller();
-        ValidationEventCollector v;
+        ValidationEventCollector v = null;
         
-        try {
-            v = (ValidationEventCollector) u.getEventHandler();
-        } catch (JAXBException ex) {
-            throw new RuntimeException("could not retrieve validation event collector of the JAXB unmarshaller", ex);
+        if (validate) {
+            try {
+                v = (ValidationEventCollector) u.getEventHandler();
+            } catch (JAXBException ex) {
+                throw new RuntimeException("could not retrieve validation event collector of the JAXB unmarshaller", ex);
+            }
         }
 
         JAXBElement<?> e;
