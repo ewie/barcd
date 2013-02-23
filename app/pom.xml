@@ -3,6 +3,7 @@
   <groupId>de.tu_chemnitz.mi.barcd</groupId>
   <artifactId>barcd-app</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <name>barcd-app</name>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -14,9 +15,35 @@
           <target>1.7</target>
         </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <mainClass>de.tu_chemnitz.mi.barcd.app.Application</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
+  	<dependency>
+  		<groupId>org.apache.mahout.commons</groupId>
+  		<artifactId>commons-cli</artifactId>
+  		<version>2.0-mahout</version>
+  	</dependency>
   	<dependency>
   		<groupId>de.tu_chemnitz.mi.barcd</groupId>
   		<artifactId>barcd-core</artifactId>
