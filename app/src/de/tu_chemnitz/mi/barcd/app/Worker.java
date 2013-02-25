@@ -1,51 +1,49 @@
 package de.tu_chemnitz.mi.barcd.app;
 
-import de.tu_chemnitz.mi.barcd.Extractor;
-import de.tu_chemnitz.mi.barcd.ImageProviderException;
 
 /**
+ * An implementation of {@link Runnable} allowing exceptions to be thrown which
+ * will then be wrapped in a {@link WorkerException}. Because {@link Runnable}
+ * cannot throw exceptions from {@link Runnable#run()}.
+ * 
+ * Also allows the routine to be terminated from the outside.
+ * 
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class Worker implements Runnable {
-    public static interface ExceptionHandler {
-        public void handle(Exception exception);
-    }
+public abstract class Worker implements Runnable {
+    private boolean terminated = false;
     
-    private Extractor extractor;
-    
-    private ExceptionHandler exceptionHandler;
-    
-    private boolean terminated;
-
-    public Worker(Extractor extractor) {
-        this.extractor = extractor;
-        terminated = false;
-    }
-    
-    public void teminate() {
+    public void terminate() {
         terminated = true;
     }
     
-    public void setExceptionHandler(ExceptionHandler handler) {
-        this.exceptionHandler = handler;
+    public boolean isTerminated() {
+        return terminated;
     }
 
     /**
-     * @throws RuntimeException
-     *   if the extractor throws an exception and no exception handler is set
+     * Invokes {@link #work()} and delegates any thrown exception to the
+     * registered exception handler.
+     * 
+     * @throws RuntimeException if no exception handler is set
      */
     @Override
-    public void run() {
+    public final void run() {
         try {
-            while (!terminated) {
-                extractor.processNextImage();
-            }
-        } catch (ImageProviderException ex) {
-            if (exceptionHandler == null) {
-                throw new RuntimeException(ex);
-            } else {
-                exceptionHandler.handle(ex);
-            }
+            work();
+        } catch (WorkerException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new WorkerException(ex);
         }
     }
+    
+    /**
+     * Implements the actual worker routine.
+     * 
+     * @throws Exception
+     * 
+     * @see Runnable#run
+     */
+    public abstract void work() throws Exception;
 }

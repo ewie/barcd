@@ -12,23 +12,23 @@ import java.util.HashMap;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Terminal {
-    public static interface Handler {
+    public static interface Routine {
         public void execute(Terminal terminal);
     }
     
     public static class Command {
         private String name;
         private String description;
-        private Handler handler;
+        private Routine routine;
 
-        public Command(String name, Handler handler, String description) {
+        public Command(String name, Routine routine, String description) {
             this.name = name;
             this.description = description;
-            this.handler = handler;
+            this.routine = routine;
         }
 
-        public Command(String name, Handler handler) {
-            this(name, handler, null);
+        public Command(String name, Routine routine) {
+            this(name, routine, null);
         }
         
         public final String getName() {
@@ -40,7 +40,7 @@ public class Terminal {
         }
         
         public void execute(Terminal terminal) {
-            handler.execute(terminal);
+            routine.execute(terminal);
         }
     }
     
