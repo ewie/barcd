@@ -15,6 +15,10 @@ import de.tu_chemnitz.mi.barcd.util.RegionHash;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Extractor {
+    public static interface FrameHandler {
+        public void handleFrame(Frame frame);
+    }
+    
     private RegionExtractor hfr = new RegionExtractor();
     
     private RegionFilter regionFilter = new RegionFilter() {
@@ -48,6 +52,8 @@ public class Extractor {
     
     private int epoch = 0;
 
+    private FrameHandler frameHandler;
+
     public Extractor(Job job)
         throws ImageProviderException
     {
@@ -65,6 +71,10 @@ public class Extractor {
     
     public void setDecoder(Decoder decoder) {
         this.decoder = decoder;
+    }
+    
+    public void setFrameHandler(FrameHandler frameHandler) {
+        this.frameHandler = frameHandler;
     }
     
     public boolean hasMoreImages() {
@@ -107,6 +117,14 @@ public class Extractor {
         }
         
         epoch += 1;
+        
+        reportFrame(frame);
+    }
+    
+    private void reportFrame(Frame frame) {
+        if (frameHandler != null) {
+            frameHandler.handleFrame(frame);
+        }
     }
     
     private void displayRegions(BufferedImage image, Region[] regions) {
