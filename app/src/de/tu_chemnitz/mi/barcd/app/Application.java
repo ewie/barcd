@@ -29,6 +29,8 @@ import de.tu_chemnitz.mi.barcd.xml.XMLSerializerException;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Application extends Worker {
+    private static final String TERMINAL_PREFIX = "barcd>";
+    
     private Job job;
     
     private Extractor extractor;
@@ -192,7 +194,7 @@ public class Application extends Worker {
     {
         Terminal terminal = new Terminal(System.in, System.out);
         
-        terminal.setPrefix(">>>");
+        terminal.setPrefix(TERMINAL_PREFIX);
         
         Routine stopRoutine = new Routine() {
             @Override
