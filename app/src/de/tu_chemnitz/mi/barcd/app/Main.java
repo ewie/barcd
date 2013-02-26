@@ -8,7 +8,9 @@ public class Main {
         try {
             Application app = new Application(args);
             app.run();
-        } catch (WorkerException | ApplicationException ex) {
+        } catch (WorkerException ex) {
+            System.err.println(ex.getMessage());
+        } catch (ApplicationException ex) {
             System.err.println(ex.getMessage());
         }
     }

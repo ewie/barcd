@@ -86,7 +86,9 @@ public class Application extends Worker {
         try {
             URL frameUrl = options.getFrames().getURL(frame.getNumber());
             frameUri = frameUrl.toURI();
-        } catch (MalformedURLException | URISyntaxException ex) {
+        } catch (MalformedURLException ex) {
+            throw new ApplicationException("invalid file URL for frame " + frame.getNumber(), ex);
+        } catch (URISyntaxException ex) {
             throw new ApplicationException("invalid file URL for frame " + frame.getNumber(), ex);
         }
         
