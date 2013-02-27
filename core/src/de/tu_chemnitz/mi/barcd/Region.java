@@ -34,8 +34,12 @@ public class Region {
     }
     
     public static Region createFromPoints(List<Point> points) {
+        return createFromPoints(points, points.size());
+    }
+    
+    public static Region createFromPoints(List<Point> points, int generatingPointCount) {
         GenericConvexPolygon polygon = GenericConvexPolygon.createFromConvexHull(points);
-        double coverage = points.size() / polygon.computeArea();
+        double coverage = generatingPointCount / polygon.computeArea();
         return new Region(polygon, coverage);
     }
     

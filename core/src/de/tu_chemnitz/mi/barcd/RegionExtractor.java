@@ -13,14 +13,18 @@ import java.util.Map;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.image.ConnectedComponentLabeler;
 import de.tu_chemnitz.mi.barcd.image.DilationOperator;
+import de.tu_chemnitz.mi.barcd.image.ScalingOperator;
 
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class RegionExtractor {
+    private static final int PROCESSING_IMAGE_WIDTH = 1000;
+    
     private ConvolveOp gx;
     private ConvolveOp gy;
     private DilationOperator dilate;
+    private ScalingOperator scale = new ScalingOperator();
 
     public RegionExtractor() {
         this.gx = new ConvolveOp(new Kernel(2, 2, new float[] {
@@ -37,9 +41,11 @@ public class RegionExtractor {
     }
     
     public Region[] detect(BufferedImage input) {
+        double scalingFactor = (double) input.getWidth() / PROCESSING_IMAGE_WIDTH;
+        input = scale.apply(input, PROCESSING_IMAGE_WIDTH);
         int[] g = gradient(input.getData());
         int[] s = segment(g, input.getWidth(), input.getHeight());
-        return regions(s, input.getWidth(), input.getHeight());
+        return regions(s, input.getWidth(), input.getHeight(), scalingFactor);
     }
     
     private int[] gradient(Raster input) {
@@ -79,7 +85,7 @@ public class RegionExtractor {
         return p;
     }
     
-    private Region[] regions(int[] input, int width, int height) {
+    private Region[] regions(int[] input, int width, int height, double scalingFactor) {
         ConnectedComponentLabeler ccl = new ConnectedComponentLabeler();
         int[][] labels = ccl.process(input, width, height);
         
@@ -92,15 +98,25 @@ public class RegionExtractor {
                 if (!labelPointsMap.containsKey(label)) {
                     labelPointsMap.put(label, new LinkedList<Point>());
                 }
-                labelPointsMap.get(label).add(new Point(x, y));
+                // Get the correct coordinates by applying the scaling factor.
+                Point p = new Point(x * scalingFactor, y * scalingFactor);
+                labelPointsMap.get(label).add(p);
             }
         }
         
         Region[] regions = new Region[labelPointsMap.size()];
         
+        double scalingFactor2 = scalingFactor * scalingFactor;
+        
         int i = 0;
         for (List<Point> points : labelPointsMap.values()) {
-            regions[i++] = Region.createFromPoints(points);
+            // Because we used a down-scaled image to extract a region's
+            // coordinates the number of coordinates is smaller than if had used
+            // image in its original size. Therefore we have to scale the
+            // number of generating coordinates by the squared scaling factor
+            // (the vertical and horizontal scaling factors are the same).
+            int generatingPointCount = (int) (points.size() * scalingFactor2);
+            regions[i++] = Region.createFromPoints(points, generatingPointCount);
         }
         
         return regions;

@@ -1,15 +1,20 @@
 package de.tu_chemnitz.mi.barcd;
 
+import java.awt.image.BufferedImage;
 import java.util.Collection;
 import java.util.LinkedList;
 
 /**
+ * TODO associate source image
+ * 
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Frame {
     private int number;
     
     private Collection<Region> regions;
+
+    private BufferedImage image;
     
     public Frame(int number, Collection<Region> regions) {
         this.number = number;
@@ -34,5 +39,13 @@ public class Frame {
 
     public void addRegion(Region region) {
         regions.add(region);
+    }
+    
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+    
+    public BufferedImage getImage() {
+        return image;
     }
 }

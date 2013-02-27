@@ -1,9 +1,6 @@
 package de.tu_chemnitz.mi.barcd;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 import de.tu_chemnitz.mi.barcd.geometry.OrientedRectangle;
@@ -84,14 +81,13 @@ public class Extractor {
     public void processNextImage()
         throws ImageProviderException
     {
-        BufferedImage image = consumeNextImage();
+        BufferedImage image = provider.consume();
         BufferedImage lum = createGrayscale(image);
         Region[] regions = hfr.detect(lum);
         
-        // XXX
-        displayRegions(image, regions);
-        
         Frame frame = job.createFrame();
+        
+        frame.setImage(image);
         
         for (Region r : regions) {
             if (!regionFilter.select(r)) continue;
@@ -127,40 +123,6 @@ public class Extractor {
         }
     }
     
-    private void displayRegions(BufferedImage image, Region[] regions) {
-        // Copy the image.
-        BufferedImage im = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
-        Graphics2D g = im.createGraphics();
-        g.drawImage(image, 0, 0, null);
-        
-        for (Region r : regions) {
-            if (!regionFilter.select(r)) continue;
-            
-            Polygon polygon = new Polygon();
-            for (Point p : r.getConvexPolygon().getPoints()) {
-                polygon.addPoint((int) p.getX(), (int) p.getY());
-            }
-            // TODO let Region assure coverage is in 0..1
-            float cov = (float) Math.max(0, Math.min(r.getCoverage(), 1));
-            g.setColor(new Color(1f, 0f, 0f, cov));
-            g.fillPolygon(polygon);
-        }
-        
-        g.dispose();
-        display.setImage(im);
-    }
-    
-    private BufferedImage consumeNextImage()
-        throws ImageProviderException
-    {
-        BufferedImage image = provider.consume();
-        // TODO make size configurable
-        if (image.getWidth() > 1000) {
-            image = scaleImage(image, 1000, (image.getHeight() * 1000) / image.getWidth());
-        }
-        return image;
-    }
-    
     private BufferedImage createGrayscale(BufferedImage in) {
         if (in.getType() == BufferedImage.TYPE_BYTE_GRAY) {
             return in;
@@ -168,18 +130,6 @@ public class Extractor {
         BufferedImage out = new BufferedImage(in.getWidth(), in.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
         Graphics2D g = out.createGraphics();
         g.drawImage(in, 0, 0, null);
-        g.dispose();
-        return out;
-    }
-    
-    private BufferedImage scaleImage(BufferedImage in, int width, int height) {
-        if (in.getWidth() == width && in.getHeight() == height) {
-            return in;
-        }
-        BufferedImage out = new BufferedImage(width, height, in.getType());
-        Graphics2D g = out.createGraphics();
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.drawImage(in, 0, 0, width, height, null);
         g.dispose();
         return out;
     }
