@@ -75,6 +75,21 @@ public class Application extends Worker {
         terminal = setupTerminal(extractionThread, extractionWorker);
     }
     
+    @Override
+    public void work()
+        throws Exception
+    {
+        extractionThread.start();
+        while (extractionThread.isAlive()) {
+            try {
+                terminal.processNextLine();
+            } catch (IOException ex) {
+                // TODO maybe just ignore?
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+    
     private void displayFrame(Frame frame) {
         BufferedImage image = frame.getImage();
         
@@ -103,21 +118,6 @@ public class Application extends Worker {
         
         g.dispose();
         display.setImage(im);
-    }
-    
-    @Override
-    public void work()
-        throws Exception
-    {
-        extractionThread.start();
-        while (extractionThread.isAlive()) {
-            try {
-                terminal.processNextLine();
-            } catch (IOException ex) {
-                // TODO maybe just ignore?
-                throw new RuntimeException(ex);
-            }
-        }
     }
     
     private void persistFrame(Frame frame)
