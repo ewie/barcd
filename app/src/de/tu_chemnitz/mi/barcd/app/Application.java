@@ -1,5 +1,9 @@
 package de.tu_chemnitz.mi.barcd.app;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,8 +23,10 @@ import de.tu_chemnitz.mi.barcd.Extractor.FrameHandler;
 import de.tu_chemnitz.mi.barcd.Frame;
 import de.tu_chemnitz.mi.barcd.ImageProviderException;
 import de.tu_chemnitz.mi.barcd.Job;
+import de.tu_chemnitz.mi.barcd.Region;
 import de.tu_chemnitz.mi.barcd.app.Terminal.Command;
 import de.tu_chemnitz.mi.barcd.app.Terminal.Routine;
+import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.xml.XMLFrameSerializer;
 import de.tu_chemnitz.mi.barcd.xml.XMLJobSerializer;
 import de.tu_chemnitz.mi.barcd.xml.XMLSerializerException;
@@ -40,6 +46,8 @@ public class Application extends Worker {
     private Terminal terminal;
 
     private CommandLineOptions options;
+    
+    private final VideoImageDisplay display = new VideoImageDisplay();
 
     public Application(String[] args)
         throws ApplicationException
@@ -55,6 +63,7 @@ public class Application extends Worker {
         extractionWorker.setFrameHandler(new FrameHandler() {
             @Override
             public void handleFrame(Frame frame) {
+                displayFrame(frame);
                 try {
                     persistFrame(frame);
                 } catch (ApplicationException ex) {
@@ -64,6 +73,36 @@ public class Application extends Worker {
         });
         extractionThread = new Thread(extractionWorker);
         terminal = setupTerminal(extractionThread, extractionWorker);
+    }
+    
+    private void displayFrame(Frame frame) {
+        BufferedImage image = frame.getImage();
+        
+        // Copy the image.
+        BufferedImage im = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+        Graphics2D g = im.createGraphics();
+        g.drawImage(image, 0, 0, null);
+        
+        for (Region r : frame.getRegions()) {
+            Polygon polygon = new Polygon();
+            for (Point p : r.getOrientedRectangle().getPoints()) {
+                polygon.addPoint((int) p.getX(), (int) p.getY());
+            }
+            // TODO let Region assure coverage is in 0..1
+            float cov = (float) Math.max(0, Math.min(r.getCoverage(), 1));
+            g.setColor(new Color(0f, 0f, 1f, cov));
+            g.fillPolygon(polygon);
+            
+            polygon = new Polygon();
+            for (Point p : r.getConvexPolygon().getPoints()) {
+                polygon.addPoint((int) p.getX(), (int) p.getY());
+            }
+            g.setColor(new Color(1f, 0f, 0f, cov));
+            g.fillPolygon(polygon);
+        }
+        
+        g.dispose();
+        display.setImage(im);
     }
     
     @Override
