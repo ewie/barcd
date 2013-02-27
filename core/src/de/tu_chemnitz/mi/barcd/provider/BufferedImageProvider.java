@@ -24,7 +24,7 @@ public class BufferedImageProvider implements ImageProvider {
     }
 
     @Override
-    public BufferedImage getNext()
+    public BufferedImage consume()
         throws ImageProviderException
     {
         BufferedImage image = images.next();

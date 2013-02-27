@@ -30,7 +30,7 @@ public class VideoImageProvider implements ImageProvider {
     }
 
     @Override
-    public BufferedImage getNext()
+    public BufferedImage consume()
         throws ImageProviderException
     {
         try {

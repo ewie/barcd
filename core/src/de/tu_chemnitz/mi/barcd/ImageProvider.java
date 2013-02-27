@@ -12,5 +12,5 @@ import java.awt.image.BufferedImage;
 public interface ImageProvider {
     public boolean hasMore();
     
-    public BufferedImage getNext() throws ImageProviderException;
+    public BufferedImage consume() throws ImageProviderException;
 }

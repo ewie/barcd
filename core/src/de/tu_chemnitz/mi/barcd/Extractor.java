@@ -153,7 +153,7 @@ public class Extractor {
     private BufferedImage consumeNextImage()
         throws ImageProviderException
     {
-        BufferedImage image = provider.getNext();
+        BufferedImage image = provider.consume();
         // TODO make size configurable
         if (image.getWidth() > 1000) {
             image = scaleImage(image, 1000, (image.getHeight() * 1000) / image.getWidth());

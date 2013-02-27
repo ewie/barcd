@@ -29,7 +29,7 @@ public class RemoteImageProvider implements ImageProvider {
     }
 
     @Override
-    public BufferedImage getNext()
+    public BufferedImage consume()
         throws ImageProviderException
     {
         try {
