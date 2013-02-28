@@ -5,8 +5,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 /**
- * TODO associate source image
- * 
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Frame {
