@@ -15,34 +15,68 @@
   
   <xs:complexType name="JobType">
     <xs:all>
-      <xs:element name="source" type="SourceType"/>
-      <xs:element name="next-frame-number" type="uint" minOccurs="0" default="0"/>
+      <xs:element name="source" type="SourceChoiceType"/>
     </xs:all>
   </xs:complexType>
   
-  <xs:complexType name="SourceType">
+  <xs:complexType name="SourceChoiceType">
     <xs:choice>
-      <xs:element name="device" type="VideoDeviceType"/>
-      <xs:element name="video" type="ResourceType"/>
-      <xs:element name="sequence" type="ImageSequenceType"/>
-      <xs:element name="images" type="ImagesType"/>
-      <xs:element name="snapshot" type="ResourceType"/>
+      <xs:element name="device" type="VideoDeviceSourceType"/>
+      <xs:element name="video" type="VideoStreamSourceType"/>
+      <xs:element name="sequence" type="ImageSequenceSourceType"/>
+      <xs:element name="images" type="ImageCollectionSourceType"/>
+      <xs:element name="snapshot" type="SnapshotSourceType"/>
     </xs:choice>
   </xs:complexType>
   
-  <xs:complexType name="VideoDeviceType">
-    <xs:attribute name="number" type="uint" use="required"/>
+  <xs:complexType name="SourceType">
+  </xs:complexType>
+  
+  <xs:complexType name="SeekableSourceType">
+    <xs:complexContent>
+      <xs:extension base="SourceType">
+        <xs:attribute name="initial-frame-number" type="uint" default="0"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="VideoDeviceSourceType">
+    <xs:complexContent>
+      <xs:extension base="SourceType">
+        <xs:attribute name="number" type="uint" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ImageSequenceSourceType">
+    <xs:complexContent>
+      <xs:extension base="SeekableSourceType">
+        <xs:all>
+          <xs:element name="template" type="URLTemplateType"/>
+          <xs:element name="range" type="RangeType"/>
+        </xs:all>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="VideoStreamSourceType">
+    <xs:complexContent>
+      <xs:extension base="SeekableSourceType">
+        <xs:attribute name="url" type="xs:anyURI" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="SnapshotSourceType">
+    <xs:complexContent>
+      <xs:extension base="SourceType">
+        <xs:attribute name="url" type="xs:anyURI" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
   
   <xs:complexType name="ResourceType">
     <xs:attribute name="url" type="xs:anyURI" use="required"/>
-  </xs:complexType>
-  
-  <xs:complexType name="ImageSequenceType">
-    <xs:all>
-      <xs:element name="template" type="URLTemplateType"/>
-      <xs:element name="range" type="RangeType"/>
-    </xs:all>
   </xs:complexType>
   
   <xs:complexType name="URLTemplateType">
@@ -60,10 +94,14 @@
     <xs:attribute name="step" type="xs:int" default="1"/>
   </xs:complexType>
   
-  <xs:complexType name="ImagesType">
-    <xs:sequence maxOccurs="unbounded">
-      <xs:element name="image" type="ResourceType"/>
-    </xs:sequence>
+  <xs:complexType name="ImageCollectionSourceType">
+    <xs:complexContent>
+      <xs:extension base="SeekableSourceType">
+        <xs:sequence maxOccurs="unbounded">
+          <xs:element name="image" type="ResourceType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
   
   <xs:complexType name="FrameType">

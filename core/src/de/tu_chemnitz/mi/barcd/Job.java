@@ -13,16 +13,9 @@ public class Job {
     
     private Collection<Frame> frames;
     
-    private int nextFrameNumber;
-    
-    public Job(Source source, int nextFrameNumber) {
+    public Job(Source source) {
         this.source = source;
         this.frames = new LinkedList<Frame>();
-        this.nextFrameNumber = nextFrameNumber;
-    }
-    
-    public Job(Source source) {
-        this(source, INITIAL_FRAME_NUMBER);
     }
     
     public Source getSource() {
@@ -40,12 +33,8 @@ public class Job {
     }
 
     public Frame createFrame() {
-        Frame frame = new Frame(nextFrameNumber++);
+        Frame frame = new Frame(frames.size());
         frames.add(frame);
         return frame;
-    }
-    
-    public int getNextFrameNumber() {
-        return nextFrameNumber;
     }
 }

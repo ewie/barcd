@@ -3,7 +3,6 @@ package de.tu_chemnitz.mi.barcd.xml;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
@@ -17,15 +16,17 @@ import de.tu_chemnitz.mi.barcd.source.VideoDeviceSource;
 import de.tu_chemnitz.mi.barcd.source.VideoStreamSource;
 import de.tu_chemnitz.mi.barcd.util.Range;
 import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequence;
-import de.tu_chemnitz.mi.barcd.xml.binding.ImageSequenceElement;
-import de.tu_chemnitz.mi.barcd.xml.binding.ImagesElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.ImageCollectionSourceElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.ImageSequenceSourceElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.JobElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.ObjectFactory;
 import de.tu_chemnitz.mi.barcd.xml.binding.RangeElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.ResourceElement;
-import de.tu_chemnitz.mi.barcd.xml.binding.SourceElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.SnapshotSourceElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.SourceChoiceElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.URLTemplateElement;
-import de.tu_chemnitz.mi.barcd.xml.binding.VideoDeviceElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.VideoDeviceSourceElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.VideoStreamSourceElement;
 
 /**
  * XML serializer/unserializer for {@link Job}.
@@ -45,12 +46,7 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
     {
         JobElement je = (JobElement) e.getValue();
         Source source = restoreImageSource(je.getSource());
-        Integer nextFrameNumber = je.getNextFrameNumber();
-        if (nextFrameNumber == null) {
-            return new Job(source);
-        } else {
-            return new Job(source, nextFrameNumber.intValue());
-        }
+        return new Job(source);
     }
 
     @Override
@@ -65,24 +61,23 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
     {
         JobElement je = elements.createJobElement();
         je.setSource(createSourceElement(job.getSource()));
-        je.setNextFrameNumber(job.getNextFrameNumber());
         return je;
     }
     
-    private SourceElement createSourceElement(Source source)
+    private SourceChoiceElement createSourceElement(Source source)
         throws XMLSerializerException
     {
-        SourceElement se = elements.createSourceElement();
+        SourceChoiceElement se = elements.createSourceChoiceElement();
         if (source instanceof VideoDeviceSource) {
-            se.setDevice(createVideoDeviceElement((VideoDeviceSource) source));
+            se.setDevice(createVideoDeviceSourceElement((VideoDeviceSource) source));
         } else if (source instanceof VideoStreamSource) {
-            se.setVideo(createResourceElement(((VideoStreamSource) source).getURL()));
+            se.setVideo(createVideoStreamSourceElement((VideoStreamSource) source));
         } else if (source instanceof ImageSequenceSource) {
-            se.setSequence(createImageSequenceElement((ImageSequenceSource) source));
+            se.setSequence(createImageSequenceSourceElement((ImageSequenceSource) source));
         } else if (source instanceof ImageCollectionSource) {
-            se.setImages(createImagesElement(((ImageCollectionSource) source).getURLs()));
+            se.setImages(createImageCollectionSourceElement((ImageCollectionSource) source));
         } else if (source instanceof ImageServiceSource) {
-            se.setSnapshot(createResourceElement(((ImageServiceSource) source).getURL()));
+            se.setSnapshot(createSnapshotSourceElement((ImageServiceSource) source));
         } else {
             throw new XMLSerializerException(
                 String.format("cannot serialize source (%s)",
@@ -91,18 +86,19 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
         return se;
     }
     
-    private ImagesElement createImagesElement(Collection<URL> files)
+    private ImageCollectionSourceElement createImageCollectionSourceElement(ImageCollectionSource source)
         throws XMLSerializerException
     {
-        ImagesElement ie = elements.createImagesElement();
+        ImageCollectionSourceElement ie = elements.createImageCollectionSourceElement();
         List<ResourceElement> fes = ie.getImage();
-        for (URL f : files) {
+        for (URL f : source.getURLs()) {
             fes.add(createResourceElement(f));
         }
+        ie.setInitialFrameNumber(source.getInitialFrameNumber());
         return ie;
     }
 
-    private ImageSequenceElement createImageSequenceElement(ImageSequenceSource source)
+    private ImageSequenceSourceElement createImageSequenceSourceElement(ImageSequenceSource source)
         throws XMLSerializerException
     {
         TemplatedURLSequence tus = source.getSequence();
@@ -119,16 +115,36 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
         re.setEnd(r.getEnd());
         re.setStep(r.getStep());
 
-        ImageSequenceElement ise = elements.createImageSequenceElement();
+        ImageSequenceSourceElement ise = elements.createImageSequenceSourceElement();
         ise.setTemplate(ute);
         ise.setRange(re);
+        ise.setInitialFrameNumber(source.getInitialFrameNumber());
         return ise;
     }
 
-    private VideoDeviceElement createVideoDeviceElement(VideoDeviceSource source) {
-        VideoDeviceElement vde = elements.createVideoDeviceElement();
+    private VideoDeviceSourceElement createVideoDeviceSourceElement(VideoDeviceSource source) {
+        VideoDeviceSourceElement vde = elements.createVideoDeviceSourceElement();
         vde.setNumber(source.getDeviceNumber());
         return vde;
+    }
+    
+    private VideoStreamSourceElement createVideoStreamSourceElement(VideoStreamSource source)
+        throws XMLSerializerException
+    {
+        VideoStreamSourceElement vsse = elements.createVideoStreamSourceElement();
+        URL rurl = relativizeUrl(source.getURL());
+        vsse.setUrl(rurl.toString());
+        vsse.setInitialFrameNumber(source.getInitialFrameNumber());
+        return vsse;
+    }
+    
+    private SnapshotSourceElement createSnapshotSourceElement(ImageServiceSource source)
+        throws XMLSerializerException
+    {
+        SnapshotSourceElement sse = elements.createSnapshotSourceElement();
+        URL rurl = relativizeUrl(source.getURL());
+        sse.setUrl(rurl.toString());
+        return sse;
     }
 
     private ResourceElement createResourceElement(URL url)
@@ -140,28 +156,30 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
         return fe;
     }
     
-    private Source restoreImageSource(SourceElement e)
+    private Source restoreImageSource(SourceChoiceElement e)
         throws XMLSerializerException
     {
         {
-            VideoDeviceElement ve = e.getDevice();
+            VideoDeviceSourceElement ve = e.getDevice();
             if (ve != null) {
                 return new VideoDeviceSource(ve.getNumber());
             }
         }
         {
-            ResourceElement fe = e.getVideo();
+            VideoStreamSourceElement fe = e.getVideo();
             if (fe != null) {
+                URL url;
                 try {
-                    URL url = new URL(getURLContext(), fe.getUrl());
-                    return new VideoStreamSource(url);
+                    url = new URL(getURLContext(), fe.getUrl());
                 } catch (MalformedURLException ex) {
                     throw new XMLSerializerException(ex);
                 }
+                int initialFrameNumber = fe.getInitialFrameNumber();
+                return new VideoStreamSource(url, initialFrameNumber);
             }
         }
         {
-            ResourceElement fe = e.getSnapshot();
+            SnapshotSourceElement fe = e.getSnapshot();
             if (fe != null) {
                 try {
                     URL url = new URL(getURLContext(), fe.getUrl());
@@ -172,7 +190,7 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
             }
         }
         {
-            ImagesElement ie = e.getImages();
+            ImageCollectionSourceElement ie = e.getImages();
             if (ie != null) {
                 List<ResourceElement> fe = ie.getImage();
                 List<URL> files = new ArrayList<URL>(fe.size());
@@ -183,22 +201,24 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
                         throw new XMLSerializerException("malformed URL", ex);
                     }
                 }
-                return new ImageCollectionSource(files);
+                int initialFrameNumber = ie.getInitialFrameNumber();
+                return new ImageCollectionSource(files, initialFrameNumber);
             }
         }
         {
-            ImageSequenceElement se = e.getSequence();
+            ImageSequenceSourceElement se = e.getSequence();
             if (se != null) {
                 RangeElement re = se.getRange();
                 URLTemplateElement ute = se.getTemplate();
                 
                 URL url = resolveUrl(ute.getValue());
+                int initialFrameNumber = se.getInitialFrameNumber();
                 
                 Range range = new Range(re.getStart(),
                     re.getEnd().intValue(), re.getStep());
                 TemplatedURLSequence seq = new TemplatedURLSequence(url,
                     ute.getTag(), range, ute.getPadding());
-                return new ImageSequenceSource(seq);
+                return new ImageSequenceSource(seq, initialFrameNumber);
             }
         }
         throw new XMLSerializerException();

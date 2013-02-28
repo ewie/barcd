@@ -2,9 +2,10 @@ package de.tu_chemnitz.mi.barcd.source;
 
 import java.net.URL;
 import java.util.Collection;
+import java.util.Iterator;
 
 import de.tu_chemnitz.mi.barcd.ImageProviderException;
-import de.tu_chemnitz.mi.barcd.Source;
+import de.tu_chemnitz.mi.barcd.SeekableSource;
 import de.tu_chemnitz.mi.barcd.provider.RemoteImageProvider;
 
 /**
@@ -13,11 +14,16 @@ import de.tu_chemnitz.mi.barcd.provider.RemoteImageProvider;
  * 
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class ImageCollectionSource implements Source {
+public class ImageCollectionSource extends SeekableSource {
     private Collection<URL> urls;
 
-    public ImageCollectionSource(Collection<URL> urls) {
+    public ImageCollectionSource(Collection<URL> urls, int initialFrameNumber) {
+        super(initialFrameNumber);
         this.urls = urls;
+    }
+
+    public ImageCollectionSource(Collection<URL> urls) {
+        this(urls, 0);
     }
     
     public Collection<URL> getURLs() {
@@ -28,6 +34,11 @@ public class ImageCollectionSource implements Source {
     public RemoteImageProvider getImageProvider()
         throws ImageProviderException
     {
-        return new RemoteImageProvider(urls.iterator());
+        Iterator<URL> it = urls.iterator();
+        int i = getInitialFrameNumber();
+        while (i --> 0) {
+            it.next();
+        }
+        return new RemoteImageProvider(it);
     }
 }

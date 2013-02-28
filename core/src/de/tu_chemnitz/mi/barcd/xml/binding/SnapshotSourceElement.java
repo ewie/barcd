@@ -10,23 +10,22 @@ package de.tu_chemnitz.mi.barcd.xml.binding;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for JobType complex type.
+ * <p>Java class for SnapshotSourceType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="JobType">
+ * &lt;complexType name="SnapshotSourceType">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;all>
- *         &lt;element name="source" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}SourceChoiceType"/>
- *       &lt;/all>
- *     &lt;/restriction>
+ *     &lt;extension base="{http://www.tu-chemnitz.de/informatik/mi/barcd}SourceType">
+ *       &lt;attribute name="url" use="required" type="{http://www.w3.org/2001/XMLSchema}anyURI" />
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -34,36 +33,37 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "JobType", propOrder = {
+@XmlType(name = "SnapshotSourceType")
+public class SnapshotSourceElement
+    extends SourceElement
+{
 
-})
-public class JobElement {
-
-    @XmlElement(required = true)
-    protected SourceChoiceElement source;
+    @XmlAttribute(required = true)
+    @XmlSchemaType(name = "anyURI")
+    protected String url;
 
     /**
-     * Gets the value of the source property.
+     * Gets the value of the url property.
      * 
      * @return
      *     possible object is
-     *     {@link SourceChoiceElement }
+     *     {@link String }
      *     
      */
-    public SourceChoiceElement getSource() {
-        return source;
+    public String getUrl() {
+        return url;
     }
 
     /**
-     * Sets the value of the source property.
+     * Sets the value of the url property.
      * 
      * @param value
      *     allowed object is
-     *     {@link SourceChoiceElement }
+     *     {@link String }
      *     
      */
-    public void setSource(SourceChoiceElement value) {
-        this.source = value;
+    public void setUrl(String value) {
+        this.url = value;
     }
 
 }
