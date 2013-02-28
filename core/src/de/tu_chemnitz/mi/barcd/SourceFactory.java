@@ -7,7 +7,7 @@ import java.util.Collection;
 import de.tu_chemnitz.mi.barcd.source.BufferedImageSource;
 import de.tu_chemnitz.mi.barcd.source.ImageCollectionSource;
 import de.tu_chemnitz.mi.barcd.source.ImageSequenceSource;
-import de.tu_chemnitz.mi.barcd.source.ImageServiceSource;
+import de.tu_chemnitz.mi.barcd.source.ImageSnapshotServiceSource;
 import de.tu_chemnitz.mi.barcd.source.VideoDeviceSource;
 import de.tu_chemnitz.mi.barcd.source.VideoStreamSource;
 import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequence;
@@ -28,8 +28,8 @@ public class SourceFactory {
         return new ImageSequenceSource(url);
     }
     
-    public ImageServiceSource newImageServiceSource(URL url) {
-        return new ImageServiceSource(url);
+    public ImageSnapshotServiceSource newImageSnapshotServiceSource(URL url) {
+        return new ImageSnapshotServiceSource(url);
     }
     
     public ImageCollectionSource newImageCollectionSource(Collection<URL> urls) {

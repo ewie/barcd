@@ -11,7 +11,7 @@ import de.tu_chemnitz.mi.barcd.Job;
 import de.tu_chemnitz.mi.barcd.Source;
 import de.tu_chemnitz.mi.barcd.source.ImageCollectionSource;
 import de.tu_chemnitz.mi.barcd.source.ImageSequenceSource;
-import de.tu_chemnitz.mi.barcd.source.ImageServiceSource;
+import de.tu_chemnitz.mi.barcd.source.ImageSnapshotServiceSource;
 import de.tu_chemnitz.mi.barcd.source.VideoDeviceSource;
 import de.tu_chemnitz.mi.barcd.source.VideoStreamSource;
 import de.tu_chemnitz.mi.barcd.util.Range;
@@ -76,8 +76,8 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
             se.setSequence(createImageSequenceSourceElement((ImageSequenceSource) source));
         } else if (source instanceof ImageCollectionSource) {
             se.setImages(createImageCollectionSourceElement((ImageCollectionSource) source));
-        } else if (source instanceof ImageServiceSource) {
-            se.setSnapshot(createSnapshotSourceElement((ImageServiceSource) source));
+        } else if (source instanceof ImageSnapshotServiceSource) {
+            se.setSnapshot(createSnapshotSourceElement((ImageSnapshotServiceSource) source));
         } else {
             throw new XMLSerializerException(
                 String.format("cannot serialize source (%s)",
@@ -138,7 +138,7 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
         return vsse;
     }
     
-    private SnapshotSourceElement createSnapshotSourceElement(ImageServiceSource source)
+    private SnapshotSourceElement createSnapshotSourceElement(ImageSnapshotServiceSource source)
         throws XMLSerializerException
     {
         SnapshotSourceElement sse = elements.createSnapshotSourceElement();
@@ -183,7 +183,7 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
             if (fe != null) {
                 try {
                     URL url = new URL(getURLContext(), fe.getUrl());
-                    return new ImageServiceSource(url);
+                    return new ImageSnapshotServiceSource(url);
                 } catch (MalformedURLException ex) {
                     throw new XMLSerializerException(ex);
                 }
