@@ -6,8 +6,8 @@ package de.tu_chemnitz.mi.barcd.image;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class DilationOperator {
-    int width;
-    int height;
+    private int width;
+    private int height;
     
     /**
      * Create a square dilation operator with all weights set to true.
