@@ -25,8 +25,10 @@ public class VideoImageProvider implements ImageProvider {
 
     @Override
     public boolean hasMore() {
-        // FIXME (frameReader.getCurrentFrameNumber() + 1) to assure condition
-        return !frameReader.isFinite() || (frameReader.getCurrentFrameNumber() + 1) < frameReader.getLengthInFrames();
+        if (frameReader.isFinite()) {
+            return frameReader.getCurrentFrameNumber() < frameReader.getLengthInFrames();
+        }
+        return true;
     }
 
     @Override
