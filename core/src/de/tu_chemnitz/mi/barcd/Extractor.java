@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 
 import de.tu_chemnitz.mi.barcd.geometry.OrientedRectangle;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
-import de.tu_chemnitz.mi.barcd.util.ImageDisplay;
 import de.tu_chemnitz.mi.barcd.util.RegionHash;
 
 /**
@@ -37,8 +36,6 @@ public class Extractor {
         }
     };
 
-    private ImageDisplay display = new ImageDisplay();
-    
     private Job job;
 
     private ImageProvider provider;
@@ -100,7 +97,6 @@ public class Extractor {
         Barcode[] barcodes = decoder.decodeMultiple(image);
         
         if (barcodes != null) {
-            System.out.printf("found %d barcodes\n", barcodes.length);
             for (Barcode barcode : barcodes) {
                 Point p = barcode.getAnchorPoints()[0];
                 Region r = rhash.find(p, epoch);
