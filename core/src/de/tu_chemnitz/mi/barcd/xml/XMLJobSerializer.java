@@ -60,11 +60,11 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
         throws XMLSerializerException
     {
         JobElement je = elements.createJobElement();
-        je.setSource(createSourceElement(job.getSource()));
+        je.setSource(createSourceChoiceElement(job.getSource()));
         return je;
     }
     
-    private SourceChoiceElement createSourceElement(Source source)
+    private SourceChoiceElement createSourceChoiceElement(Source source)
         throws XMLSerializerException
     {
         SourceChoiceElement se = elements.createSourceChoiceElement();
