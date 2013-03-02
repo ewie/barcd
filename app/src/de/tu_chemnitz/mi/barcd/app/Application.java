@@ -27,6 +27,7 @@ import de.tu_chemnitz.mi.barcd.Region;
 import de.tu_chemnitz.mi.barcd.app.Terminal.Command;
 import de.tu_chemnitz.mi.barcd.app.Terminal.Routine;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
+import de.tu_chemnitz.mi.barcd.image.ScalingOperator;
 import de.tu_chemnitz.mi.barcd.xml.XMLFrameSerializer;
 import de.tu_chemnitz.mi.barcd.xml.XMLJobSerializer;
 import de.tu_chemnitz.mi.barcd.xml.XMLSerializerException;
@@ -90,18 +91,19 @@ public class Application extends Worker {
         }
     }
     
-    private void displayFrame(Frame frame) {
+    private void displayFrame(Frame frame, BufferedImage image) {
         BufferedImage image = frame.getImage();
         
-        // Copy the image.
-        BufferedImage im = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+        ScalingOperator scaling = new ScalingOperator();
+        BufferedImage im = scaling.apply(image, 1000);
+        double scale = (double) im.getWidth() / image.getWidth();
+        
         Graphics2D g = im.createGraphics();
-        g.drawImage(image, 0, 0, null);
         
         for (Region r : frame.getRegions()) {
             Polygon polygon = new Polygon();
             for (Point p : r.getOrientedRectangle().getPoints()) {
-                polygon.addPoint((int) p.getX(), (int) p.getY());
+                polygon.addPoint((int) (p.getX() * scale), (int) (p.getY() * scale));
             }
             // TODO let Region assure coverage is in 0..1
             float cov = (float) Math.max(0, Math.min(r.getCoverage(), 1));
@@ -110,7 +112,7 @@ public class Application extends Worker {
             
             polygon = new Polygon();
             for (Point p : r.getConvexPolygon().getPoints()) {
-                polygon.addPoint((int) p.getX(), (int) p.getY());
+                polygon.addPoint((int) (p.getX() * scale), (int) (p.getY() * scale));
             }
             g.setColor(new Color(1f, 0f, 0f, cov));
             g.fillPolygon(polygon);
