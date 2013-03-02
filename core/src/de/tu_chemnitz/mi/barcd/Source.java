@@ -8,12 +8,12 @@ package de.tu_chemnitz.mi.barcd;
 public abstract class Source {
     public static final int INITIAL_FRAME_NUMBER = 0;
 
-    public ImageProvider getImageProvider()
+    public ImageProvider createImageProvider()
         throws ImageProviderException
     {
-        return getImageProvider(INITIAL_FRAME_NUMBER);
+        return createImageProvider(INITIAL_FRAME_NUMBER);
     }
 
-    public abstract ImageProvider getImageProvider(int initialFrameNumber)
+    public abstract ImageProvider createImageProvider(int initialFrameNumber)
         throws ImageProviderException;
 }

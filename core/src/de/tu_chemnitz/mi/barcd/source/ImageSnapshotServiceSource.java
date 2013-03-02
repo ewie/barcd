@@ -26,7 +26,7 @@ public class ImageSnapshotServiceSource extends Source {
     }
 
     @Override
-    public RemoteImageProvider getImageProvider(int initialFrameNumber)
+    public RemoteImageProvider createImageProvider(int initialFrameNumber)
         throws ImageProviderException
     {
         return new RemoteImageProvider(new Iterator<URL>() {

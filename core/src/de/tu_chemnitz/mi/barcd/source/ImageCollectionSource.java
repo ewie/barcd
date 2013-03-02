@@ -26,7 +26,7 @@ public class ImageCollectionSource extends Source {
     }
     
     @Override
-    public RemoteImageProvider getImageProvider(int initialFrameNumber)
+    public RemoteImageProvider createImageProvider(int initialFrameNumber)
         throws ImageProviderException
     {
         Iterator<URL> it = urls.iterator();

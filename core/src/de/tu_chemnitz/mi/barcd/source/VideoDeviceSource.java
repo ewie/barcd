@@ -25,7 +25,7 @@ public class VideoDeviceSource extends Source {
     }
     
     @Override
-    public VideoImageProvider getImageProvider(int initialFrameNumber)
+    public VideoImageProvider createImageProvider(int initialFrameNumber)
         throws ImageProviderException
     {
         try {

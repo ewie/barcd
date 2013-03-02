@@ -23,7 +23,7 @@ public class BufferedImageSource extends Source {
     }
 
     @Override
-    public BufferedImageProvider getImageProvider(int initialFrameNumber)
+    public BufferedImageProvider createImageProvider(int initialFrameNumber)
         throws ImageProviderException
     {
         Iterator<BufferedImage> it = images.iterator();

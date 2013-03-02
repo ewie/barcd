@@ -39,7 +39,7 @@ public class Job {
     public ImageProvider createImageProvider()
         throws ImageProviderException
     {
-        return source.getImageProvider(initialFrameNumber);
+        return source.createImageProvider(initialFrameNumber);
     }
     
     public ImageProvider getImageProvider()
