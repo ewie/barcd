@@ -63,8 +63,8 @@ public class Application extends Worker {
         ExtractionWorker extractionWorker = new ExtractionWorker(extractor);
         extractionWorker.setFrameHandler(new FrameHandler() {
             @Override
-            public void handleFrame(Frame frame) {
-                displayFrame(frame);
+            public void handleFrame(Frame frame, BufferedImage image) {
+                displayFrame(frame, image);
                 try {
                     persistFrame(frame);
                 } catch (ApplicationException ex) {
@@ -92,8 +92,6 @@ public class Application extends Worker {
     }
     
     private void displayFrame(Frame frame, BufferedImage image) {
-        BufferedImage image = frame.getImage();
-        
         ScalingOperator scaling = new ScalingOperator();
         BufferedImage im = scaling.apply(image, 1000);
         double scale = (double) im.getWidth() / image.getWidth();

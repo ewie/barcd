@@ -12,7 +12,7 @@ import de.tu_chemnitz.mi.barcd.util.RegionHash;
  */
 public class Extractor {
     public static interface FrameHandler {
-        public void handleFrame(Frame frame);
+        public void handleFrame(Frame frame, BufferedImage image);
     }
     
     private RegionExtractor hfr = new RegionExtractor();
@@ -84,8 +84,6 @@ public class Extractor {
         
         Frame frame = job.createFrame();
         
-        frame.setImage(image);
-        
         for (Region r : regions) {
             if (!regionFilter.select(r)) continue;
             frame.addRegion(r);
@@ -110,12 +108,12 @@ public class Extractor {
         
         epoch += 1;
         
-        reportFrame(frame);
+        reportFrame(frame, image);
     }
     
-    private void reportFrame(Frame frame) {
+    private void reportFrame(Frame frame, BufferedImage image) {
         if (frameHandler != null) {
-            frameHandler.handleFrame(frame);
+            frameHandler.handleFrame(frame, image);
         }
     }
     

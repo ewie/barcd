@@ -15,8 +15,6 @@ public class Frame {
     
     private Collection<Region> regions;
 
-    private BufferedImage image;
-    
     private Collection<Barcode> regionlessBarcodes;
 
     /**
@@ -52,14 +50,6 @@ public class Frame {
 
     public void addRegion(Region region) {
         regions.add(region);
-    }
-    
-    public void setImage(BufferedImage image) {
-        this.image = image;
-    }
-    
-    public BufferedImage getImage() {
-        return image;
     }
     
     public void addRegionlessBarcode(Barcode barcode) {
