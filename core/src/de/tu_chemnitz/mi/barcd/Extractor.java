@@ -101,7 +101,7 @@ public class Extractor {
                 Point p = barcode.getAnchorPoints()[0];
                 Region r = rhash.find(p, epoch);
                 if (r == null) {
-                    // TODO handle decoded barcodes not captured by any region
+                    frame.addRegionlessBarcode(barcode);
                 } else {
                     r.setBarcode(barcode);
                 }

@@ -2,6 +2,7 @@ package de.tu_chemnitz.mi.barcd.xml;
 
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -39,7 +40,8 @@ public class XMLFrameSerializer extends XMLSerializer<Frame> {
         FrameElement fe = (FrameElement) e.getValue();
         int number = fe.getNumber();
         Collection<Region> regions = restoreRegions(fe.getRegions());
-        return new Frame(number, regions);
+        Collection<Barcode> barcodes = restoreRegionlessBarcodes(fe.getBarcodes(), fe.getRegions());
+        return new Frame(number, regions, barcodes);
     }
 
     @Override
@@ -53,21 +55,19 @@ public class XMLFrameSerializer extends XMLSerializer<Frame> {
         FrameElement fe = elements.createFrameElement();
         fe.setRegions(createRegionsElement(frame.getRegions()));
         fe.setNumber(frame.getNumber());
-        fe.setBarcodes(createBarcodesElement(frame.getRegions()));
+        fe.setBarcodes(createBarcodesElement(frame.getBarcodes()));
         return fe;
     }
     
-    private BarcodesElement createBarcodesElement(Collection<Region> regions) {
+    private BarcodesElement createBarcodesElement(Collection<Barcode> barcodes) {
         BarcodesElement be = elements.createBarcodesElement();
         List<BarcodeElement> bes = be.getBarcode();
-        for (Region region : regions) {
-            Barcode barcode = region.getBarcode();
-            if (barcode == null) continue;
+        for (Barcode barcode : barcodes) {
             bes.add(createBarcodeElement(barcode));
         }
         return be;
     }
-
+    
     private RegionsElement createRegionsElement(Collection<Region> regions) {
         RegionsElement re = elements.createRegionsElement();
         List<RegionElement> res = re.getRegion();
@@ -134,6 +134,32 @@ public class XMLFrameSerializer extends XMLSerializer<Frame> {
         Region region = new Region(polygon, coverage);
         region.setBarcode(restoreBarcode((BarcodeElement) e.getBarcode()));
         return region;
+    }
+    
+    private Collection<Barcode> restoreRegionlessBarcodes(BarcodesElement bse, RegionsElement rse) {
+        // Map each barcode to its region if a region contains a barcode. Use
+        // BarcodeElement as key instead of Barcode, because there could be
+        // multiple instances of equal barcodes because of restoreBarcode. This
+        // way we can make use of Object#equal.
+        HashMap<BarcodeElement, RegionElement> map = new HashMap<BarcodeElement, RegionElement>();
+        for (RegionElement re : rse.getRegion()) {
+            BarcodeElement be = (BarcodeElement) re.getBarcode();
+            if (be != null) {
+                map.put(be, re);
+            }
+        }
+
+        // Restore all barcodes which have no corresponding region.
+        Collection<Barcode> barcodes = new LinkedList<Barcode>();
+        List<BarcodeElement> bes = bse.getBarcode();
+        for (BarcodeElement be : bes) {
+            if (!map.containsKey(be)) {
+                Barcode b = restoreBarcode(be);
+                barcodes.add(b);
+            }
+        }
+        
+        return barcodes;
     }
     
     private Barcode restoreBarcode(BarcodeElement e) {
