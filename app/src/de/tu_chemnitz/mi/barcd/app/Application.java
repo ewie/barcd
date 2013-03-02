@@ -103,8 +103,7 @@ public class Application extends Worker {
             for (Point p : r.getOrientedRectangle().getPoints()) {
                 polygon.addPoint((int) (p.getX() * scale), (int) (p.getY() * scale));
             }
-            // TODO let Region assure coverage is in 0..1
-            float cov = (float) Math.max(0, Math.min(r.getCoverage(), 1));
+            float cov = (float) r.getCoverage();
             g.setColor(new Color(0f, 0f, 1f, cov));
             g.fillPolygon(polygon);
             

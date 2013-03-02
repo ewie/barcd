@@ -13,12 +13,6 @@ import de.tu_chemnitz.mi.barcd.geometry.Point;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Region {
-    public enum BoundType {
-        AXIS_ALIGNED_RECTANGLE,
-        CONVEX_POLYGON,
-        ORIENTED_RECTANGLE
-    };
-    
     private ConvexPolygon polygon;
 
     private OrientedRectangle orientedRectangle;
@@ -45,7 +39,7 @@ public class Region {
     
     public Region(ConvexPolygon polygon, double coverage) {
         this.polygon = polygon;
-        this.coverage = coverage;
+        this.coverage = Math.max(0, Math.min(coverage, 1));
     }
     
     public double getCoverage() {
@@ -58,24 +52,6 @@ public class Region {
     
     public void setBarcode(Barcode barcode) {
         this.barcode = barcode;
-    }
-    
-    public double getCoverage(BoundType type) {
-        double cov;
-        switch (type) {
-        case AXIS_ALIGNED_RECTANGLE:
-            cov = (coverage * polygon.computeArea()) / getAxisAlignedRectangle().computeArea();
-            break;
-        case CONVEX_POLYGON:
-            cov = coverage;
-            break;
-        case ORIENTED_RECTANGLE:
-            cov = (coverage * polygon.computeArea()) / getOrientedRectangle().computeArea();
-            break;
-        default:
-            throw new IllegalArgumentException("unknown region bound type");
-        }
-        return Math.max(0, Math.min(cov, 1));
     }
     
     /**
