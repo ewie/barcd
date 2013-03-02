@@ -1,6 +1,5 @@
 package de.tu_chemnitz.mi.barcd;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
