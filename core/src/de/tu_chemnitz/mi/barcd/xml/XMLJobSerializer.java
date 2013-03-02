@@ -46,7 +46,12 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
     {
         JobElement je = (JobElement) e.getValue();
         Source source = restoreImageSource(je.getSource());
-        return new Job(source);
+        Integer nextFrameNumber = je.getNextFrameNumber();
+        if (nextFrameNumber == null) {
+            return new Job(source);
+        } else {
+            return new Job(source, nextFrameNumber);
+        }
     }
 
     @Override
@@ -61,6 +66,7 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
     {
         JobElement je = elements.createJobElement();
         je.setSource(createSourceChoiceElement(job.getSource()));
+        je.setNextFrameNumber(job.nextFrameNumber());
         return je;
     }
     
@@ -94,7 +100,6 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
         for (URL f : source.getURLs()) {
             fes.add(createResourceElement(f));
         }
-        ie.setInitialFrameNumber(source.getInitialFrameNumber());
         return ie;
     }
 
@@ -118,7 +123,6 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
         ImageSequenceSourceElement ise = elements.createImageSequenceSourceElement();
         ise.setTemplate(ute);
         ise.setRange(re);
-        ise.setInitialFrameNumber(source.getInitialFrameNumber());
         return ise;
     }
 
@@ -134,7 +138,6 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
         VideoStreamSourceElement vsse = elements.createVideoStreamSourceElement();
         URL rurl = relativizeUrl(source.getURL());
         vsse.setUrl(rurl.toString());
-        vsse.setInitialFrameNumber(source.getInitialFrameNumber());
         return vsse;
     }
     
@@ -174,8 +177,7 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
                 } catch (MalformedURLException ex) {
                     throw new XMLSerializerException(ex);
                 }
-                int initialFrameNumber = fe.getInitialFrameNumber();
-                return new VideoStreamSource(url, initialFrameNumber);
+                return new VideoStreamSource(url);
             }
         }
         {
@@ -201,8 +203,7 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
                         throw new XMLSerializerException("malformed URL", ex);
                     }
                 }
-                int initialFrameNumber = ie.getInitialFrameNumber();
-                return new ImageCollectionSource(files, initialFrameNumber);
+                return new ImageCollectionSource(files);
             }
         }
         {
@@ -212,13 +213,12 @@ public class XMLJobSerializer extends XMLSerializer<Job> {
                 URLTemplateElement ute = se.getTemplate();
                 
                 URL url = resolveUrl(ute.getValue());
-                int initialFrameNumber = se.getInitialFrameNumber();
                 
                 Range range = new Range(re.getStart(),
                     re.getEnd().intValue(), re.getStep());
                 TemplatedURLSequence seq = new TemplatedURLSequence(url,
                     ute.getTag(), range, ute.getPadding());
-                return new ImageSequenceSource(seq, initialFrameNumber);
+                return new ImageSequenceSource(seq);
             }
         }
         throw new XMLSerializerException();

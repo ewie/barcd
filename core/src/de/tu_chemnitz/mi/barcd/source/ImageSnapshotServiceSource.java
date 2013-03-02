@@ -14,7 +14,7 @@ import de.tu_chemnitz.mi.barcd.provider.RemoteImageProvider;
  * 
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class ImageSnapshotServiceSource implements Source {
+public class ImageSnapshotServiceSource extends Source {
     private final URL url;
     
     public ImageSnapshotServiceSource(URL url) {
@@ -26,7 +26,7 @@ public class ImageSnapshotServiceSource implements Source {
     }
 
     @Override
-    public RemoteImageProvider getImageProvider()
+    public RemoteImageProvider getImageProvider(int initialFrameNumber)
         throws ImageProviderException
     {
         return new RemoteImageProvider(new Iterator<URL>() {

@@ -7,25 +7,48 @@ import java.util.LinkedList;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Job {
-    public static final int INITIAL_FRAME_NUMBER = 0;
-    
     private Source source;
     
     private Collection<Frame> frames;
     
-    public Job(Source source) {
+    private int initialFrameNumber;
+
+    private ImageProvider imageProvider;
+    
+    public Job(Source source, int initialFrameNumber) {
+        if (initialFrameNumber < Source.INITIAL_FRAME_NUMBER) {
+            throw new IllegalArgumentException("+initialFrameNumber+ must be greater " + Source.INITIAL_FRAME_NUMBER);
+        }
         this.source = source;
+        this.initialFrameNumber = initialFrameNumber;
         this.frames = new LinkedList<Frame>();
+    }
+    
+    public Job(Source source) {
+        this(source, Source.INITIAL_FRAME_NUMBER);
     }
     
     public Source getSource() {
         return source;
     }
     
+    public int nextFrameNumber() {
+        return initialFrameNumber + frames.size();
+    }
+    
+    public ImageProvider createImageProvider()
+        throws ImageProviderException
+    {
+        return source.getImageProvider(initialFrameNumber);
+    }
+    
     public ImageProvider getImageProvider()
         throws ImageProviderException
     {
-        return source.getImageProvider();
+        if (imageProvider == null) {
+            imageProvider = createImageProvider();
+        }
+        return imageProvider;
     }
     
     public Collection<Frame> getFrames() {
@@ -33,7 +56,7 @@ public class Job {
     }
 
     public Frame createFrame() {
-        Frame frame = new Frame(frames.size());
+        Frame frame = new Frame(nextFrameNumber());
         frames.add(frame);
         return frame;
     }

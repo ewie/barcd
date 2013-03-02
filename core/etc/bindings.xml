@@ -39,9 +39,6 @@
     <jxb:bindings node="//xs:complexType[@name='ResourceType']">
       <jxb:class name="ResourceElement"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='SeekableSourceType']">
-      <jxb:class name="SeekableSourceElement"/>
-    </jxb:bindings>
     <jxb:bindings node="//xs:complexType[@name='SnapshotSourceType']">
       <jxb:class name="SnapshotSourceElement"/>
     </jxb:bindings>

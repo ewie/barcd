@@ -1,7 +1,7 @@
 package de.tu_chemnitz.mi.barcd.source;
 
 import de.tu_chemnitz.mi.barcd.ImageProviderException;
-import de.tu_chemnitz.mi.barcd.SeekableSource;
+import de.tu_chemnitz.mi.barcd.Source;
 import de.tu_chemnitz.mi.barcd.provider.RemoteImageProvider;
 import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequence;
 import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequenceIterator;
@@ -11,16 +11,11 @@ import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequenceIterator;
  * 
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class ImageSequenceSource extends SeekableSource {
+public class ImageSequenceSource extends Source {
     private TemplatedURLSequence sequence;
     
-    public ImageSequenceSource(TemplatedURLSequence sequence, int initialFrameNumber) {
-        super(initialFrameNumber);
-        this.sequence = sequence;
-    }
-    
     public ImageSequenceSource(TemplatedURLSequence sequence) {
-        this(sequence, 0);
+        this.sequence = sequence;
     }
     
     public TemplatedURLSequence getSequence() {
@@ -28,12 +23,11 @@ public class ImageSequenceSource extends SeekableSource {
     }
     
     @Override
-    public RemoteImageProvider getImageProvider()
+    public RemoteImageProvider getImageProvider(int initialFrameNumber)
         throws ImageProviderException
     {
         TemplatedURLSequenceIterator it = sequence.iterator();
-        int i = getInitialFrameNumber();
-        while (i --> 0) {
+        while (initialFrameNumber --> 0) {
             it.next();
         }
         return new RemoteImageProvider(it);

@@ -16,6 +16,7 @@
   <xs:complexType name="JobType">
     <xs:all>
       <xs:element name="source" type="SourceChoiceType"/>
+      <xs:element name="next-frame-number" type="uint" default="0" minOccurs="0"/>
     </xs:all>
   </xs:complexType>
   
@@ -32,14 +33,6 @@
   <xs:complexType name="SourceType">
   </xs:complexType>
   
-  <xs:complexType name="SeekableSourceType">
-    <xs:complexContent>
-      <xs:extension base="SourceType">
-        <xs:attribute name="initial-frame-number" type="uint" default="0"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  
   <xs:complexType name="VideoDeviceSourceType">
     <xs:complexContent>
       <xs:extension base="SourceType">
@@ -50,7 +43,7 @@
   
   <xs:complexType name="ImageSequenceSourceType">
     <xs:complexContent>
-      <xs:extension base="SeekableSourceType">
+      <xs:extension base="SourceType">
         <xs:all>
           <xs:element name="template" type="URLTemplateType"/>
           <xs:element name="range" type="RangeType"/>
@@ -61,7 +54,7 @@
   
   <xs:complexType name="VideoStreamSourceType">
     <xs:complexContent>
-      <xs:extension base="SeekableSourceType">
+      <xs:extension base="SourceType">
         <xs:attribute name="url" type="xs:anyURI" use="required"/>
       </xs:extension>
     </xs:complexContent>
@@ -96,7 +89,7 @@
   
   <xs:complexType name="ImageCollectionSourceType">
     <xs:complexContent>
-      <xs:extension base="SeekableSourceType">
+      <xs:extension base="SourceType">
         <xs:sequence maxOccurs="unbounded">
           <xs:element name="image" type="ResourceType"/>
         </xs:sequence>

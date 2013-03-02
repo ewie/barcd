@@ -13,7 +13,7 @@ import de.tu_chemnitz.mi.barcd.video.OpenCVDeviceFrameReader;
  * 
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class VideoDeviceSource implements Source {
+public class VideoDeviceSource extends Source {
     private int deviceNumber;
     
     public VideoDeviceSource(int deviceNumber) {
@@ -25,7 +25,7 @@ public class VideoDeviceSource implements Source {
     }
     
     @Override
-    public VideoImageProvider getImageProvider()
+    public VideoImageProvider getImageProvider(int initialFrameNumber)
         throws ImageProviderException
     {
         try {

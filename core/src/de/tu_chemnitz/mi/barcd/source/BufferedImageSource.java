@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import de.tu_chemnitz.mi.barcd.ImageProviderException;
-import de.tu_chemnitz.mi.barcd.SeekableSource;
+import de.tu_chemnitz.mi.barcd.Source;
 import de.tu_chemnitz.mi.barcd.provider.BufferedImageProvider;
 
 /**
@@ -15,25 +15,19 @@ import de.tu_chemnitz.mi.barcd.provider.BufferedImageProvider;
  * 
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class BufferedImageSource extends SeekableSource {
+public class BufferedImageSource extends Source {
     private Collection<BufferedImage> images;
 
-    public BufferedImageSource(Collection<BufferedImage> images, int initialFrameNumber) {
-        super(initialFrameNumber);
+    public BufferedImageSource(Collection<BufferedImage> images) {
         this.images = images;
     }
 
-    public BufferedImageSource(Collection<BufferedImage> images) {
-        this(images, 0);
-    }
-
     @Override
-    public BufferedImageProvider getImageProvider()
+    public BufferedImageProvider getImageProvider(int initialFrameNumber)
         throws ImageProviderException
     {
         Iterator<BufferedImage> it = images.iterator();
-        int i = getInitialFrameNumber();
-        while (i --> 0) {
+        while (initialFrameNumber --> 0) {
             it.next();
         }
         return new BufferedImageProvider(it);
