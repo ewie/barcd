@@ -30,10 +30,6 @@ public class BufferedImageProvider implements ImageProvider {
     public BufferedImage consume()
         throws ImageProviderException
     {
-        BufferedImage image = images.next();
-        if (image == null) {
-            throw new ImageProviderException("next image is null");
-        }
-        return image;
+        return images.next();
     }
 }
