@@ -8,20 +8,23 @@ import java.util.List;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class GenericConvexPolygon extends ConvexPolygon {
-    private Point[] points;
+    private Point[] vertices;
 
     /**
      * Create a convex polygon from some vertices.
      *
-     * @param points the convex polygon's vertices
+     * @param vertices the convex polygon's vertices
      */
-    public GenericConvexPolygon(Point[] points) {
-        this.points = points;
+    public GenericConvexPolygon(Point[] vertices) {
+        if (vertices.length < 3) {
+            throw new IllegalArgumentException("create a convex polygon with at least 3 vertices");
+        }
+        this.vertices = vertices;
     }
 
     @Override
-    public Point[] getPoints() {
-        return points;
+    public Point[] getVertices() {
+        return vertices;
     }
 
     /**

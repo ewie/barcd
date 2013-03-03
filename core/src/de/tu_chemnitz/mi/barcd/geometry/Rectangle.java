@@ -20,4 +20,9 @@ public abstract class Rectangle extends ConvexPolygon {
     public double computeArea() {
         return getWidth() * getHeight();
     }
+
+    @Override
+    public final int getSize() {
+        return 4;
+    }
 }

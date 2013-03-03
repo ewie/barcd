@@ -7,15 +7,27 @@ package de.tu_chemnitz.mi.barcd.geometry;
  */
 public abstract class ConvexPolygon {
     /**
-     * @return the points forming the polygon's boundary in clockwise order
+     * @return the vertices forming the polygon's boundary in clockwise order
      */
-    public abstract Point[] getPoints();
+    public abstract Point[] getVertices();
+
+    /**
+     * Get the number of vertices this polygon contains. Uses {@link #getVertices()}
+     * to get the number of vertices. Override this method if {@link #getVertices()}
+     * the number of vertices can be determined without (eventually) computing
+     * all vertices.
+     *
+     * @return this polygon's number of vertices
+     */
+    public int getSize() {
+        return getVertices().length;
+    }
 
     /**
      * @return the area enclosed by the polygon
      */
     public double computeArea() {
-        Point[] points = getPoints();
+        Point[] points = getVertices();
         int area = 0;
         for (int i = 0; i < points.length; ++i) {
             Point p = points[i];
@@ -35,7 +47,7 @@ public abstract class ConvexPolygon {
      * @return true if the polygon contains the point
      */
     public boolean contains(Point p) {
-        Point[] points = getPoints();
+        Point[] points = getVertices();
         int n = points.length;
         double x = p.getX();
         double y = p.getY();

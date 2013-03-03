@@ -86,9 +86,9 @@ public class XMLFrameSerializer extends XMLSerializer<Frame> {
         }
         List<String> pes = re.getPolygon();
         ConvexPolygon polygon = region.getConvexPolygon();
-        Point[] points = polygon.getPoints();
-        for (Point p : points) {
-            pes.add(p.getX() + "," + p.getY());
+        Point[] vertices = polygon.getVertices();
+        for (Point v : vertices) {
+            pes.add(v.getX() + "," + v.getY());
         }
         return re;
     }
@@ -181,15 +181,15 @@ public class XMLFrameSerializer extends XMLSerializer<Frame> {
     }
     
     private GenericConvexPolygon restorePolygon(List<String> ps) {
-        Point[] points = new Point[ps.size()];
+        Point[] vertices = new Point[ps.size()];
         int i = 0;
         for (String s : ps) {
             int p = s.indexOf(',');
             String sx = s.substring(0, p);
             String sy = s.substring(p + 1);
-            points[i++] = new Point(Double.valueOf(sx), Double.valueOf(sy));
+            vertices[i++] = new Point(Double.valueOf(sx), Double.valueOf(sy));
         }
-        return new GenericConvexPolygon(points);
+        return new GenericConvexPolygon(vertices);
     }
     
     private static EnumMap<BarcodeFormat, BarcodeType> format2type;

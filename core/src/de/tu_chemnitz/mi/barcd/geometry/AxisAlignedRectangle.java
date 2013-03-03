@@ -45,7 +45,7 @@ public class AxisAlignedRectangle extends Rectangle {
     }
 
     @Override
-    public Point[] getPoints() {
+    public Point[] getVertices() {
         return new Point[] {
             min,
             new Point(max.getX(), min.getY()),
@@ -75,7 +75,7 @@ public class AxisAlignedRectangle extends Rectangle {
         double maxX = Double.NEGATIVE_INFINITY;
         double maxY = Double.NEGATIVE_INFINITY;
 
-        Point[] coords = polygon.getPoints();
+        Point[] coords = polygon.getVertices();
 
         for (int i = 0; i < coords.length; ++i) {
             double x = coords[i].getX();

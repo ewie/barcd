@@ -64,7 +64,7 @@ public class OrientedRectangle extends Rectangle {
     }
 
     @Override
-    public Point[] getPoints() {
+    public Point[] getVertices() {
         Point p = origin.translate(width);
         Point q = p.translate(height);
         Point r = origin.translate(height);
@@ -80,7 +80,7 @@ public class OrientedRectangle extends Rectangle {
      * @return the enclosing oriented rectangle
      */
     public static OrientedRectangle createFromPolygon(ConvexPolygon polygon) {
-        Point[] hull = polygon.getPoints();
+        Point[] hull = polygon.getVertices();
 
         // The vertices of the minimum area rectangle.
         double[] boxx = new double[3];
