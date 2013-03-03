@@ -1,6 +1,8 @@
 package de.tu_chemnitz.mi.barcd.geometry;
 
 /**
+ * An n-sided convex polygon.
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public abstract class ConvexPolygon {
@@ -8,7 +10,7 @@ public abstract class ConvexPolygon {
      * @return the points forming the polygon's boundary in clockwise order
      */
     public abstract Point[] getPoints();
-    
+
     /**
      * @return the area enclosed by the polygon
      */
@@ -22,14 +24,14 @@ public abstract class ConvexPolygon {
         }
         return Math.abs(area / 2);
     }
-    
+
     /**
      * Test if the polygon contains a certain point.
-     * 
+     *
      * Taken from {@link http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html}
-     * 
+     *
      * @param p the point to test
-     * 
+     *
      * @return true if the polygon contains the point
      */
     public boolean contains(Point p) {

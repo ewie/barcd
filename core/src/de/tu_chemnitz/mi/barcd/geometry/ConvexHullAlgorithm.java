@@ -28,27 +28,27 @@ public class ConvexHullAlgorithm {
             return 0;
         }
     };
-    
+
     /**
      * Compute the convex hull for a collection of points.
-     * 
+     *
      * @param points the points within the resulting convex hull
-     * 
+     *
      * @return the points making up the convex hull in clockwise order
      */
     public Point[] computeConvexHull(List<Point> points) {
         Collections.sort(points, lexicalPointComparator);
-        
+
         LinkedList<Point> lower = new LinkedList<Point>();
         LinkedList<Point> upper = new LinkedList<Point>();
-        
+
         for (Point p : points) {
             while (lower.size() >= 2 && cross(lower.get(lower.size() - 2), lower.get(lower.size() - 1), p) <= 0) {
                 lower.removeLast();
             }
             lower.add(p);
         }
-        
+
         ListIterator<Point> it = points.listIterator(points.size());
         while (it.hasPrevious()) {
             Point p = it.previous();
@@ -57,27 +57,27 @@ public class ConvexHullAlgorithm {
             }
             upper.add(p);
         }
-        
+
         lower.removeLast();
         upper.removeLast();
-        
+
         // Construct the array of points forming a convex hull. Reverse the
         // points so they end up in clockwise order.
         Point[] hull = new Point[lower.size() + upper.size()];
         int i = hull.length;
         for (Point p : lower) hull[--i] = p;
         for (Point p : upper) hull[--i] = p;
-        
+
         return hull;
     }
-    
+
     /**
      * Compute the 2D cross product of two vectors given by 3 points.
-     * 
+     *
      * @param origin the origin of both vectors
      * @param p a point forming the first vector with {@link origin}
      * @param q a point forming the second vector with {@link origin}
-     * 
+     *
      * @return the 2D cross product
      */
     private static double cross(Point origin, Point p, Point q) {

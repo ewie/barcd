@@ -2,42 +2,48 @@ package de.tu_chemnitz.mi.barcd.geometry;
 
 /**
  * A rectangle whose parallel pairs of sides are aligned with the X or Y axes.
- * 
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class AxisAlignedRectangle extends Rectangle {
     private Point min;
     private Point max;
-    
+
+    /**
+     * Create an axis-aligned rectangle from a minimum and a maximum point.
+     *
+     * @param min the point with minimum X and Y coordinate
+     * @param max the point with maximum X and Y coordinate
+     */
     public AxisAlignedRectangle(Point min, Point max) {
         this.min = min;
         this.max = max;
     }
-    
+
     /**
      * @return the rectangle's vertex with minimum X- and Y-coordinate
      */
     public Point getMin() {
         return min;
     }
-    
+
     /**
      * @return the rectangle's vertex with maximum X- and Y-coordinate
      */
     public Point getMax() {
         return max;
     }
-    
+
     @Override
     public double getWidth() {
         return max.getX() - min.getX();
     }
-    
+
     @Override
     public double getHeight() {
         return max.getY() - min.getY();
     }
-    
+
     @Override
     public Point[] getPoints() {
         return new Point[] {
@@ -47,7 +53,7 @@ public class AxisAlignedRectangle extends Rectangle {
             new Point(min.getX(), max.getY())
         };
     }
-    
+
     @Override
     public boolean contains(Point p) {
         double x = p.getX();
@@ -55,12 +61,12 @@ public class AxisAlignedRectangle extends Rectangle {
         return x >= min.getX() && x <= max.getX()
             && y >= min.getY() && y <= max.getY();
     }
-    
+
     /**
      * Create an axis aligned rectangle enclosing the given polygon.
-     * 
+     *
      * @param polygon
-     * 
+     *
      * @return the enclosing axis aligned rectangle
      */
     public static AxisAlignedRectangle createFromPolygon(ConvexPolygon polygon) {
@@ -68,9 +74,9 @@ public class AxisAlignedRectangle extends Rectangle {
         double minY = Double.POSITIVE_INFINITY;
         double maxX = Double.NEGATIVE_INFINITY;
         double maxY = Double.NEGATIVE_INFINITY;
-        
+
         Point[] coords = polygon.getPoints();
-        
+
         for (int i = 0; i < coords.length; ++i) {
             double x = coords[i].getX();
             double y = coords[i].getY();
@@ -79,7 +85,7 @@ public class AxisAlignedRectangle extends Rectangle {
             if (y < minY) minY = y;
             if (y > maxY) maxY = y;
         }
-        
+
         return new AxisAlignedRectangle(
             new Point(minX, minY),
             new Point(maxX, maxY));
