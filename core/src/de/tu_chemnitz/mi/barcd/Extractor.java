@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import de.tu_chemnitz.mi.barcd.geometry.OrientedRectangle;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
-import de.tu_chemnitz.mi.barcd.util.RegionHash;
+import de.tu_chemnitz.mi.barcd.util.RegionHashTable;
 
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
@@ -40,11 +40,9 @@ public class Extractor {
 
     private ImageProvider provider;
 
-    private RegionHash rhash = new RegionHash(10, 400);
+    private RegionHashTable rhash = new RegionHashTable(10, 400);
 
     private Decoder decoder = new ZXingBarcodeDecoder();
-
-    private int epoch = 0;
 
     private FrameHandler frameHandler;
 
@@ -95,7 +93,7 @@ public class Extractor {
         for (Region r : regions) {
             if (!regionFilter.select(r)) continue;
             frame.addRegion(r);
-            rhash.insert(r, epoch);
+            rhash.insert(r);
         }
 
         // TODO improve image regions
@@ -105,7 +103,7 @@ public class Extractor {
         if (barcodes != null) {
             for (Barcode barcode : barcodes) {
                 Point p = barcode.getAnchorPoints()[0];
-                Region r = rhash.find(p, epoch);
+                Region r = rhash.find(p);
                 if (r == null) {
                     frame.addRegionlessBarcode(barcode);
                 } else {
@@ -114,7 +112,7 @@ public class Extractor {
             }
         }
 
-        epoch += 1;
+        rhash.clear();
 
         reportFrame(frame, image);
     }
