@@ -1,107 +1,123 @@
 package de.tu_chemnitz.mi.barcd.image;
 
+import de.tu_chemnitz.mi.barcd.util.UnionFind;
+
 /**
+ * The connected component labeler assigns each pixel of an image a label. Two
+ * pixels have the same label if they are connected (4-connectivity) and have
+ * the same value.
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class ConnectedComponentLabeler {
     private static final int BACKGROUND_VALUE = 0;
-    
-    public int[][] process(int[] image, int width, int height) {
-        return process(image, width, height, BACKGROUND_VALUE);
+
+    /**
+     * Perform connected-component-labeling on the given image data. Assigns all
+     * pixels that belong to the background (value 0) the same label (0).
+     *
+     * @param pixels the pixels in row-major order with at least {@code
+     *   width * height} elements
+     * @param width the image width
+     * @param height the image height
+     *
+     * @return an array with {@code width * height} labels in the same order as
+     *   the pixels
+     */
+    public int[] process(int[] pixels, int width, int height) {
+        return process(pixels, width, height, BACKGROUND_VALUE);
     }
-    
-    public int[][] process(int[] pixels, int width, int height, int backgroundValue) {
-        int[][] labels = new int[width][height];
+
+    /**
+     * Perform connected-component-labeling on the given image data. Assigns all
+     * pixels that belong to the background the same label (0).
+     *
+     * @param pixels the pixels in row-major order with at least {@code
+     *   width * height} elements
+     * @param width the image width
+     * @param height the image height
+     * @param backgroundValue the value of pixels to be considered background
+     *
+     * @return an array with {@code width * height} labels in the same order as
+     *   the pixels
+     */
+    public int[] process(int[] pixels, int width, int height, int backgroundValue) {
+        // The labels are automatically initialized to zero.
+        int[] labels = new int[width * height];
+
+        // The value of the next label. Increment manually. Value 0 is used
+        // implicitly for background pixels.
         int nextLabel = 1;
+
+        // Use the union-find algorithm to keep track of equivalent labels.
         UnionFind eq = new UnionFind(width * height);
-        
+
+        // Assign a new label to the first pixel if it's not part of the
+        // background.
+        if (pixels[0] != backgroundValue) {
+            pixels[0] = nextLabel++;
+        }
+
+        // Process the first row (w/o the first pixel) comparing each pixel
+        // with the pixel to its left.
         for (int x = 1; x < width; ++x) {
             int v = pixels[x];
             if (v == backgroundValue) continue;
             if (v == pixels[x - 1]) {
-                labels[x][0] = labels[x - 1][0];
+                labels[x] = labels[x - 1];
             } else {
-                labels[x][0] = nextLabel++;
+                labels[x] = nextLabel++;
             }
         }
-        
+
+        // Process the first row (w/o the first pixel) comparing each pixel
+        // with the pixel to its top.
         for (int y = 1; y < height; ++y) {
             int v = pixels[y * width];
             if (v == backgroundValue) continue;
             if (v == pixels[(y - 1) * width]) {
-                labels[0][y] = labels[0][y - 1];
+                labels[y * width] = labels[(y - 1) * width];
             } else {
-                labels[0][y] = nextLabel++;
+                labels[y * width] = nextLabel++;
             }
         }
-        
+
+        // Row-wise process all remaining pixels comparing a pixel's value with
+        // pixel to the left and top.
         for (int y = 1; y < height; ++y) {
             for (int x = 1; x < width; ++x) {
                 int v = pixels[x + y * width];
                 if (v == backgroundValue) continue;
-                
+
                 int vn = pixels[x + (y - 1) * width];
                 int vw = pixels[(x - 1) + y * width];
-                
+
                 if (v == vn && v == vw) {
-                    int ln = labels[x][y - 1];
-                    int lw = labels[x - 1][y];
-                    labels[x][y] = Math.min(ln, lw);
+                    // If two labels are equivalent assign the smaller one
+                    // (the one assigned earlier).
+                    int ln = labels[x + (y - 1) * width];
+                    int lw = labels[(x - 1) + y * width];
+                    labels[x + y * width] = Math.min(ln, lw);
                     eq.union(lw, ln);
                     eq.union(ln, lw);
                 } else if (v == vn) {
-                    labels[x][y] = labels[x][y - 1];
+                    labels[x + y * width] = labels[x + (y - 1) * width];
                 } else if (v == vw) {
-                    labels[x][y] = labels[x - 1][y];
+                    labels[x + y * width] = labels[(x - 1) + y * width];
                 } else {
-                    labels[x][y] = nextLabel++;
+                    labels[x + y * width] = nextLabel++;
                 }
             }
         }
-        
-        for (int y = 0; y < height; ++y) {
-            for (int x = 0; x < width; ++x) {
-                if (pixels[x + y * width] == backgroundValue) continue;
-                int label = eq.find(labels[x][y]);
-                labels[x][y] = label;
+
+        // Resolve equivalent labels.
+        for (int i = 0; i < pixels.length; ++i) {
+            if (pixels[i] == backgroundValue) {
+                continue;
             }
+            labels[i] = eq.find(labels[i]);
         }
-        
+
         return labels;
-    }
-    
-    private static class UnionFind {
-        private int[] parent;
-        private int[] rank;
-        
-        public UnionFind(int max) {
-            parent = new int[max];
-            rank = new int[max];
-            for (int i = 0; i < max; ++i) {
-                parent[i] = i;
-            }
-        }
-        
-        public int find(int i) {
-            int p = parent[i];
-            if (i == p) {
-                return i;
-            }
-            return parent[i] = find(p);
-        }
-        
-        public void union(int i, int j) {
-            int p = find(i);
-            int q = find(j);
-            if (p == q) return;
-            if (rank[p] > rank[q]) {
-                parent[q] = p;
-            } else if (rank[p] < rank[q]) {
-                parent[p] = q;
-            } else {
-                parent[q] = p;
-                rank[p] += 1;
-            }
-        }
     }
 }

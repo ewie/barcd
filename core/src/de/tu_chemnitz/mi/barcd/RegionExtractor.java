@@ -20,26 +20,26 @@ import de.tu_chemnitz.mi.barcd.image.ScalingOperator;
  */
 public class RegionExtractor {
     private static final int PROCESSING_IMAGE_WIDTH = 1000;
-    
+
     private ConvolveOp gx;
     private ConvolveOp gy;
     private DilationOperator dilate;
     private ScalingOperator scale = new ScalingOperator();
 
     public RegionExtractor() {
-        this.gx = new ConvolveOp(new Kernel(2, 2, new float[] {
+        gx = new ConvolveOp(new Kernel(2, 2, new float[] {
             1,  0,
             0, -1
         }));
-        
-        this.gy = new ConvolveOp(new Kernel(2, 2, new float[] {
+
+        gy = new ConvolveOp(new Kernel(2, 2, new float[] {
              0, 1,
             -1, 0
         }));
 
-        this.dilate = new DilationOperator(5, 5);
+        dilate = new DilationOperator(5, 5);
     }
-    
+
     public Region[] detect(BufferedImage input) {
         double scalingFactor = (double) input.getWidth() / PROCESSING_IMAGE_WIDTH;
         input = scale.apply(input, PROCESSING_IMAGE_WIDTH);
@@ -47,32 +47,32 @@ public class RegionExtractor {
         int[] s = segment(g, input.getWidth(), input.getHeight());
         return regions(s, input.getWidth(), input.getHeight(), scalingFactor);
     }
-    
+
     private int[] gradient(Raster input) {
         int width = input.getWidth();
         int height = input.getHeight();
-        
+
         WritableRaster rx = gx.createCompatibleDestRaster(input);
         WritableRaster ry = gy.createCompatibleDestRaster(input);
-        
+
         gx.filter(input, rx);
         gy.filter(input, ry);
-        
+
         int[] px = rx.getPixels(0, 0, width, height, (int[]) null);
         int[] py = ry.getPixels(0, 0, width, height, (int[]) null);
-        
+
         int[] pxy = new int[px.length];
-        
+
         for (int i = 0; i < px.length; ++i) {
             pxy[i] = px[i] + py[i];
         }
-        
+
         return pxy;
     }
-    
+
     private int[] segment(int[] in, int w, int h) {
         int[] p = dilate.apply(in, w, h);
-        
+
         long mean = 0;
         for (int i = 0; i < p.length; ++i) {
             mean += p[i];
@@ -81,19 +81,19 @@ public class RegionExtractor {
         for (int i = 0; i < p.length; ++i) {
             p[i] = p[i] > mean ? 255 : 0;
         }
-        
+
         return p;
     }
-    
+
     private Region[] regions(int[] input, int width, int height, double scalingFactor) {
         ConnectedComponentLabeler ccl = new ConnectedComponentLabeler();
-        int[][] labels = ccl.process(input, width, height);
-        
+        int[] labels = ccl.process(input, width, height);
+
         Map<Integer, List<Point>> labelPointsMap = new HashMap<Integer, List<Point>>();
 
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
-                int label = labels[x][y];
+                int label = labels[x + y * width];
                 if (label == 0) continue;
                 if (!labelPointsMap.containsKey(label)) {
                     labelPointsMap.put(label, new LinkedList<Point>());
@@ -103,11 +103,11 @@ public class RegionExtractor {
                 labelPointsMap.get(label).add(p);
             }
         }
-        
+
         Region[] regions = new Region[labelPointsMap.size()];
-        
+
         double scalingFactor2 = scalingFactor * scalingFactor;
-        
+
         int i = 0;
         for (List<Point> points : labelPointsMap.values()) {
             // Because we used a down-scaled image to extract a region's
@@ -118,7 +118,7 @@ public class RegionExtractor {
             int generatingPointCount = (int) (points.size() * scalingFactor2);
             regions[i++] = Region.createFromPoints(points, generatingPointCount);
         }
-        
+
         return regions;
     }
 }
