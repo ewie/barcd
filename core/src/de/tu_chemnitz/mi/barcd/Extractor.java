@@ -14,9 +14,9 @@ public class Extractor {
     public static interface FrameHandler {
         public void handleFrame(Frame frame, BufferedImage image);
     }
-    
+
     private RegionExtractor hfr = new RegionExtractor();
-    
+
     private RegionFilter regionFilter = new RegionFilter() {
         @Override
         public boolean select(Region region) {
@@ -39,11 +39,11 @@ public class Extractor {
     private Job job;
 
     private ImageProvider provider;
-    
+
     private RegionHash rhash = new RegionHash(10, 400);
-    
+
     private Decoder decoder = new ZXingBarcodeDecoder();
-    
+
     private int epoch = 0;
 
     private FrameHandler frameHandler;
@@ -52,48 +52,56 @@ public class Extractor {
         throws ImageProviderException
     {
         this.job = job;
-        this.provider = job.getImageProvider();
+        provider = job.getImageProvider();
     }
-    
+
     public Job getJob() {
         return job;
     }
-    
+
     public void setRegionFilter(RegionFilter filter) {
-        this.regionFilter = filter;
+        regionFilter = filter;
     }
-    
+
     public void setDecoder(Decoder decoder) {
         this.decoder = decoder;
     }
-    
+
     public void setFrameHandler(FrameHandler frameHandler) {
         this.frameHandler = frameHandler;
     }
-    
+
     public boolean hasMoreImages() {
         return provider.hasMore();
     }
-    
+
+    /**
+     * @throws ImageProviderException if the next image is null
+     */
     public void processNextImage()
         throws ImageProviderException
     {
         BufferedImage image = provider.consume();
+
+        if (image == null) {
+            throw new ImageProviderException("next image is null");
+        }
+
         BufferedImage lum = createGrayscale(image);
         Region[] regions = hfr.detect(lum);
-        
+
         Frame frame = job.createFrame();
-        
+
         for (Region r : regions) {
             if (!regionFilter.select(r)) continue;
             frame.addRegion(r);
             rhash.insert(r, epoch);
         }
-        
+
         // TODO improve image regions
-        
+
         Barcode[] barcodes = decoder.decodeMultiple(image);
-        
+
         if (barcodes != null) {
             for (Barcode barcode : barcodes) {
                 Point p = barcode.getAnchorPoints()[0];
@@ -105,18 +113,18 @@ public class Extractor {
                 }
             }
         }
-        
+
         epoch += 1;
-        
+
         reportFrame(frame, image);
     }
-    
+
     private void reportFrame(Frame frame, BufferedImage image) {
         if (frameHandler != null) {
             frameHandler.handleFrame(frame, image);
         }
     }
-    
+
     private BufferedImage createGrayscale(BufferedImage in) {
         if (in.getType() == BufferedImage.TYPE_BYTE_GRAY) {
             return in;
