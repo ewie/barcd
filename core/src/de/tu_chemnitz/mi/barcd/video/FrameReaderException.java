@@ -9,15 +9,15 @@ public class FrameReaderException extends Exception {
     public FrameReaderException() {
         super();
     }
-    
+
     public FrameReaderException(String message) {
         super(message);
     }
-    
+
     public FrameReaderException(String message, Throwable cause) {
         super(message, cause);
     }
-    
+
     public FrameReaderException(Throwable cause) {
         super(cause);
     }

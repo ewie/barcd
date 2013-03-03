@@ -7,18 +7,18 @@ public class ImageProviderException extends Exception {
     private static final long serialVersionUID = 1L;
 
     public ImageProviderException() {
-        this(null, null);
-    }
-    
-    public ImageProviderException(String message) {
-        this(message, null);
+        super();
     }
 
-    public ImageProviderException(Throwable cause) {
-        this(null, cause);
+    public ImageProviderException(String message) {
+        super(message);
     }
 
     public ImageProviderException(String message, Throwable cause) {
         super(message, cause);
+    }
+
+    public ImageProviderException(Throwable cause) {
+        super(cause);
     }
 }
