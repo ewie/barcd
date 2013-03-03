@@ -13,16 +13,19 @@ import de.tu_chemnitz.mi.barcd.ImageProviderException;
 /**
  * A sequence of images retrieved from a sequence of URLs with one URL per
  * image.
- * 
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class RemoteImageProvider implements ImageProvider {
     private Iterator<URL> urls;
-    
+
+    /**
+     * @param urls an iterator over all image URLs
+     */
     public RemoteImageProvider(Iterator<URL> urls) {
         this.urls = urls;
     }
-    
+
     @Override
     public boolean hasMore() {
         return urls.hasNext();
