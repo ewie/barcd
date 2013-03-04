@@ -3,6 +3,8 @@ package de.tu_chemnitz.mi.barcd.video;
 import java.awt.image.BufferedImage;
 
 /**
+ * Reads the frames of a video source.
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public interface FrameReader {
@@ -10,47 +12,28 @@ public interface FrameReader {
      * @return the frame width
      */
     public int getWidth();
-    
+
     /**
      * @return the frame height
      */
     public int getHeight();
-    
+
     /**
      * Read the next frame.
-     * 
+     *
      * @return the image of the next frame
-     * 
+     *
      * @throws FrameReaderException
      */
     public BufferedImage getNextFrame() throws FrameReaderException;
-    
-    /**
-     * Skip the next frames.
-     * 
-     * @param count the number of frames to skip
-     * 
-     * @throws FrameReaderException
-     */
-    public void skipFrames(int count) throws FrameReaderException;
-    
+
     /**
      * @return the current frame number
      */
     public int getCurrentFrameNumber();
-    
+
     /**
-     * Set the frame number of the next frame to be read.
-     * 
-     * @param frameNumber
-     * 
-     * @throws FrameReaderException
+     * @return true if there are more frames
      */
-    public void setFrameNumber(int frameNumber) throws FrameReaderException;
-    
-    public int getLengthInFrames();
-
-    public boolean isSeekable();
-
-    public boolean isFinite();
+    public boolean hasMoreFrames();
 }

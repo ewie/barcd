@@ -4,9 +4,16 @@ import java.net.URL;
 
 import com.googlecode.javacv.OpenCVFrameGrabber;
 
-public class OpenCVFileFrameReader extends OpenCVFrameReader {
+/**
+ * A file based seekable frame reader using OpenCV.
+ *
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
+public class OpenCVFileFrameReader extends OpenCVFrameReader
+    implements SeekableFrameReader
+{
     private URL url;
-    
+
     protected OpenCVFileFrameReader(URL url, OpenCVFrameGrabber frameGrabber)
         throws FrameReaderException
     {
@@ -25,9 +32,9 @@ public class OpenCVFileFrameReader extends OpenCVFrameReader {
      * Open a local or remote resource.
      *
      * @param url the resource URL
-     * 
+     *
      * @return the frame reader using the specified resource
-     * 
+     *
      * @throws FrameReaderException
      */
     public static OpenCVFileFrameReader open(URL url)
@@ -37,4 +44,31 @@ public class OpenCVFileFrameReader extends OpenCVFrameReader {
         return new OpenCVFileFrameReader(url, fg);
     }
 
+    @Override
+    public boolean hasMoreFrames() {
+        return getCurrentFrameNumber() < getLengthInFrames();
+    }
+
+    @Override
+    public void setFrameNumber(int frameNumber)
+        throws FrameReaderException
+    {
+        try {
+            frameGrabber.setFrameNumber(frameNumber);
+        } catch (Exception ex) {
+            throw new FrameReaderException(ex);
+        }
+    }
+
+    @Override
+    public void skipFrames(int count)
+        throws FrameReaderException
+    {
+        setFrameNumber(getCurrentFrameNumber() + count);
+    }
+
+    @Override
+    public int getLengthInFrames() {
+        return frameGrabber.getLengthInFrames();
+    }
 }

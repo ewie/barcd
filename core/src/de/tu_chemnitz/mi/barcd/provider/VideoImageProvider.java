@@ -24,10 +24,7 @@ public class VideoImageProvider implements ImageProvider {
 
     @Override
     public boolean hasMore() {
-        if (frameReader.isFinite()) {
-            return frameReader.getCurrentFrameNumber() < frameReader.getLengthInFrames();
-        }
-        return true;
+        return frameReader.hasMoreFrames();
     }
 
     @Override
