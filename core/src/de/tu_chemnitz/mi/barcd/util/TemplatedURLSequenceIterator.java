@@ -4,13 +4,21 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 
+/**
+ * An {@link Iterator} over the URLs provided by a {@link TemplatedURLSequence}.
+ *
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class TemplatedURLSequenceIterator implements Iterator<URL> {
     private TemplatedURLSequence template;
-    
+
     private int index = 0;
-    
-    public TemplatedURLSequenceIterator(TemplatedURLSequence pattern) {
-        this.template = pattern;
+
+    /**
+     * @param sequence the templated URL sequence
+     */
+    public TemplatedURLSequenceIterator(TemplatedURLSequence sequence) {
+        template = sequence;
     }
 
     @Override
