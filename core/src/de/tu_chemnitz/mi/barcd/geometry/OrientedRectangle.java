@@ -25,7 +25,7 @@ public class OrientedRectangle extends Rectangle {
         this.origin = origin;
         this.width = width;
         this.height = height;
-        if (Math.abs(width.getAngle(height)) > 1e-5) {
+        if (Math.abs(width.computeAngle(height)) > 1e-5) {
             throw new IllegalArgumentException("the vectors must form a right angle");
         }
     }
@@ -50,7 +50,7 @@ public class OrientedRectangle extends Rectangle {
      * @return the angle of rotation
      */
     public double getRotationAngle() {
-        return width.getAngle(new Vector(1, 0));
+        return width.computeAngle(new Vector(1, 0));
     }
 
     @Override
