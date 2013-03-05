@@ -38,7 +38,7 @@ public class Extractor {
         throws ImageProviderException
     {
         this.job = job;
-        imageProvider = job.getImageProvider();
+        imageProvider = job.createImageProvider();
     }
 
     /**
