@@ -37,9 +37,9 @@ import de.tu_chemnitz.mi.barcd.xml.XMLSerializerException;
  */
 public class Application extends Worker {
     private static final String TERMINAL_PREFIX = "barcd>";
-    
+
     private Job job;
-    
+
     private Extractor extractor;
 
     private Thread extractionThread;
@@ -47,7 +47,7 @@ public class Application extends Worker {
     private Terminal terminal;
 
     private CommandLineOptions options;
-    
+
     private final VideoImageDisplay display = new VideoImageDisplay();
 
     public Application(String[] args)
@@ -65,17 +65,19 @@ public class Application extends Worker {
             @Override
             public void handleFrame(Frame frame, BufferedImage image) {
                 displayFrame(frame, image);
+                /*
                 try {
                     persistFrame(frame);
                 } catch (ApplicationException ex) {
                     throw new WorkerException(ex);
                 }
+                */
             }
         });
         extractionThread = new Thread(extractionWorker);
         terminal = setupTerminal(extractionThread, extractionWorker);
     }
-    
+
     @Override
     public void work()
         throws Exception
@@ -90,35 +92,35 @@ public class Application extends Worker {
             }
         }
     }
-    
+
     private void displayFrame(Frame frame, BufferedImage image) {
         ScalingOperator scaling = new ScalingOperator();
         BufferedImage im = scaling.apply(image, 1000);
         double scale = (double) im.getWidth() / image.getWidth();
-        
+
         Graphics2D g = im.createGraphics();
-        
+
         for (Region r : frame.getRegions()) {
             Polygon polygon = new Polygon();
-            for (Point p : r.getOrientedRectangle().getPoints()) {
+            for (Point p : r.getOrientedRectangle().getVertices()) {
                 polygon.addPoint((int) (p.getX() * scale), (int) (p.getY() * scale));
             }
             float cov = (float) r.getCoverage();
             g.setColor(new Color(0f, 0f, 1f, cov));
             g.fillPolygon(polygon);
-            
+
             polygon = new Polygon();
-            for (Point p : r.getConvexPolygon().getPoints()) {
+            for (Point p : r.getConvexPolygon().getVertices()) {
                 polygon.addPoint((int) (p.getX() * scale), (int) (p.getY() * scale));
             }
             g.setColor(new Color(1f, 0f, 0f, cov));
             g.fillPolygon(polygon);
         }
-        
+
         g.dispose();
         display.setImage(im);
     }
-    
+
     private void persistFrame(Frame frame)
         throws ApplicationException
     {
@@ -131,7 +133,7 @@ public class Application extends Worker {
         } catch (URISyntaxException ex) {
             throw new ApplicationException("invalid file URL for frame " + frame.getNumber(), ex);
         }
-        
+
         File frameFile = new File(frameUri);
         FileOutputStream frameOut;
         try {
@@ -147,16 +149,16 @@ public class Application extends Worker {
         } catch (XMLSerializerException ex) {
             throw new ApplicationException("could not serialize or persist frame", ex);
         }
-        
+
         persistJob();
     }
-    
+
     private void persistJob()
         throws ApplicationException
     {
         File jobFile = new File(options.getJobFilePath());
         FileOutputStream jobOut;
-        
+
         try {
             jobOut = new FileOutputStream(jobFile);
         } catch (FileNotFoundException ex) {
@@ -171,44 +173,44 @@ public class Application extends Worker {
             throw new ApplicationException("could not serialize or persist job", ex);
         }
     }
-    
+
     private CommandLineOptions parseArguments(String[] args)
         throws ApplicationException
     {
         CommandLineOptions options = new CommandLineOptions();
-        
+
         if (!options.parse(args)) {
             throw new ApplicationException("could not parse arguments");
         }
-        
+
         return options;
     }
-    
+
     private Job loadJob(String path)
         throws ApplicationException
     {
         Job job = null;
-        
+
         File file = new File(path);
         if (!file.exists()) {
             throw new ApplicationException(String.format("job file (%s) does not exist", file));
         }
-        
+
         FileInputStream fin = null;
-        
+
         try {
             fin = new FileInputStream(file);
         } catch (FileNotFoundException ex) {
             throw new ApplicationException(String.format("job file (%s) not found", file), ex);
         }
-        
+
         URL schemaURL = null;
         try {
             schemaURL = new URL("file:/home/ewie/workspace/barcd/core/etc/barcd.xsd");
         } catch (MalformedURLException ex) {
             throw new ApplicationException("could not open XML schema", ex);
         }
-        
+
         XMLJobSerializer sj = new XMLJobSerializer();
         try {
             try {
@@ -223,17 +225,17 @@ public class Application extends Worker {
         } catch (XMLSerializerException ex) {
             throw new ApplicationException(String.format("job file (%s) could not be deserialized", file), ex);
         }
-        
+
         return job;
     }
-    
+
     private Terminal setupTerminal(final Thread thread, final ExtractionWorker worker)
         throws ApplicationException
     {
         Terminal terminal = new Terminal(System.in, System.out);
-        
+
         terminal.setPrefix(TERMINAL_PREFIX);
-        
+
         Routine stopRoutine = new Routine() {
             @Override
             public void execute(Terminal terminal) {
@@ -245,7 +247,7 @@ public class Application extends Worker {
                 }
             }
         };
-        
+
         Routine quitRoutine = new Routine() {
             @Override
             public void execute(Terminal terminal) {
@@ -262,19 +264,19 @@ public class Application extends Worker {
                 }
             }
         };
-        
+
         Command stopCommand = new Command("stop", stopRoutine,
             "stop the extraction process and persist all extractions so far");
-        
+
         Command quitCommand = new Command("help", quitRoutine, "display this help");
-        
+
         try {
             terminal.registerCommand(stopCommand);
             terminal.registerCommand(quitCommand);
         } catch (TerminalException ex) {
             throw new ApplicationException("could not setup terminal", ex);
         }
-        
+
         return terminal;
     }
 }
