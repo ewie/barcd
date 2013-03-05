@@ -1,9 +1,7 @@
 package de.tu_chemnitz.mi.barcd;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.tu_chemnitz.mi.barcd.geometry.OrientedRectangle;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.util.RegionHashTable;
 
@@ -15,85 +13,122 @@ public class Extractor {
         public void handleFrame(Frame frame, BufferedImage image);
     }
 
-    private RegionExtractor hfr = new RegionExtractor();
+    private RegionExtractor regionExtractor = new DefaultRegionExtractor();
 
-    private RegionFilter regionFilter = new RegionFilter() {
-        @Override
-        public boolean select(Region region) {
-            double cov = region.getCoverage();
-            if (cov < 0.5) {
-                return false;
-            }
-            OrientedRectangle rect = region.getOrientedRectangle();
-            if (rect.getWidth() < 20 || rect.getHeight() < 20) {
-                return false;
-            }
-            double dis = region.getDiscrepancy();
-            if (dis < 0.85) {
-                return false;
-            }
-            return true;
-        }
-    };
+    private RegionSelector regionSelector = new DefaultRegionSelector();
 
     private Job job;
 
-    private ImageProvider provider;
+    private ImageProvider imageProvider;
 
-    private RegionHashTable rhash = new RegionHashTable(10, 400);
+    private RegionHashTable regionHashTable = new RegionHashTable(10, 400);
 
     private Decoder decoder = new ZXingBarcodeDecoder();
 
     private FrameHandler frameHandler;
 
+    private Grayscaler grayscaler;
+
+    /**
+     * @param job the job to process
+     *
+     * @throws ImageProviderException if the image provider could no be created
+     */
     public Extractor(Job job)
         throws ImageProviderException
     {
         this.job = job;
-        provider = job.getImageProvider();
+        imageProvider = job.getImageProvider();
     }
 
+    /**
+     * @return the job processed by this extractor
+     */
     public Job getJob() {
         return job;
     }
 
-    public void setRegionFilter(RegionFilter filter) {
-        regionFilter = filter;
+    /**
+     * Set the grayscaler.
+     *
+     * @param grayscaler the grayscaler
+     */
+    public void setGrayscaler(Grayscaler grayscaler) {
+        this.grayscaler = grayscaler;
     }
 
+    /**
+     * Set the region extractor.
+     *
+     * @param regionExtractor
+     */
+    public void setRegionExtractor(RegionExtractor regionExtractor) {
+        this.regionExtractor = regionExtractor;
+    }
+
+    /**
+     * Set a region filter.
+     *
+     * @param regionSelector
+     */
+    public void setRegionSelector(RegionSelector regionSelector) {
+        this.regionSelector = regionSelector;
+    }
+
+    /**
+     * Set the barcode decoder.
+     *
+     * @param decoder
+     */
     public void setDecoder(Decoder decoder) {
         this.decoder = decoder;
     }
 
+    /**
+     * Register a frame handler.
+     *
+     * @param frameHandler
+     */
     public void setFrameHandler(FrameHandler frameHandler) {
         this.frameHandler = frameHandler;
     }
 
+    /**
+     * @return true if the underlying image provider has more images
+     */
     public boolean hasMoreImages() {
-        return provider.hasMore();
+        return imageProvider.hasMore();
     }
 
     /**
+     * Process the next image returned by the image provider.
+     *
      * @throws ImageProviderException if the next image is null
      */
     public void processNextImage()
-        throws ImageProviderException
+        throws ExtractorException
     {
-        BufferedImage image = provider.consume();
-
-        if (image == null) {
-            throw new ImageProviderException("next image is null");
+        BufferedImage image;
+        try {
+            image = imageProvider.consume();
+        } catch (ImageProviderException ex) {
+            throw new ExtractorException(ex);
         }
 
-        BufferedImage lum = createGrayscale(image);
-        Region[] regions = hfr.detect(lum);
+        if (image == null) {
+            throw new ExtractorException("next image is null");
+        }
+
+        BufferedImage lum = grayscaler.convertToGrayscale(image);
+        Region[] regions = regionExtractor.extractRegions(lum);
 
         Frame frame = job.createFrame();
 
         for (Region r : regions) {
-            if (!regionFilter.select(r)) continue;
-            frame.addRegion(r);
-            rhash.insert(r);
+            if (regionSelector.selectRegion(r)) {
+                frame.addRegion(r);
+                regionHashTable.insert(r);
+            }
         }
 
         // TODO improve image regions
@@ -102,8 +137,17 @@ public class Extractor {
 
         if (barcodes != null) {
             for (Barcode barcode : barcodes) {
-                Point p = barcode.getAnchorPoints()[0];
-                Region r = rhash.find(p);
+                Region r = null;
+
+                // Try each anchor point until we find region containing it.
+                Point[] pp = barcode.getAnchorPoints();
+                for (Point p : pp) {
+                    r = regionHashTable.find(p);
+                    if (r != null) {
+                        break;
+                    }
+                }
+
                 if (r == null) {
                     frame.addRegionlessBarcode(barcode);
                 } else {
@@ -112,25 +156,21 @@ public class Extractor {
             }
         }
 
-        rhash.clear();
+        regionHashTable.clear();
 
         reportFrame(frame, image);
     }
 
+    /**
+     * Report a frame along with an image if the there's a registered frame
+     * handler.
+     *
+     * @param frame the frame to report
+     * @param image the image to pass along with the frame
+     */
     private void reportFrame(Frame frame, BufferedImage image) {
         if (frameHandler != null) {
             frameHandler.handleFrame(frame, image);
         }
-    }
-
-    private BufferedImage createGrayscale(BufferedImage in) {
-        if (in.getType() == BufferedImage.TYPE_BYTE_GRAY) {
-            return in;
-        }
-        BufferedImage out = new BufferedImage(in.getWidth(), in.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
-        Graphics2D g = out.createGraphics();
-        g.drawImage(in, 0, 0, null);
-        g.dispose();
-        return out;
     }
 }

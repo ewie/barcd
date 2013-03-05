@@ -5,7 +5,7 @@ package de.tu_chemnitz.mi.barcd;
  *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public interface RegionFilter {
+public interface RegionSelector {
     /**
      * Decides if a region should be selected or rejected.
      *
@@ -13,5 +13,5 @@ public interface RegionFilter {
      *
      * @return true to select the region, false to reject it
      */
-    public boolean select(Region region);
+    public boolean selectRegion(Region region);
 }
