@@ -27,7 +27,7 @@ public class Extractor {
 
     private FrameHandler frameHandler;
 
-    private Grayscaler grayscaler;
+    private Grayscaler grayscaler = new DefaultGrayscaler();
 
     /**
      * @param job the job to process
