@@ -28,6 +28,7 @@ import de.tu_chemnitz.mi.barcd.app.Terminal.Command;
 import de.tu_chemnitz.mi.barcd.app.Terminal.Routine;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.image.ScalingOperator;
+import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequence;
 import de.tu_chemnitz.mi.barcd.xml.XMLFrameSerializer;
 import de.tu_chemnitz.mi.barcd.xml.XMLJobSerializer;
 import de.tu_chemnitz.mi.barcd.xml.XMLSerializerException;
@@ -46,15 +47,15 @@ public class Application extends Worker {
 
     private Terminal terminal;
 
-    private CommandLineOptions options;
+    private Options options;
 
     private final VideoImageDisplay display = new VideoImageDisplay();
 
-    public Application(String[] args)
+    public Application(Options options)
         throws ApplicationException
     {
-        options = parseArguments(args);
-        job = loadJob(options.getJobFilePath());
+        this.options = options;
+        job = loadJob(options.getJobFile());
         try {
             extractor = new Extractor(job);
         } catch (ImageProviderException ex) {
@@ -125,8 +126,9 @@ public class Application extends Worker {
         throws ApplicationException
     {
         URI frameUri;
+        TemplatedURLSequence frameUrlSequence = options.getFrameUrlSequence();
         try {
-            URL frameUrl = options.getFrames().getURL(frame.getNumber());
+            URL frameUrl = frameUrlSequence.getURL(frame.getNumber());
             frameUri = frameUrl.toURI();
         } catch (MalformedURLException ex) {
             throw new ApplicationException("invalid file URL for frame " + frame.getNumber(), ex);
@@ -156,7 +158,7 @@ public class Application extends Worker {
     private void persistJob()
         throws ApplicationException
     {
-        File jobFile = new File(options.getJobFilePath());
+        File jobFile = options.getJobFile();
         FileOutputStream jobOut;
 
         try {
@@ -174,29 +176,10 @@ public class Application extends Worker {
         }
     }
 
-    private CommandLineOptions parseArguments(String[] args)
+    private Job loadJob(File file)
         throws ApplicationException
     {
-        CommandLineOptions options = new CommandLineOptions();
-
-        if (!options.parse(args)) {
-            throw new ApplicationException("could not parse arguments");
-        }
-
-        return options;
-    }
-
-    private Job loadJob(String path)
-        throws ApplicationException
-    {
-        Job job = null;
-
-        File file = new File(path);
-        if (!file.exists()) {
-            throw new ApplicationException(String.format("job file (%s) does not exist", file));
-        }
-
-        FileInputStream fin = null;
+        FileInputStream fin;
 
         try {
             fin = new FileInputStream(file);
@@ -225,6 +208,8 @@ public class Application extends Worker {
         } catch (XMLSerializerException ex) {
             throw new ApplicationException("could not set XML schema location", ex);
         }
+
+        Job job;
 
         try {
             job = sj.unserialize(fin);

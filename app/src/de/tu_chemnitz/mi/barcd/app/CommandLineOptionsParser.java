@@ -16,6 +16,7 @@ import org.apache.commons.cli2.builder.GroupBuilder;
 import org.apache.commons.cli2.commandline.Parser;
 import org.apache.commons.cli2.option.DefaultOption;
 import org.apache.commons.cli2.util.HelpFormatter;
+import org.apache.commons.cli2.validation.FileValidator;
 import org.apache.commons.cli2.validation.InvalidArgumentException;
 import org.apache.commons.cli2.validation.UrlValidator;
 import org.apache.commons.cli2.validation.Validator;
@@ -26,10 +27,8 @@ import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequence;
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class CommandLineOptions {
-    private CommandLine commandLine;
-
-    private DefaultOption jobOption;
+public class CommandLineOptionsParser {
+    private DefaultOption jobFileOption;
 
     private Argument templateArgument;
 
@@ -41,34 +40,30 @@ public class CommandLineOptions {
 
     private DefaultOption xmlSchemaOption;
 
+    private Parser parser;
+
+    public CommandLineOptionsParser() {
+        parser = createParser();
+    }
+
     /**
-     * @param args
+     * @param args the arguments as passed to a main function
      *
-     * @return true if the command line arguments were successfully parsed
+     * @return the parsed options, null if the arguments could no be parsed
      */
-    public boolean parse(String[] args) {
-        Parser parser = createParser();
-        commandLine = parser.parseAndHelp(args);
-        return commandLine != null;
+    public Options parse(String[] args) {
+        CommandLine commandLine = parser.parseAndHelp(args);
+        if (commandLine == null) {
+            return null;
+        }
+        Options options = new Options();
+        options.setJobFile((File) commandLine.getValue(jobFileOption));
+        options.setXmlSchemaUrl((URL) commandLine.getValue(xmlSchemaOption));
+        options.setFrameUrlSequence(createFrameUrlSequence(commandLine));
+        return options;
     }
 
-    /**
-     * Get the path of the job file.
-     *
-     * @return the job file's path
-     */
-    public String getJobFilePath() {
-        return (String) commandLine.getValue(jobOption);
-    }
-
-    /**
-     * @return the URL of the XML schema or null if not given
-     */
-    public URL getXmlSchemaUrl() {
-        return (URL) commandLine.getValue(xmlSchemaOption);
-    }
-
-    public TemplatedURLSequence getFrames() {
+    public TemplatedURLSequence createFrameUrlSequence(CommandLine commandLine) {
         String template = (String) commandLine.getValue(templateArgument);
         String tag = (String) commandLine.getValue(tagArgument);
         int padding = Integer.valueOf((String) commandLine.getValue(paddingArgument));
@@ -106,9 +101,16 @@ public class CommandLineOptions {
         GroupBuilder gb = new GroupBuilder();
         ArgumentBuilder ab = new ArgumentBuilder();
 
+        FileValidator fileValidator = new FileValidator();
+        fileValidator.setReadable(true);
+        fileValidator.setWritable(true);
+        fileValidator.setExisting(true);
+        fileValidator.setFile(true);
+
         Argument jobArgument = ab.withName("PATH")
                                  .withMinimum(1)
                                  .withMaximum(1)
+                                 .withValidator(fileValidator)
                                  .create();
 
         templateArgument = ab.withName("TEMPLATE")
@@ -130,11 +132,11 @@ public class CommandLineOptions {
                         .withMaximum(1)
                         .create();
 
-        jobOption = ob.withLongName("job")
-                      .withDescription("The path to the job file.")
-                      .withArgument(jobArgument)
-                      .withRequired(true)
-                      .create();
+        jobFileOption = ob.withLongName("job")
+                          .withDescription("The path to the job file.")
+                          .withArgument(jobArgument)
+                          .withRequired(true)
+                          .create();
 
         Validator rangeValidator = new Validator() {
             @Override
@@ -189,7 +191,7 @@ public class CommandLineOptions {
                                      .withDescription("Display this help.")
                                      .create();
 
-        Group group = gb.withOption(jobOption)
+        Group group = gb.withOption(jobFileOption)
                         .withOption(framesOption)
                         .withOption(xmlSchemaOption)
                         .withOption(helpOption)
