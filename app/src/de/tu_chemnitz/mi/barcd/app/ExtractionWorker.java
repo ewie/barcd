@@ -25,7 +25,7 @@ public class ExtractionWorker extends Worker {
     public void work()
         throws ExtractorException
     {
-        while (!isTerminated() && extractor.hasMoreImages()) {
+        while (!shouldTerminate() && extractor.hasMoreImages()) {
             extractor.processNextImage();
         }
     }
