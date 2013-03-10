@@ -17,6 +17,7 @@ import org.apache.commons.cli2.commandline.Parser;
 import org.apache.commons.cli2.option.DefaultOption;
 import org.apache.commons.cli2.util.HelpFormatter;
 import org.apache.commons.cli2.validation.InvalidArgumentException;
+import org.apache.commons.cli2.validation.UrlValidator;
 import org.apache.commons.cli2.validation.Validator;
 
 import de.tu_chemnitz.mi.barcd.util.Range;
@@ -27,7 +28,7 @@ import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequence;
  */
 public class CommandLineOptions {
     private CommandLine commandLine;
-    
+
     private DefaultOption jobOption;
 
     private Argument templateArgument;
@@ -37,10 +38,12 @@ public class CommandLineOptions {
     private Argument paddingArgument;
 
     private Argument rangeArgument;
-    
+
+    private DefaultOption xmlSchemaOption;
+
     /**
      * @param args
-     * 
+     *
      * @return true if the command line arguments were successfully parsed
      */
     public boolean parse(String[] args) {
@@ -48,16 +51,23 @@ public class CommandLineOptions {
         commandLine = parser.parseAndHelp(args);
         return commandLine != null;
     }
-    
+
     /**
      * Get the path of the job file.
-     * 
+     *
      * @return the job file's path
      */
     public String getJobFilePath() {
         return (String) commandLine.getValue(jobOption);
     }
-    
+
+    /**
+     * @return the URL of the XML schema or null if not given
+     */
+    public URL getXmlSchemaUrl() {
+        return (URL) commandLine.getValue(xmlSchemaOption);
+    }
+
     public TemplatedURLSequence getFrames() {
         String template = (String) commandLine.getValue(templateArgument);
         String tag = (String) commandLine.getValue(tagArgument);
@@ -72,7 +82,7 @@ public class CommandLineOptions {
         }
         return new TemplatedURLSequence(url, tag, range, padding);
     }
-    
+
     private Range parseRange(String s) {
         String[] ss = s.split(":", 3);
         switch (ss.length) {
@@ -85,47 +95,47 @@ public class CommandLineOptions {
             throw new RuntimeException();
         }
     }
-    
+
     /**
      * Create the command line parser.
-     * 
+     *
      * @return a command line parser
      */
     private Parser createParser() {
         DefaultOptionBuilder ob = new DefaultOptionBuilder();
         GroupBuilder gb = new GroupBuilder();
         ArgumentBuilder ab = new ArgumentBuilder();
-        
+
         Argument jobArgument = ab.withName("PATH")
                                  .withMinimum(1)
                                  .withMaximum(1)
                                  .create();
-        
+
         templateArgument = ab.withName("TEMPLATE")
                              .withDescription("A templated URL identifying each frame result.")
                              .withMinimum(1)
                              .withMaximum(1)
                              .create();
-        
+
         paddingArgument = ab.withName("PADDING")
                             .withDescription("The length of the sequence number padded with zeros to the left.")
                             .withMinimum(0)
                             .withMaximum(1)
                             .withDefault(0)
                             .create();
-        
+
         tagArgument = ab.withName("TAG")
                         .withDescription("A unique substring in the templated URL that will be replaced by an integer from the given range.")
                         .withMinimum(1)
                         .withMaximum(1)
                         .create();
-        
+
         jobOption = ob.withLongName("job")
                       .withDescription("The path to the job file.")
                       .withArgument(jobArgument)
                       .withRequired(true)
                       .create();
-        
+
         Validator rangeValidator = new Validator() {
             @Override
             public void validate(List objects)
@@ -141,34 +151,50 @@ public class CommandLineOptions {
                 }
             }
         };
-        
+
         rangeArgument = ab.withName("RANGE")
                           .withDescription("The range of integers for which the template tag should be evaluated. Format: start:end[:step]")
                           .withMinimum(1)
                           .withMaximum(1)
                           .withValidator(rangeValidator)
                           .create();
-        
+
         Group templateGroup = gb.withOption(templateArgument)
                                 .withOption(tagArgument)
                                 .withOption(rangeArgument)
                                 .withOption(paddingArgument)
                                 .create();
-        
+
         DefaultOption framesOption = ob.withLongName("frames")
                                        .withChildren(templateGroup)
                                        .withRequired(true)
                                        .create();
-        
+
+        UrlValidator urlValidator = new UrlValidator();
+
+        Argument xmlSchemaArgument = ab.withName("URL")
+                                       .withMinimum(1)
+                                       .withMaximum(1)
+                                       .withValidator(urlValidator)
+                                       .create();
+
+        xmlSchemaOption = ob.withLongName("xml-schema")
+                            .withShortName("xs")
+                            .withDescription("Specify the location of the XML schema used for validation.")
+                            .withArgument(xmlSchemaArgument)
+                            .withRequired(false)
+                            .create();
+
         DefaultOption helpOption = ob.withLongName("help")
                                      .withDescription("Display this help.")
                                      .create();
-        
+
         Group group = gb.withOption(jobOption)
                         .withOption(framesOption)
+                        .withOption(xmlSchemaOption)
                         .withOption(helpOption)
                         .create();
-        
+
         HelpFormatter hf = new HelpFormatter();
         Parser p = new Parser();
         p.setGroup(group);

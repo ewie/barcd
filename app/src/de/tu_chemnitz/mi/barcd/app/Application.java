@@ -204,23 +204,29 @@ public class Application extends Worker {
             throw new ApplicationException(String.format("job file (%s) not found", file), ex);
         }
 
-        URL schemaURL = null;
+        XMLJobSerializer sj = new XMLJobSerializer();
+
+        URL contextURL;
+
         try {
-            schemaURL = new URL("file:/home/ewie/workspace/barcd/core/etc/barcd.xsd");
+            contextURL = file.getParentFile().toURI().toURL();
         } catch (MalformedURLException ex) {
-            throw new ApplicationException("could not open XML schema", ex);
+            throw new ApplicationException("malformed context URL", ex);
         }
 
-        XMLJobSerializer sj = new XMLJobSerializer();
+        sj.setURLContext(contextURL);
+
         try {
-            try {
-                URL contextURL = file.getParentFile().toURI().toURL();
-                sj.setURLContext(contextURL);
-            } catch (MalformedURLException ex) {
-                throw new ApplicationException("could not set URL context", ex);
+            URL schemaUrl = options.getXmlSchemaUrl();
+            if (schemaUrl != null) {
+                sj.setSchemaLocation(options.getXmlSchemaUrl());
+                sj.setValidation(true);
             }
-            sj.setSchemaLocation(schemaURL);
-            sj.setValidation(true);
+        } catch (XMLSerializerException ex) {
+            throw new ApplicationException("could not set XML schema location", ex);
+        }
+
+        try {
             job = sj.unserialize(fin);
         } catch (XMLSerializerException ex) {
             throw new ApplicationException(String.format("job file (%s) could not be deserialized", file), ex);
