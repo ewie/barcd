@@ -27,7 +27,7 @@ import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequence;
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class CommandLineOptionsParser {
+public class CommandLineArgumentsParser {
     private DefaultOption jobFileOption;
 
     private Argument templateArgument;
@@ -42,7 +42,7 @@ public class CommandLineOptionsParser {
 
     private Parser parser;
 
-    public CommandLineOptionsParser() {
+    public CommandLineArgumentsParser() {
         parser = createParser();
     }
 

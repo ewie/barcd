@@ -5,7 +5,7 @@ package de.tu_chemnitz.mi.barcd.app;
  */
 public class Main {
     public static void main(String[] args) {
-        CommandLineOptionsParser parser = new CommandLineOptionsParser();
+        CommandLineArgumentsParser parser = new CommandLineArgumentsParser();
         Options options = parser.parse(args);
 
         try {
