@@ -49,7 +49,7 @@ public class Application extends Worker {
 
     private Options options;
 
-    private final VideoImageDisplay display = new VideoImageDisplay();
+    private final ImageDisplay display = new ImageDisplay();
 
     public Application(Options options)
         throws ApplicationException
