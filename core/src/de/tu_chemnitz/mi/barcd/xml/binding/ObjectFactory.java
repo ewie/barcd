@@ -162,19 +162,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link UrlTemplateElement }
+     * 
+     */
+    public UrlTemplateElement createUrlTemplateElement() {
+        return new UrlTemplateElement();
+    }
+
+    /**
      * Create an instance of {@link BarcodesElement }
      * 
      */
     public BarcodesElement createBarcodesElement() {
         return new BarcodesElement();
-    }
-
-    /**
-     * Create an instance of {@link URLTemplateElement }
-     * 
-     */
-    public URLTemplateElement createURLTemplateElement() {
-        return new URLTemplateElement();
     }
 
     /**

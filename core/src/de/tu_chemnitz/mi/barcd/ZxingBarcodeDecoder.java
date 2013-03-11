@@ -24,7 +24,7 @@ import de.tu_chemnitz.mi.barcd.geometry.Point;
  * 
  * @see <a href="http://code.google.com/p/zxing">ZXing</a>
  */
-public class ZXingBarcodeDecoder implements Decoder {
+public class ZxingBarcodeDecoder implements Decoder {
     private static final EnumMap<BarcodeFormat, BarcodeType> format2type;
     
     private MultiFormatReader multiFormatReader = new MultiFormatReader();

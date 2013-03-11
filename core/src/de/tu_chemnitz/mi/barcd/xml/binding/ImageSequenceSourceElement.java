@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{http://www.tu-chemnitz.de/informatik/mi/barcd}SourceType">
  *       &lt;all>
- *         &lt;element name="template" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}URLTemplateType"/>
+ *         &lt;element name="template" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}UrlTemplateType"/>
  *         &lt;element name="range" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}RangeType"/>
  *       &lt;/all>
  *     &lt;/extension>
@@ -44,7 +44,7 @@ public class ImageSequenceSourceElement
 {
 
     @XmlElement(required = true)
-    protected URLTemplateElement template;
+    protected UrlTemplateElement template;
     @XmlElement(required = true)
     protected RangeElement range;
 
@@ -53,10 +53,10 @@ public class ImageSequenceSourceElement
      * 
      * @return
      *     possible object is
-     *     {@link URLTemplateElement }
+     *     {@link UrlTemplateElement }
      *     
      */
-    public URLTemplateElement getTemplate() {
+    public UrlTemplateElement getTemplate() {
         return template;
     }
 
@@ -65,10 +65,10 @@ public class ImageSequenceSourceElement
      * 
      * @param value
      *     allowed object is
-     *     {@link URLTemplateElement }
+     *     {@link UrlTemplateElement }
      *     
      */
-    public void setTemplate(URLTemplateElement value) {
+    public void setTemplate(UrlTemplateElement value) {
         this.template = value;
     }
 

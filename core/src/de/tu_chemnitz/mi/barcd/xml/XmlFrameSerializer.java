@@ -26,16 +26,16 @@ import de.tu_chemnitz.mi.barcd.xml.binding.PointsElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.RegionElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.RegionsElement;
 
-public class XMLFrameSerializer extends XMLSerializer<Frame> {
+public class XmlFrameSerializer extends XmlSerializer<Frame> {
     private ObjectFactory elements = new ObjectFactory();
     
-    public XMLFrameSerializer() {
+    public XmlFrameSerializer() {
         super(FrameElement.class.getPackage().getName());
     }
 
     @Override
     protected Frame restoreModel(JAXBElement<?> e)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         FrameElement fe = (FrameElement) e.getValue();
         int number = fe.getNumber();
@@ -46,7 +46,7 @@ public class XMLFrameSerializer extends XMLSerializer<Frame> {
 
     @Override
     protected JAXBElement<?> createRootElement(Frame frame)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         return elements.createFrame(createFrameElement(frame));
     }

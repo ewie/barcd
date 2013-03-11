@@ -5,7 +5,7 @@ import de.tu_chemnitz.mi.barcd.Source;
 import de.tu_chemnitz.mi.barcd.provider.VideoImageProvider;
 import de.tu_chemnitz.mi.barcd.video.FrameReader;
 import de.tu_chemnitz.mi.barcd.video.FrameReaderException;
-import de.tu_chemnitz.mi.barcd.video.OpenCVDeviceFrameReader;
+import de.tu_chemnitz.mi.barcd.video.OpenCvDeviceFrameReader;
 
 /**
  * An image source using a camera device addressed by its number (0 for the
@@ -29,7 +29,7 @@ public class VideoDeviceSource extends Source {
         throws ImageProviderException
     {
         try {
-            FrameReader fr = OpenCVDeviceFrameReader.open(deviceNumber);
+            FrameReader fr = OpenCvDeviceFrameReader.open(deviceNumber);
             return new VideoImageProvider(fr);
         } catch (FrameReaderException ex) {
             throw new ImageProviderException("cannot create image provider", ex);

@@ -3,8 +3,8 @@ package de.tu_chemnitz.mi.barcd.source;
 import de.tu_chemnitz.mi.barcd.ImageProviderException;
 import de.tu_chemnitz.mi.barcd.Source;
 import de.tu_chemnitz.mi.barcd.provider.RemoteImageProvider;
-import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequence;
-import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequenceIterator;
+import de.tu_chemnitz.mi.barcd.util.TemplatedUrlSequence;
+import de.tu_chemnitz.mi.barcd.util.TemplatedUrlSequenceIterator;
 
 /**
  * An image source using a templated URL.
@@ -12,13 +12,13 @@ import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequenceIterator;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class ImageSequenceSource extends Source {
-    private TemplatedURLSequence sequence;
+    private TemplatedUrlSequence sequence;
     
-    public ImageSequenceSource(TemplatedURLSequence sequence) {
+    public ImageSequenceSource(TemplatedUrlSequence sequence) {
         this.sequence = sequence;
     }
     
-    public TemplatedURLSequence getSequence() {
+    public TemplatedUrlSequence getSequence() {
         return sequence;
     }
     
@@ -26,7 +26,7 @@ public class ImageSequenceSource extends Source {
     public RemoteImageProvider createImageProvider(int initialFrameNumber)
         throws ImageProviderException
     {
-        TemplatedURLSequenceIterator it = sequence.iterator();
+        TemplatedUrlSequenceIterator it = sequence.iterator();
         while (initialFrameNumber --> 0) {
             it.next();
         }

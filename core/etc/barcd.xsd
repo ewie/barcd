@@ -45,7 +45,7 @@
     <xs:complexContent>
       <xs:extension base="SourceType">
         <xs:all>
-          <xs:element name="template" type="URLTemplateType"/>
+          <xs:element name="template" type="UrlTemplateType"/>
           <xs:element name="range" type="RangeType"/>
         </xs:all>
       </xs:extension>
@@ -72,7 +72,7 @@
     <xs:attribute name="url" type="xs:anyURI" use="required"/>
   </xs:complexType>
   
-  <xs:complexType name="URLTemplateType">
+  <xs:complexType name="UrlTemplateType">
     <xs:simpleContent>
       <xs:extension base="xs:anyURI">
         <xs:attribute name="tag" type="xs:string" use="required"/>

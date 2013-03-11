@@ -17,12 +17,12 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for URLTemplateType complex type.
+ * <p>Java class for UrlTemplateType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="URLTemplateType">
+ * &lt;complexType name="UrlTemplateType">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>anyURI">
  *       &lt;attribute name="tag" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
@@ -35,10 +35,10 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "URLTemplateType", propOrder = {
+@XmlType(name = "UrlTemplateType", propOrder = {
     "value"
 })
-public class URLTemplateElement {
+public class UrlTemplateElement {
 
     @XmlValue
     @XmlSchemaType(name = "anyURI")

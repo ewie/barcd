@@ -10,7 +10,7 @@ import de.tu_chemnitz.mi.barcd.source.ImageSequenceSource;
 import de.tu_chemnitz.mi.barcd.source.ImageSnapshotServiceSource;
 import de.tu_chemnitz.mi.barcd.source.VideoDeviceSource;
 import de.tu_chemnitz.mi.barcd.source.VideoStreamSource;
-import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequence;
+import de.tu_chemnitz.mi.barcd.util.TemplatedUrlSequence;
 
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
@@ -24,7 +24,7 @@ public class SourceFactory {
         return new BufferedImageSource(images);
     }
     
-    public ImageSequenceSource newImageSequenceSource(TemplatedURLSequence url) {
+    public ImageSequenceSource newImageSequenceSource(TemplatedUrlSequence url) {
         return new ImageSequenceSource(url);
     }
     

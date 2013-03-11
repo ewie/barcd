@@ -37,7 +37,7 @@ import de.tu_chemnitz.mi.barcd.Serializer;
  * 
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
+public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     private JAXBContext context;
     
     private boolean validate;
@@ -57,9 +57,9 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
     /**
      * @param contextPath the context path used to initialize the JAXB context
      * 
-     * @throws XMLSerializerException
+     * @throws XmlSerializerException
      */
-    public XMLSerializer(String contextPath) {
+    public XmlSerializer(String contextPath) {
         try {
             context = JAXBContext.newInstance(contextPath);
         } catch (JAXBException ex) {
@@ -74,10 +74,10 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * 
      * @return the restored model
      * 
-     * @throws XMLSerializerException
+     * @throws XmlSerializerException
      */
     protected abstract T restoreModel(JAXBElement<?> e)
-        throws XMLSerializerException;
+        throws XmlSerializerException;
     
     /**
      * Create a root element from the model to be serialized.
@@ -86,21 +86,21 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * 
      * @return the root element to be marshalled
      * 
-     * @throws XMLSerializerException
+     * @throws XmlSerializerException
      */
     protected abstract JAXBElement<?> createRootElement(T model)
-        throws XMLSerializerException;
+        throws XmlSerializerException;
 
     /**
      * @param model the model to be serialized
      * 
      * @param out the stream where to write the data
      * 
-     * @throws XMLSerializerException
+     * @throws XmlSerializerException
      */
     @Override
     public void serialize(T model, OutputStream out)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         marshal(model, out);
     }
@@ -109,11 +109,11 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * @param model the model to be serialized
      * @param out the writer used to write the XML representation
      * 
-     * @throws XMLSerializerException
+     * @throws XmlSerializerException
      */
     @Override
     public void serialize(T model, Writer out)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         marshal(model, out);
     }
@@ -124,10 +124,10 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * @param model the model to be serialized
      * @param node the node to hold the model's XML representation
      * 
-     * @throws XMLSerializerException
+     * @throws XmlSerializerException
      */
     public void appendTo(T model, Node node)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         marshal(model, node);
     }
@@ -137,11 +137,11 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * 
      * @return the restored model
      * 
-     * @throws XMLSerializerException
+     * @throws XmlSerializerException
      */
     @Override
     public T unserialize(InputStream in)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         return unmarshal(in);
     }
@@ -151,11 +151,11 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * 
      * @return the restored model
      * 
-     * @throws XMLSerializerException
+     * @throws XmlSerializerException
      */
     @Override
     public T unserialize(Reader in)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         return unmarshal(in);
     }
@@ -165,10 +165,10 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * 
      * @return the restored model
      * 
-     * @throws XMLSerializerException
+     * @throws XmlSerializerException
      */
     public T extractFrom(Node node)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         return unmarshal(node);
     }
@@ -178,10 +178,10 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * 
      * @param url the schema location
      * 
-     * @throws XMLSerializerException if the schema could no be loaded
+     * @throws XmlSerializerException if the schema could no be loaded
      */
     public void setSchemaLocation(URL url)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         setSchemaLocation(url, true);
     }
@@ -190,17 +190,17 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * @param url the schema location
      * @param useSchema true if to use the schema
      * 
-     * @throws XMLSerializerException if the schema could not be loaded
+     * @throws XmlSerializerException if the schema could not be loaded
      */
     public void setSchemaLocation(URL url, boolean useSchema)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         Schema s;
         try {
             s = sf.newSchema(url);
         } catch (SAXException ex) {
-            throw new XMLSerializerException("could not open XML schema", ex);
+            throw new XmlSerializerException("could not open XML schema", ex);
         }
         schemaLocation = url;
         if (useSchema) {
@@ -234,14 +234,14 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
     /**
      * @param include true if to include the XML declaration
      */
-    public void setIncludeXMLDeclaration(boolean include) {
+    public void setIncludeXmlDeclaration(boolean include) {
         this.includeXmlDeclaration = include;
     }
     
     /**
      * @return true if the XML declaration is to be included
      */
-    public boolean getIncludeXMLDeclaration() {
+    public boolean getIncludeXmlDeclaration() {
         return includeXmlDeclaration;
     }
 
@@ -250,14 +250,14 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * 
      * @param context the URL context
      */
-    public void setURLContext(URL context) {
+    public void setUrlContext(URL context) {
         this.urlContext = context;
     }
     
     /**
      * @return the URL context
      */
-    public URL getURLContext() {
+    public URL getUrlContext() {
         return urlContext;
     }
     
@@ -287,13 +287,13 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * 
      * @param validate true to enable, false to disable validation
      * 
-     * @throws XMLSerializerException if no schema has been specified
+     * @throws XmlSerializerException if no schema has been specified
      */
     public void setValidation(boolean validate)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         if (validate && schema == null) {
-            throw new XMLSerializerException("no XML schema loaded");
+            throw new XmlSerializerException("no XML schema loaded");
         }
         this.validate = validate;
     }
@@ -316,19 +316,19 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
     }
     
     protected URL resolveUrl(String rawUrl)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         URL url;
         try {
             url = new URL(rawUrl);
         } catch (MalformedURLException ex) {
-            throw new XMLSerializerException("invalid URL", ex);
+            throw new XmlSerializerException("invalid URL", ex);
         }
         return resolveUrl(url);
     }
     
     protected URL resolveUrl(URL url)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         if (context == null) {
             return url;
@@ -337,27 +337,27 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
             try {
                 uri = url.toURI();
             } catch (URISyntaxException ex) {
-                throw new XMLSerializerException("invalid URL", ex);
+                throw new XmlSerializerException("invalid URL", ex);
             }
             URI context;
             try {
                 context = urlContext.toURI();
             } catch (URISyntaxException ex) {
-                throw new XMLSerializerException("invalid URL", ex);
+                throw new XmlSerializerException("invalid URL", ex);
             }
             URI ruri = context.resolve(uri);
             URL rurl;
             try {
                 rurl = ruri.toURL();
             } catch (MalformedURLException ex) {
-                throw new XMLSerializerException("invalid URL", ex);
+                throw new XmlSerializerException("invalid URL", ex);
             }
             return rurl;
         }
     }
     
     protected URL relativizeUrl(URL url)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         if (urlContext == null) {
             return url;
@@ -367,19 +367,19 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
             try {
                 uri = url.toURI();
             } catch (URISyntaxException ex) {
-                throw new XMLSerializerException("invalid URL", ex);
+                throw new XmlSerializerException("invalid URL", ex);
             }
             try {
                 context = urlContext.toURI();
             } catch (URISyntaxException ex) {
-                throw new XMLSerializerException("invalid URL context", ex);
+                throw new XmlSerializerException("invalid URL context", ex);
             }
             URI ruri = context.relativize(uri);
             URL rurl;
             try {
                 rurl = ruri.toURL();
             } catch (MalformedURLException ex) {
-                throw new XMLSerializerException("invalid URL", ex);
+                throw new XmlSerializerException("invalid URL", ex);
             }
             return rurl;
         }
@@ -392,10 +392,10 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * 
      * @return the unmarshalled model
      * 
-     * @throws XMLSerializerException
+     * @throws XmlSerializerException
      */
     private T unmarshal(Object source)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         Unmarshaller u = createUnmarshaller();
         ValidationEventCollector v = null;
@@ -425,9 +425,9 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
             }
             e = (JAXBElement<?>) o;
         } catch (UnmarshalException ex) {
-            throw new XMLSerializerValidationException(translateValidationErrors(v), ex);
+            throw new XmlSerializerValidationException(translateValidationErrors(v), ex);
         } catch (JAXBException ex) {
-            throw new XMLSerializerException(ex);
+            throw new XmlSerializerException(ex);
         }
         
         return restoreModel(e);
@@ -439,10 +439,10 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * @param model the model to marshall
      * @param target an object receiving the XML data
      * 
-     * @throws XMLSerializerException
+     * @throws XmlSerializerException
      */
     private void marshal(T model, Object target)
-        throws XMLSerializerException
+        throws XmlSerializerException
     {
         JAXBElement<?> e = createRootElement(model);
         Marshaller m = createMarshaller(e);
@@ -469,9 +469,9 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
                 throw new RuntimeException();
             }
         } catch (MarshalException ex) {
-            throw new XMLSerializerValidationException(translateValidationErrors(v), ex);
+            throw new XmlSerializerValidationException(translateValidationErrors(v), ex);
         } catch (JAXBException ex) {
-            throw new XMLSerializerException("unexpected error during marshalling", ex);
+            throw new XmlSerializerException("unexpected error during marshalling", ex);
         }
     }
     
@@ -480,7 +480,7 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * 
      * @return an unmarshaller
      * 
-     * @throws XMLSerializerException
+     * @throws XmlSerializerException
      */
     private Unmarshaller createUnmarshaller() {
         try {
@@ -531,13 +531,13 @@ public abstract class XMLSerializer<T extends Object> implements Serializer<T> {
      * 
      * @return the validation errors
      */
-    private List<XMLSerializerValidationError> translateValidationErrors(ValidationEventCollector validation)
+    private List<XmlSerializerValidationError> translateValidationErrors(ValidationEventCollector validation)
     {
         ValidationEvent[] events = validation.getEvents();
-        XMLSerializerValidationError[] errors = new XMLSerializerValidationError[events.length];
+        XmlSerializerValidationError[] errors = new XmlSerializerValidationError[events.length];
         for (int i = 0; i < events.length; ++i) {
             ValidationEventLocator loc = events[i].getLocator();
-            XMLSerializerValidationError e = new XMLSerializerValidationError(
+            XmlSerializerValidationError e = new XmlSerializerValidationError(
                 events[i].getMessage(), loc.getLineNumber(), loc.getColumnNumber());
             errors[i] = e;
         }

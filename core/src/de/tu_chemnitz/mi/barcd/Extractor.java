@@ -23,7 +23,7 @@ public class Extractor {
 
     private RegionHashTable regionHashTable = new RegionHashTable(10, 400);
 
-    private Decoder decoder = new ZXingBarcodeDecoder();
+    private Decoder decoder = new ZxingBarcodeDecoder();
 
     private FrameHandler frameHandler;
 

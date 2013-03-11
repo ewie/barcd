@@ -10,7 +10,7 @@ import java.net.URL;
  *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class TemplatedURLSequence implements Iterable<URL> {
+public class TemplatedUrlSequence implements Iterable<URL> {
     private URL template;
 
     private String tag;
@@ -33,7 +33,7 @@ public class TemplatedURLSequence implements Iterable<URL> {
      *   sequence number (will be padded with '0' to the left), use 0 for no
      *   padding at all
      */
-    public TemplatedURLSequence(URL template, String tag, Range range, int padding)
+    public TemplatedUrlSequence(URL template, String tag, Range range, int padding)
     {
         this.template = template;
         this.tag = tag;
@@ -106,7 +106,7 @@ public class TemplatedURLSequence implements Iterable<URL> {
      *   substituted for an integer causing a valid URL if the URL template is
      *   a valid URL.)
      */
-    public URL getURL(int index)
+    public URL getUrl(int index)
         throws MalformedURLException
     {
         return new URL(String.format(format, range.get(index)));
@@ -116,7 +116,7 @@ public class TemplatedURLSequence implements Iterable<URL> {
      * The iterator over all possible URLs of this template.
      */
     @Override
-    public TemplatedURLSequenceIterator iterator() {
-        return new TemplatedURLSequenceIterator(this);
+    public TemplatedUrlSequenceIterator iterator() {
+        return new TemplatedUrlSequenceIterator(this);
     }
 }

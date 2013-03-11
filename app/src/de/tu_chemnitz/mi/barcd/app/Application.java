@@ -28,10 +28,10 @@ import de.tu_chemnitz.mi.barcd.app.Terminal.Command;
 import de.tu_chemnitz.mi.barcd.app.Terminal.Routine;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.image.ScalingOperator;
-import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequence;
-import de.tu_chemnitz.mi.barcd.xml.XMLFrameSerializer;
-import de.tu_chemnitz.mi.barcd.xml.XMLJobSerializer;
-import de.tu_chemnitz.mi.barcd.xml.XMLSerializerException;
+import de.tu_chemnitz.mi.barcd.util.TemplatedUrlSequence;
+import de.tu_chemnitz.mi.barcd.xml.XmlFrameSerializer;
+import de.tu_chemnitz.mi.barcd.xml.XmlJobSerializer;
+import de.tu_chemnitz.mi.barcd.xml.XmlSerializerException;
 
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
@@ -126,9 +126,9 @@ public class Application extends Worker {
         throws ApplicationException
     {
         URI frameUri;
-        TemplatedURLSequence frameUrlSequence = options.getFrameUrlSequence();
+        TemplatedUrlSequence frameUrlSequence = options.getFrameUrlSequence();
         try {
-            URL frameUrl = frameUrlSequence.getURL(frame.getNumber());
+            URL frameUrl = frameUrlSequence.getUrl(frame.getNumber());
             frameUri = frameUrl.toURI();
         } catch (MalformedURLException ex) {
             throw new ApplicationException("invalid file URL for frame " + frame.getNumber(), ex);
@@ -144,11 +144,11 @@ public class Application extends Worker {
             throw new ApplicationException("could not open or create frame file: " + frameFile.toString(), ex);
         }
 
-        XMLFrameSerializer fs = new XMLFrameSerializer();
+        XmlFrameSerializer fs = new XmlFrameSerializer();
         fs.setPretty(true);
         try {
             fs.serialize(frame, frameOut);
-        } catch (XMLSerializerException ex) {
+        } catch (XmlSerializerException ex) {
             throw new ApplicationException("could not serialize or persist frame", ex);
         }
 
@@ -167,11 +167,11 @@ public class Application extends Worker {
             throw new ApplicationException("could not open or create job file: " + jobFile.toString(), ex);
         }
 
-        XMLJobSerializer js = new XMLJobSerializer();
+        XmlJobSerializer js = new XmlJobSerializer();
         js.setPretty(true);
         try {
             js.serialize(job, jobOut);
-        } catch (XMLSerializerException ex) {
+        } catch (XmlSerializerException ex) {
             throw new ApplicationException("could not serialize or persist job", ex);
         }
     }
@@ -187,7 +187,7 @@ public class Application extends Worker {
             throw new ApplicationException(String.format("job file (%s) not found", file), ex);
         }
 
-        XMLJobSerializer sj = new XMLJobSerializer();
+        XmlJobSerializer sj = new XmlJobSerializer();
 
         URL contextURL;
 
@@ -197,7 +197,7 @@ public class Application extends Worker {
             throw new ApplicationException("malformed context URL", ex);
         }
 
-        sj.setURLContext(contextURL);
+        sj.setUrlContext(contextURL);
 
         try {
             URL schemaUrl = options.getXmlSchemaUrl();
@@ -205,7 +205,7 @@ public class Application extends Worker {
                 sj.setSchemaLocation(options.getXmlSchemaUrl());
                 sj.setValidation(true);
             }
-        } catch (XMLSerializerException ex) {
+        } catch (XmlSerializerException ex) {
             throw new ApplicationException("could not set XML schema location", ex);
         }
 
@@ -213,7 +213,7 @@ public class Application extends Worker {
 
         try {
             job = sj.unserialize(fin);
-        } catch (XMLSerializerException ex) {
+        } catch (XmlSerializerException ex) {
             throw new ApplicationException(String.format("job file (%s) could not be deserialized", file), ex);
         }
 

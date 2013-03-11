@@ -22,7 +22,7 @@ import org.apache.commons.cli2.validation.UrlValidator;
 import org.apache.commons.cli2.validation.Validator;
 
 import de.tu_chemnitz.mi.barcd.util.Range;
-import de.tu_chemnitz.mi.barcd.util.TemplatedURLSequence;
+import de.tu_chemnitz.mi.barcd.util.TemplatedUrlSequence;
 
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
@@ -63,7 +63,7 @@ public class CommandLineArgumentsParser {
         return options;
     }
 
-    public TemplatedURLSequence createFrameUrlSequence(CommandLine commandLine) {
+    public TemplatedUrlSequence createFrameUrlSequence(CommandLine commandLine) {
         String template = (String) commandLine.getValue(templateArgument);
         String tag = (String) commandLine.getValue(tagArgument);
         int padding = Integer.valueOf((String) commandLine.getValue(paddingArgument));
@@ -75,7 +75,7 @@ public class CommandLineArgumentsParser {
         } catch (MalformedURLException ex) {
             throw new RuntimeException(ex);
         }
-        return new TemplatedURLSequence(url, tag, range, padding);
+        return new TemplatedUrlSequence(url, tag, range, padding);
     }
 
     private Range parseRange(String s) {

@@ -48,8 +48,8 @@
     <jxb:bindings node="//xs:complexType[@name='SourceChoiceType']">
       <jxb:class name="SourceChoiceElement"/>
     </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='URLTemplateType']">
-      <jxb:class name="URLTemplateElement"/>
+    <jxb:bindings node="//xs:complexType[@name='UrlTemplateType']">
+      <jxb:class name="UrlTemplateElement"/>
     </jxb:bindings>
     <jxb:bindings node="//xs:complexType[@name='VideoDeviceSourceType']">
       <jxb:class name="VideoDeviceSourceElement"/>

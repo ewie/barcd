@@ -12,10 +12,10 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
  *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public abstract class OpenCVFrameReader implements FrameReader {
+public abstract class OpenCvFrameReader implements FrameReader {
     protected OpenCVFrameGrabber frameGrabber;
 
-    protected OpenCVFrameReader(OpenCVFrameGrabber frameGrabber)
+    protected OpenCvFrameReader(OpenCVFrameGrabber frameGrabber)
         throws FrameReaderException
     {
         this.frameGrabber = frameGrabber;

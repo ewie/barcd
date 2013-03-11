@@ -11,17 +11,17 @@ import de.tu_chemnitz.mi.barcd.provider.RemoteImageProvider;
  * An image source using a web service which serves a new image on every
  * request, e.g. get the current image of a surveillance camera accessible
  * through a network.
- * 
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class ImageSnapshotServiceSource extends Source {
     private final URL url;
-    
+
     public ImageSnapshotServiceSource(URL url) {
         this.url = url;
     }
-    
-    public URL getURL() {
+
+    public URL getUrl() {
         return url;
     }
 

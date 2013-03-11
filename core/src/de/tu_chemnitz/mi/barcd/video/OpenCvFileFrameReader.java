@@ -9,12 +9,12 @@ import com.googlecode.javacv.OpenCVFrameGrabber;
  *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class OpenCVFileFrameReader extends OpenCVFrameReader
+public class OpenCvFileFrameReader extends OpenCvFrameReader
     implements SeekableFrameReader
 {
     private URL url;
 
-    protected OpenCVFileFrameReader(URL url, OpenCVFrameGrabber frameGrabber)
+    protected OpenCvFileFrameReader(URL url, OpenCVFrameGrabber frameGrabber)
         throws FrameReaderException
     {
         super(frameGrabber);
@@ -24,7 +24,7 @@ public class OpenCVFileFrameReader extends OpenCVFrameReader
     /**
      * @return the URL of the file this frame reader is using
      */
-    public URL getURL() {
+    public URL getUrl() {
         return url;
     }
 
@@ -37,11 +37,11 @@ public class OpenCVFileFrameReader extends OpenCVFrameReader
      *
      * @throws FrameReaderException
      */
-    public static OpenCVFileFrameReader open(URL url)
+    public static OpenCvFileFrameReader open(URL url)
         throws FrameReaderException
     {
         OpenCVFrameGrabber fg = new OpenCVFrameGrabber(url.toString());
-        return new OpenCVFileFrameReader(url, fg);
+        return new OpenCvFileFrameReader(url, fg);
     }
 
     @Override

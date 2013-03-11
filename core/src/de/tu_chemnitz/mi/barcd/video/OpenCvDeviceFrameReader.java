@@ -7,10 +7,10 @@ import com.googlecode.javacv.OpenCVFrameGrabber;
  *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class OpenCVDeviceFrameReader extends OpenCVFrameReader {
+public class OpenCvDeviceFrameReader extends OpenCvFrameReader {
     private int deviceNumber;
 
-    protected OpenCVDeviceFrameReader(int deviceId, OpenCVFrameGrabber frameGrabber)
+    protected OpenCvDeviceFrameReader(int deviceId, OpenCVFrameGrabber frameGrabber)
         throws FrameReaderException
     {
         super(frameGrabber);
@@ -34,11 +34,11 @@ public class OpenCVDeviceFrameReader extends OpenCVFrameReader {
      *
      * @throws FrameReaderException
      */
-    public static OpenCVDeviceFrameReader open(int deviceNumber)
+    public static OpenCvDeviceFrameReader open(int deviceNumber)
         throws FrameReaderException
     {
         OpenCVFrameGrabber fg = new OpenCVFrameGrabber(deviceNumber);
-        return new OpenCVDeviceFrameReader(deviceNumber, fg);
+        return new OpenCvDeviceFrameReader(deviceNumber, fg);
     }
 
     @Override
