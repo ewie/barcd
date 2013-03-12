@@ -8,11 +8,13 @@
 
 package de.tu_chemnitz.mi.barcd.xml.binding;
 
+import java.net.URI;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -39,8 +41,9 @@ public class VideoStreamSourceElement
 {
 
     @XmlAttribute(name = "url", required = true)
+    @XmlJavaTypeAdapter(Adapter1 .class)
     @XmlSchemaType(name = "anyURI")
-    protected String url;
+    protected URI url;
 
     /**
      * Gets the value of the url property.
@@ -50,7 +53,7 @@ public class VideoStreamSourceElement
      *     {@link String }
      *     
      */
-    public String getUrl() {
+    public URI getUrl() {
         return url;
     }
 
@@ -62,7 +65,7 @@ public class VideoStreamSourceElement
      *     {@link String }
      *     
      */
-    public void setUrl(String value) {
+    public void setUrl(URI value) {
         this.url = value;
     }
 

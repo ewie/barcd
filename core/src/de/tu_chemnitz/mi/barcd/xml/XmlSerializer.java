@@ -32,18 +32,18 @@ import de.tu_chemnitz.mi.barcd.Serializer;
 
 /**
  * Provides serialization and unserialization of business models using JAXB.
- * 
+ *
  * @param <T> the model class
- * 
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     private JAXBContext context;
-    
+
     private boolean validate;
-    
+
     private Schema schema;
-    
+
     private URL urlContext;
 
     private URL schemaLocation;
@@ -56,7 +56,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
 
     /**
      * @param contextPath the context path used to initialize the JAXB context
-     * 
+     *
      * @throws XmlSerializerException
      */
     public XmlSerializer(String contextPath) {
@@ -66,26 +66,26 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
             throw new RuntimeException("could not create JABX context", ex);
         }
     }
-    
+
     /**
      * Restore a model from an unmarshalled XML document.
-     * 
+     *
      * @param e the root element of the unmarshalled XML document
-     * 
+     *
      * @return the restored model
-     * 
+     *
      * @throws XmlSerializerException
      */
     protected abstract T restoreModel(JAXBElement<?> e)
         throws XmlSerializerException;
-    
+
     /**
      * Create a root element from the model to be serialized.
-     * 
+     *
      * @param model the model to be serialized
-     * 
+     *
      * @return the root element to be marshalled
-     * 
+     *
      * @throws XmlSerializerException
      */
     protected abstract JAXBElement<?> createRootElement(T model)
@@ -93,9 +93,9 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
 
     /**
      * @param model the model to be serialized
-     * 
+     *
      * @param out the stream where to write the data
-     * 
+     *
      * @throws XmlSerializerException
      */
     @Override
@@ -104,11 +104,11 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     {
         marshal(model, out);
     }
-    
+
     /**
      * @param model the model to be serialized
      * @param out the writer used to write the XML representation
-     * 
+     *
      * @throws XmlSerializerException
      */
     @Override
@@ -120,10 +120,10 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
 
     /**
      * Append the XML representation of a model to a DOM node.
-     * 
+     *
      * @param model the model to be serialized
      * @param node the node to hold the model's XML representation
-     * 
+     *
      * @throws XmlSerializerException
      */
     public void appendTo(T model, Node node)
@@ -131,12 +131,12 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     {
         marshal(model, node);
     }
-    
+
     /**
      * @param in the stream from which to read the XML data
-     * 
+     *
      * @return the restored model
-     * 
+     *
      * @throws XmlSerializerException
      */
     @Override
@@ -148,9 +148,9 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
 
     /**
      * @param in the reader from which to read the XML data
-     * 
+     *
      * @return the restored model
-     * 
+     *
      * @throws XmlSerializerException
      */
     @Override
@@ -159,12 +159,12 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     {
         return unmarshal(in);
     }
-    
+
     /**
      * @param node the DOM node whose child element to use as model data
-     * 
+     *
      * @return the restored model
-     * 
+     *
      * @throws XmlSerializerException
      */
     public T extractFrom(Node node)
@@ -172,12 +172,12 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     {
         return unmarshal(node);
     }
-    
+
     /**
      * Set the schema location and use the schema.
-     * 
+     *
      * @param url the schema location
-     * 
+     *
      * @throws XmlSerializerException if the schema could no be loaded
      */
     public void setSchemaLocation(URL url)
@@ -185,11 +185,11 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     {
         setSchemaLocation(url, true);
     }
-    
+
     /**
      * @param url the schema location
      * @param useSchema true if to use the schema
-     * 
+     *
      * @throws XmlSerializerException if the schema could not be loaded
      */
     public void setSchemaLocation(URL url, boolean useSchema)
@@ -207,37 +207,37 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
             setSchema(s);
         }
     }
-    
+
     /**
      * @return the schema location
      */
     public URL getSchemaLocation() {
         return schemaLocation;
     }
-    
+
     /**
      * @param include true if to include the schema location
-     * 
+     *
      * @see xsi:schemaLocation
      */
     public void setIncludeSchemaLocation(boolean include) {
         this.includeSchemaLocation = include;
     }
-    
+
     /**
      * @return true if the schema location is to be included
      */
     public boolean getIncludeSchemaLocation() {
         return includeSchemaLocation;
     }
-    
+
     /**
      * @param include true if to include the XML declaration
      */
     public void setIncludeXmlDeclaration(boolean include) {
         this.includeXmlDeclaration = include;
     }
-    
+
     /**
      * @return true if the XML declaration is to be included
      */
@@ -247,46 +247,46 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
 
     /**
      * Set the URL context to resolve relative URLs.
-     * 
+     *
      * @param context the URL context
      */
     public void setUrlContext(URL context) {
         this.urlContext = context;
     }
-    
+
     /**
      * @return the URL context
      */
     public URL getUrlContext() {
         return urlContext;
     }
-    
+
     /**
      * @param schema the schema to be used for validation
      */
     public void setSchema(Schema schema) {
         this.schema = schema;
     }
-    
+
     /**
      * @return the schema used for validation
      */
     public Schema getSchema() {
         return schema;
     }
-    
+
     /**
      * @return true if to validate the XML on marshalling and unmarshalling
      */
     public boolean getValidation() {
         return validate;
     }
-    
+
     /**
      * Enable or disable schema validation.
-     * 
+     *
      * @param validate true to enable, false to disable validation
-     * 
+     *
      * @throws XmlSerializerException if no schema has been specified
      */
     public void setValidation(boolean validate)
@@ -297,24 +297,44 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
         }
         this.validate = validate;
     }
-    
+
     /**
      * Enable or disable pretty printing. Applies only to a serialized
      * representation.
-     * 
+     *
      * @param pretty true if to pretty print the XML representation
      */
     public void setPretty(boolean pretty) {
         this.pretty = pretty;
     }
-    
+
     /**
      * @return true if to pretty print the XML representation
      */
     public boolean getPretty() {
         return pretty;
     }
-    
+
+    protected URL uri2url(URI uri)
+        throws XmlSerializerException
+    {
+        try {
+            return uri.toURL();
+        } catch (MalformedURLException ex) {
+            throw new XmlSerializerException("cannot convert URI to URL", ex);
+        }
+    }
+
+    protected URI url2uri(URL url)
+        throws XmlSerializerException
+    {
+        try {
+            return url.toURI();
+        } catch (URISyntaxException ex) {
+            throw new XmlSerializerException("cannot convert URL to URI", ex);
+        }
+    }
+
     protected URL resolveUrl(String rawUrl)
         throws XmlSerializerException
     {
@@ -326,7 +346,19 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
         }
         return resolveUrl(url);
     }
-    
+
+    protected URL resolveUrl(URI uri)
+        throws XmlSerializerException
+    {
+        URL url;
+        try {
+            url = uri.toURL();
+        } catch (MalformedURLException ex) {
+            throw new XmlSerializerException(ex);
+        }
+        return resolveUrl(url);
+    }
+
     protected URL resolveUrl(URL url)
         throws XmlSerializerException
     {
@@ -355,7 +387,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
             return rurl;
         }
     }
-    
+
     protected URL relativizeUrl(URL url)
         throws XmlSerializerException
     {
@@ -384,14 +416,14 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
             return rurl;
         }
     }
-    
+
     /**
      * Unmarshall a model from an XML representation.
-     * 
+     *
      * @param source an object providing XML data
-     * 
+     *
      * @return the unmarshalled model
-     * 
+     *
      * @throws XmlSerializerException
      */
     private T unmarshal(Object source)
@@ -399,7 +431,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     {
         Unmarshaller u = createUnmarshaller();
         ValidationEventCollector v = null;
-        
+
         if (validate) {
             try {
                 v = (ValidationEventCollector) u.getEventHandler();
@@ -409,7 +441,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
         }
 
         JAXBElement<?> e;
-        
+
         try {
             Object o;
             // XXX Not very pretty but the only way without resorting to code
@@ -429,16 +461,16 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
         } catch (JAXBException ex) {
             throw new XmlSerializerException(ex);
         }
-        
+
         return restoreModel(e);
     }
-    
+
     /**
      * Marshall a model to an XML representation.
-     * 
+     *
      * @param model the model to marshall
      * @param target an object receiving the XML data
-     * 
+     *
      * @throws XmlSerializerException
      */
     private void marshal(T model, Object target)
@@ -447,7 +479,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
         JAXBElement<?> e = createRootElement(model);
         Marshaller m = createMarshaller(e);
         ValidationEventCollector v = null;
-        
+
         if (validate) {
             try {
                 v = (ValidationEventCollector) m.getEventHandler();
@@ -455,7 +487,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
                 throw new RuntimeException("could not retrieve validation event collector of the JAXB marshaller", ex);
             }
         }
-        
+
         try {
             // XXX Not very pretty but the only way without resorting to code
             // duplication.
@@ -474,12 +506,12 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
             throw new XmlSerializerException("unexpected error during marshalling", ex);
         }
     }
-    
+
     /**
      * Create and configure an unmarshaller.
-     * 
+     *
      * @return an unmarshaller
-     * 
+     *
      * @throws XmlSerializerException
      */
     private Unmarshaller createUnmarshaller() {
@@ -495,10 +527,10 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
             throw new RuntimeException("could not create JAXB unmarshaller", ex);
         }
     }
-    
+
     /**
      * Create and configure an marshaller.
-     * 
+     *
      * @return an marshaller
      */
     private Marshaller createMarshaller(JAXBElement<?> element) {
@@ -523,12 +555,12 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
             throw new RuntimeException("could not create JAXB marshaller", ex);
         }
     }
-    
+
     /**
      * Translate the validation errors reported by an marshaller/unmarshaller.
-     * 
+     *
      * @param validation provides the validation events
-     * 
+     *
      * @return the validation errors
      */
     private List<XmlSerializerValidationError> translateValidationErrors(ValidationEventCollector validation)

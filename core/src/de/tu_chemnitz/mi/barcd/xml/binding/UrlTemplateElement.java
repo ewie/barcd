@@ -8,12 +8,14 @@
 
 package de.tu_chemnitz.mi.barcd.xml.binding;
 
+import java.net.URI;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -41,8 +43,9 @@ import javax.xml.bind.annotation.XmlValue;
 public class UrlTemplateElement {
 
     @XmlValue
+    @XmlJavaTypeAdapter(Adapter1 .class)
     @XmlSchemaType(name = "anyURI")
-    protected String value;
+    protected URI value;
     @XmlAttribute(name = "tag", required = true)
     protected String tag;
     @XmlAttribute(name = "padding")
@@ -56,7 +59,7 @@ public class UrlTemplateElement {
      *     {@link String }
      *     
      */
-    public String getValue() {
+    public URI getValue() {
         return value;
     }
 
@@ -68,7 +71,7 @@ public class UrlTemplateElement {
      *     {@link String }
      *     
      */
-    public void setValue(String value) {
+    public void setValue(URI value) {
         this.value = value;
     }
 

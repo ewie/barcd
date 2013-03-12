@@ -1,6 +1,5 @@
 package de.tu_chemnitz.mi.barcd.xml;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,8 +108,8 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
         TemplatedUrlSequence tus = source.getSequence();
 
         UrlTemplateElement ute = elements.createUrlTemplateElement();
-        String url = relativizeUrl(tus.getTemplate()).toString();
-        ute.setValue(url);
+        URL url = relativizeUrl(tus.getTemplate());
+        ute.setValue(url2uri(url));
         ute.setTag(tus.getTag());
         ute.setPadding(tus.getPadding());
 
@@ -137,7 +136,7 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
     {
         VideoStreamSourceElement vsse = elements.createVideoStreamSourceElement();
         URL rurl = relativizeUrl(source.getUrl());
-        vsse.setUrl(rurl.toString());
+        vsse.setUrl(url2uri(rurl));
         return vsse;
     }
 
@@ -146,7 +145,7 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
     {
         SnapshotSourceElement sse = elements.createSnapshotSourceElement();
         URL rurl = relativizeUrl(source.getUrl());
-        sse.setUrl(rurl.toString());
+        sse.setUrl(url2uri(rurl));
         return sse;
     }
 
@@ -155,7 +154,7 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
     {
         ResourceElement fe = elements.createResourceElement();
         URL rurl = relativizeUrl(url);
-        fe.setUrl(rurl.toString());
+        fe.setUrl(url2uri(rurl));
         return fe;
     }
 
@@ -171,24 +170,15 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
         {
             VideoStreamSourceElement fe = e.getVideo();
             if (fe != null) {
-                URL url;
-                try {
-                    url = new URL(getUrlContext(), fe.getUrl());
-                } catch (MalformedURLException ex) {
-                    throw new XmlSerializerException(ex);
-                }
+                URL url = resolveUrl(fe.getUrl());
                 return new VideoStreamSource(url);
             }
         }
         {
             SnapshotSourceElement fe = e.getSnapshot();
             if (fe != null) {
-                try {
-                    URL url = new URL(getUrlContext(), fe.getUrl());
-                    return new ImageSnapshotServiceSource(url);
-                } catch (MalformedURLException ex) {
-                    throw new XmlSerializerException(ex);
-                }
+                URL url = resolveUrl(fe.getUrl());
+                return new ImageSnapshotServiceSource(url);
             }
         }
         {
@@ -197,11 +187,8 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
                 List<ResourceElement> fe = ie.getImage();
                 List<URL> files = new ArrayList<URL>(fe.size());
                 for (ResourceElement f : fe) {
-                    try {
-                        files.add(new URL(getUrlContext(), f.getUrl()));
-                    } catch (MalformedURLException ex) {
-                        throw new XmlSerializerException("malformed URL", ex);
-                    }
+                    URL url = resolveUrl(f.getUrl());
+                    files.add(url);
                 }
                 return new ImageCollectionSource(files);
             }
@@ -213,6 +200,7 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
                 UrlTemplateElement ute = se.getTemplate();
 
                 URL url = resolveUrl(ute.getValue());
+
 
                 Range range = new Range(re.getStart(),
                     re.getEnd().intValue(), re.getStep());
