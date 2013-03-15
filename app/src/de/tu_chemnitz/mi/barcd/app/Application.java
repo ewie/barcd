@@ -179,25 +179,17 @@ public class Application extends Worker {
     private Job loadJob(File file)
         throws ApplicationException
     {
-        FileInputStream fin;
-
-        try {
-            fin = new FileInputStream(file);
-        } catch (FileNotFoundException ex) {
-            throw new ApplicationException(String.format("job file (%s) not found", file), ex);
-        }
-
         XmlJobSerializer sj = new XmlJobSerializer();
 
-        URL contextURL;
+        URL contextUrl;
 
         try {
-            contextURL = file.getParentFile().toURI().toURL();
+            contextUrl = file.getParentFile().toURI().toURL();
         } catch (MalformedURLException ex) {
             throw new ApplicationException("malformed context URL", ex);
         }
 
-        sj.setUrlContext(contextURL);
+        sj.setUrlContext(contextUrl);
 
         try {
             URL schemaUrl = options.getXmlSchemaUrl();
@@ -207,6 +199,14 @@ public class Application extends Worker {
             }
         } catch (XmlSerializerException ex) {
             throw new ApplicationException("could not set XML schema location", ex);
+        }
+
+        FileInputStream fin;
+
+        try {
+            fin = new FileInputStream(file);
+        } catch (FileNotFoundException ex) {
+            throw new ApplicationException(String.format("job file (%s) not found", file), ex);
         }
 
         Job job;

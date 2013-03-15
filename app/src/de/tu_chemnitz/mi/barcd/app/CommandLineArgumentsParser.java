@@ -150,6 +150,7 @@ public class CommandLineArgumentsParser {
         GroupBuilder gb = new GroupBuilder();
 
         Validator rangeValidator = new Validator() {
+            @SuppressWarnings("rawtypes")
             @Override
             public void validate(List objects)
                 throws InvalidArgumentException
