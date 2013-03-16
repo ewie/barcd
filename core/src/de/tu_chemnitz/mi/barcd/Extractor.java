@@ -117,7 +117,7 @@ public class Extractor {
         try {
             image = imageProvider.consume();
         } catch (ImageProviderException ex) {
-            throw new ExtractorException(ex);
+            throw new ExtractorException("could not consume next image", ex);
         }
 
         if (image == null) {
