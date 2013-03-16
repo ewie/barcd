@@ -32,7 +32,7 @@ public class Extractor {
     /**
      * @param job the job to process
      *
-     * @throws ImageProviderException if the image provider could no be created
+     * @throws ExtractorException if the image provider could no be created
      */
     public Extractor(Job job)
         throws ExtractorException
@@ -107,7 +107,8 @@ public class Extractor {
     /**
      * Process the next image returned by the image provider.
      *
-     * @throws ImageProviderException if the next image is null
+     * @throws ExtractorException
+     *   if the next image could not be consumed or is null
      */
     public void processNextImage()
         throws ExtractorException
@@ -143,7 +144,7 @@ public class Extractor {
             for (Barcode barcode : barcodes) {
                 Region r = null;
 
-                // Try each anchor point until we find region containing it.
+                // Try each anchor point until we find a region containing it.
                 Point[] pp = barcode.getAnchorPoints();
                 for (Point p : pp) {
                     r = regionHashTable.find(p);
