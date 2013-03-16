@@ -49,7 +49,7 @@ public class Application extends Worker {
 
     private Options options;
 
-    private final ImageDisplay display = new ImageDisplay();
+    private ImageDisplay display;
 
     public Application(Options options)
         throws ApplicationException
@@ -65,14 +65,12 @@ public class Application extends Worker {
         extractionWorker.setFrameHandler(new FrameHandler() {
             @Override
             public void handleFrame(Frame frame, BufferedImage image) {
-                displayFrame(frame, image);
-                /*
+                Application.this.displayFrame(frame, image);
                 try {
-                    persistFrame(frame);
+                    Application.this.persistFrame(frame);
                 } catch (ApplicationException ex) {
                     throw new WorkerException(ex);
                 }
-                */
             }
         });
         extractionThread = new Thread(extractionWorker);
@@ -95,6 +93,9 @@ public class Application extends Worker {
     }
 
     private void displayFrame(Frame frame, BufferedImage image) {
+        if (!options.getDisplay()) return;
+        if (display == null) display = new ImageDisplay();
+
         ScalingOperator scaling = new ScalingOperator();
         BufferedImage im = scaling.apply(image, 1000);
         double scale = (double) im.getWidth() / image.getWidth();
@@ -125,6 +126,8 @@ public class Application extends Worker {
     private void persistFrame(Frame frame)
         throws ApplicationException
     {
+        if (!options.getPersist()) return;
+
         URI frameUri;
         TemplatedUrlSequence frameUrlSequence = options.getFrameUrlSequence();
         try {

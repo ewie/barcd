@@ -13,8 +13,10 @@ import org.apache.commons.cli2.Group;
 import org.apache.commons.cli2.builder.ArgumentBuilder;
 import org.apache.commons.cli2.builder.DefaultOptionBuilder;
 import org.apache.commons.cli2.builder.GroupBuilder;
+import org.apache.commons.cli2.builder.SwitchBuilder;
 import org.apache.commons.cli2.commandline.Parser;
 import org.apache.commons.cli2.option.DefaultOption;
+import org.apache.commons.cli2.option.Switch;
 import org.apache.commons.cli2.util.HelpFormatter;
 import org.apache.commons.cli2.validation.FileValidator;
 import org.apache.commons.cli2.validation.InvalidArgumentException;
@@ -48,6 +50,8 @@ public class CommandLineArgumentsParser {
         options.setJobFile((File) commandLine.getValue("--job"));
         options.setXmlSchemaUrl((URL) commandLine.getValue("--xml-schema"));
         options.setFrameUrlSequence(createFrameUrlSequence(commandLine));
+        options.setDisplay(commandLine.getSwitch("+display"));
+        options.setPersist(commandLine.getSwitch("+persist"));
         return options;
     }
 
@@ -96,6 +100,8 @@ public class CommandLineArgumentsParser {
             gb.withOption(createJobFileOption())
               .withOption(createFramesOption())
               .withOption(createXmlSchemaOption())
+              .withOption(createDisplaySwitch())
+              .withOption(createPersistSwitch())
               .withOption(helpOption)
               .create();
         parser.setGroup(group);
@@ -234,5 +240,25 @@ public class CommandLineArgumentsParser {
               .create();
 
         return xmlSchemaOption;
+    }
+
+    private Switch createDisplaySwitch() {
+        SwitchBuilder sb = new SwitchBuilder();
+        Switch displaySwitch =
+            sb.withName("display")
+              .withDescription("Whether to display each frame.")
+              .withSwitchDefault(false)
+              .create();
+        return displaySwitch;
+    }
+
+    private Switch createPersistSwitch() {
+        SwitchBuilder sb = new SwitchBuilder();
+        Switch persistSwitch =
+            sb.withName("persist")
+              .withDescription("Whether to persist any extractions")
+              .withSwitchDefault(true)
+              .create();
+        return persistSwitch;
     }
 }

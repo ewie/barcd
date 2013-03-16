@@ -12,6 +12,8 @@ public class Options {
     private File jobFile;
     private TemplatedUrlSequence frameUrlSequence;
     private URL xmlSchemaUrl;
+    private boolean display;
+    private boolean persist;
 
     public void setJobFile(File value) {
         jobFile = value;
@@ -35,5 +37,21 @@ public class Options {
 
     public URL getXmlSchemaUrl() {
         return xmlSchemaUrl;
+    }
+
+    public void setDisplay(boolean value) {
+        display = value;
+    }
+
+    public boolean getDisplay() {
+        return display;
+    }
+
+    public void setPersist(boolean value) {
+        persist = value;
+    }
+
+    public boolean getPersist() {
+        return persist;
     }
 }
