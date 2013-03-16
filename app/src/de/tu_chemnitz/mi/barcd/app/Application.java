@@ -41,8 +41,6 @@ public class Application extends Worker {
 
     private Job job;
 
-    private Extractor extractor;
-
     private Thread extractionThread;
 
     private Terminal terminal;
@@ -56,25 +54,9 @@ public class Application extends Worker {
     {
         this.options = options;
         job = loadJob(options.getJobFile());
-        try {
-            extractor = new Extractor(job);
-        } catch (ImageProviderException ex) {
-            throw new ApplicationException("could not create image provider", ex);
-        }
-        ExtractionWorker extractionWorker = new ExtractionWorker(extractor);
-        extractionWorker.setFrameHandler(new FrameHandler() {
-            @Override
-            public void handleFrame(Frame frame, BufferedImage image) {
-                Application.this.displayFrame(frame, image);
-                try {
-                    Application.this.persistFrame(frame);
-                } catch (ApplicationException ex) {
-                    throw new WorkerException(ex);
-                }
-            }
-        });
+        ExtractionWorker extractionWorker = createExtractionWorker();
         extractionThread = new Thread(extractionWorker);
-        terminal = setupTerminal(extractionThread, extractionWorker);
+        terminal = createTerminal(extractionThread, extractionWorker);
     }
 
     @Override
@@ -90,6 +72,40 @@ public class Application extends Worker {
                 throw new RuntimeException(ex);
             }
         }
+    }
+
+    private ExtractionWorker createExtractionWorker()
+        throws ApplicationException
+    {
+        Extractor extractor;
+
+        try {
+            extractor = new Extractor(job);
+        } catch (ImageProviderException ex) {
+            throw new ApplicationException("could not create image provider", ex);
+        }
+
+        ExtractionWorker extractionWorker = new ExtractionWorker(extractor);
+
+        extractionWorker.setFrameHandler(new FrameHandler() {
+            @Override
+            public void handleFrame(Frame frame, BufferedImage image) {
+                try {
+                    Application.this.handleFrame(frame, image);
+                } catch (ApplicationException ex) {
+                    throw new WorkerException(ex);
+                }
+            }
+        });
+
+        return extractionWorker;
+    }
+
+    private void handleFrame(Frame frame, BufferedImage image)
+        throws ApplicationException
+    {
+        displayFrame(frame, image);
+        persistFrameAndJob(frame, job);
     }
 
     private void displayFrame(Frame frame, BufferedImage image) {
@@ -123,11 +139,17 @@ public class Application extends Worker {
         display.setImage(im);
     }
 
-    private void persistFrame(Frame frame)
+    private void persistFrameAndJob(Frame frame, Job job)
         throws ApplicationException
     {
         if (!options.getPersist()) return;
+        persistFrame(frame);
+        persistJob(job);
+    }
 
+    private void persistFrame(Frame frame)
+        throws ApplicationException
+    {
         URI frameUri;
         TemplatedUrlSequence frameUrlSequence = options.getFrameUrlSequence();
         try {
@@ -154,11 +176,9 @@ public class Application extends Worker {
         } catch (XmlSerializerException ex) {
             throw new ApplicationException("could not serialize or persist frame", ex);
         }
-
-        persistJob();
     }
 
-    private void persistJob()
+    private void persistJob(Job job)
         throws ApplicationException
     {
         File jobFile = options.getJobFile();
@@ -223,7 +243,7 @@ public class Application extends Worker {
         return job;
     }
 
-    private Terminal setupTerminal(final Thread thread, final ExtractionWorker worker)
+    private Terminal createTerminal(final Thread thread, final ExtractionWorker worker)
         throws ApplicationException
     {
         Terminal terminal = new Terminal(System.in, System.out);
