@@ -35,10 +35,14 @@ public class Extractor {
      * @throws ImageProviderException if the image provider could no be created
      */
     public Extractor(Job job)
-        throws ImageProviderException
+        throws ExtractorException
     {
         this.job = job;
-        imageProvider = job.createImageProvider();
+        try {
+            imageProvider = job.createImageProvider();
+        } catch (ImageProviderException ex) {
+            throw new ExtractorException("could not create image provider", ex);
+        }
     }
 
     /**

@@ -20,8 +20,8 @@ import java.util.Comparator;
 
 import de.tu_chemnitz.mi.barcd.Extractor;
 import de.tu_chemnitz.mi.barcd.Extractor.FrameHandler;
+import de.tu_chemnitz.mi.barcd.ExtractorException;
 import de.tu_chemnitz.mi.barcd.Frame;
-import de.tu_chemnitz.mi.barcd.ImageProviderException;
 import de.tu_chemnitz.mi.barcd.Job;
 import de.tu_chemnitz.mi.barcd.Region;
 import de.tu_chemnitz.mi.barcd.app.Terminal.Command;
@@ -81,8 +81,8 @@ public class Application extends Worker {
 
         try {
             extractor = new Extractor(job);
-        } catch (ImageProviderException ex) {
-            throw new ApplicationException("could not create image provider", ex);
+        } catch (ExtractorException ex) {
+            throw new ApplicationException("could not create extractor", ex);
         }
 
         ExtractionWorker extractionWorker = new ExtractionWorker(extractor);
