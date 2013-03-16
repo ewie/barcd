@@ -130,7 +130,7 @@ public class Extractor {
         Frame frame = job.createFrame();
 
         for (Region r : regions) {
-            if (regionSelector.selectRegion(r)) {
+            if (regionSelector == null || regionSelector.selectRegion(r)) {
                 frame.addRegion(r);
                 regionHashTable.insert(r);
             }
