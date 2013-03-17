@@ -262,7 +262,7 @@ public class Application extends Worker {
             }
         };
 
-        Routine quitRoutine = new Routine() {
+        Routine helpRoutine = new Routine() {
             @Override
             public void execute(Terminal terminal, String args) {
                 Collection<Command> cc = terminal.commands();
@@ -273,20 +273,28 @@ public class Application extends Worker {
                         return x.getName().compareTo(y.getName());
                     }
                 });
+                int maxNameLength = 0;
                 for (Command c : cl) {
-                    terminal.printf("%s : %s\n", c.getName(), c.getDescription());
+                    maxNameLength = Math.max(maxNameLength, c.getName().length());
+                }
+                for (Command c : cl) {
+                    String s = Util.padRight(c.getName(), maxNameLength);
+                    if (c.getDescription() != null) {
+                        s += " :: ";
+                        s += c.getDescription();
+                    }
+                    terminal.println(s);
                 }
             }
         };
 
-        Command stopCommand = new Command("stop", stopRoutine,
-            "stop the extraction process and persist all extractions so far");
+        Command stopCommand = new Command("stop", stopRoutine, "stop the extraction process");
 
-        Command quitCommand = new Command("help", quitRoutine, "display this help");
+        Command helpCommand = new Command("help", helpRoutine, "display this help");
 
         try {
             terminal.registerCommand(stopCommand);
-            terminal.registerCommand(quitCommand);
+            terminal.registerCommand(helpCommand);
         } catch (TerminalException ex) {
             throw new ApplicationException("could not setup terminal", ex);
         }
