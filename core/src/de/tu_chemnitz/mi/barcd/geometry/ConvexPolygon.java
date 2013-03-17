@@ -40,13 +40,14 @@ public abstract class ConvexPolygon {
     /**
      * Test if the polygon contains a certain point.
      *
-     * Taken from {@link http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html}
-     *
      * @param p the point to test
      *
      * @return true if the polygon contains the point
      */
     public boolean contains(Point p) {
+        // Algorithm taken from:
+        //   http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+
         Point[] points = getVertices();
         int n = points.length;
         double x = p.getX();

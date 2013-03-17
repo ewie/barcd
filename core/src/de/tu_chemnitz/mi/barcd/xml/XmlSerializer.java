@@ -216,9 +216,10 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     }
 
     /**
-     * @param include true if to include the schema location
+     * Set whether to include the schema location (if set) in the generated XML
+     * (using xsi:schemaLocation).
      *
-     * @see xsi:schemaLocation
+     * @param include true if to include the schema location
      */
     public void setIncludeSchemaLocation(boolean include) {
         this.includeSchemaLocation = include;
