@@ -252,7 +252,7 @@ public class Application extends Worker {
 
         Routine stopRoutine = new Routine() {
             @Override
-            public void execute(Terminal terminal) {
+            public void execute(Terminal terminal, String args) {
                 worker.terminate();
                 try {
                     thread.join();
@@ -264,7 +264,7 @@ public class Application extends Worker {
 
         Routine quitRoutine = new Routine() {
             @Override
-            public void execute(Terminal terminal) {
+            public void execute(Terminal terminal, String args) {
                 Collection<Command> cc = terminal.commands();
                 ArrayList<Command> cl = new ArrayList<Command>(cc);
                 Collections.sort(cl, new Comparator<Command>() {
