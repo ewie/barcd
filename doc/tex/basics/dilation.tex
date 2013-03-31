@@ -1,0 +1,14 @@
+\subsubsection*{Dilation}
+
+Die Dilatation ist eine morphologische Operation um Strukturen eines Bildes zu
+vergrößern.
+Für die Dilation eines Grauwertbildes wird jedem Pixel der Maximalwert aller
+Pixel innerhalb einer gewissen Umgebung zugewiesen.
+Für die Beschreibung der Umgebung verwendet man ein Strukturelement fester
+Größe und Form (z.B. ein 3$\times$3 Quadrat).
+
+  \[ (I \oplus K)(x) =
+       \max \{ I_{x+t} | t \in D(K) \} \forall x \in D(I) \]
+
+Durch die Anwendung einer Dilation können Bildstrukturen zusammengefasst
+werden wenn deren Abstand kleiner ist als die Größe des Strukturelements.

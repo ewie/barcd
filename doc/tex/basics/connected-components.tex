@@ -1,0 +1,19 @@
+\subsubsection*{Connected Components Labeling}
+
+Um zusammenhängende Bildstrukturen zu erfassen verwendet man dass sogenannte
+Connected Components Labeling. Dabei wird jeder Bildpunkt genau einer Menge
+zugeordnet welche je eine Komponente zusammenhängenger Bildpunkte repräsentiert.
+Zwei Bildpunkte hängen zusammen, wenn diese benachbart sind und gleichen Wert
+besitzen. Für die Nachbarschaft gibt es verschiedene Modelle.
+
+\begin{description}
+  \item[4-Konnektivität]
+    betrachtet für ein Pixel $(x,y)$ die 4 Pixel $(x\pm1,y)$ und $(x,y\pm1)$
+  \item[8-Konnektivität]
+    betrachtet für ein Pixel $(x,y)$ neben den 4 Pixel der 4-Konnektivität
+    zusätzlich noch die 4 Pixel $(x\pm1,y\pm1)$
+\end{description}
+
+Je mehr Pixel als Nachbarschaft herangezogen werden, desto größer können die
+zusammenhängenden Komponenten ausfallen, da es mehr Möglichkeiten gibt in denen
+zwei Pixel als verbunden gelten.
