@@ -1,0 +1,35 @@
+\section*{Kantenerkennung}
+
+Kanten in einem Bild zeigen sich durch abrupte Helligkeitsänderungen zwischen
+benachbarten Pixeln.
+Um die Helligkeitsänderung für jedes Pixel zu bestimmen muss der Gradient der
+Helligkeitsfunktion eines Bildes berechnet werden.
+Das gängigste Verfahren zur Gradientenbestimmung ist die Faltung des Bildes $I$
+mit einer Faltungsmatrix $K$.
+  \[ (I \circ K)(x) = \sum_{t\in\mathcal{D}^*(K)} I(x+t) K(t)
+       \quad \forall x\in\mathcal{D}(I) \]
+Eine der häufigsten Faltungsmatrizen ist der \textsc{Sobel}-Operator:
+  \[ K_{Sobel} =  \begin{vmatrix}
+           -1 & -2 & -1 \\
+            0 &  0 &  0 \\
+            1 &  2 &  1
+         \end{vmatrix} \]
+Dieser funktioniert für unsere Anwendung recht gut. Erfasst aber bereits leichte
+Helligkeitsänderungen.
+Daher haben wir auch andere Matrizen ausprobiert.
+Unter anderem den \textsc{Roberts}-Operator \cite{DBLP:books/garland/Roberts63}.
+  \[ K_{Roberts} = \begin{vmatrix}
+           -1 & 0 \\
+            0 & 1
+         \end{vmatrix} \]
+Dies ist einer der ersten Operatoren der zur Kantenerkennung in
+Strichzeichnungen entwickelt wurde.
+
+Die Berechnung eines einzelnen Gradientenbildes reicht jedoch nicht aus um alle
+Kanten eines Bildes zu erfassen, da die Faltungsmatrix nur Helligkeitsänderungen
+entlang einer Dimension erfasst.
+Deshalb muss ein zweites Gradientenbild unter Verwendung der Transponierten der
+Faltungsmatrix berechnet werden.
+Das Kantenbild ergibt sich dann aus der Kombinitation beider Gradientenbilder
+mittels pixelweiser Addition der Absolutwerte.
+  \[ I_{edge} = \Big|I \circ K\Big| + \Big|I \circ K^\top\Big| \]
