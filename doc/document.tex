@@ -59,12 +59,9 @@
 \newtheorem{bsp}{Beispiel}[chapter]
 \newtheorem{satz}{Satz}[chapter]
 
-\includeonly{meta,title}
-
 \begin{document}
-\include{meta}
-
-\include{title}
+\input{tex/meta}
+\input{tex/title}
 
 \manualmark
 \markboth{Literaturverzeichnis}{Literaturverzeichnis}
@@ -79,8 +76,7 @@ selbstständig angefertigt, nicht anderweitig zu Prüfungszwecken vorgelegt und
 keine anderen als die angegebenen Hilfsmittel verwendet habe. Sämtliche 
 wissentlich verwendete Textausschnitte, Zitate oder Inhalte anderer Verfasser 
 wurden ausdrücklich als solche gekennzeichnet.\\[2ex]
-\dcplace, den \dcdate\\[6ex]
-\flushleft
+\dcplace, den \dcdate\\[10ex]
 \begin{tabular}{p{5cm} p{5cm}}\hline
 \footnotesize \dcauthornameriren &
 \footnotesize \dcauthornameewie
