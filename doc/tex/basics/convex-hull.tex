@@ -1,4 +1,4 @@
-\subsubsection*{Konvexe Hülle}
+\section*{Konvexe Hülle}
 
 Als konvexe Hülle einer Punktmenge $M$ bezeichnet man das minimale konvexe
 Polygon, welches sämtliche Punkte aus $M$ enthält.
@@ -9,13 +9,10 @@ Dazu werden zwei "`halbe"' Hüllen erstellt, die obere Hülle $U$ und untere Hü
 $L$.
 Die obere Hülle wird erzeugt indem über alle Punkte der Menge $M$ entsprechend
 der lexikografischen Ordnung
-
   \[ (x,y) < (u, v) \Longleftrightarrow x < u \vee x = u \wedge y < v \]
-
-iteriert wird, und wiederholt das letzte Element in
-$U$ entfernt wird solange $U$ mindestens 2 Punkte enthält und die letzten 2
-Punkte zusammen mit dem aktuell betrachteten Punkt \emph{keine} Rechtskurve
-bilden.
+iteriert, und wiederholt das letzte Element in $U$ entfernt wird solange $U$
+mindestens 2 Punkte enthält und die letzten 2 Punkte zusammen mit dem aktuell
+betrachteten Punkt \emph{keine} Rechtskurve bilden.
 Anschließend wird der aktuelle Punkt ans Ende von $U$ eingefügt.
 Die untere Hülle $L$ wird analog zu $U$ erzeugt.
 Jedoch werden die Punkte in umgekehrter Reihenfolge betrachtet.
