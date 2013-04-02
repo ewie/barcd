@@ -16,3 +16,21 @@ besitzen. Für die Nachbarschaft gibt es verschiedene Modelle.
 Je mehr Pixel als Nachbarschaft herangezogen werden, desto größer können die
 zusammenhängenden Komponenten ausfallen, da es mehr Möglichkeiten gibt in denen
 zwei Pixel als verbunden gelten.
+
+Das Connected Component Labeling lässt sich gut mit einem Scanline-Verfahren
+implementieren.
+Dazu wird jede Bildzeile, mit der oberen ($y=0$) beginnend, von links ($x=0$)
+nach rechts pixelweise verarbeitet.
+Jedes Pixel wird dabei mit allen Nachbarn links und oberhalb auf eine Mögliche
+verbindung verglichen.
+Unterscheidet sich der Wert des aktuellen Pixels von den betrachteten Nachbarn
+so wird diesem ein neues Label zugewiesen.
+Besitzt das Pixel hingegen den Wert mindestens eines Nachbarn so wird das Label
+des Nachbarn zugewiesen.
+Besitzen mehrere Nachbarn den gleichen Wert aber unterschiedliche Label, so
+werden diese Label als äquivalent markiert.
+Die erste Bildzeile und -spalte müssen gesondert initialisert werden, da diese
+keine Nachbarn oberhalb bzw. links besitzen.
+Sind alle Pixel verarbeitet, müssen Labeläquivalenzen aufgelöst werden, sodass
+Pixeln mit äquivalenten Label ein gemeinsames Label zugewiesen werden kann.
+Zum Erfassen der Äquivalenzen eignet sich die \emph{UnionFind} Datenstruktur.
