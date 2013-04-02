@@ -5,11 +5,13 @@ benachbarten Pixeln.
 Um die Helligkeitsänderung für jedes Pixel zu bestimmen muss der Gradient der
 Helligkeitsfunktion eines Bildes berechnet werden.
 Das gängigste Verfahren zur Gradientenbestimmung ist die Faltung des Bildes $I$
-mit einer Faltungsmatrix $K$.
-  \[ (I \circ K)(x) = \sum_{t\in\mathcal{D}^*(K)} I(x+t) K(t)
-       \quad \forall x\in\mathcal{D}(I) \]
+mit einer Faltungsmatrix $K$ (auch genannt Kernel).
+  \[ (I\circ K)(x,y) =
+       \sum_{(u,v)\in m\times n}
+       I\left(x+u-\frac{m}{2},y+v-\frac{n}{2}\right)K_{u,v}
+       \quad K\in\mathbb{R}^{m\times n} \]
 Eine der häufigsten Faltungsmatrizen ist der \textsc{Sobel}-Operator:
-  \[ K_{Sobel} =  \begin{vmatrix}
+  \[ K_{Sobel} = \begin{vmatrix}
            -1 & -2 & -1 \\
             0 &  0 &  0 \\
             1 &  2 &  1

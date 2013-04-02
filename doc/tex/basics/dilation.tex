@@ -6,8 +6,7 @@ Für die Dilation eines Grauwertbildes wird jedem Pixel der Maximalwert aller
 Pixel innerhalb einer gewissen Umgebung zugewiesen.
 Für die Beschreibung der Umgebung verwendet man ein Strukturelement fester Größe
 und Form (z.B. ein 3$\times$3 Quadrat).
-  \[ (I \oplus K)(x) =
-       \max \left\{ I(x+t) \;\middle|\; t \in \mathcal{D}^*(K)\right\}
-       \quad\forall x \in \mathcal{D}(I) \]
+  \[ (I\oplus K)(x,y)=\max\left\{I(x+u,y+v)\;\middle|\;(u,v)\in K\right\}
+       \quad K\subseteq\mathbb{Z}^2 \]
 Durch die Anwendung einer Dilation können Bildstrukturen zusammengefasst werden
 wenn deren Abstand kleiner ist als die Größe des Strukturelements.
