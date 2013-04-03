@@ -89,5 +89,10 @@
     	<artifactId>org.apache.commons.codec</artifactId>
     	<version>1.6</version>
     </dependency>
+    <dependency>
+    	<groupId>gov.nih.imagej</groupId>
+    	<artifactId>imagej</artifactId>
+    	<version>1.46</version>
+    </dependency>
   </dependencies>
 </project>
