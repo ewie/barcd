@@ -1,0 +1,23 @@
+\section{Nach Bildverarbeitung}
+Trotzdem die Bibliothek ZXing bereits einen großen Funktionsumfang bereit stellt, enthält sie nichtsdestotrotz Schwachpunkte. Diese werden vor allem bei starker Unschärfe, starken Rotationen, Schatten und Schrägen sichtbar.
+Bei der Aufbereitung der Codes wurde daher auf diese Punkte ein besonderes Augenmerk gelegt.
+
+\subsection*{Unschärfe}
+
+
+
+\subsection*{Rotation}
+Da die Rotation von Strichcodes sich als großes Problem für den Dekodierer herausstellte, wurden Funktionen zur Berechnung des Drehwinkels und der Rotation des Bildes erstellt. Durch diese können alle Strichcodes auf einen erkennbaren Winkel rotiert werden und so mit Sicherheit erkannt werden.
+
+Da aber vor der Erkennung nicht klar ist, um welche Art von Code es sich handelt, wird einfach jeder rotiert, da die Funktionen auch ausreichend gut für andere Codes funktionieren und z.B für QR-Codes die Rotation auch weniger Bedeutung für die Akzeptanz hat.
+
+Problematisch ist es nur, wenn ein Strichcode um 90$ \circ $ gedreht ist, da dann keine durchgehende Gerade wahrnehmbar ist. Allerdings gibt es da die Möglichkeit zwei Durchläufe der Funktionen durchzuführen, da dann erst ein beliebiger anderer Winkel erzeugt wird und beim zweiten Mal richtig rotiert wird.
+
+
+
+\subsection*{Schatten}
+
+
+
+\subsection*{Schrägen}
+
