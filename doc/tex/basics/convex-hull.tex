@@ -1,22 +1,13 @@
 \section*{Konvexe Hülle}
 
-Als konvexe Hülle einer Punktmenge $M$ bezeichnet man das minimale konvexe
-Polygon, welches sämtliche Punkte aus $M$ enthält.
-Für die Berechnung der konvexen Hülle aus einer Menge von Punkten existieren
-diverse Alogirthmen.
-Ein simpler Algorithmus ist Andrew's Monotone Chain \cite{compgeom2008}.
-Dazu werden zwei "`halbe"' Hüllen erstellt, die obere Hülle $U$ und untere Hülle
-$L$.
-Die obere Hülle wird erzeugt indem über alle Punkte der Menge $M$ entsprechend
-der lexikografischen Ordnung
+Als konvexe Hülle einer Punktmenge $M$ bezeichnet man das minimale konvexe Polygon, welches sämtliche Punkte aus $M$ enthält.
+Für die Berechnung der konvexen Hülle aus einer Menge von Punkten existieren diverse Alogirthmen.
+Ein simpler Algorithmus ist \textsc{Andrew}'s Monotone Chain \cite{compgeom2008}.
+Dazu werden zwei "`halbe"' Hüllen erstellt, die obere Hülle $U$ und untere Hülle $L$.
+Die obere Hülle wird erzeugt indem über alle Punkte der Menge $M$ entsprechend der lexikografischen Ordnung
   \[ (x,y) < (u, v) \Longleftrightarrow x < u \vee x = u \wedge y < v \]
-iteriert, und wiederholt das letzte Element in $U$ entfernt wird solange $U$
-mindestens 2 Punkte enthält und die letzten 2 Punkte zusammen mit dem aktuell
-betrachteten Punkt \emph{keine} Rechtskurve bilden.
+iteriert, und wiederholt das letzte Element in $U$ entfernt wird solange $U$ mindestens 2 Punkte enthält und die letzten 2 Punkte zusammen mit dem aktuell betrachteten Punkt \emph{keine} Rechtskurve bilden.
 Anschließend wird der aktuelle Punkt ans Ende von $U$ eingefügt.
 Die untere Hülle $L$ wird analog zu $U$ erzeugt.
 Jedoch werden die Punkte in umgekehrter Reihenfolge betrachtet.
-Zudem \emph{müssen} die letzten 2 Punkte zusammen mit dem aktuell betrachteten
-Punkt eine Rechtskurve bilden. Abschließend werden $U$ und $L$ so zusammen
-gefasst, dass diese die konvexe Hülle als Liste von Eckpunkten im Uhrzeigersinn
-ergeben.
+Zudem \emph{müssen} die letzten 2 Punkte zusammen mit dem aktuell betrachteten Punkt eine Rechtskurve bilden. Abschließend werden $U$ und $L$ so zusammen gefasst, dass diese die konvexe Hülle als Liste von Eckpunkten im Uhrzeigersinn ergeben.
