@@ -62,6 +62,15 @@
 \newtheorem{bsp}{Beispiel}[chapter]
 \newtheorem{satz}{Satz}[chapter]
 
+\makeatletter
+\renewcommand{\env@cases}[1][@{}l@{\quad}l@{}]{%
+  \let\@ifnextchar\new@ifnextchar
+  \left\lbrace
+  \def\arraystretch{1.2}%
+  \array{#1}%
+}
+\makeatother
+
 \begin{document}
 \input{tex/meta}
 \input{tex/title}

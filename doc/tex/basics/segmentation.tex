@@ -1,0 +1,55 @@
+\section*{Segmentierung}
+
+Die Segmentierung findet Anwendung bei der Klassifizierung von Bildelementen.
+Dabei wird jedes Pixel anhand eines Kriteriums einer Klasse zugeordnet.
+Ein simples Verfahren ist dabei die Verwendung eines Schwellwertes.
+  \[ C_I^{(n)}(x,y) = \begin{cases}[c@{\quad}r@{}c@{}l@{}]
+       0      &              & \;I(x,y) & \;<    t_1     \\
+       1      & t_1     \leq & \;I(x,y) & \;<    t_2     \\
+       \vdots &              &   \vdots &                \\
+       n-2    & t_{n-2} \leq & \;I(x,y) & \;<    t_{n-1} \\
+       n-1    &              & \;I(x,y) & \;\geq t_{n-1}
+     \end{cases} \]
+Eine der häufigsten Anwendungen ist die Einteilung eines Bildes in zwei Klassen.
+Für gewöhnlich ist dies eine Einteilung des Bildes in Vorder- und Hintergrund.
+  \[ C_I^{(2)}(x,y) = \begin{cases}
+       0 & I(x,y) <    t \\
+       1 & I(x,y) \geq t
+     \end{cases} \]
+Die Berechnung des Schwellwerts $t$ ist dabei entscheidend über die Qualität der Segmentierung, d.h. dass Bildelemente korrekt klassifiziert werden.
+
+\subsection*{Schwellwertbestimmung}
+\todo[author=Erik,inline]{Schwellwertbestimmung}
+
+\paragraph{Mittelwert}
+Nutzt den Mittelwert der Helligkeit aller Bildpunkte als Schwellwert.
+\todo[author=Erik]{Mittelwert Vor- \& Nachteile}
+
+\paragraph{Otsu's Method}
+\textsc{Otsu}'s Method ist ein histogrammbasiertes Verfahren, dass eine bimodale Helligkeitsverteilung\footnote{Eine bimodale Helligkeitsverteilung besitzt zwei Maxima die den Helligkeitswerten des Hintergrund bzw. Vordergrund entsprechen. Der optimale Schwellwert liegt im Tal zwischen den Maxima.} voraussetzt.
+Der Algorithmus sucht den Schwellwert, der die Varianz innheralb der beiden Klassen minimiert.
+
+\paragraph{Balanced Histogram Thresholding}
+Das Balanced Histogram Thresholding erwartet, wie \textsc{Otsu}'s Method, eine bimodale Helligkeitsverteilung.
+Das Verfahren ermittelt den Schwellwert derart, dass dieser das Histogramm in zwei gleich "`schwere"' Hälften teilt.
+Als Maß für das Gewicht einer Hälfte dient die Summe der absoluten Häufigkeiten aller Klassen der betrachteten Hälfte.
+Von der schwereren Häfte werden solange Klassen entfernt bis nur noch eine Klasse betrachtet wird, welche dem gesuchten Schwellwert entspricht.
+
+\subsection*{Schwellwertanwendung}
+\todo[author=Erik,inline]{Schwellwertanwendung}
+
+\paragraph{global}
+Der Schwellwert wird für das gesamte Bild einmalig berechnet und auf alle Bildpunkte angewandt.
+Die Verwendung eines einzelnen Schwellwertes für das gesamte Bild funkioniert nur sofern das Bild gleichmäßtig Belichtet ist.
+Ansonsten kann es vorkommen, dass Bildteile die zu gering belichtet sind unterhalb des Schwellwertes liegen und somit als Hintergrund klassifiziert werden.
+
+\paragraph{lokal}
+Unterteilt das Bild in disjunkte Regionen und ermittelt jeweils einen eigenen Schwellwert, mit dem der jeweilige Bereich segmentiert wird.
+Die negativen Effekte des globalen Thresholding auf das Gesamtbild werden vermieden, können innerhalb einer Region aber dennoch auftreten.
+Wodurch es an den Regionsgrenzen zu unterschiedlichen Klassifikationen kommen kann.
+
+\paragraph{dynamisch}
+Ermittelt für jeden Bildpunkt einen Schwellwert unter Betrachtung der Umgebung des Bildpunktes.
+Anhand des Schwellwertes wird der Bildpunkt einer Klasse zugeordnet.
+Vermeidet die Fehler durch ein ungleiche Beleuchtung, wenn eine Pixelumgebung gewählt werden kann, die einer gleichmäßigen Beleuchtung unterliegt.
+
