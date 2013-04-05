@@ -52,6 +52,33 @@
 
 \usepackage{user}
 
+\usepackage{listings}
+
+\usepackage{color}
+\definecolor{string}{rgb}{0.16,0,1}
+\definecolor{identifier}{rgb}{0.25,0.5,0.5}
+\definecolor{keyword}{rgb}{0.5,0,0.5}
+
+\lstset{
+  numberstyle=\scriptsize\ttfamily\color{gray},
+  basicstyle=\footnotesize\ttfamily,
+  columns=fullflexible,
+  showstringspaces=false,
+  numbers=left,
+  stepnumber=1,
+  breaklines=true
+}
+
+\lstdefinelanguage{XSD}
+{
+  morestring=[b]",
+  stringstyle=\color{string},
+  identifierstyle=\color{identifier},
+  keywordstyle=\color{keyword},
+  morekeywords={xmlns,version,type,default,name,value,base,minOccurs,maxOccurs,
+    use, targetNamespace,elementFormDefault,encoding}
+}
+
 %\pagestyle{scrheadings}
 %\setkomafont{pagehead}{\small\scshape}
 
@@ -99,7 +126,6 @@ wurden ausdrücklich als solche gekennzeichnet.\\[2ex]
 \input{tex/content}
 
 \cleardoublepage
-\begin{appendix}
-\end{appendix}
+\input{tex/appendix}
 
 \end{document}
