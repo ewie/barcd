@@ -1,8 +1,7 @@
 \section*{Kantenerkennung}
 
 Kanten in einem Bild zeigen sich durch abrupte Helligkeitsänderungen zwischen benachbarten Pixeln.
-Um die Helligkeitsänderung für jedes Pixel zu bestimmen muss der Gradient der
-Helligkeitsfunktion $\nabla I$ eines Bildes berechnet werden.
+Um die Helligkeitsänderung für jedes Pixel zu bestimmen muss der Gradient der Helligkeitsfunktion $\nabla I$ eines Bildes berechnet werden.
 Das gängigste Verfahren zur Gradientenbestimmung ist die Faltung des Bildes $I$ mit einer Faltungsmatrix $K$ (auch genannt Kernel).
   \[ (I\circ K)(x,y) =
        \sum_{(u,v)\in m\times n}
