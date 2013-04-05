@@ -27,6 +27,7 @@ public class DefaultRegionExtractor implements RegionExtractor {
     private ScalingOperator scale = new ScalingOperator();
 
     public DefaultRegionExtractor() {
+        // Robert's operator
         gx = new ConvolveOp(new Kernel(2, 2, new float[] {
             1,  0,
             0, -1
@@ -36,6 +37,45 @@ public class DefaultRegionExtractor implements RegionExtractor {
              0, 1,
             -1, 0
         }));
+
+        // Sobel operator
+//        gx = new ConvolveOp(new Kernel(3, 3, new float[] {
+//            -1, -2, -1,
+//             0,  0,  0,
+//             1,  2,  1
+//        }));
+//
+//        gy = new ConvolveOp(new Kernel(3, 3, new float[] {
+//             -1, 0, 1,
+//             -2, 0, 2,
+//             -1, 0, 1
+//        }));
+
+        // Scharr operator
+//        gx = new ConvolveOp(new Kernel(3, 3, new float[] {
+//            -3, -10, -3,
+//             0,   0,  0,
+//             3,  10,  3
+//        }));
+//
+//        gy = new ConvolveOp(new Kernel(3, 3, new float[] {
+//             -3, 0,  3,
+//            -10, 0, 10,
+//             -3, 0,  3
+//        }));
+
+        // Prewitt operator
+//        gx = new ConvolveOp(new Kernel(3, 3, new float[] {
+//            -1, -1, -1,
+//             0,  0,  0,
+//             1,  1,  1
+//        }));
+//
+//        gy = new ConvolveOp(new Kernel(3, 3, new float[] {
+//             -1, 0, 1,
+//             -1, 0, 1,
+//             -1, 0, 1
+//        }));
 
         dilate = new DilationOperator(5, 5);
     }
@@ -56,6 +96,9 @@ public class DefaultRegionExtractor implements RegionExtractor {
         WritableRaster rx = gx.createCompatibleDestRaster(input);
         WritableRaster ry = gy.createCompatibleDestRaster(input);
 
+        // The gradient values should be in the interval [-255, 255] but
+        // ConvolveOp#filter() probably uses the absolute value [0,255]
+        // thereby losing any information about the gradient's direction.
         gx.filter(input, rx);
         gy.filter(input, ry);
 
@@ -65,7 +108,9 @@ public class DefaultRegionExtractor implements RegionExtractor {
         int[] pxy = new int[px.length];
 
         for (int i = 0; i < px.length; ++i) {
-            pxy[i] = px[i] + py[i];
+            // TODO evaluate how to combine both gradient images
+            //pxy[i] = Math.max(px[i], py[i]);
+            pxy[i] = Math.min(px[i] + py[i], 255);
         }
 
         return pxy;
