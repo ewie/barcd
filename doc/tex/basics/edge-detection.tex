@@ -2,28 +2,42 @@
 
 Kanten in einem Bild zeigen sich durch abrupte Helligkeitsänderungen zwischen benachbarten Pixeln.
 Um die Helligkeitsänderung für jedes Pixel zu bestimmen muss der Gradient der
-Helligkeitsfunktion eines Bildes berechnet werden.
+Helligkeitsfunktion $\nabla I$ eines Bildes berechnet werden.
 Das gängigste Verfahren zur Gradientenbestimmung ist die Faltung des Bildes $I$ mit einer Faltungsmatrix $K$ (auch genannt Kernel).
   \[ (I\circ K)(x,y) =
        \sum_{(u,v)\in m\times n}
        I\left(x+u-\frac{m}{2},y+v-\frac{n}{2}\right)K_{u,v}
        \quad K\in\mathbb{R}^{m\times n} \]
-Eine der häufigsten Faltungsmatrizen ist der \textsc{Sobel}-Operator.
-  \[ K_{Sobel} = \begin{vmatrix}
-           -1 & -2 & -1 \\
-            0 &  0 &  0 \\
-            1 &  2 &  1
-         \end{vmatrix} \]
-Dieser funktioniert für unsere Anwendung recht gut. Erfasst aber bereits leichte Helligkeitsänderungen.
-Daher haben wir auch andere Matrizen ausprobiert.
-Unter anderem den \textsc{Roberts}-Operator \cite{DBLP:books/garland/Roberts63}.
-  \[ K_{Roberts} = \begin{vmatrix}
-           -1 & 0 \\
-            0 & 1
-         \end{vmatrix} \]
-Dies ist einer der ersten Operatoren der zur Kantenerkennung in Strichzeichnungen entwickelt wurde.
-
 Die Berechnung eines einzelnen Gradientenbildes reicht jedoch nicht aus um alle Kanten eines Bildes zu erfassen, da die Faltungsmatrix nur Helligkeitsänderungen entlang einer Dimension erfasst.
-Deshalb muss ein zweites Gradientenbild unter Verwendung der Transponierten der Faltungsmatrix berechnet werden.
-Das Kantenbild ergibt sich dann aus der Kombinitation beider Gradientenbilder mittels pixelweiser Addition der Absolutwerte.
-  \[ I_{edge} = \Big|I \circ K\Big| + \Big|I \circ K^\top\Big| \]
+Deshalb ist ein zweites Gradientenbild unter Verwendung einer Faltungsmatrix, die Helligkeitsänderungen entlang einer zweiten Dimension erfasst, erforderlich.
+In der Regel nutzt man dafür die Transponierte der ersteren Faltungsmatrix.
+Der Gradient der Helligkeitsfunktion ergibt sich dann aus
+  \[ \nabla I(x,y) = \sqrt{(I \circ K_X)(x,y)^2 + (I \circ K_Y)(x,y)^2} \]
+
+\subsection*{Sobel-Operator}
+Eine der häufigsten Faltungsmatrizen ist der \textsc{Sobel}-Operator.
+Dieser funktioniert für unsere Anwendung recht gut, ist jedoch anfällig für Bildrauschen.
+  \[ K_X = \begin{vmatrix}
+       -1 & -2 & -1 \\
+        0 &  0 &  0 \\
+        1 &  2 &  1
+     \end{vmatrix}
+     \quad
+     K_Y = K_X^\top = \begin{vmatrix}
+       -1 & 0 & 1 \\
+       -2 & 0 & 2 \\
+       -1 & 0 & 1
+     \end{vmatrix} \]
+
+\subsection*{Roberts-Operator}
+Der \textsc{Roberts}-Operator \cite{DBLP:books/garland/Roberts63} war eine der ersten Faltungsmatrizen die zur Kantenerkennung in technischen Strichzeichnungen verwendet wurde.
+Da die Matrix $K_X$ identisch mit ihrer Transponierten ist verwendet man für die zweite Dimension eine Matrix $K_Y$ deren Spalten vertauscht wurden.
+  \[ K_X = \begin{vmatrix}
+       1 &  0 \\
+       0 & -1
+     \end{vmatrix}
+     \quad
+     K_Y = \begin{vmatrix}
+        0 & 1 \\
+       -1 & 0
+     \end{vmatrix} \]
