@@ -90,9 +90,11 @@
     	<version>1.6</version>
     </dependency>
     <dependency>
-    	<groupId>gov.nih.imagej</groupId>
-    	<artifactId>imagej</artifactId>
-    	<version>1.46</version>
+	    <groupId>gov.nih.imagej</groupId>
+	    <artifactId>imagej</artifactId>
+	    <version>1.47a</version>
+	    <scope>system</scope>
+	    <systemPath>${project.basedir}/lib/ij.jar</systemPath>
     </dependency>
   </dependencies>
 </project>
