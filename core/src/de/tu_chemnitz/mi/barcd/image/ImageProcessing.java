@@ -168,22 +168,16 @@ public int isDark(BufferedImage biDark){
     int[] iHistogram = iprNew.getHistogram();
     int iHistoAverage = 0, iHistoHelp = 0;
 
-    //calculate the real average pixel brightness and which brightness has the most pixel
+    //calculate the average pixel brightness
     for (int k = 0; k < iHistogram.length; k++){
-        iHistoHelp += iHistogram[k];
-        if ((((iWidth*iHeight)/2.0f) < iHistoHelp) && (iHistoAverage == 0)) iHistoAverage = k;
+        iHistoHelp += iHistogram[k]*k;
     }
-    int k = iHistoAverage + 1;
-    while ((iHistogram[k] == 0) && (k < 256)){
-        k++;          
-    }
-    iHistoAverage += (int)((k - iHistoAverage)/2);
+    iHistoAverage = (int)( (float)iHistoHelp / (iWidth*iHeight) );
 
     return iHistoAverage;
   }
 
   
-  // has to be minimum 30 pixels high
 /**
  * Checks how much the barcode in the image is rotated.
  * 
@@ -382,7 +376,7 @@ public BufferedImage blurBufferedImage_mean(BufferedImage biBlur){
  * <p>
  * The normal image has a value of fBrighness = 1.0.
  * Everything above brightens the image, everything under it darkens it.
- * The most useful interval is between 0.0 and 2.0 .
+ * The most useful interval is between 0.0 and 5.0 .
  * 
  * @param biBright      The image to blur.
  * @param fBrightness   Brightening/Darkening Factor.

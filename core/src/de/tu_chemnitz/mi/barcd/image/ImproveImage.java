@@ -31,8 +31,10 @@ public class ImproveImage {
         biNew = biPrep;
         // brighten image up a bit to normalize it
         // this also might help with a little bit blurry images and pictures where the color difference is not big enough
-        while (ipNew.isDark(biNew) < 128){
-            biNew = ipNew.brightenBufferedImage_linear(biNew, 1.1f);
+        int iBrightness = ipNew.isDark(biNew);
+        if (iBrightness < 128){
+            float fRescale = (float)115 / iBrightness;
+            biNew = ipNew.brightenBufferedImage_linear(biNew, fRescale);
         }
         
         return biNew;
