@@ -1,0 +1,14 @@
+\section*{Graustufen}
+\writtenby{\dcauthornameewie}%
+In der Regel reicht es für die Bildanalyse aus Strukturen anhand ihrer Helligkeit und daraus resultierenden Kontrasten zu erkennen.
+Daher ist es nicht nötig für die Varbeitung eventuell farbige Ausgangsbilder (z.B. \textit{sRGB} oder \textit{YUV}) zu betrachten.
+Deshalb ist es angebracht die Helligkeit $Y$ eines Originalbildes zu extrahieren wodurch sich ein Graustufenbild ergibt, welches die Helligkeit eines jeden Bildpunktes kodiert.
+Im Falle von \textit{YUV} ist diese Umwandlung trivial da die Helligkeit direkt in den Bilddaten kodiert ist.
+Liegt jedoch \textit{sRGB} vor so ist eine etwas umfangreichere Umrechnung erforderlich.
+
+CIE XYZ definiert die Umrechung wie folgt, wobei hier der Fokus darauf liegt die vom Menschen wahrgenommene Helligkeit zu extrahieren\todo[author=\dcauthornameewie]{Quelle}.
+  \[ Y = 0.299 R + 0.587 G + 0.114 B \]
+Soll die Konvertierung möglichst schnell erfolgen\footnote{\href{https://code.google.com/p/zxing/source/browse/trunk/core/src/com/google/zxing/RGBLuminanceSource.java?spec=svn2633&r=2394\#57}{ZXing RGBLuminanceSource.java r2394 L57 (code.google.com)}} wird meist auf eine einfachere Variante zurückgegriffen, welche die Komponente $G$, im Vergleich zu $R$ und $B$, doppelt gewichtet\footnote{diese Gewichtung wird übrigens auch von allen Digitalkameras angewandt deren CCD-Sensor als \textsc{Bayer}-Matrix aufgebaut ist}.
+  \[ Y = \frac{1}{4}(R + 2 G + B) \]
+Da die Faktoren allesamt Zweier-Potenzen sind kann die Formel ausschließlich durch 3 Additionen sowie 1 Rechtsshift umgesetzt werden.
+  \[ Y = (R + G + G + B) >> 2 \]
