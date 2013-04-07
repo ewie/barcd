@@ -1,5 +1,5 @@
 \section*{Connected Components Labeling}
-
+\writtenby{\dcauthornameewie}%
 Um zusammenhängende Bildstrukturen zu erfassen verwendet man dass sogenannte Connected Components Labeling.
 Dabei wird jeder Bildpunkt genau einer Menge zugeordnet welche je eine Komponente zusammenhängenger Bildpunkte repräsentiert.
 Zwei Bildpunkte hängen zusammen, wenn diese benachbart sind und den gleichen Wert besitzen.
@@ -11,7 +11,7 @@ Für die Nachbarschaft gibt es verschiedene Modelle.
 \end{description}
 Je mehr Pixel als Nachbarschaft herangezogen werden, desto größer können die zusammenhängenden Komponenten ausfallen, da es mehr Möglichkeiten gibt in denen zwei Pixel als verbunden gelten.
 
-Das Connected Component Labeling lässt sich leicht realisieren durch Anwendung eines Scanline-Verfahren, d.h. jede Bildzeile wird, mit der oberen ($y=0$) beginnend, von links ($x=0$) nach rechts pixelweise verarbeitet.
+Das Connected Component Labeling lässt sich leicht realisieren durch Anwendung eines Scanline-Verfahren \cite[69--75]{compvis2001}, d.h. jede Bildzeile wird, mit der oberen ($y=0$) beginnend, von links ($x=0$) nach rechts pixelweise verarbeitet.
 Dabei überprüft man jedes Pixel auf Verbundenheit mit seinen Nachbarn oberhalb ($y-1$) und links ($x-1$).
 Unterscheidet sich der Wert des aktuellen Pixels von den betrachteten Nachbarn so wird diesem ein neues Label zugewiesen.
 Besitzt das Pixel hingegen den Wert mindestens eines Nachbarn so wird das Label des Nachbarn zugewiesen.
