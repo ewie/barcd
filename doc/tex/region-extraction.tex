@@ -1,78 +1,51 @@
 \chapter{Auffinden und Extrahieren der Barcodekandidaten}
-Um Regionen mit potentiellen Barcodes zu ermitteln machen wir uns den Umstand
-zu Nutze, dass Barcodes einen relativ hohen Kontrast aufweisen und sich in
-dieser Hinsicht von deren Umgebung abheben.
+\writtenby{\dcauthornameewie}%
+Um Regionen mit potentiellen Barcodes zu ermitteln machen wir uns den Umstand zu Nutze, dass lesbare Barcodes einen relativ hohen Kontrast aufweisen und sich in dieser Hinsicht von deren Umgebung abheben.
 
 \begin{enumerate}[(i)]
-  \item \textbf{Grauwertbild}
-    Das Grauwertbild \( I_{lum} \) wird durch folgen einfache Formel berechnet.
-    \[ I_{lum} = \frac{I_r + 2I_g + I_b}{4} \]
+\item \textbf{Graustufen}
+\todo[inline,author=\dcauthornameewie]{Konvertierung erfolgt durch Zeichnen des Bildes in ein \texttt{BufferedImage} mit ColorModel \texttt{TYPE\_BYTE\_GRAY} (schnell).
+Jedoch ohne Kenntnis der zu Grunde liegenden Formel zur Berechnung des Grauwertes.}
 
-  \item \textbf{Kantenbild bestimmen}
-    Das Kantenbild \( I_{edge} \) ergibt sich aus der pixelweisen Addition der
-    absoluten Werte zweier Gradientenbilder (in horizontaler und vertikaler
-    Richtung). Die beiden Gradientenbilder werden durch Faltung mit einem Kernel
-    \( K \) berechnet.
-    \[ I_{edge} = \Big| I_{lum} \circ K \Big|
-                + \Big| I_{lum} \circ K^\top \Big|
-    \]
-    Wir verwenden als Kernel den Roberts-Operator
-      \cite{DBLP:books/garland/Roberts63}.
-    \[ K = K_{Roberts} = \left[ \begin{array}{cc}
-         -1 & 0 \\
-          0 & 1
-       \end{array} \right]
-    \]
-    Dieser hat sich für unser Problem als ideal erwiesen, da er im Gegensatz zum
-    gängigeren Sobel-Operator
-    \[ K_{Sobel} = \left[ \begin{array}{ccc}
-         -1 & -2 & -1 \\
-          0 &  0 &  0 \\
-          1 &  2 &  1
-       \end{array} \right]
-    \]
-    robuster gegenüber kleinen Helligkeitsänderungen ist, welche mit dem
-    Sobel-Operator eher als Kante erfasst würden.
+\item \textbf{Kantenbild bestimmen} Das Kantenbild $I_{edge}$ ergibt sich aus der pixelweisen Addition der absoluten Werte zweier Gradientenbilder (in horizontaler und vertikaler Richtung). 
+Die beiden Gradientenbilder werden durch Faltung mit dem \textsc{Roberts}-Operator berechnet.
+  \[ I_{edge}(x,y) = \big|(I_{lum} \circ K_X)(x,y)\big| + \big|(I_{lum} \circ K_Y)(x,y)\big| \]
+Wir verwenden den Roberts-Operator, da dieser sich für unser Problem als ideal erwiesen hat.
+\todo[author=\dcauthornameewie]{näher erläutern}
 
-  \item \textbf{Kanten verstärken}
-    \[ I_{edge}^\bullet = I_{edge} \oplus D \]
+\item \textbf{Kanten verstärken} Die Kanten werden mit einem $5\times5$ Strukturelement mittels Dilation verstärkt.
+    \[ I_{edge}^\bullet = I_{edge} \oplus D, \quad D = [-2,2]\times[-2,2] \]
 
-  \item \textbf{Segmentierung}
-    Das Kantenbild wird anschließend segmentiert um jedes Pixel entweder dem
-    Vordergrund (Kanten) oder dem Hintergrund zuzuordnen. Wir nutzen dazu das
-    Schwellwertverfahren.
-    \[ I_{bin}(x,y) = \begin{cases}
-         255 & I_{edge}^\bullet(x,y) > T \\
-         0   & I_{edge}^\bullet(x,y) \leq T
-       \end{cases}
-    \]
-    Als Schwellwert \( T \) dient die mittlere Helligkeit aller Pixel.
-    \[ T = \frac{1}{NM} \sum_{x,y}{I_{edge}^\bullet(x,y)} \]
-    
-  \item \textbf{Komponenten extrahieren}
-    Um alle zusammenhängenden Komponente aus \(I_{bin}\) zu extrahieren wenden
-    wir das \textit{connected-component labeling} \cite[69--75]{compvis2001} an.
-    Das Verfahren bestimmt für jedes Pixel aus \(I_{bin}\) desen Zugehörigkeit
-    zu einer Komponente. Das Resultat ist eine Punktmenge für jede Komponente.
-  
-  \item \textbf{Regionen klassifizieren}
-    Die extrahierten Komponenten beschreiben bisher nur Bildelemente mit
-    erhöhtem Kontrast. Darunter fallen, neben den erwünschten Barcodes, auch
-    Elemente wie z.B. Schrift und Symbole. Um alle potentiellen Barcodes
-    auszuwählen müssen wir alle Komponente herausfiltern welche nicht als
-    Barcode in Frage kommen. Dazu berechnen wir für jede Komponente deren
-    konvexe Hülle \cite[6--7]{compgeom2008} über den Koordinaten der
-    entsprechenden Pixel. Jetzt können wir für jede Region den Deckungsgrad \(
-    \gamma \) definieren, d.h. welchen Anteil die Fläche einer Komponente an der
-    Fläche \( A \) des Polygons \cite{braden1986} besitzt, das durch die
-    konvexe Hülle beschrieben wird.
-    \begin{align*}
-      \gamma &= \frac{|C|}{A}
-             & C~\hat=~\text{Punktmenge einer Komponente} \\
-      A      &= \frac{1}{2} \sum_{i=0}^{n-1}{\hat x_i (\hat y_{i+1} - \hat
-                                             y_{i-1})}
-             & \hat x_i = x_{i \bmod n}
-    \end{align*}
+\item \textbf{Segmentierung} Das Kantenbild wird anschließend segmentiert um jedes Pixel entweder dem Vordergrund (Kanten) oder dem Hintergrund zuzuordnen.
+Wir nutzen dazu das Schwellwertverfahren.
+Als Schwellwert \( t \) dient die mittlere Helligkeit aller Pixel.
+  \[ I_{bin}(x,y) = \begin{cases}
+       0   & I_{edge}^\bullet(x,y) \leq t \\
+       255 & I_{edge}^\bullet(x,y) > t
+     \end{cases} \]
 
-    \cite[4]{DBLP:conf/cvpr/DalalT05}
+\item \textbf{Komponenten extrahieren} Um alle zusammenhängenden Komponente aus $I_{bin}$ zu extrahieren wenden wir das \textit{connected-component labeling} an.
+Dabei behandeln wir $I_{bin}(x,y) = 0$ als Hintergrund welcher als eine einzige Komponente mit Label $0$ erfasst wird.
+Dadurch kann der Hintergrund leicht verworfen werden, da er für die weitere Verarbeitung nicht von belang ist.
+
+\item \textbf{Regionen klassifizieren} Die extrahierten Komponenten beschreiben bisher nur Bildelemente mit erhöhtem Kontrast.
+Darunter fallen, neben den erwünschten Barcodes, auch Elemente wie z.B. Schrift und Symbole.
+Um alle potentiellen Barcodes auszuwählen müssen wir alle Komponente herausfiltern welche nicht als Barcode in Frage kommen.
+Dazu berechnen wir für jede Komponente deren konvexe Hülle über den Koordinaten der entsprechenden Pixel.
+
+Jetzt können wir für jede Region den Deckungsgrad $\gamma$ definieren, d.h. welchen Anteil die Fläche einer Komponente, d.h. die Anzahl der enthaltenen Pixel, an der Fläche $A$ des Polygons \cite{braden1986} besitzt, das durch die konvexe Hülle beschrieben wird.
+  \begin{align*}
+    \gamma &= \frac{|C|}{A} \in [0,1]
+           & C~\hat=~\text{Punktmenge einer Komponente} \\
+         A &= \frac{1}{2} \sum_{i=0}^{n-1}{\hat x_i (\hat y_{i+1} - \hat y_{i-1})}
+           & \hat z_i = z_{i \bmod n}
+  \end{align*}
+
+\begin{itemize}
+  \item Minimum Area Enclosing Rectangle
+  \item Axis Aligned Bounding Rectangle
+\end{itemize}
+
+\todo[author=\dcauthornameewie]{weitere Maße}
+
 \end{enumerate}
