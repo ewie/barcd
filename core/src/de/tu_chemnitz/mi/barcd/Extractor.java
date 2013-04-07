@@ -2,6 +2,7 @@ package de.tu_chemnitz.mi.barcd;
 
 import java.awt.image.BufferedImage;
 
+import de.tu_chemnitz.mi.barcd.geometry.AxisAlignedRectangle;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.util.RegionHashTable;
 
@@ -28,6 +29,8 @@ public class Extractor {
     private FrameHandler frameHandler;
 
     private Grayscaler grayscaler = new DefaultGrayscaler();
+
+    private ImageEnhancer enhancer = new DefaultImageEnhancer();
 
     /**
      * @param job the job to process
@@ -129,39 +132,80 @@ public class Extractor {
 
         Frame frame = job.createFrame();
 
-        for (Region r : regions) {
-            if (regionSelector == null || regionSelector.selectRegion(r)) {
-                frame.addRegion(r);
-                regionHashTable.insert(r);
+//        for (Region r : regions) {
+//            if (regionSelector == null || regionSelector.selectRegion(r)) {
+//                frame.addRegion(r);
+//                regionHashTable.insert(r);
+//            }
+//        }
+
+        for (Region region : regions) {
+            if (regionSelector == null || regionSelector.selectRegion(region)) {
+                frame.addRegion(region);
+
+                AxisAlignedRectangle rect = region.getAxisAlignedRectangle();
+                Point min = rect.getMin();
+
+                // TODO fix padding
+                int x = (int) min.getX() - 10;
+                int y = (int) min.getY() - 10;
+                int width = (int) rect.getWidth() + 20;
+                int height = (int) rect.getHeight() + 20;
+
+                if (x < 0) {
+                    x = 0;
+                }
+                if (y < 0) {
+                    y = 0;
+                }
+                if (x + width > image.getWidth()) {
+                    width = image.getWidth() - x;
+                }
+                if (y + height > image.getHeight()) {
+                    height = image.getHeight() - y;
+                }
+
+                BufferedImage sub = image.getSubimage(x, y, width, height);
+
+                BufferedImage enhanced;
+                try {
+                    enhanced = enhancer.enhanceImage(sub);
+                } catch (ImageEnhancerException ex) {
+                    continue;
+                }
+
+                Barcode barcode = decoder.decode(enhanced);
+
+                if (barcode != null) {
+                    region.setBarcode(barcode);
+                }
             }
         }
 
-        // TODO improve image regions
+//        Barcode[] barcodes = decoder.decodeMultiple(image);
+//
+//        if (barcodes != null) {
+//            for (Barcode barcode : barcodes) {
+//                Region r = null;
+//
+//                // Try each anchor point until we find a region containing it.
+//                Point[] pp = barcode.getAnchorPoints();
+//                for (Point p : pp) {
+//                    r = regionHashTable.find(p);
+//                    if (r != null) {
+//                        break;
+//                    }
+//                }
+//
+//                if (r == null) {
+//                    frame.addRegionlessBarcode(barcode);
+//                } else {
+//                    r.setBarcode(barcode);
+//                }
+//            }
+//        }
 
-        Barcode[] barcodes = decoder.decodeMultiple(image);
-
-        if (barcodes != null) {
-            for (Barcode barcode : barcodes) {
-                Region r = null;
-
-                // Try each anchor point until we find a region containing it.
-                Point[] pp = barcode.getAnchorPoints();
-                for (Point p : pp) {
-                    r = regionHashTable.find(p);
-                    if (r != null) {
-                        break;
-                    }
-                }
-
-                if (r == null) {
-                    frame.addRegionlessBarcode(barcode);
-                } else {
-                    r.setBarcode(barcode);
-                }
-            }
-        }
-
-        regionHashTable.clear();
+//        regionHashTable.clear();
 
         reportFrame(frame, image);
     }
