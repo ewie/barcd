@@ -1,14 +1,20 @@
 \subsection*{QR-Code}
 %Herkunft und Nutzung
-Der QR-Code wurde 1994 von der japanischen Firma Denso Wave inc.(Tochterfirma von Toyota) als 'Quick Response Code' entwickelt. Er kann maximal 7089 Ziffern bzw. 4296 Zeichen+Ziffern verschlüsseln und besitzt eine hohe Fehlerkorrekturrate(durch Reed-Solomon Code). Er wird inzwischen in allen Bereichen des täglichen Lebens genutzt. Dies zeigt z.B. auch eine Studie aus dem August 2006 in Japan, wo 82.4\% der zufällig Befragten ihre Handys dafür nutzten QR-Codes zu lesen.\cite{Furht2011}
+Der QR-Code wurde 1994 von der japanischen Firma Denso Wave inc.(Tochterfirma von Toyota) als 'Quick Response Code' entwickelt. Er kann maximal 7089 Ziffern bzw. 4296 Zeichen+Ziffern verschlüsseln und besitzt eine hohe Fehlerkorrekturrate(durch Reed-Solomon Code). Er wird inzwischen in allen Bereichen des täglichen Lebens genutzt. Dies zeigt z.B. auch eine Studie aus dem August 2006 in Japan, wo 82.4\% der zufällig Befragten ihre Handys dafür nutzten QR-Codes zu lesen.(cite{Furht2011})
+\todo{Quelle vervollständigen}
+
 %Aufbau
-Er besteht aus 5 verschiedenen Bereichen, Positionsmuster, Ausrichtungsmuster, Syncronisationsmuster, Ruhezone und Datenbereich. Das Positionsmuster besteht aus 3 Quadraten, durch die man die Position, den Drehwinkel und die Größe des Codes ermitteln kann. Die Ausrichtungsmuster, ab Version 2, helfen beim Ausgleich von nicht-linearen Verzerrungen. Alle Symbole finden wir mit Hilfe des Syncronisationsmusters. Die Ruhezone, um den Code, ist für das Finden des Codes, z.B innerhalb eines Bildes, unbedingt nötig und im Datenbereich befinden sich jegliche Daten, die als quadratische Matrix gespeichert werden. Diese existiert in 40 verschiedenen Versionen, die die Größe der Matrix festlegen(von 21x21 bis 177x177 Pixel).\\
+Er besteht aus 5 verschiedenen Bereichen: Positionsmuster, Ausrichtungsmuster, Syncronisationsmuster, Ruhezone und Datenbereich. Das Positionsmuster besteht aus 3 Quadraten, durch die man die Position, den Drehwinkel und die Größe des Codes ermitteln kann. Die Ausrichtungsmuster, ab Version 2, helfen beim Ausgleich von nicht-linearen Verzerrungen. Alle Symbole finden wir mit Hilfe des Syncronisationsmusters. Die Ruhezone, um den Code, ist für das Finden des Codes, z.B innerhalb eines Bildes, unbedingt nötig und im Datenbereich befinden sich jegliche Daten, die als quadratische Matrix gespeichert werden. Diese existiert in 40 verschiedenen Versionen, die die Größe der Matrix festlegen(von 21x21 bis 177x177 Pixel).
+
 In diesem Datenbereich sind Informationen horizontal und vertikal verschlüsselt.
 Für die Fehlerkorrektur gibt es 4 Level, L 7\%, M 15\%, Q 25\%, H 30\%, durch die der Code dann entsprechend größer wird.
+
 %Vorteile/Nachteile und Zusätzliches
-Die Vorteile sind die hohe Verschlüsselungskapazität der Daten(Zeichenanzahl), die kleine Druckgröße, Verschmutzungs- und Schadensresistenz(bis zu 30\% Schaden kann ausgeglichen werden), die Lesbarkeit unabhängig vom Winkel und die Teilbarkeit in mehrere kleine QR-Codes.
+Die Vorteile des QR-Codes sind die hohe Verschlüsselungskapazität der Daten(Zeichenanzahl), die kleine Druckgröße, Verschmutzungs- und Schadensresistenz(bis zu 30\% Schaden kann durch Level H ausgeglichen werden), die Lesbarkeit unabhängig vom Winkel und die Teilbarkeit in mehrere kleine QR-Codes.
+
+\todo{in Referenzen eingliedern}
+Quellen:
 \begin{itemize}
-	\item \cite{DensoWave2000-2010}\\
-	\url{http://www.qrcode.com/en/index.html}
+	\item DensoWave2000-2010: \url{http://www.qrcode.com/en/index.html}
 	\item \url{Site 341 in 'Handbook of Augmented Reality' by Borko Furht}
 \end{itemize}

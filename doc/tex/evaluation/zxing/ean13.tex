@@ -1,6 +1,5 @@
 \subsection*{EAN-13 Code}
-
-
+\writtenby{\dcauthornameriren}%
 % normale
 Strichcodes sind sich im Allgemeinen sehr ähnlich und unterscheiden sich maximal durch die Strichbreite und -länge. Die Länge ist allerdings für die aktuelle Untersuchung nicht von Interesse, denn diese bietet maximal eine leichte Fehlertoleranz, aber keinen Unterschied in der Erkennungsleistung. Die Strichbreite dagegen ermöglicht eine höhere Robustheit in der Erkennung. Daher untersuchen wir, wie in Abbildung \ref*{fig:eannormal} Bild 1 und 2 zu sehen ist, nur 2 unterschiedliche Strichstärken. 
 
@@ -27,15 +26,35 @@ Bei unscharfen Bildern macht sich die Strichbreite sofort bemerkbar, denn für d
 % \textbf{Bilder einfügen, blurry3, blurry35}
 
 % rotierte
-ROTIERT
-\textbf{Bilder einfügen, rotate45, rotateface25, rotateface27f, rotateblurry35, rotateblurry40 }
+\todo{Rotiert Beschreibung}
+\begin{figure}[H]
+  \centering
+  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/rotate_01_35.jpg}}
+  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/rotate_01_145.jpg}}
+  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/rotate_02_10.jpg}}
+  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/rotate_02_11f.jpg}}
+  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/rotate_02_170.jpg}}
+  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/blurryrotate_01_07_35.jpg}}
+  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/blurryrotate_02_4_10.jpg}}
+  \caption{Drehwinkel von 35$^\circ$, 145$^\circ$, 10$^\circ$, 11$^\circ$, 170$^\circ$, 35$^\circ$ und 10$^\circ$}
+  \label{fig:eanrotate}
+\end{figure}
+%\textbf{Bilder einfügen, rotate45, rotateface25, rotateface27f, rotateblurry35, rotateblurry40 }
 
 % dunkle
-DUNKEL
-\textbf{Bilder einfügen, dark98, dark99f, darkface90, darkface95f, blurrydark75, blurrydark80f, blurrydarkrotate90, blurrydarkrotate95f }
+\todo{Dunkel Beschreibung}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.30\textwidth]{img/EAN13/dark_01_90.jpg}
+  \includegraphics[width=0.35\textwidth]{img/EAN13/dark_02_90.jpg}
+  \includegraphics[width=0.35\textwidth]{img/EAN13/blurrydarkrotate_01_07_80_35.jpg}
+  \caption{Dunkle Bilder}
+  \label{fig:eandark}
+\end{figure}
+%\textbf{Bilder einfügen, dark98, dark99f, darkface90, darkface95f, blurrydark75, blurrydark80f, blurrydarkrotate90, blurrydarkrotate95f }
 
 % schatten
-SCHATTEN
+\todo{Schatten + Bilder}
 
 % schräg
-SCHRÄG
+%SCHRÄG
