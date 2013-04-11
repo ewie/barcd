@@ -1,0 +1,24 @@
+\chapter{Beweis Division durch Rechtsshift}
+\label{proof-division}
+\writtenby{\dcauthornameewie}%
+\paragraph{Satz}
+Eine natürliche Zahl kann durch Rechtsshift um $k\in\mathbb{N}_0$ Bits im Binärsystem durch $2^k$ geteilt werden.
+
+\paragraph{Definition}
+Sei $B$ eine Binärzahl der Form
+  \[ B = \sum_{i=0}^{n-1} b_i 2^i \quad b_i \in \{0,1\} \forall i \]
+und der Rechtsshift von $B$ um $k$ Bits wie folgt definiert
+  \[ B >\!\!> k = \left\lfloor\sum_{i=k}^{n-1} b_i 2^{i-k}\right\rfloor
+       \quad k\in\mathbb{N}_0 \cap [0,n) \]
+
+\paragraph{Beweis}
+\begin{align*}
+  B >\!\!> k &\overset{!}{=} \left\lfloor\frac{B}{2^k}\right\rfloor \\
+    &= \left\lfloor2^{-k} \sum_{i=0}^{n-1} b_i 2^i\right\rfloor
+     = \left\lfloor\sum_{i=0}^{n-1} b_i \frac{2^i}{2^{k}}\right\rfloor
+     = \left\lfloor\sum_{i=0}^{n-1} b_i 2^{i-k}\right\rfloor \\
+    &= \Bigg\lfloor\underbrace{\sum_{i=0}^{k-1} b_i 2^{i-k}}_\text{Nullfolge}
+       + \sum_{i=k}^{n-1} b_i 2^{i-k}\Bigg\rfloor \\
+    &= \left\lfloor{\sum_{i=k}^{n-1} b_i 2^{i-k}}\right\rfloor \\
+\end{align*}
+\hfill \qedsymbol

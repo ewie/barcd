@@ -1,14 +1,33 @@
 \section*{Graustufen}
 \writtenby{\dcauthornameewie}%
-In der Regel reicht es für die Bildanalyse aus Strukturen anhand ihrer Helligkeit und daraus resultierenden Kontrasten zu erkennen.
-Daher ist es nicht nötig für die Varbeitung eventuell farbige Ausgangsbilder (z.B. \textit{sRGB} oder \textit{YUV}) zu betrachten.
-Deshalb ist es angebracht die Helligkeit $Y$ eines Originalbildes zu extrahieren wodurch sich ein Graustufenbild ergibt, welches die Helligkeit eines jeden Bildpunktes kodiert.
-Im Falle von \textit{YUV} ist diese Umwandlung trivial da die Helligkeit direkt in den Bilddaten kodiert ist.
-Liegt jedoch \textit{sRGB} vor so ist eine etwas umfangreichere Umrechnung erforderlich.
+Im Allgemeinen liegen Bilddaten in Farbe vor.
+Sind für die Analyse jedoch Strukturen entscheidend, welche sich durch Helligkeitunterschiede ergeben, so ist es nötig diese Helligkeitsinformation aus den Farbbildern zu extrahieren.
+Zunächst ist es entscheiden, in welchem Format die Bilder vorliegen, d.h. wie die Farbinformation kodiert ist.
 
-CIE XYZ definiert die Umrechung wie folgt, wobei hier der Fokus darauf liegt die vom Menschen wahrgenommene Helligkeit zu extrahieren\todo[author=\dcauthornameewie]{Quelle}.
-  \[ Y = 0.299 R + 0.587 G + 0.114 B \]
-Soll die Konvertierung möglichst schnell erfolgen\footnote{\href{https://code.google.com/p/zxing/source/browse/trunk/core/src/com/google/zxing/RGBLuminanceSource.java?spec=svn2633&r=2394\#57}{ZXing RGBLuminanceSource.java r2394 L57 (code.google.com)}} wird meist auf eine einfachere Variante zurückgegriffen, welche die Komponente $G$, im Vergleich zu $R$ und $B$, doppelt gewichtet\footnote{diese Gewichtung wird übrigens auch von allen Digitalkameras angewandt deren CCD-Sensor als \textsc{Bayer}-Matrix aufgebaut ist}.
-  \[ Y = \frac{1}{4}(R + 2 G + B) \]
-Da die Faktoren allesamt Zweier-Potenzen sind kann die Formel ausschließlich durch 3 Additionen sowie 1 Rechtsshift umgesetzt werden.
-  \[ Y = (R + G + G + B) >> 2 \]
+Die zwei gängigsten Formate sind RGB und YCbCr.
+RGB kodiert Farbwerte mit 3 Komponenten die den Farbkanälen Rot (R), Grün (G), und Blau (B) entsprechen.
+Im Gegensatz dazu stellt YCbCr die Farbinformation mit den 3 Komponenten Helligkeit (Y'), Blau-Gelb-Chrominanz (Cb), sowie Rot-Grün-Chrominanz (Cr).
+YCbCr findet Anwendung in JPEG und MPEG zu Komprimierung der Bilddaten.
+\todo{Quelle}
+
+Liegen die Bilddaten in YCbCr vor, da z.B. mit Videos in MPEG gearbeitet wird, bietet es sich an die kodierte Helligkeit Y direkt zu verwenden, da diese sich an der menschlichen Helligkeitswahrnehmung orientiert.
+
+Liegt jedoch RGB vor, so muss die Helligkeit explizit ermittelt werden.
+Zum einen kann man Y so berechnen wie dies bei Umwandlung von RGB in YCbCr standardmäßig erfolgt.
+Nämlich nach folgender Formel.
+\todo{Quelle}
+  \[ Y = K_R R + (1 - K_R - K_B) G + K_B B \]
+Für die Werte $K_R$ und $K_B$ gibt es zwei Standards ITU-R BT.601 (SDTV) und ITU-R BT.709 (HDTV).
+\todo{Quelle}
+%
+\begin{itemize}
+\item ITU-R BT.601: $K_R=0.114,~K_B=0.299$
+\item ITU-R BT.709: $K_R=0.0722,~K_B=0.2126$
+\end{itemize}
+%
+Soll die Konvertierung möglichst schnell erfolgen wird auch auf eine einfachere Variante zurückgegriffen\footnote{\href{https://code.google.com/p/zxing/source/browse/trunk/core/src/com/google/zxing/RGBLuminanceSource.java?spec=svn2633&r=2394\#57}{RGBLuminanceSource.java r2394 L57 (code.google.com/p/zxing)}}, welche die Komponente $G$, im Vergleich zu $R$ und $B$, doppelt gewichtet.
+Diese Gewichtung erfolgt auch in allen Digitalkameras deren CCD-Sensor als \textsc{Bayer}-Matrix aufgebaut ist.
+  \[ Y = \frac{1}{4} R + \frac{1}{2} G + \frac{1}{4}B \]
+Liegen die Werte R, G, und B als positive ganze Zahlen vor, kann die Formel durch 3 Additionen sowie 1 Rechtsshift im Binärsystem umgesetzt werden, da die Faktoren allesamt 2er-Potenzen sind.
+Siehe Anhang \ref{proof-division} für den Beweis.
+  \[ Y = (R + G + G + B) >\!\!> 2 \]
