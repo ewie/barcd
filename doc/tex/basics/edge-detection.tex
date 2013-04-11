@@ -1,4 +1,4 @@
-\section*{Kantenerkennung}
+\section{Kantenerkennung}
 \writtenby{\dcauthornameewie}%
 Kanten in einem Bild zeigen sich durch abrupte Helligkeitsänderungen zwischen benachbarten Pixeln.
 Um die Helligkeitsänderung für jedes Pixel zu bestimmen muss der Gradient der Helligkeitsfunktion $\nabla I$ eines Bildes berechnet werden.
@@ -13,7 +13,7 @@ In der Regel nutzt man dafür die Transponierte der ersteren Faltungsmatrix.
 Der Gradient der Helligkeitsfunktion ergibt sich dann aus
   \[ \nabla I(x,y) = \sqrt{(I \circ K_X)(x,y)^2 + (I \circ K_Y)(x,y)^2} \]
 
-\paragraph{Sobel-Operator}
+\subsection*{Sobel-Operator}
 Eine der häufigsten Faltungsmatrizen ist der \textsc{Sobel}-Operator.
 Dieser funktioniert für unsere Anwendung recht gut, ist jedoch anfällig für Bildrauschen.
   \[ K_X = \begin{vmatrix}
@@ -28,7 +28,7 @@ Dieser funktioniert für unsere Anwendung recht gut, ist jedoch anfällig für B
        -1 & 0 & 1
      \end{vmatrix} \]
 
-\paragraph{Roberts-Operator}
+\subsection*{Roberts-Operator}
 Der \textsc{Roberts}-Operator \cite{DBLP:books/garland/Roberts63} war eine der ersten Faltungsmatrizen die zur Kantenerkennung in technischen Strichzeichnungen verwendet wurde.
 Da die Matrix $K_X$ identisch mit ihrer Transponierten ist verwendet man für die zweite Dimension eine Matrix $K_Y$ deren Spalten vertauscht wurden.
   \[ K_X = \begin{vmatrix}
