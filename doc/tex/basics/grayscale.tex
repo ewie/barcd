@@ -12,17 +12,16 @@ YCbCr findet Anwendung in JPEG/JFIF \cite{jfif} zur Farbkodierung.
 Liegen die Bilddaten in YCbCr vor, da z.B. mit Videos in MPEG gearbeitet wird, bietet es sich an die kodierte Helligkeit Y direkt zu verwenden, da diese sich an der menschlichen Helligkeitswahrnehmung orientiert.
 
 Liegt jedoch RGB vor, so muss die Helligkeit explizit ermittelt werden.
-Zum einen kann man Y so berechnen wie dies bei Umwandlung von RGB in YCbCr standardmäßig erfolgt.
-Nämlich nach folgender Formel \cite[2.5.1]{itu/rec/601}.
+Zum einen kann $Y$ nach der Formel folgender Formel \cite[2.5.1]{itu/rec/601} berechnet werden.
   \[ Y = K_R R + (1 - K_R - K_B) G + K_B B \]
-Für die Werte $K_R$ und $K_B$ gibt es zwei Standards ITU-R BT.601 (SDTV) und ITU-R BT.709 (HDTV).
+Die Faktoren $K_R$ und $K_B$ sind in den beiden Standards ITU-R BT.601 (SDTV) und ITU-R BT.709 (HDTV) definiert.
 %
 \begin{itemize}
 \item ITU-R BT.601: $K_R=0.299,~K_B=0.114$ \cite[2.5.1]{itu/rec/601}
 \item ITU-R BT.709: $K_R=0.2126,~K_B=0.0722$ \cite[4]{itu/rec/709}
 \end{itemize}
 %
-Soll die Konvertierung möglichst schnell erfolgen wird auch auf eine einfachere Variante zurückgegriffen\footnote{\href{https://code.google.com/p/zxing/source/browse/trunk/core/src/com/google/zxing/RGBLuminanceSource.java?spec=svn2633&r=2394\#57}{RGBLuminanceSource.java r2394 L57 (code.google.com/p/zxing)}}, welche die Komponente $G$, im Vergleich zu $R$ und $B$, doppelt gewichtet.
+Soll die Konvertierung aber möglichst schnell erfolgen wird auch auf eine einfachere Variante zurückgegriffen\footnote{\href{https://code.google.com/p/zxing/source/browse/trunk/core/src/com/google/zxing/RGBLuminanceSource.java?spec=svn2633&r=2394\#57}{RGBLuminanceSource.java r2394 L57 (code.google.com/p/zxing)}}, welche die Komponente $G$, im Vergleich zu $R$ und $B$, doppelt gewichtet.
 Diese Gewichtung erfolgt auch in allen Digitalkameras deren CCD-Sensor als \textsc{Bayer}-Matrix aufgebaut ist.
   \[ Y = \frac{1}{4} R + \frac{1}{2} G + \frac{1}{4}B \]
 Liegen die Werte R, G, und B als positive ganze Zahlen vor, kann die Formel durch 3 Additionen sowie 1 Rechtsshift im Binärsystem umgesetzt werden, da die Faktoren allesamt 2er-Potenzen sind.
