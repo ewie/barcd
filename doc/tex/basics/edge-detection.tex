@@ -10,8 +10,8 @@ Das gängigste Verfahren zur Bestimmung des Gradienten ist dessen Annäherung du
        \quad m,n \in\mathbb{N} \]
 Die Berechnung eines einzelnen Gradientenbildes reicht jedoch nicht aus um alle Kanten eines Bildes zu erfassen, da die Faltungsmatrix nur Helligkeitsänderungen entlang einer Dimension erfasst.
 Deshalb ist ein zweites Gradientenbild unter Verwendung einer Faltungsmatrix, die Helligkeitsänderungen entlang einer zweiten Dimension erfasst, erforderlich.
-In der Regel nutzt man dafür die Transponierte der ersteren Faltungsmatrix.
-Der Gradient der Helligkeitsfunktion ergibt sich  Berechnung 
+Für eine zweite Dimension orthogonal zu ersten eignet sich die Transponierte der ersteren Faltungsmatrix.
+Der Stärke des Gradienten der Helligkeitsfunktion in einem Bildpunkt ergibt sich aus folgender Formel.
   \[ \nabla I(x,y) = \sqrt{(I \circ K_X)(x,y)^2 + (I \circ K_Y)(x,y)^2} \]
 
 \subsection*{Roberts-Operator}
