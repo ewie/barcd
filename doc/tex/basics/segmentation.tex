@@ -36,14 +36,14 @@ Im Allgemeinen ist der Mittelwert jedoch nicht optimal da dieser die Helligkeits
 \todo[author=\dcauthornameewie]{Iteratives Verfahren}
 
 \subsubsection*{Otsu's Methode}
-\surname{Otsu}'s Methode ist ein histogrammbasiertes Verfahren, dass eine bimodale Helligkeitsverteilung\footnote{Eine bimodale Helligkeitsverteilung besitzt zwei Maxima die den Helligkeitswerten des Hintergrund bzw. Vordergrund entsprechen. Der optimale Schwellwert liegt im Tal zwischen den Maxima.} voraussetzt.
+\surname{Otsu}'s Methode \cite{otsu1979} ist ein histogrammbasiertes Verfahren, dass eine bimodale Helligkeitsverteilung\footnote{Eine bimodale Helligkeitsverteilung besitzt zwei Maxima die den Helligkeitswerten des Hintergrund bzw. Vordergrund entsprechen. Der optimale Schwellwert liegt im Tal zwischen den Maxima.} voraussetzt.
 Der Algorithmus sucht den Schwellwert, der die Varianz innheralb der beiden Klassen minimiert.
 
 \subsubsection*{Balanced Histogram Thresholding}
-Das Balanced Histogram Thresholding erwartet, wie \surname{Otsu}'s Methode, eine bimodale Helligkeitsverteilung.
+Das Balanced Histogram Thresholding \cite{DBLP:conf/biostec/AnjosS08} erwartet, wie \surname{Otsu}'s Methode, eine bimodale Helligkeitsverteilung.
 Das Verfahren ermittelt den Schwellwert derart, dass dieser das Histogramm in zwei gleich "`schwere"' Hälften teilt.
 Als Maß für das Gewicht einer Hälfte dient die Summe der absoluten Häufigkeiten aller Klassen der betrachteten Hälfte.
-Von der schwereren Häfte wird solange die äußere Klasse entfernt bis nur noch eine Klasse betrachtet wird, welche dem gesuchten Schwellwert entspricht.
+Von der schwereren Häfte wird solange die äußere Klasse entfernt bis nur noch eine Klasse übrig ist, welche dem gesuchten Schwellwert entspricht.
 
 \subsection*{Varianten des Thresholding}
 Es existieren verschiedene Varianten der Anwendung das Schwellwertverfahrens.
