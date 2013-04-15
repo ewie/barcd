@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
 public class ImageDisplay extends JFrame {
     private static final long serialVersionUID = -5184274079279042989L;
 
-    private ImageComponent imageComponent;
+    private final ImageComponent imageComponent;
 
     public ImageDisplay() {
         super();
@@ -52,7 +52,7 @@ public class ImageDisplay extends JFrame {
         }
 
         private class ImageRunnable implements Runnable {
-            private Image image;
+            private final Image image;
 
             public ImageRunnable(Image image) {
                 super();

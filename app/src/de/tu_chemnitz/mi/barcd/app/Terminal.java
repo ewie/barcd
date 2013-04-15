@@ -21,28 +21,30 @@ public class Terminal {
     /**
      * The pattern to extract a command's name and arguments.
      */
-    private Pattern COMMAND_LINE_PATTERN = Pattern.compile("^\\s*([^\\s]+)+(.*)$");
+    private static final Pattern COMMAND_LINE_PATTERN = Pattern.compile("^\\s*([^\\s]+)+(.*)$");
 
     /**
      * Map command names to the respective commands.
      */
-    private HashMap<String, Command> commands = new HashMap<String, Command>();
+    private final HashMap<String, Command> commands = new HashMap<String, Command>();
 
-    private BufferedReader reader;
+    private final BufferedReader reader;
 
-    private PrintStream printer;
+    private final PrintStream printer;
 
-    private String prefix;
+    private final String prefix;
 
     /**
      * Create a new terminal with input and print stream.
      *
      * @param in the source of the terminal's input
      * @param out the target of the terminal's output
+     * @param prefix the command line prefix
      */
-    public Terminal(InputStream in, PrintStream out) {
+    public Terminal(InputStream in, PrintStream out, String prefix) {
         reader = new BufferedReader(new InputStreamReader(in));
         printer = out;
+        this.prefix = prefix;
     }
 
     /**
@@ -71,24 +73,6 @@ public class Terminal {
      */
     public Collection<Command> commands() {
         return Collections.unmodifiableCollection(commands.values());
-    }
-
-    /**
-     * Set the prefix indicating the terminal's input.
-     *
-     * @param prefix
-     */
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    /**
-     * Get the terminal's input prefix.
-     *
-     * @return the input prefix
-     */
-    public String getPrefix() {
-        return prefix;
     }
 
     /**

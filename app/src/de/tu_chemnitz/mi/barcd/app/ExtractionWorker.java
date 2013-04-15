@@ -8,7 +8,7 @@ import de.tu_chemnitz.mi.barcd.ExtractorException;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class ExtractionWorker extends Worker {
-    private Extractor extractor;
+    private final Extractor extractor;
 
     public ExtractionWorker(Extractor extractor) {
         this.extractor = extractor;

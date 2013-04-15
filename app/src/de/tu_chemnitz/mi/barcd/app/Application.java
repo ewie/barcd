@@ -39,13 +39,13 @@ import de.tu_chemnitz.mi.barcd.xml.XmlSerializerException;
 public class Application extends Worker {
     private static final String TERMINAL_PREFIX = "barcd>";
 
-    private Job job;
+    private final Job job;
 
-    private Thread extractionThread;
+    private final Thread extractionThread;
 
-    private Terminal terminal;
+    private final Terminal terminal;
 
-    private Options options;
+    private final Options options;
 
     private ImageDisplay display;
 
@@ -246,9 +246,7 @@ public class Application extends Worker {
     private Terminal createTerminal(final Thread thread, final ExtractionWorker worker)
         throws ApplicationException
     {
-        Terminal terminal = new Terminal(System.in, System.out);
-
-        terminal.setPrefix(TERMINAL_PREFIX);
+        Terminal terminal = new Terminal(System.in, System.out, TERMINAL_PREFIX);
 
         Routine stopRoutine = new Routine() {
             @Override
