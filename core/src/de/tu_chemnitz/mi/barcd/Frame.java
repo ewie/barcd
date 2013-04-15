@@ -12,11 +12,11 @@ import java.util.LinkedList;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Frame {
-    private int number;
+    private final int number;
 
-    private Collection<Region> regions;
+    private final Collection<Region> regions;
 
-    private Collection<Barcode> regionlessBarcodes;
+    private final Collection<Barcode> regionlessBarcodes;
 
     /**
      * Create a frame with number, regions and region-less barcodes.

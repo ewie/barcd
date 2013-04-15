@@ -19,19 +19,19 @@ import de.tu_chemnitz.mi.barcd.geometry.Point;
 
 /**
  * A barcode decoder using ZXing.
- * 
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
- * 
+ *
  * @see <a href="http://code.google.com/p/zxing">ZXing</a>
  */
 public class ZxingBarcodeDecoder implements Decoder {
     private static final EnumMap<BarcodeFormat, BarcodeType> format2type;
-    
-    private MultiFormatReader multiFormatReader = new MultiFormatReader();
-    
-    private MultipleBarcodeReader multipleBarcodeReader =
+
+    private final MultiFormatReader multiFormatReader = new MultiFormatReader();
+
+    private final MultipleBarcodeReader multipleBarcodeReader =
         new GenericMultipleBarcodeReader(multiFormatReader);
-    
+
     @Override
     public Barcode decode(BufferedImage image) {
         BinaryBitmap bitmap = createBitmap(image);
@@ -46,7 +46,7 @@ public class ZxingBarcodeDecoder implements Decoder {
         }
         return translateResult(result);
     }
-    
+
     @Override
     public Barcode[] decodeMultiple(BufferedImage image) {
         BinaryBitmap bitmap = createBitmap(image);
@@ -61,20 +61,20 @@ public class ZxingBarcodeDecoder implements Decoder {
         }
         return translateResults(results);
     }
-    
+
     private BinaryBitmap createBitmap(BufferedImage image) {
         int w = image.getWidth();
         int h = image.getHeight();
-        
+
         int[] pixels = image.getRGB(0, 0, w, h, null, 0, w);
-        
+
         RGBLuminanceSource lum = new RGBLuminanceSource(w, h, pixels);
         Binarizer binarizer = new HybridBinarizer(lum);
         BinaryBitmap bitmap = new BinaryBitmap(binarizer);
-        
+
         return bitmap;
     }
-    
+
     private Barcode[] translateResults(Result[] results) {
         Barcode[] barcodes = new Barcode[results.length];
         for (int i = 0; i < results.length; ++i) {
@@ -82,7 +82,7 @@ public class ZxingBarcodeDecoder implements Decoder {
         }
         return barcodes;
     }
-    
+
     private Barcode translateResult(Result result) {
         return new Barcode(
             translateBarcodeFormat(result.getBarcodeFormat()),
@@ -90,7 +90,7 @@ public class ZxingBarcodeDecoder implements Decoder {
             result.getRawBytes(),
             translateResultPoints(result.getResultPoints()));
     }
-    
+
     private BarcodeType translateBarcodeFormat(BarcodeFormat format) {
         BarcodeType type = format2type.get(format);
         if (type == null) {
@@ -98,7 +98,7 @@ public class ZxingBarcodeDecoder implements Decoder {
         }
         return type;
     }
-    
+
     private Point[] translateResultPoints(ResultPoint[] resultPoints) {
         Point[] points = new Point[resultPoints.length];
         for (int j = 0; j < resultPoints.length; ++j) {

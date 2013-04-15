@@ -13,7 +13,7 @@ import de.tu_chemnitz.mi.barcd.video.FrameReaderException;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class VideoImageProvider implements ImageProvider {
-    private FrameReader frameReader;
+    private final FrameReader frameReader;
 
     /**
      * @param frameReader a frame reader

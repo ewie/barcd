@@ -11,7 +11,8 @@ import java.awt.image.BufferedImage;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class DefaultGrayscaler implements Grayscaler {
-    @Override public BufferedImage convertToGrayscale(BufferedImage image) {
+    @Override
+    public BufferedImage convertToGrayscale(BufferedImage image) {
         BufferedImage out = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
         Graphics2D g = out.createGraphics();
         g.drawImage(image, 0, 0, null);

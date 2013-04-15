@@ -33,7 +33,7 @@ import de.tu_chemnitz.mi.barcd.xml.binding.VideoStreamSourceElement;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class XmlJobSerializer extends XmlSerializer<Job> {
-    private ObjectFactory elements = new ObjectFactory();
+    private final ObjectFactory elements = new ObjectFactory();
 
     public XmlJobSerializer() {
         super(JobElement.class.getPackage().getName());

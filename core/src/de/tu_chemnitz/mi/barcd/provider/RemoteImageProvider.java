@@ -17,7 +17,7 @@ import de.tu_chemnitz.mi.barcd.ImageProviderException;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class RemoteImageProvider implements ImageProvider {
-    private Iterator<URL> urls;
+    private final Iterator<URL> urls;
 
     /**
      * @param urls an iterator over all image URLs

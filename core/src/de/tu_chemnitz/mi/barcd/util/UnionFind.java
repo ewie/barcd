@@ -6,8 +6,8 @@ package de.tu_chemnitz.mi.barcd.util;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class UnionFind {
-    private int[] parent;
-    private int[] rank;
+    private final int[] parent;
+    private final int[] rank;
 
     /**
      * Create a union-find data structure with a given size.

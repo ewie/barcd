@@ -15,7 +15,7 @@ import de.tu_chemnitz.mi.barcd.provider.RemoteImageProvider;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class ImageCollectionSource extends Source {
-    private Collection<URL> urls;
+    private final Collection<URL> urls;
 
     public ImageCollectionSource(Collection<URL> urls) {
         this.urls = urls;

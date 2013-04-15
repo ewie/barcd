@@ -8,20 +8,20 @@ import de.tu_chemnitz.mi.barcd.util.TemplatedUrlSequenceIterator;
 
 /**
  * An image source using a templated URL.
- * 
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class ImageSequenceSource extends Source {
-    private TemplatedUrlSequence sequence;
-    
+    private final TemplatedUrlSequence sequence;
+
     public ImageSequenceSource(TemplatedUrlSequence sequence) {
         this.sequence = sequence;
     }
-    
+
     public TemplatedUrlSequence getSequence() {
         return sequence;
     }
-    
+
     @Override
     public RemoteImageProvider createImageProvider(int initialFrameNumber)
         throws ImageProviderException

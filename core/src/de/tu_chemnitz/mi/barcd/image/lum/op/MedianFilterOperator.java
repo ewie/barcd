@@ -9,8 +9,8 @@ import de.tu_chemnitz.mi.barcd.image.lum.Operator;
  */
 @Deprecated
 public class MedianFilterOperator implements Operator {
-    private int size;
-    
+    private final int size;
+
     public MedianFilterOperator(int size) {
         this.size = size;
     }
@@ -29,7 +29,7 @@ public class MedianFilterOperator implements Operator {
         }
         return out;
     }
-    
+
     private int[] getNeighbours(LuminanceImage in, int x, int y) {
         int xMin = x - size / 2;
         int yMin = y - size / 2;
@@ -48,7 +48,7 @@ public class MedianFilterOperator implements Operator {
         }
         return neighbours;
     }
-    
+
     private int getMedian(int[] neighbours) {
         int len = neighbours.length;
         for (int i = 0; i < len; ++i) {

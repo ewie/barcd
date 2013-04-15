@@ -8,13 +8,13 @@ import de.tu_chemnitz.mi.barcd.geometry.Point;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Barcode {
-    private BarcodeType type;
+    private final BarcodeType type;
 
-    private String text;
+    private final String text;
 
-    private byte[] bytes;
+    private final byte[] bytes;
 
-    private Point[] anchorPoints;
+    private final Point[] anchorPoints;
 
     /**
      * Create a barcode.

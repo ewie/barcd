@@ -10,7 +10,7 @@ import java.util.Iterator;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class TemplatedUrlSequenceIterator implements Iterator<URL> {
-    private TemplatedUrlSequence template;
+    private final TemplatedUrlSequence template;
 
     private int index = 0;
 

@@ -14,7 +14,7 @@ import de.tu_chemnitz.mi.barcd.video.OpenCvFileFrameReader;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class VideoStreamSource extends Source {
-    private URL url;
+    private final URL url;
 
     public VideoStreamSource(URL url) {
         this.url = url;

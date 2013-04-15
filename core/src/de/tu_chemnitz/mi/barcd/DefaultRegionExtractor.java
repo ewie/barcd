@@ -21,10 +21,10 @@ import de.tu_chemnitz.mi.barcd.image.ScalingOperator;
 public class DefaultRegionExtractor implements RegionExtractor {
     private static final int PROCESSING_IMAGE_WIDTH = 1000;
 
-    private ConvolveOp gx;
-    private ConvolveOp gy;
-    private DilationOperator dilate;
-    private ScalingOperator scale = new ScalingOperator();
+    private final ConvolveOp gx;
+    private final ConvolveOp gy;
+    private final DilationOperator dilate;
+    private final ScalingOperator scale = new ScalingOperator();
 
     public DefaultRegionExtractor() {
         // Robert's operator

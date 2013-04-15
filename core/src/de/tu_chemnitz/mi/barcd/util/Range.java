@@ -6,10 +6,10 @@ package de.tu_chemnitz.mi.barcd.util;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Range implements Iterable<Integer> {
-    private int start;
-    private int end;
-    private int step;
-    private int length;
+    private final int start;
+    private final int end;
+    private final int step;
+    private final int length;
 
     /**
      * Create a range with a custom step size.
@@ -33,11 +33,13 @@ public class Range implements Iterable<Integer> {
         this.end = end;
         this.step = step;
 
-        length = (end - start) / step;
+        int len = (end - start) / step;
 
         if ((end - start) % step != 0) {
-            length += 1;
+            len += 1;
         }
+
+        length = len;
     }
     /**
      * Create a range for every integer in [start, end) or (end, start].

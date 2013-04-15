@@ -10,11 +10,11 @@ import java.util.LinkedList;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Job {
-    private Source source;
+    private final Source source;
 
-    private Collection<Frame> frames;
+    private final Collection<Frame> frames;
 
-    private int initialFrameNumber;
+    private final int initialFrameNumber;
 
     private int nextFrameNumber;
 

@@ -11,18 +11,18 @@ import java.net.URL;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class TemplatedUrlSequence implements Iterable<URL> {
-    private URL template;
+    private final URL template;
 
-    private String tag;
+    private final String tag;
 
-    private Range range;
+    private final Range range;
 
-    private int padding;
+    private final int padding;
 
     /**
      * The format string used to construct the filenames {@link String#format}.
      */
-    private String format;
+    private final String format;
 
     /**
      * @param template the URL template

@@ -8,7 +8,7 @@ import com.googlecode.javacv.OpenCVFrameGrabber;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class OpenCvDeviceFrameReader extends OpenCvFrameReader {
-    private int deviceNumber;
+    private final int deviceNumber;
 
     protected OpenCvDeviceFrameReader(int deviceId, OpenCVFrameGrabber frameGrabber)
         throws FrameReaderException

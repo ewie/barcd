@@ -8,15 +8,15 @@ import de.tu_chemnitz.mi.barcd.image.lum.LuminanceImage;
  */
 @Deprecated
 public class IterativeThresholdSelector implements GlobalThresholdSelector {
-    static int MAX_ROUNDS = 10;
-    
+    private static final int MAX_ROUNDS = 10;
+
     @Override
     public int getThreshold(LuminanceImage input) {
         int width = input.getWidth();
         int height = input.getHeight();
-        
+
         int threshold = 128;
-        
+
         for (int i = 0; i < MAX_ROUNDS; ++i) {
             int fgAvg = 0;
             int bgAvg = 0;
@@ -40,7 +40,7 @@ public class IterativeThresholdSelector implements GlobalThresholdSelector {
             }
             threshold = newThreshold;
         }
-        
+
         return threshold;
     }
 }

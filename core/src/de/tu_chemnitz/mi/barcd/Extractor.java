@@ -14,19 +14,19 @@ public class Extractor {
         public void handleFrame(Frame frame, BufferedImage image);
     }
 
+    private final Job job;
+
+    private final ImageProvider imageProvider;
+
+    private FrameHandler frameHandler;
+
     private RegionExtractor regionExtractor = new DefaultRegionExtractor();
 
     private RegionSelector regionSelector = new DefaultRegionSelector();
 
-    private Job job;
-
-    private ImageProvider imageProvider;
-
-    private RegionHashTable regionHashTable = new RegionHashTable(10, 400);
+    private final RegionHashTable regionHashTable = new RegionHashTable(10, 400);
 
     private Decoder decoder = new ZxingBarcodeDecoder();
-
-    private FrameHandler frameHandler;
 
     private Grayscaler grayscaler = new DefaultGrayscaler();
 
@@ -171,6 +171,7 @@ public class Extractor {
                 try {
                     enhanced = enhancer.enhanceImage(sub);
                 } catch (ImageEnhancerException ex) {
+                    // TODO pass original image zo ZXing
                     continue;
                 }
 

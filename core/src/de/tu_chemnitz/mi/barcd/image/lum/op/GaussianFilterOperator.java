@@ -5,16 +5,16 @@ import de.tu_chemnitz.mi.barcd.image.lum.LuminanceImage;
 
 /**
  * A kernel realizing a Gaussian filter.
- * 
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 @Deprecated
 public class GaussianFilterOperator implements KernelOperator {
-    private ConvolutionOperator kernel;
-    
+    private final ConvolutionOperator kernel;
+
     /**
      * Create a square Gaussian filter.
-     * 
+     *
      * @param size the kernel's width and height
      * @param sigma the standard deviation of the Gaussian distribution
      */
@@ -36,17 +36,17 @@ public class GaussianFilterOperator implements KernelOperator {
         }
         this.kernel = new ConvolutionOperator(kernel);
     }
-    
+
     @Override
     public int getWidth() {
-        return this.kernel.getWidth();
+        return kernel.getWidth();
     }
-    
+
     @Override
     public int getHeight() {
-        return this.kernel.getHeight();
+        return kernel.getHeight();
     }
-    
+
     @Override
     public LuminanceImage apply(LuminanceImage input) {
         return kernel.apply(input);

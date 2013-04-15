@@ -9,7 +9,7 @@ import de.tu_chemnitz.mi.barcd.image.lum.Operator;
  */
 @Deprecated
 public class DownsamplingOperator implements Operator {
-    private int factor;
+    private final int factor;
 
     public DownsamplingOperator(int factor) {
         if (factor <= 1) {
@@ -17,14 +17,15 @@ public class DownsamplingOperator implements Operator {
         }
         this.factor = factor;
     }
-    
+
     public int getFactor() {
-        return this.factor;
+        return factor;
     }
-    
+
+    @Override
     public LuminanceImage apply(LuminanceImage in) {
-        int width = in.getWidth() / this.factor;
-        int height = in.getHeight() / this.factor;
+        int width = in.getWidth() / factor;
+        int height = in.getHeight() / factor;
         BufferedLuminanceImage out = new BufferedLuminanceImage(width, height);
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {

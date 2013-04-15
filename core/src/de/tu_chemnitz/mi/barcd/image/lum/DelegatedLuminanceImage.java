@@ -7,27 +7,27 @@ import java.awt.Rectangle;
  */
 @Deprecated
 public class DelegatedLuminanceImage implements LuminanceImage {
-    private LuminanceImage image;
-    
-    private Rectangle roi;
-    
+    private final LuminanceImage image;
+
+    private final Rectangle roi;
+
     public DelegatedLuminanceImage(LuminanceImage image) {
         this(image, 0, 0, image.getWidth(), image.getHeight());
     }
-    
+
     public DelegatedLuminanceImage(LuminanceImage image, int x, int y, int width, int height) {
         this.image = image;
-        this.roi = new Rectangle(x, y, width, height);
+        roi = new Rectangle(x, y, width, height);
     }
-    
+
     public LuminanceImage getDelegatedImage() {
         return image;
     }
-    
+
     public Rectangle getROI() {
         return new Rectangle(roi);
     }
-    
+
     @Override
     public int getWidth() {
         return roi.width;
@@ -42,7 +42,7 @@ public class DelegatedLuminanceImage implements LuminanceImage {
     public int getIntensityAt(int x, int y) {
         return image.getIntensityAt(x + roi.x, y + roi.y);
     }
-    
+
     @Override
     public int getValueAt(int x, int y) {
         return image.getValueAt(x + roi.x, y + roi.y);

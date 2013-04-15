@@ -27,8 +27,8 @@ import de.tu_chemnitz.mi.barcd.xml.binding.RegionElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.RegionsElement;
 
 public class XmlFrameSerializer extends XmlSerializer<Frame> {
-    private ObjectFactory elements = new ObjectFactory();
-    
+    private final ObjectFactory elements = new ObjectFactory();
+
     public XmlFrameSerializer() {
         super(FrameElement.class.getPackage().getName());
     }
@@ -50,7 +50,7 @@ public class XmlFrameSerializer extends XmlSerializer<Frame> {
     {
         return elements.createFrame(createFrameElement(frame));
     }
-    
+
     private FrameElement createFrameElement(Frame frame) {
         FrameElement fe = elements.createFrameElement();
         fe.setRegions(createRegionsElement(frame.getRegions()));
@@ -58,7 +58,7 @@ public class XmlFrameSerializer extends XmlSerializer<Frame> {
         fe.setBarcodes(createBarcodesElement(frame.getBarcodes()));
         return fe;
     }
-    
+
     private BarcodesElement createBarcodesElement(Collection<Barcode> barcodes) {
         BarcodesElement be = elements.createBarcodesElement();
         List<BarcodeElement> bes = be.getBarcode();
@@ -67,7 +67,7 @@ public class XmlFrameSerializer extends XmlSerializer<Frame> {
         }
         return be;
     }
-    
+
     private RegionsElement createRegionsElement(Collection<Region> regions) {
         RegionsElement re = elements.createRegionsElement();
         List<RegionElement> res = re.getRegion();
@@ -76,7 +76,7 @@ public class XmlFrameSerializer extends XmlSerializer<Frame> {
         }
         return re;
     }
-    
+
     private RegionElement createRegionElement(Region region) {
         RegionElement re = elements.createRegionElement();
         re.setCoverage(region.getCoverage());
@@ -92,7 +92,7 @@ public class XmlFrameSerializer extends XmlSerializer<Frame> {
         }
         return re;
     }
-    
+
     private BarcodeElement createBarcodeElement(Barcode barcode) {
         BarcodeElement be = elements.createBarcodeElement();
         be.setId(barcode.getType().toString() + "_" + barcode.getText());
@@ -127,7 +127,7 @@ public class XmlFrameSerializer extends XmlSerializer<Frame> {
         }
         return regions;
     }
-    
+
     private Region restoreRegion(RegionElement e) {
         double coverage = e.getCoverage();
         ConvexPolygon polygon = restorePolygon(e.getPolygon());
@@ -135,7 +135,7 @@ public class XmlFrameSerializer extends XmlSerializer<Frame> {
         region.setBarcode(restoreBarcode((BarcodeElement) e.getBarcode()));
         return region;
     }
-    
+
     private Collection<Barcode> restoreRegionlessBarcodes(BarcodesElement bse, RegionsElement rse) {
         // Map each barcode to its region if a region contains a barcode. Use
         // BarcodeElement as key instead of Barcode, because there could be
@@ -158,10 +158,10 @@ public class XmlFrameSerializer extends XmlSerializer<Frame> {
                 barcodes.add(b);
             }
         }
-        
+
         return barcodes;
     }
-    
+
     private Barcode restoreBarcode(BarcodeElement e) {
         String text = e.getText();
         byte[] raw = e.getBytes();
@@ -169,7 +169,7 @@ public class XmlFrameSerializer extends XmlSerializer<Frame> {
         Point[] points = restorePoints(e.getPoints());
         return new Barcode(type, text, raw, points);
     }
-    
+
     private Point[] restorePoints(PointsElement e) {
         List<PointElement> pes = e.getPoint();
         Point[] points = new Point[pes.size()];
@@ -179,7 +179,7 @@ public class XmlFrameSerializer extends XmlSerializer<Frame> {
         }
         return points;
     }
-    
+
     private GenericConvexPolygon restorePolygon(List<String> ps) {
         Point[] vertices = new Point[ps.size()];
         int i = 0;
@@ -191,21 +191,21 @@ public class XmlFrameSerializer extends XmlSerializer<Frame> {
         }
         return new GenericConvexPolygon(vertices);
     }
-    
+
     private static EnumMap<BarcodeFormat, BarcodeType> format2type;
     private static EnumMap<BarcodeType, BarcodeFormat> type2format;
-    
+
     static {
         format2type = new EnumMap<BarcodeFormat, BarcodeType>(BarcodeFormat.class);
         type2format = new EnumMap<BarcodeType, BarcodeFormat>(BarcodeType.class);
-        
+
         for (BarcodeType type : BarcodeType.values()) {
             format2type.put(BarcodeFormat.fromValue(type.value()), type);
         }
-        
+
         for (Entry<BarcodeFormat, BarcodeType> e : format2type.entrySet()) {
             type2format.put(e.getValue(), e.getKey());
         }
     }
-    
+
 }

@@ -38,7 +38,7 @@ import de.tu_chemnitz.mi.barcd.Serializer;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
-    private JAXBContext context;
+    private final JAXBContext context;
 
     private boolean validate;
 

@@ -19,15 +19,15 @@ public class RegionHashTable {
     /**
      * The actual hash table storing the head of each linked list of references.
      */
-    private Reference[] table;
+    private final Reference[] table;
 
     /**
      * The hash table's epoch.
      */
     private int epoch = 0;
 
-    private double resolutionX;
-    private double resolutionY;
+    private final double resolutionX;
+    private final double resolutionY;
 
     /**
      * Create a region hash with an x- and y-resolution and a minimum hash table

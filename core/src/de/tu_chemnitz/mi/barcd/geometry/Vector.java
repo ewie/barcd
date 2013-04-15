@@ -6,8 +6,8 @@ package de.tu_chemnitz.mi.barcd.geometry;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Vector {
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
 
     /**
      * @param x the x-component

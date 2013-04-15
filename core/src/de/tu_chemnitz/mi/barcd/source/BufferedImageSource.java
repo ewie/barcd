@@ -10,13 +10,13 @@ import de.tu_chemnitz.mi.barcd.provider.BufferedImageProvider;
 
 /**
  * An image source using a collection of {@link BufferedImage}.
- * 
+ *
  * Instances of this class cannot be persisted.
- * 
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class BufferedImageSource extends Source {
-    private Collection<BufferedImage> images;
+    private final Collection<BufferedImage> images;
 
     public BufferedImageSource(Collection<BufferedImage> images) {
         this.images = images;

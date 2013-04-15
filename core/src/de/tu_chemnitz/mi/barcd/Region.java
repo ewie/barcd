@@ -20,7 +20,7 @@ import de.tu_chemnitz.mi.barcd.geometry.Point;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Region {
-    private ConvexPolygon convexPolygon;
+    private final ConvexPolygon convexPolygon;
 
     private OrientedRectangle orientedRectangle;
 
@@ -28,7 +28,7 @@ public class Region {
 
     private Barcode barcode;
 
-    private double coverage;
+    private final double coverage;
 
     /**
      * Create a region from a collection of points.

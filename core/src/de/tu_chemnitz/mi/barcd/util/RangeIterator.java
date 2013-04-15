@@ -8,7 +8,7 @@ import java.util.Iterator;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class RangeIterator implements Iterator<Integer> {
-    private Range range;
+    private final Range range;
     private int index = 0;
 
     /**

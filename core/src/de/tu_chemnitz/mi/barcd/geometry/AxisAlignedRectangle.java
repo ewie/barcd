@@ -6,8 +6,8 @@ package de.tu_chemnitz.mi.barcd.geometry;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class AxisAlignedRectangle extends Rectangle {
-    private Point min;
-    private Point max;
+    private final Point min;
+    private final Point max;
 
     /**
      * Create an axis-aligned rectangle from a minimum and a maximum point.

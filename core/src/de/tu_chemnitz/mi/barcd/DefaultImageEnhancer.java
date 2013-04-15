@@ -8,7 +8,7 @@ import de.tu_chemnitz.mi.barcd.image.ImproveImage;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class DefaultImageEnhancer implements ImageEnhancer {
-    private ImproveImage improve = new ImproveImage();
+    private final ImproveImage improve = new ImproveImage();
 
     @Override
     public BufferedImage enhanceImage(BufferedImage image)

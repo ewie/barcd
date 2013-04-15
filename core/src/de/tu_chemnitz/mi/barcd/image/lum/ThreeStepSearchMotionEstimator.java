@@ -10,14 +10,14 @@ public class ThreeStepSearchMotionEstimator extends BlockMatchingMotionEstimator
     public ThreeStepSearchMotionEstimator(int blockSize) {
         super(blockSize);
     }
-    
+
     @Override
     public Vector processBlock(int x, int y, LuminanceImage image, LuminanceImage referenceImage) {
         int x0 = x;
         int y0 = y;
         int width = image.getWidth();
         int height = image.getHeight();
-        for (int size = this.getBlockSize(); size > 1; size /= 2) {
+        for (int size = getBlockSize(); size > 1; size /= 2) {
             int minCost = bdm(image, x, y, referenceImage, 0, 0);
             int dx = 0;
             int dy = 0;
@@ -42,7 +42,7 @@ public class ThreeStepSearchMotionEstimator extends BlockMatchingMotionEstimator
         }
         return new Vector(x - x0, y - y0);
     }
-    
+
     private int bdm(LuminanceImage image, int x, int y, LuminanceImage referenceImage, int dx, int dy) {
         int bdm = 0;
         for (int i = 0; i < getBlockSize(); ++i) {

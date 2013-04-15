@@ -13,7 +13,7 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public abstract class OpenCvFrameReader implements FrameReader {
-    protected OpenCVFrameGrabber frameGrabber;
+    protected final OpenCVFrameGrabber frameGrabber;
 
     protected OpenCvFrameReader(OpenCVFrameGrabber frameGrabber)
         throws FrameReaderException

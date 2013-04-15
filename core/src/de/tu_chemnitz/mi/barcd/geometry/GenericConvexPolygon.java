@@ -8,7 +8,7 @@ import java.util.List;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class GenericConvexPolygon extends ConvexPolygon {
-    private Point[] vertices;
+    private final Point[] vertices;
 
     /**
      * Create a convex polygon from some vertices.

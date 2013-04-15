@@ -19,21 +19,21 @@ public class LuminanceImageConverter {
             //    (r * 2126 + g * 7152 + b * 722) / 10000
             ;
         }
-        
+
         public int lum2rgb(int lum) {
             return 0xff000000 | (lum << 16) | (lum << 8) | lum;
         }
     }
-    
-    private ColorConverter converter;
-    
+
+    private final ColorConverter converter;
+
     /**
      * Construct an image converter using the default color converter.
      */
     public LuminanceImageConverter() {
         this(new ColorConverter());
     }
-    
+
     /**
      * @param converter a custom color converter (may override default
      *   conversion methods)
@@ -41,13 +41,13 @@ public class LuminanceImageConverter {
     public LuminanceImageConverter(ColorConverter converter) {
         this.converter = converter;
     }
-    
+
     /**
      * Convert a {@link LuminanceImage} to a true color {@link BufferedImage}
      * using {@link ColorConverter#lum2rgb(int)}.
-     * 
+     *
      * @param in the image to convert
-     * 
+     *
      * @return the {@link BufferedImage} with image type
      *   {@link BufferedImage#TYPE_INT_ARGB}
      */
@@ -66,13 +66,13 @@ public class LuminanceImageConverter {
         out.setRGB(0, 0, w, h, pixels, 0, w);
         return out;
     }
-    
+
     /**
      * Convert a {@link LuminanceImage} to a gray-scale {@link BufferedImage}
      * using {@link LuminanceImage#getIntensityAt(int, int)}.
-     * 
+     *
      * @param in the image to convert
-     * 
+     *
      * @return the {@link BufferedImage} with image type
      *   {@link BufferedImage#TYPE_BYTE_GRAY}
      */
@@ -91,13 +91,13 @@ public class LuminanceImageConverter {
         raster.setPixels(0, 0, w, h, pixels);
         return out;
     }
-    
+
     /**
      * Convert a {@link BufferedImage} to a {@link BufferedLuminanceImage} using
      * {@link ColorConverter#rgb2lum(int)}.
-     * 
+     *
      * @param in the image to convert
-     * 
+     *
      * @return the image representing the input's luminance
      */
     public LuminanceImage toLuminanceImage(BufferedImage in) {

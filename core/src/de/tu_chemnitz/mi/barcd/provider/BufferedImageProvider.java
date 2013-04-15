@@ -12,7 +12,7 @@ import de.tu_chemnitz.mi.barcd.ImageProviderException;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class BufferedImageProvider implements ImageProvider {
-    private Iterator<BufferedImage> images;
+    private final Iterator<BufferedImage> images;
 
     /**
      * @param images an iterator over all images

@@ -10,20 +10,20 @@ import de.tu_chemnitz.mi.barcd.video.OpenCvDeviceFrameReader;
 /**
  * An image source using a camera device addressed by its number (0 for the
  * first device, 1 for the second device, etc).
- * 
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class VideoDeviceSource extends Source {
-    private int deviceNumber;
-    
+    private final int deviceNumber;
+
     public VideoDeviceSource(int deviceNumber) {
         this.deviceNumber = deviceNumber;
     }
-    
+
     public int getDeviceNumber() {
         return deviceNumber;
     }
-    
+
     @Override
     public VideoImageProvider createImageProvider(int initialFrameNumber)
         throws ImageProviderException

@@ -10,8 +10,8 @@ package de.tu_chemnitz.mi.barcd.image;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class DilationOperator {
-    private int windowWidth;
-    private int windowHeight;
+    private final int windowWidth;
+    private final int windowHeight;
 
     /**
      * Create a square dilation operator with the given window width and height.

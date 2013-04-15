@@ -6,9 +6,9 @@ package de.tu_chemnitz.mi.barcd.geometry;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class OrientedRectangle extends Rectangle {
-    private Point origin;
-    private Vector width;
-    private Vector height;
+    private final Point origin;
+    private final Vector width;
+    private final Vector height;
 
     /**
      * Create an oriented rectangle from a vertex and two vectors enclosing a

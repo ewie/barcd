@@ -5,13 +5,13 @@ package de.tu_chemnitz.mi.barcd.geometry;
  */
 @Deprecated
 public class VectorField {
-    private int width;
+    private final int width;
 
-    private int height;
+    private final int height;
 
-    private int blockSize;
+    private final int blockSize;
 
-    private Vector[] vectors;
+    private final Vector[] vectors;
 
     public VectorField(int blockSize, int width, int height, Vector[] vectors) {
         this.width = width;

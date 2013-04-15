@@ -5,7 +5,7 @@ import de.tu_chemnitz.mi.barcd.image.lum.LuminanceImage;
 
 /**
  * A threshold selector using the mean of all pixel values.
- * 
+ *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 @Deprecated

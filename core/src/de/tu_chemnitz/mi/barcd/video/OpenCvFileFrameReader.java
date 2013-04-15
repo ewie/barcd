@@ -12,7 +12,7 @@ import com.googlecode.javacv.OpenCVFrameGrabber;
 public class OpenCvFileFrameReader extends OpenCvFrameReader
     implements SeekableFrameReader
 {
-    private URL url;
+    private final URL url;
 
     protected OpenCvFileFrameReader(URL url, OpenCVFrameGrabber frameGrabber)
         throws FrameReaderException
