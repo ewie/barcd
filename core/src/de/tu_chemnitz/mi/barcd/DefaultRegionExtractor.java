@@ -83,13 +83,15 @@ public class DefaultRegionExtractor implements RegionExtractor {
     @Override
     public Region[] extractRegions(BufferedImage image) {
         double scalingFactor = (double) image.getWidth() / PROCESSING_IMAGE_WIDTH;
-        image = scale.apply(image, PROCESSING_IMAGE_WIDTH);
-        int[] g = gradient(image.getData());
-        int[] s = segment(g, image.getWidth(), image.getHeight());
-        return regions(s, image.getWidth(), image.getHeight(), scalingFactor);
+        BufferedImage scaledImage = scale.apply(image, PROCESSING_IMAGE_WIDTH);
+        int width = scaledImage.getWidth();
+        int height = scaledImage.getHeight();
+        int[] g = extractEdges(scaledImage.getData());
+        int[] s = performSegmentation(g, width, height);
+        return createRegions(s, width, height, scalingFactor);
     }
 
-    private int[] gradient(Raster input) {
+    private int[] extractEdges(Raster input) {
         int width = input.getWidth();
         int height = input.getHeight();
 
@@ -116,7 +118,7 @@ public class DefaultRegionExtractor implements RegionExtractor {
         return pxy;
     }
 
-    private int[] segment(int[] in, int w, int h) {
+    private int[] performSegmentation(int[] in, int w, int h) {
         int[] p = dilate.apply(in, w, h);
 
         long mean = 0;
@@ -131,7 +133,7 @@ public class DefaultRegionExtractor implements RegionExtractor {
         return p;
     }
 
-    private Region[] regions(int[] input, int width, int height, double scalingFactor) {
+    private Region[] createRegions(int[] input, int width, int height, double scalingFactor) {
         ConnectedComponentLabeler ccl = new ConnectedComponentLabeler();
         int[] labels = ccl.process(input, width, height);
 
