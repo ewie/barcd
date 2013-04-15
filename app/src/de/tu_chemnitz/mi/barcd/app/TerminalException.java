@@ -5,20 +5,20 @@ package de.tu_chemnitz.mi.barcd.app;
  */
 public class TerminalException extends Exception {
     private static final long serialVersionUID = 1L;
-    
-    public TerminalException() {
-        super();
-    }
-    
-    public TerminalException(String message) {
-        super(message);
-    }
-    
-    public TerminalException(Throwable cause) {
-        super(cause);
-    }
-    
+
     public TerminalException(String message, Throwable cause) {
         super(message, cause);
+    }
+
+    public TerminalException(String message) {
+        this(message, null);
+    }
+
+    public TerminalException(Throwable cause) {
+        this(null, cause);
+    }
+
+    public TerminalException() {
+        this(null, null);
     }
 }

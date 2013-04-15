@@ -6,19 +6,19 @@ package de.tu_chemnitz.mi.barcd;
 public class ImageProviderException extends Exception {
     private static final long serialVersionUID = 1L;
 
-    public ImageProviderException() {
-        super();
-    }
-
-    public ImageProviderException(String message) {
-        super(message);
-    }
-
     public ImageProviderException(String message, Throwable cause) {
         super(message, cause);
     }
 
+    public ImageProviderException(String message) {
+        this(message, null);
+    }
+
     public ImageProviderException(Throwable cause) {
-        super(cause);
+        this(null, cause);
+    }
+
+    public ImageProviderException() {
+        this(null, null);
     }
 }

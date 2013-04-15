@@ -6,19 +6,19 @@ package de.tu_chemnitz.mi.barcd;
 public class ImageEnhancerException extends Exception {
     private static final long serialVersionUID = 1L;
 
-    public ImageEnhancerException() {
-        super();
-    }
-
-    public ImageEnhancerException(String message) {
-        super(message);
-    }
-
     public ImageEnhancerException(String message, Throwable cause) {
         super(message, cause);
     }
 
+    public ImageEnhancerException(String message) {
+        this(message, null);
+    }
+
     public ImageEnhancerException(Throwable cause) {
-        super(cause);
+        this(null, cause);
+    }
+
+    public ImageEnhancerException() {
+        this(null, null);
     }
 }
