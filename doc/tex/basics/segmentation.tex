@@ -45,22 +45,19 @@ Das Verfahren ermittelt den Schwellwert derart, dass dieser das Histogramm in zw
 Als Maß für das Gewicht einer Hälfte dient die Summe der absoluten Häufigkeiten aller Klassen der betrachteten Hälfte.
 Von der schwereren Häfte wird solange die äußere Klasse entfernt bis nur noch eine Klasse übrig ist, welche dem gesuchten Schwellwert entspricht.
 
-\subsection*{Varianten des Thresholding}
-Es existieren verschiedene Varianten der Anwendung das Schwellwertverfahrens.
-\todo[author=\dcauthornameewie]{ausführlicher}
+\subsection*{Anwendungsbereich des Thresholding}
+Die Berechnung und Anwendung eines Schwellwertes ist nicht auf das Gesamtbild beschränkt, sondern kann granularer gestaltet sein um z.B. ungleichmäßige Beleuchtung zu behandeln.
 
-\subsubsection*{Globales Thresholding}
+\subsubsection*{Statisches Thresholding}
 Der Schwellwert wird für das gesamte Bild einmalig berechnet und auf alle Bildpunkte angewandt.
-Die Verwendung eines einzelnen Schwellwertes für das gesamte Bild funkioniert nur sofern das Bild gleichmäßtig Belichtet ist.
+Die Verwendung eines einzelnen Schwellwertes für das gesamte Bild funkioniert nur sofern das Bild gleichmäßig belichtet ist \cite[Kap.~4.3]{davies2012}.
 Ansonsten kann es vorkommen, zu dunkle Bildteile, aufgrund zu geringer Belichtung, als Hintergrund zu klassifizieren da diese unterhalb des Schwellwertes liegen.
 
-\subsubsection*{Lokales Thresholding}
-Durch Unterteilung des Bildes in disjunkte Regionen und Ermittelung sowie Anwendung eines Schwellwertes pro Region, können die negativen Effekte des globalen Thresholding auf das Gesamtbild verwieden werden.
-Innerhalb einer Region können jene Effekte aber dennoch auftreten, wodurch es an den Regionsgrenzen zu unterschiedlichen Klassifikationen kommen kann.
-
 \subsubsection*{Dynamisches Thresholding}
-Mit dynamischen Tresholding ist es möglich einer ungleichmäßigen Beleuchtung eines Bildes besser entgegenzuwirken.
-Dazu wird für jeden Bildpunkt ein Schwellwert unter Betrachtung seiner Umgebenung ermittelt.
+Adaptives Thresholding ermöglicht es Bilder mit ungleichmäßiger Beleuchtung besser zu Segmentieren.
+Eine Möglichkeit ist es das Bild in Rechtecke zu unterteilen und auf jede Region das statische Thresholding anzuwenden \cite[Kap.~4.4,~S.~88--89]{davies2012}.
+Dabei kann es an den Regionsgrenzen zu unterschiedlichen Klassifikationen kommen.
+Ein besseres Verfahren stellt die Berechnung eines individuellen Schwellwertes für jeden Bildpunkt, unter Betrachtung seiner Umgebung, dar \cite[Kap.~4.4.2]{davies2012}.
 
 \begin{figure}[H]
   \label{fig:segmentation}
@@ -73,17 +70,17 @@ Dazu wird für jeden Bildpunkt ein Schwellwert unter Betrachtung seiner Umgebenu
   \begin{subfigure}{0.49\linewidth}
     \centering
     \includegraphics[width=\linewidth]{img/basics/segmentation/global}
-    \caption{global}
+    \caption{statisch}
   \end{subfigure}
   \begin{subfigure}{0.49\linewidth}
     \centering
     \includegraphics[width=\linewidth]{img/basics/segmentation/local}
-    \caption{lokal (Einteilung in 100$\times$100)}
+    \caption{dynamisc, Einteilung in 100$\times$100 Pixel große Regionen}
   \end{subfigure}
   \begin{subfigure}{0.49\linewidth}
     \centering
     \includegraphics[width=\linewidth]{img/basics/segmentation/dynamic}
-    \caption{dynamisch (3$\times$3 Nachbarschaft)}
+    \caption{dynamisc, Betrachtung einer 3$\times$3 Nachbarschaft}
   \end{subfigure}
   \caption[Vergleich von Thresholding Varianten]{Vergleich von Thresholding Varianten für Text bei ungleichmäßiger Belichtung. Als Schwellwert dient jeweils der oben beschriebene Mittelwert.}
 \end{figure}
