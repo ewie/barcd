@@ -20,7 +20,7 @@ public class TemplatedUrlSequence implements Iterable<URL> {
     private final int padding;
 
     /**
-     * The format string used to construct the filenames {@link String#format}.
+     * The format string used to construct the URLs {@link String#format}.
      */
     private final String format;
 
