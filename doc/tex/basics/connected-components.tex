@@ -34,3 +34,23 @@ Besitzt das Pixel hingegen den Wert mindestens eines Nachbarn so wird das Label 
 Besitzen mehrere Nachbarn den gleichen Wert aber unterschiedliche Label, so werden diese Label als äquivalent markiert.
 Die erste Bildzeile und -spalte müssen gesondert initialisert werden, da diese keine Nachbarn oberhalb bzw. links besitzen.
 Sind alle Pixel verarbeitet, müssen Labeläquivalenzen aufgelöst werden, sodass Pixeln mit äquivalenten Label ein gemeinsames Label zugewiesen werden kann. Zum Erfassen der Äquivalenzen eignet sich die \emph{UnionFind} Datenstruktur.
+%
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[t]{0.327\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{img/basics/connected-compontents/labeling-1}
+    \caption{Ausgangsgrafik}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.327\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{img/basics/connected-compontents/labeling-2}
+    \caption{Label zuweisen und Äquivalenzen ($\rightarrow$) aufzeichnen}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.327\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{img/basics/connected-compontents/labeling-3}
+    \caption{Äquivalenzen auflösen}
+  \end{subfigure}
+  \caption[Ablauf Connected Components Labeling]{Ablauf des Connected Components Labeling mit 4-Konnektivität.}
+\end{figure}
