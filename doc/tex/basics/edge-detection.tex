@@ -2,7 +2,7 @@
 \writtenby{\dcauthornameewie}%
 Kanten in einem Bild zeigen sich durch abrupte Helligkeitsänderungen zwischen benachbarten Pixeln.
 Um die Helligkeitsänderung für jedes Pixel zu bestimmen muss der Gradient der Helligkeitsfunktion $\nabla I$ eines Bildes berechnet werden.
-Das gängigste Verfahren zur Bestimmung des Gradienten ist dessen Annäherung durch Faltung des Bildes $I$ mit einer Faltungsmatrix $K$ (auch genannt Kernel).
+Das gängigste Verfahren zur Bestimmung des Gradienten ist dessen Annäherung durch Faltung des Bildes $I$ mit einer Faltungsmatrix $K$ (in diesem Zusammenhang auch Kantenoperator genannt).
   \[ (I\circ K)(x,y) =
        \sum_{(u,v)\in m\times n}
        I\left(x+u-\frac{m}{2},y+v-\frac{n}{2}\right)K_{u,v}
@@ -10,52 +10,70 @@ Das gängigste Verfahren zur Bestimmung des Gradienten ist dessen Annäherung du
        \quad m,n \in\mathbb{N} \]
 Die Berechnung eines einzelnen Gradientenbildes reicht jedoch nicht aus um alle Kanten eines Bildes zu erfassen, da die Faltungsmatrix nur Helligkeitsänderungen entlang einer Dimension erfasst.
 Deshalb ist ein zweites Gradientenbild unter Verwendung einer Faltungsmatrix, die Helligkeitsänderungen entlang einer zweiten Dimension erfasst, erforderlich.
-Für eine zweite Dimension orthogonal zu ersten eignet sich die Transponierte der ersteren Faltungsmatrix.
-Der Stärke des Gradienten der Helligkeitsfunktion in einem Bildpunkt ergibt sich aus folgender Formel.
+Für eine zweite Dimension orthogonal zu ersten ist es ausreichend die erstere Faltungsmatrix um $90^\circ$ zu drehen.
+Der Stärke des Gradienten der Helligkeitsfunktion in einem Bildpunkt ergibt sich aus der Formel
   \[ \nabla I(x,y) = \sqrt{(I \circ K_X)(x,y)^2 + (I \circ K_Y)(x,y)^2} \]
+wobei die einfachere Formel
+  \[ \nabla I(x,y) = |(I \circ K_X)(x,y)| + |(I \circ K_Y)(x,y)| \]
+ebenfalls eine gute Annäherung bietet \cite[Kap.~5.2]{davies2012}.
 
 \subsection*{Roberts-Operator}
-Der \surname{Roberts}-Operator \cite{DBLP:books/garland/Roberts63} war eine der ersten Faltungsmatrizen die zur Kantenerkennung in technischen Strichzeichnungen verwendet wurde.
+Der Ursprung des \surname{Roberts}-Operators \cite[S.~26]{DBLP:books/garland/Roberts63} ist die Kantenerkennung in technischen Strichzeichnungen.
 Im vergleich zu anderen Operatoren erzeugt er dünnere Kanten.
 Hat dadurch aber den Vorteil Bildrauschen weniger stark als Kanten zu erfassen.
-Da die Matrix $K_X$ identisch mit ihrer Transponierten ist vertauscht man die Spalten von $K_X$ um somit $K_Y$ zu erhalten.
   \[ K_X = \begin{vmatrix}
-       1 &  0 \\
-       0 & -1
-     \end{vmatrix}
-     \quad K_Y = \begin{vmatrix}
         0 & 1 \\
        -1 & 0
+     \end{vmatrix}
+     \quad
+     K_Y = \begin{vmatrix}
+       1 &  0 \\
+       0 & -1
      \end{vmatrix} \]
 
 \subsection*{Prewitt-Operator}
 Der \surname{Prewitt}-Operator \cite[S.~108]{prewitt1070} erzeugt bereits dickere Kanten, und ist noch nicht so anfällig für Bildrauschen.
   \[ K_X = \begin{vmatrix}
-       1 & 0 & -1 \\
-       1 & 0 & -1 \\
-       1 & 0 & -1
+       -1 & 0 & 1 \\
+       -1 & 0 & 1 \\
+       -1 & 0 & 1
      \end{vmatrix}
-     \quad K_Y = K_X^\top \]
+     \quad
+     K_Y = \begin{vmatrix}
+        1 &  1 &  1 \\
+        0 &  0 &  0 \\
+       -1 & -1 & -1
+     \end{vmatrix} \]
 
 \subsection*{Sobel-Operator}
-Der \surname{Sobel}-Operator unterscheidet sich kaum vom \surname{Prewitt}-Operator.
+Der \surname{Sobel}-Operator \cite[Kap.~5.2]{davies2012} unterscheidet sich kaum vom \surname{Prewitt}-Operator.
 Jedoch ist er bereits empfindlicher gegenüber Rauschen.
   \[ K_X = \begin{vmatrix}
-       1 & 0 & -1 \\
-       2 & 0 & -2 \\
-       1 & 0 & -1
+       -1 & 0 & 1 \\
+       -2 & 0 & 2 \\
+       -1 & 0 & 1
      \end{vmatrix}
-     \quad K_Y = K_X^\top \]
+     \quad
+     K_Y = \begin{vmatrix}
+        1 &  2 &  1 \\
+        0 &  0 &  0 \\
+       -1 & -2 & -1
+     \end{vmatrix} \]
 
 \subsection*{Scharr-Operator}
-Der \surname{Scharr}-Operator \cite[9.3]{scharr2000} ist eine Weiterentwicklung des \surname{Sobel}-Operators mit besserer Rotationssymmetrie.
+Der \surname{Scharr}-Operator \cite[Kap.~9.3]{scharr2000} ist eine Weiterentwicklung des surname{Sobel}-Operators mit besserer Rotationssymmetrie.
 Erfasst Bildrauschen jedoch noch stärker als der \surname{Sobel}-Operator.
   \[ K_X = \begin{vmatrix}
-        3 & 0 & -3 \\
-       10 & 0 & -10 \\
-        3 & 0 & -3
+        -3 & 0 &  3 \\
+       -10 & 0 & 10 \\
+        -3 & 0 &  3
      \end{vmatrix}
-     \quad K_Y = K_X^\top \]
+     \quad
+     K_Y = \begin{vmatrix}
+        3 & 10 &  3 \\
+        0 &  0 &  0 \\
+       -3 & 10 & -3
+     \end{vmatrix} \]
 
 \begin{figure}[H]
   \label{fig:edge-detection}
