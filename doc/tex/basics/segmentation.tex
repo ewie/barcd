@@ -1,18 +1,20 @@
 \section{Segmentierung}
 \writtenby{\dcauthornameewie}%
 Die Segmentierung findet Anwendung bei der Klassifizierung von Bildelementen.
-Dabei wird jedes Pixel anhand eines Kriteriums einer Klasse zugeordnet.
-Ein simples Verfahren ist dabei die Verwendung eines Schwellwertes, das sogenannte \emph{Thresholding}.
+Jedes Pixel wird dabei anhand eines Kriteriums einer Klasse zugeordnet.
+Ein simples Verfahren stellt das Thresholding dar.
+Dazu wird ein Schwellwert verwendet, der den Wertebereich des Klassifizierungskriteriums teilt, und somit zwei Klassen erzeugt.
+Im Allgemeinen können $n$ Klassen unter Verwendung von $n-1$ Schwellwerten definiert werden.
 %
-  \[ C_I^{(n)}(x,y) = \begin{cases}[c@{\quad}r@{}c@{}l@{}]
-       0      &              & \;I(x,y) & \;<    t_1     \\
-       1      & t_1     \leq & \;I(x,y) & \;<    t_2     \\
-       \vdots &              &   \vdots &                \\
-       n-2    & t_{n-2} \leq & \;I(x,y) & \;<    t_{n-1} \\
-       n-1    &              & \;I(x,y) & \;\geq t_{n-1}
-     \end{cases} \]
+%  \[ C_I^{(n)}(x,y) = \begin{cases}[c@{\quad}r@{}c@{}l@{}]
+%       0      &              & \;I(x,y) & \;<    t_1     \\
+%       1      & t_1     \leq & \;I(x,y) & \;<    t_2     \\
+%       \vdots &              &   \vdots &                \\
+%       n-2    & t_{n-2} \leq & \;I(x,y) & \;<    t_{n-1} \\
+%       n-1    &              & \;I(x,y) & \;\geq t_{n-1}
+%     \end{cases} \]
 %
-Eine der häufigsten Anwendungen ist die Einteilung eines Bildes in zwei Klassen, z.B. Vorder- und Hintergrund.
+Wobei die häufigste Anwendung die Einteilung eines Bildes in zwei Klassen, z.B. Vorder- und Hintergrund, ist.
 %
   \[ C_I^{(2)}(x,y) = \begin{cases}
        0 & I(x,y) <    t \\
