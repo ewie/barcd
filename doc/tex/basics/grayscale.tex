@@ -13,7 +13,9 @@ Liegen die Bilddaten in YCbCr vor, da z.B. mit Videos in MPEG gearbeitet wird, b
 
 Liegt jedoch RGB vor, so muss die Helligkeit explizit ermittelt werden.
 Zum einen kann $Y$ nach der Formel folgender Formel \cite[2.5.1]{itu/rec/601} berechnet werden.
-  \[ Y = K_R R + (1 - K_R - K_B) G + K_B B \]
+\begin{equation}
+  Y = K_R R + (1 - K_R - K_B) G + K_B B
+\end{equation}
 Die Faktoren $K_R$ und $K_B$ sind in den beiden Standards ITU-R BT.601 (SDTV) und ITU-R BT.709 (HDTV) definiert.
 %
 \begin{itemize}
@@ -23,7 +25,11 @@ Die Faktoren $K_R$ und $K_B$ sind in den beiden Standards ITU-R BT.601 (SDTV) un
 %
 Soll die Konvertierung aber möglichst schnell erfolgen wird auch auf eine einfachere Variante zurückgegriffen\footnote{\href{https://code.google.com/p/zxing/source/browse/trunk/core/src/com/google/zxing/RGBLuminanceSource.java?spec=svn2633&r=2394\#57}{RGBLuminanceSource.java r2394 L57 (code.google.com/p/zxing)}}, welche die Komponente $G$, im Vergleich zu $R$ und $B$, doppelt gewichtet.
 Diese Gewichtung erfolgt auch in allen Digitalkameras deren CCD-Sensor als \textsc{Bayer}-Matrix aufgebaut ist.
-  \[ Y = \frac{1}{4} R + \frac{1}{2} G + \frac{1}{4}B \]
+\begin{equation}
+  Y = \frac{1}{4} R + \frac{1}{2} G + \frac{1}{4}B
+\end{equation}
 Liegen die Werte R, G, und B als positive ganze Zahlen vor, kann die Formel durch 3 Additionen sowie 1 Rechtsshift im Binärsystem umgesetzt werden, da die Faktoren allesamt 2er-Potenzen sind.
 Siehe Anhang \ref{proof-division} für den Beweis.
-  \[ Y = (R + G + G + B) >\!\!> 2 \]
+\begin{equation}
+  Y = (R + G + G + B) >\!\!> 2
+\end{equation}

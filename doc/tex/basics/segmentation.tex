@@ -5,22 +5,22 @@ Jedes Pixel wird dabei anhand eines Kriteriums einer Klasse zugeordnet.
 Ein simples Verfahren stellt das Thresholding dar.
 Dazu wird ein Schwellwert verwendet, der den Wertebereich des Klassifizierungskriteriums teilt, und somit zwei Klassen erzeugt.
 Im Allgemeinen können $n$ Klassen unter Verwendung von $n-1$ Schwellwerten definiert werden.
-%
-%  \[ C_I^{(n)}(x,y) = \begin{cases}[c@{\quad}r@{}c@{}l@{}]
-%       0      &              & \;I(x,y) & \;<    t_1     \\
-%       1      & t_1     \leq & \;I(x,y) & \;<    t_2     \\
-%       \vdots &              &   \vdots &                \\
-%       n-2    & t_{n-2} \leq & \;I(x,y) & \;<    t_{n-1} \\
-%       n-1    &              & \;I(x,y) & \;\geq t_{n-1}
-%     \end{cases} \]
-%
+%\begin{equation}
+%  C_I^{(n)}(x,y) = \begin{cases}[c@{\quad}r@{}c@{}l@{}]
+%    0      &              & \;I(x,y) & \;<    t_1     \\
+%    1      & t_1     \leq & \;I(x,y) & \;<    t_2     \\
+%    \vdots &              &   \vdots &                \\
+%    n-2    & t_{n-2} \leq & \;I(x,y) & \;<    t_{n-1} \\
+%    n-1    &              & \;I(x,y) & \;\geq t_{n-1}
+%  \end{cases}
+%\end{equation}
 Wobei die häufigste Anwendung die Einteilung eines Bildes in zwei Klassen, z.B. Vorder- und Hintergrund, ist.
-%
-  \[ C_I^{(2)}(x,y) = \begin{cases}
-       0 & I(x,y) <    t \\
-       1 & I(x,y) \geq t
-     \end{cases} \]
-%
+\begin{equation}
+  C_I^{(2)}(x,y) = \begin{cases}
+    0 & I(x,y) <    t \\
+    1 & I(x,y) \geq t
+  \end{cases}
+\end{equation}
 Die Berechnung des Schwellwerts $t$ ist dabei entscheidend für die Qualität der Segmentierung, d.h. dass Bildelemente korrekt klassifiziert werden.
 
 \subsection*{Schwellwertbestimmung}
@@ -31,7 +31,9 @@ Diese machen sich zum Teil bestimmte Eigenschaften eines Bildes zu nutze und sin
 Nutzt den Mittelwert der Helligkeit aller Bildpunkte als Schwellwert.
 Der ermittelte Schwellwert ist sinnvoll, wenn sich Bildelemente durch ihre Helligkeits bereits deutlich vom Hintergrund abheben.
 Im Allgemeinen ist der Mittelwert jedoch nicht optimal da dieser die Helligkeitsverteilung der Bildpunkte nicht berücksichtigt.
-  \[ t = \frac{1}{N} \sum_{x,y} I(x,y), \quad N = \sum_{x,y} 1 \]
+\begin{equation}
+  t = \frac{1}{N} \sum_{x,y} I(x,y), \quad N = \sum_{x,y} 1
+\end{equation}
 
 \subsubsection*{Iteratives Verfahren}
 \ldots

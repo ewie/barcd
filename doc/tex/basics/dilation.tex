@@ -5,7 +5,9 @@
 Die Dilatation ist eine morphologische Operation um Strukturen eines Bildes zu vergrößern.
 Bei die Dilation eines Grauwertbildes wird jedem Pixel der Maximalwert aller Pixel innerhalb einer gewissen Umgebung zugewiesen \cite[3.5]{steinmueller2008}.
 Zur Beschreibung der Umgebung dient ein Strukturelement $X$ fester Größe und Form (z.B. ein 3$\times$3 Quadrat), welches mit seinem Mittelpunkt $(0,0)$ über dem betrachteten Pixel platziert wird.
-  \[ (I\oplus X)(x,y)= \max \left\{ I(x+u,y+v) \;\middle|\; (u,v) \in X \right\} \quad X \subseteq \mathbb{Z}^2 \]
+\begin{equation}
+  (I\oplus X)(x,y)= \max \left\{ I(x+u,y+v) \;\middle|\; (u,v) \in X \right\} \quad X \subseteq \mathbb{Z}^2
+\end{equation}
 Eine Dilation findet Anwendung um Bildstrukturen zu verstärken und zusammenzufassen \cite[3.1]{steinmueller2008}.
 Es können aber nur Bildstrukturen zusammengefasst werden sofern das Strukturelement groß genug ist um Zwischenräume zu überbrücken.
 
@@ -20,7 +22,7 @@ Es können aber nur Bildstrukturen zusammengefasst werden sofern das Strukturele
   \begin{subfigure}{0.49\linewidth}
     \centering
     \includegraphics[width=0.5\textwidth]{img/basics/dilation/after}
-    \caption{diliert mit einem 3$\times$3-Strukturelement}
+    \caption{Dilation mit einem 3$\times$3-Strukturelement}
   \end{subfigure}
   \caption{Beispiel einer Dilation eines Grauwertbildes}
 \end{figure}
