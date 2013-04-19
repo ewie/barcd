@@ -1,51 +1,47 @@
 \chapter{Auffinden und Extrahieren der Barcodekandidaten}
 \writtenby{\dcauthornameewie}%
-Um Regionen mit potentiellen Barcodes zu ermitteln machen wir uns den Umstand zu Nutze, dass lesbare Barcodes einen relativ hohen Kontrast aufweisen und sich in dieser Hinsicht von deren Umgebung abheben.
+Um maschinell lesbar zu sein, zeichnen sich Barcodes durch einen, im Vergleich zur ihrer Umgebung, hohen Helligkeitskontrast aus.
+Das im Folgenden beschriebene Verfahren macht sich diesen Umstand zu nutze um Bildregionen zu identifizieren, die mit höherer Wahrscheinlichkeit Barcodes enthalten.
+Das Verfahren arbeitet mit einem Graustufenbild \autoref{sec:grayscaling}, das die Helligkeit der Pixel kodiert.
 
-\begin{enumerate}[(i)]
-\item \textbf{Graustufen}
-\todo[inline,author=\dcauthornameewie]{Konvertierung erfolgt durch Zeichnen des Bildes in ein \texttt{BufferedImage} mit ColorModel \texttt{TYPE\_BYTE\_GRAY} (schnell).
-Jedoch ohne Kenntnis der zu Grunde liegenden Formel zur Berechnung des Grauwertes.}
+\begin{enumerate}[(1)]
+\item \textbf{Kantenbild bestimmen}
+Das Kantenbild wird gemäß \autoref{sec:edge-detection} ermittelt.
+Der \textsc{Roberts}-Operator erweist sich am geeignetsten da er Bildrauschen weniger stark erfasst als z.B. der \textsc{Sobel}-Operator.
 
-\item \textbf{Kantenbild bestimmen} Das Kantenbild $I_{edge}$ ergibt sich aus der pixelweisen Addition der absoluten Werte zweier Gradientenbilder (in horizontaler und vertikaler Richtung). 
-Die beiden Gradientenbilder werden durch Faltung mit dem \textsc{Roberts}-Operator berechnet.
-  \[ I_{edge}(x,y) = \big|(I_{lum} \circ K_X)(x,y)\big| + \big|(I_{lum} \circ K_Y)(x,y)\big| \]
-Wir verwenden den Roberts-Operator, da dieser sich für unser Problem als ideal erwiesen hat.
-\todo[author=\dcauthornameewie]{näher erläutern}
+\item \textbf{Kanten verstärken}
+Die Kanten werden mit einem $5\times5$ Strukturelement mittels Dilation verstärkt.
+Dadurch wird erreicht, dass nah beieinander liegende Kanten (wie es bei Strichcodes der Fall ist) eine möglichst geschloßene Fläche bilden.
+Hierbei ist die Wahl der Größe des Strukturelements entscheidend.
+Ist es zu klein, bleiben zu größe Löcher übrig.
+Ist es zu groß kann es vorkommen, dass Barcodes mit geringem Abstand zueinander zu einer Fläsche verschmelzen (trotz vorhandener Ruhezone).
 
-\item \textbf{Kanten verstärken} Die Kanten werden mit einem $5\times5$ Strukturelement mittels Dilation verstärkt.
-    \[ I_{edge}^\bullet = I_{edge} \oplus D, \quad D = [-2,2]\times[-2,2] \]
+\item \textbf{Segmentierung}
+Die Segmentierung erfolgt mittels Thresholding.
+Als Schwellwert dient der Mittelwert der Helligkeit aller Bildpunkte.
+Die Verwendung des Mittelwertes ist ideal, da sich Kantenpixel durch ihren Gradienten bereits deutlich vom Hintergrund abzeichnen.
+Das Resultat ist ein Binärbild mit Hintergrund in schwarz (0\%) und Bildelementen in weiß (100\%).
 
-\item \textbf{Segmentierung} Das Kantenbild wird anschließend segmentiert um jedes Pixel entweder dem Vordergrund (Kanten) oder dem Hintergrund zuzuordnen.
-Wir nutzen dazu das Schwellwertverfahren.
-Als Schwellwert \( t \) dient die mittlere Helligkeit aller Pixel.
-  \[ I_{bin}(x,y) = \begin{cases}
-       0   & I_{edge}^\bullet(x,y) \leq t \\
-       255 & I_{edge}^\bullet(x,y) > t
-     \end{cases} \]
+\item \textbf{Komponenten extrahieren}
+Wie in \autoref{sec:connected-components} beschrieben, werden die zusammenhängenden Komponenten der Bildelemente extrahiert.
+Punktmengen stellen die resultierenden Komponenten dar.
 
-\item \textbf{Komponenten extrahieren} Um alle zusammenhängenden Komponente aus $I_{bin}$ zu extrahieren wenden wir das \textit{connected-component labeling} an.
-Dabei behandeln wir $I_{bin}(x,y) = 0$ als Hintergrund welcher als eine einzige Komponente mit Label $0$ erfasst wird.
-Dadurch kann der Hintergrund leicht verworfen werden, da er für die weitere Verarbeitung nicht von belang ist.
-
-\item \textbf{Regionen klassifizieren} Die extrahierten Komponenten beschreiben bisher nur Bildelemente mit erhöhtem Kontrast.
+\item \textbf{Regionen klassifizieren}
+Die extrahierten Komponenten beschreiben bisher nur Bildelemente mit erhöhtem Kontrast.
 Darunter fallen, neben den erwünschten Barcodes, auch Elemente wie z.B. Schrift und Symbole.
-Um alle potentiellen Barcodes auszuwählen müssen wir alle Komponente herausfiltern welche nicht als Barcode in Frage kommen.
-Dazu berechnen wir für jede Komponente deren konvexe Hülle über den Koordinaten der entsprechenden Pixel.
+Um alle potentiellen Barcodes auszuwählen sind alle Komponente, die nicht als Barcode in Frage kommen, herauszufiltern.
 
-Jetzt können wir für jede Region den Deckungsgrad $\gamma$ definieren, d.h. welchen Anteil die Fläche einer Komponente, d.h. die Anzahl der enthaltenen Pixel, an der Fläche $A$ des Polygons \cite{braden1986} besitzt, das durch die konvexe Hülle beschrieben wird.
-  \begin{align*}
-    \gamma &= \frac{|C|}{A} \in [0,1]
-           & C~\hat=~\text{Punktmenge einer Komponente} \\
-         A &= \frac{1}{2} \sum_{i=0}^{n-1}{\hat x_i (\hat y_{i+1} - \hat y_{i-1})}
-           & \hat z_i = z_{i \bmod n}
-  \end{align*}
+Es hat sich gezeigt, dass Regionen, denen Barcodes entsprechen, sich dadurch auszeichnen, dass deren Komponenten deutlich geschloßener sind (d.h. weniger Löcher besitzen) als andere falsch-positive Regionen und deren Flächen besser abdecken.
+Als Maß für die Abdeckung~$\gamma$ dient das Verhältnis der Anzahl der Pixel einer Komponente~$C$ und der Fläche~$A$ \cite{braden1986} ihrer konvexen Hülle.
+\begin{align}
+  \gamma &= \frac{|C|}{A} \in [0,1] \\
+       A &= \frac{1}{2} \sum_{i=0}^{n-1}{\hat x_i (\hat y_{i+1} - \hat y_{i-1})}
+         & \hat z_i = z_{i \bmod n}
+\end{align}
+Der Wertebereich $\gamma\in[0,1]$ ergibt sich aus der Definition der konvexen Hülle, dass diese alle Punkte einschließt über denen sie konstruiert ist.
 
-\begin{itemize}
-  \item Minimum Area Enclosing Rectangle
-  \item Axis Aligned Bounding Rectangle
-\end{itemize}
-
-\todo[author=\dcauthornameewie]{weitere Maße}
-
+Neben der Abdeckung ist die Größe einer Region sinnvoll um Regionen ausschließen zu können die zu klein sind um einen lesbaren Barcode zu enthalten.
+Unter der Annahme, dass Barcodes rechteckig sind (ShotCode stellt dabei eine Außnahme dar), ist es möglich Breite und Höhe über ein, die konvexe Hülle umschließendes, Rechteck mit minimaler Fläche zu bestimmen.
+Dieses Rechteck, auch "`minimum area enclosing rectangle"' genannt, lässt sich mittels Rotating Calipers berechnen.
+Die Berechnung dieses Rechtecks macht es zudem möglich die Orientierung des Barcodes zu ermitteln, vorausgesetzt dass die Breite eines Barcodes größer als seine Höhe ist.
 \end{enumerate}
