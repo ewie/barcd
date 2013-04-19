@@ -1,0 +1,41 @@
+\section{Extrahieren der Regionen und Barcodes}
+\writtenby{\dcauthornameewie}%
+%
+Die Extrahierung der Regionen und Barcodes bildet das Kernstück dieser Arbeit.
+Das Verfahren besteht aus 3 Schritten.
+%
+\begin{enumerate}[(1)]
+\item Regionen mit potentiellen Barcodes finden.
+\item Jede gefundene Region bildtechnisch aufbereiten und den eventuellen Barcode lesen.
+\item Alle lesbaren Barcodes im Ausgangsbild lesen.
+Dies ermöglicht es, in Schritt~(1) nicht erfasste, Barcodes mit ins Ergebnis einzubeziehen.
+\end{enumerate}
+%
+Zum besseren Verständnis sei im Folgenden der Ablauf in Form eines Pseudocodes gegeben.
+%
+\vspace{1em}
+\hrule
+\vspace{0.5em}
+\begin{algorithmic}
+\Require Graustufenbild $I$
+\Ensure Menge $X$ mit Barcode-Region-Paaren
+\State $X\gets\varnothing$
+\State $R\gets FindCandidateRegions(I)$
+\ForAll {$r\in R$}
+  \State $I_r\gets GetRegionImage(I,r)$
+  \State $I_r\gets ImproveImage(I_r)$
+  \State $b\gets ReadBarcode(I_r)$
+  \State $X\gets X\cup \{(b,r)\}$
+\EndFor
+\State $B\gets ReadMultipleBarcodes(I)$
+\ForAll {$b\in B$}
+  \If {$b\notin\{b'|(b',r')\in X\}$}
+      \Comment {wenn $b$ noch nicht Teil der Ergebnismenge}
+    \State $X\gets X\cup \{(b,\varnothing)\}$
+  \EndIf
+\EndFor
+\State\Return $X$
+\end{algorithmic}
+\vspace{0.5em}
+\hrule
+\vspace{1em}
