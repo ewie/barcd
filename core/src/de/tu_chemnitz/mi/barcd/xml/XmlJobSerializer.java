@@ -96,7 +96,7 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
     {
         ImageCollectionSourceElement ie = elements.createImageCollectionSourceElement();
         List<ResourceElement> fes = ie.getImage();
-        for (URL f : source.getUrlCollection()) {
+        for (URL f : source.getUrls()) {
             fes.add(createResourceElement(f));
         }
         return ie;
@@ -105,7 +105,7 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
     private ImageSequenceSourceElement createImageSequenceSourceElement(ImageSequenceSource source)
         throws XmlSerializerException
     {
-        TemplatedUrlSequence tus = source.getSequence();
+        TemplatedUrlSequence tus = source.getUrlSequence();
 
         UrlTemplateElement ute = elements.createUrlTemplateElement();
         URL url = relativizeUrl(tus.getTemplate());

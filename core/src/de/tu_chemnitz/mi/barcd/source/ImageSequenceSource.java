@@ -18,7 +18,7 @@ public class ImageSequenceSource extends Source {
         this.sequence = sequence;
     }
 
-    public TemplatedUrlSequence getSequence() {
+    public TemplatedUrlSequence getUrlSequence() {
         return sequence;
     }
 

@@ -21,7 +21,7 @@ public class ImageCollectionSource extends Source {
         this.urls = urls;
     }
 
-    public Collection<URL> getUrlCollection() {
+    public Collection<URL> getUrls() {
         return urls;
     }
 
