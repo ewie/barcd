@@ -10,10 +10,6 @@ import de.tu_chemnitz.mi.barcd.util.RegionHashTable;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class Extractor {
-    public static interface FrameHandler {
-        public void handleFrame(Frame frame, BufferedImage image);
-    }
-
     private final Job job;
 
     private final ImageProvider imageProvider;

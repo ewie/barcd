@@ -19,9 +19,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import de.tu_chemnitz.mi.barcd.Extractor;
-import de.tu_chemnitz.mi.barcd.Extractor.FrameHandler;
 import de.tu_chemnitz.mi.barcd.ExtractorException;
 import de.tu_chemnitz.mi.barcd.Frame;
+import de.tu_chemnitz.mi.barcd.FrameHandler;
 import de.tu_chemnitz.mi.barcd.Job;
 import de.tu_chemnitz.mi.barcd.Region;
 import de.tu_chemnitz.mi.barcd.app.Terminal.Command;
