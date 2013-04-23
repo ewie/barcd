@@ -18,13 +18,13 @@ import com.google.zxing.multi.MultipleBarcodeReader;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 
 /**
- * A barcode decoder using ZXing.
+ * A barcode reader using ZXing.
  *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  *
  * @see <a href="http://code.google.com/p/zxing">ZXing</a>
  */
-public class ZxingBarcodeDecoder implements Decoder {
+public class DefaultBarcodeReader implements BarcodeReader {
     private static final EnumMap<BarcodeFormat, BarcodeType> format2type;
 
     private final MultiFormatReader multiFormatReader = new MultiFormatReader();
@@ -33,7 +33,7 @@ public class ZxingBarcodeDecoder implements Decoder {
         new GenericMultipleBarcodeReader(multiFormatReader);
 
     @Override
-    public Barcode decode(BufferedImage image) {
+    public Barcode read(BufferedImage image) {
         BinaryBitmap bitmap = createBitmap(image);
         Result result;
         try {
@@ -48,7 +48,7 @@ public class ZxingBarcodeDecoder implements Decoder {
     }
 
     @Override
-    public Barcode[] decodeMultiple(BufferedImage image) {
+    public Barcode[] readMultiple(BufferedImage image) {
         BinaryBitmap bitmap = createBitmap(image);
         Result[] results;
         try {

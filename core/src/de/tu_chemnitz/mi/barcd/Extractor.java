@@ -26,7 +26,7 @@ public class Extractor {
 
     private final RegionHashTable regionHashTable = new RegionHashTable(10, 400);
 
-    private Decoder decoder = new ZxingBarcodeDecoder();
+    private BarcodeReader reader = new DefaultBarcodeReader();
 
     private Grayscaler grayscaler = new DefaultGrayscaler();
 
@@ -83,12 +83,12 @@ public class Extractor {
     }
 
     /**
-     * Set the barcode decoder.
+     * Set the barcode reader.
      *
-     * @param decoder
+     * @param reader
      */
-    public void setDecoder(Decoder decoder) {
-        this.decoder = decoder;
+    public void setBarcodeReader(BarcodeReader reader) {
+        this.reader = reader;
     }
 
     /**
@@ -175,7 +175,7 @@ public class Extractor {
                     continue;
                 }
 
-                Barcode barcode = decoder.decode(enhanced);
+                Barcode barcode = reader.read(enhanced);
 
                 if (barcode != null) {
                     region.setBarcode(barcode);
