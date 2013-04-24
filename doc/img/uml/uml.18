@@ -1,0 +1,58 @@
+%!PS
+%%BoundingBox: -1 -33 173 1 
+%%HiResBoundingBox: -0.25 -32.75916 172.39943 0.25 
+%%Creator: MetaPost 1.208
+%%CreationDate: 2013.04.24:2312
+%%Pages: 1
+%*Font: ptmr8r 9.96265 9.96265 20:80eafde07f5fffb57fcfbfc
+%%BeginProlog
+%%EndProlog
+%%Page: 1 1
+ 0.7 0.7 0.7 setrgbcolor
+newpath 1 -1 moveto
+172.39943 -1 lineto
+172.39943 -32.75916 lineto
+1 -32.75916 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 0 0 moveto
+171.39943 0 lineto
+171.39943 -31.75916 lineto
+0 -31.75916 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+ [] 0 setdash 1 setlinejoin 10 setmiterlimit
+newpath 0 0 moveto
+171.39943 0 lineto
+171.39943 -31.75916 lineto
+0 -31.75916 lineto
+ closepath stroke
+ 0 setlinecap
+newpath 0 -12.75458 moveto
+171.39943 -12.75458 lineto stroke
+newpath 0 -17.25458 moveto
+171.39943 -17.25458 lineto stroke
+40.04645 -9.75458 moveto
+(DefaultRegionSelector) ptmr8r 9.96265 fshow
+13 -27.75916 moveto
+(selectRegion\(region:\040Region\):\040boolean) ptmr8r 9.96265 fshow
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -25.0592 moveto
+7.95004 -25.0592 lineto
+7.95004 -27.75916 lineto
+2 -27.75916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -27.75916 moveto
+9 -26.7092 lineto
+9 -24.00925 lineto
+7.95004 -25.0592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -25.0592 moveto
+9 -24.00925 lineto
+3.04996 -24.00925 lineto
+2 -25.0592 lineto
+ closepath fill
+showpage
+%%EOF

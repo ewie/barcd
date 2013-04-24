@@ -1,0 +1,83 @@
+%!PS
+%%BoundingBox: -1 -48 244 1 
+%%HiResBoundingBox: -0.25 -47.48734 243.75104 0.25 
+%%Creator: MetaPost 1.208
+%%CreationDate: 2013.04.24:2312
+%%Pages: 1
+%*Font: ptmr8r 6.97382 9.96265 20:80e2802a204020145f473c8
+%*Font: ptmro8r 9.96265 9.96265 42:9f02c001773cfb
+%*Font: ptmr8r 9.96265 9.96265 20:80c00020004280007f472e
+%%BeginProlog
+%%EndProlog
+%%Page: 1 1
+ 0.7 0.7 0.7 setrgbcolor
+newpath 1 -1 moveto
+243.75104 -1 lineto
+243.75104 -47.48734 lineto
+1 -47.48734 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 0 0 moveto
+242.75104 0 lineto
+242.75104 -46.48734 lineto
+0 -46.48734 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+ [] 0 setdash 1 setlinejoin 10 setmiterlimit
+newpath 0 0 moveto
+242.75104 0 lineto
+242.75104 -46.48734 lineto
+0 -46.48734 lineto
+ closepath stroke
+ 0 setlinecap
+newpath 0 -21.48276 moveto
+242.75104 -21.48276 lineto stroke
+newpath 0 -21.48276 moveto
+242.75104 -21.48276 lineto stroke
+104.81216 -7.72818 moveto
+(<<interface>>) ptmr8r 6.97382 fshow
+107.5425 -18.48276 moveto
+(Source) ptmro8r 9.96265 fshow
+13 -31.98734 moveto
+(createImageProvider\(\):\040ImageProvider) ptmr8r 9.96265 fshow
+13 -42.48734 moveto
+(createImageProvider\(frameNumber:\040int\):\040ImageProvider) ptmr8r
+ 9.96265 fshow
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -29.28738 moveto
+7.95004 -29.28738 lineto
+7.95004 -31.98734 lineto
+2 -31.98734 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -31.98734 moveto
+9 -30.93738 lineto
+9 -28.23743 lineto
+7.95004 -29.28738 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -29.28738 moveto
+9 -28.23743 lineto
+3.04996 -28.23743 lineto
+2 -29.28738 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -39.78738 moveto
+7.95004 -39.78738 lineto
+7.95004 -42.48734 lineto
+2 -42.48734 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -42.48734 moveto
+9 -41.43738 lineto
+9 -38.73743 lineto
+7.95004 -39.78738 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -39.78738 moveto
+9 -38.73743 lineto
+3.04996 -38.73743 lineto
+2 -39.78738 lineto
+ closepath fill
+showpage
+%%EOF

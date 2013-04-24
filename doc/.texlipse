@@ -1,5 +1,5 @@
 #TeXlipse project settings
-#Mon Apr 01 16:43:30 CEST 2013
+#Wed Apr 24 23:21:01 CEST 2013
 markTmpDer=true
 builderNum=2
 outputDir=
@@ -8,7 +8,7 @@ bibrefDir=
 outputFormat=pdf
 tempDir=tmp
 mainTexFile=document.tex
-outputFile=barcd.pdf
+outputFile=document.pdf
 langSpell=de
 markDer=true
 srcDir=
