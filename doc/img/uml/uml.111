@@ -1,0 +1,99 @@
+%!PS
+%%BoundingBox: -1 -74 292 1 
+%%HiResBoundingBox: -0.25 -73.4729 291.05318 0.25 
+%%Creator: MetaPost 1.208
+%%CreationDate: 2013.04.26:0029
+%%Pages: 1
+%*Font: ptmr8r 6.97382 9.96265 20:80ea802a220220147f4f3c
+%*Font: ptmro8r 9.96265 9.96265 42:8a008001703c8
+%*Font: ptmr8r 9.96265 9.96265 20:80c80020224000004fce24
+%%BeginProlog
+%%EndProlog
+%%Page: 1 1
+ 0.7 0.7 0.7 setrgbcolor
+newpath 1 -1 moveto
+291.05318 -1 lineto
+291.05318 -36.98734 lineto
+1 -36.98734 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 0 0 moveto
+290.05318 0 lineto
+290.05318 -35.98734 lineto
+0 -35.98734 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+ [] 0 setdash 1 setlinejoin 10 setmiterlimit
+newpath 0 0 moveto
+290.05318 0 lineto
+290.05318 -35.98734 lineto
+0 -35.98734 lineto
+ closepath stroke
+ 0 setlinecap
+newpath 0 -21.48276 moveto
+290.05318 -21.48276 lineto stroke
+newpath 0 -21.48276 moveto
+290.05318 -21.48276 lineto stroke
+128.46324 -7.72818 moveto
+(<<interface>>) ptmr8r 6.97382 fshow
+116.25478 -18.48276 moveto
+(FrameHandler) ptmro8r 9.96265 fshow
+13 -31.98734 moveto
+(handleFrame\(frame:\040Frame,\040image:\040BufferedImage\):\040BufferedIma\
+ge) ptmr8r 9.96265 fshow
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -29.28738 moveto
+7.95004 -29.28738 lineto
+7.95004 -31.98734 lineto
+2 -31.98734 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -31.98734 moveto
+9 -30.93738 lineto
+9 -28.23743 lineto
+7.95004 -29.28738 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -29.28738 moveto
+9 -28.23743 lineto
+3.04996 -28.23743 lineto
+2 -29.28738 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 126.79947 -56.98734 moveto
+165.25372 -56.98734 lineto
+165.25372 -73.4729 lineto
+126.79947 -73.4729 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 125.79947 -55.98734 moveto
+164.25372 -55.98734 lineto
+164.25372 -72.4729 lineto
+125.79947 -72.4729 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 125.79947 -55.98734 moveto
+164.25372 -55.98734 lineto
+164.25372 -72.4729 lineto
+125.79947 -72.4729 lineto
+ closepath stroke
+newpath 125.79947 -72.4729 moveto
+164.25372 -72.4729 lineto stroke
+newpath 125.79947 -72.4729 moveto
+164.25372 -72.4729 lineto stroke
+132.29947 -67.4729 moveto
+(Frame) ptmr8r 9.96265 fshow
+ 0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
+ [3 3 ] 0 setdash
+newpath 145.0266 -35.98706 moveto
+145.0266 -43.48761 lineto stroke
+ [] 0 setdash
+newpath 145.0266 -43.48761 moveto
+145.0266 -55.98767 lineto stroke
+ 0 0.5 dtransform truncate idtransform setlinewidth pop
+newpath 145.0266 -55.98767 moveto
+150.0266 -43.48761 lineto stroke
+newpath 145.0266 -55.98767 moveto
+140.0266 -43.48761 lineto stroke
+showpage
+%%EOF

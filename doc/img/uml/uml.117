@@ -1,45 +1,45 @@
 %!PS
-%%BoundingBox: -1 -37 148 1 
-%%HiResBoundingBox: -0.25 -36.98734 147.73232 0.25 
+%%BoundingBox: -1 -37 173 1 
+%%HiResBoundingBox: -0.25 -36.98734 172.39943 0.25 
 %%Creator: MetaPost 1.208
-%%CreationDate: 2013.04.24:2312
+%%CreationDate: 2013.04.26:0029
 %%Pages: 1
-%*Font: ptmr8r 6.97382 9.96265 20:80c0002a214008005f4f3e4
-%*Font: ptmro8r 9.96265 9.96265 42:9f008001763cc1
-%*Font: ptmr8r 9.96265 9.96265 20:80c00020204000005f8624
+%*Font: ptmr8r 6.97382 9.96265 20:80ea802a7201a0147f4fbec
+%*Font: ptmro8r 9.96265 9.96265 42:9f02c001773ce9
+%*Font: ptmr8r 9.96265 9.96265 20:80c0002000002000754b38
 %%BeginProlog
 %%EndProlog
 %%Page: 1 1
  0.7 0.7 0.7 setrgbcolor
 newpath 1 -1 moveto
-147.73232 -1 lineto
-147.73232 -36.98734 lineto
+172.39943 -1 lineto
+172.39943 -36.98734 lineto
 1 -36.98734 lineto
  closepath fill
  0.9 0.9 0.9 setrgbcolor
 newpath 0 0 moveto
-146.73232 0 lineto
-146.73232 -35.98734 lineto
+171.39943 0 lineto
+171.39943 -35.98734 lineto
 0 -35.98734 lineto
  closepath fill
  0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
  [] 0 setdash 1 setlinejoin 10 setmiterlimit
 newpath 0 0 moveto
-146.73232 0 lineto
-146.73232 -35.98734 lineto
+171.39943 0 lineto
+171.39943 -35.98734 lineto
 0 -35.98734 lineto
  closepath stroke
  0 setlinecap
 newpath 0 -21.48276 moveto
-146.73232 -21.48276 lineto stroke
+171.39943 -21.48276 lineto stroke
 newpath 0 -21.48276 moveto
-146.73232 -21.48276 lineto stroke
-56.80281 -7.72818 moveto
+171.39943 -21.48276 lineto stroke
+69.13637 -7.72818 moveto
 (<<interface>>) ptmr8r 6.97382 fshow
-42.10861 -18.48276 moveto
-(ImageEnhancer) ptmro8r 9.96265 fshow
+54.98524 -18.48276 moveto
+(RegionSelector) ptmro8r 9.96265 fshow
 13 -31.98734 moveto
-(enhanceImage\(\):\040BufferedImage) ptmr8r 9.96265 fshow
+(selectRegion\(region:\040Region\):\040boolean) ptmr8r 9.96265 fshow
  0.4 0.4 0.4 setrgbcolor
 newpath 2 -29.28738 moveto
 7.95004 -29.28738 lineto

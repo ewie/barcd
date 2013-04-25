@@ -1,10 +1,10 @@
 %!PS
-%%BoundingBox: -1 -148 287 1 
-%%HiResBoundingBox: -0.25 -147.49472 286.66025 0.25 
+%%BoundingBox: -1 -187 287 1 
+%%HiResBoundingBox: -0.25 -186.2493 286.66025 0.25 
 %%Creator: MetaPost 1.208
-%%CreationDate: 2013.04.24:2312
+%%CreationDate: 2013.04.26:0029
 %%Pages: 1
-%*Font: ptmr8r 9.96265 9.96265 20:80eafde07fffffb57fefbfc
+%*Font: ptmr8r 9.96265 9.96265 20:80ea802a220220147f4f3c
 %%BeginProlog
 %%EndProlog
 %%Page: 1 1
@@ -288,5 +288,77 @@ newpath 7.95004 -139.79477 moveto
 3.04996 -138.74481 lineto
 2 -139.79477 lineto
  closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 156.62343 -169.49472 moveto
+202.81866 -169.49472 lineto
+202.81866 -186.2493 lineto
+156.62343 -186.2493 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 155.62343 -168.49472 moveto
+201.81866 -168.49472 lineto
+201.81866 -185.2493 lineto
+155.62343 -185.2493 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+newpath 155.62343 -168.49472 moveto
+201.81866 -168.49472 lineto
+201.81866 -185.2493 lineto
+155.62343 -185.2493 lineto
+ closepath stroke
+newpath 155.62343 -185.2493 moveto
+201.81866 -185.2493 lineto stroke
+newpath 155.62343 -185.2493 moveto
+201.81866 -185.2493 lineto stroke
+162.12343 -180.2493 moveto
+(Barcode) ptmr8r 9.96265 fshow
+ 0.7 0.7 0.7 setrgbcolor
+newpath 84.84158 -169.49472 moveto
+126.62343 -169.49472 lineto
+126.62343 -186.2493 lineto
+84.84158 -186.2493 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 83.84158 -168.49472 moveto
+125.62343 -168.49472 lineto
+125.62343 -185.2493 lineto
+83.84158 -185.2493 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 83.84158 -168.49472 moveto
+125.62343 -168.49472 lineto
+125.62343 -185.2493 lineto
+83.84158 -185.2493 lineto
+ closepath stroke
+newpath 83.84158 -185.2493 moveto
+125.62343 -185.2493 lineto stroke
+newpath 83.84158 -185.2493 moveto
+125.62343 -185.2493 lineto stroke
+90.34157 -180.2493 moveto
+(Region) ptmr8r 9.96265 fshow
+ 0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
+ [3 3 ] 0 setdash
+newpath 104.7325 -146.49472 moveto
+104.7325 -155.99484 lineto stroke
+ [] 0 setdash
+newpath 104.7325 -155.99484 moveto
+104.7325 -168.49472 lineto stroke
+ 0 0.5 dtransform truncate idtransform setlinewidth pop
+newpath 104.7325 -168.49472 moveto
+109.7325 -155.99484 lineto stroke
+newpath 104.7325 -168.49472 moveto
+99.7325 -155.99484 lineto stroke
+ 0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
+ [3 3 ] 0 setdash
+newpath 178.72105 -146.49472 moveto
+178.72105 -155.99484 lineto stroke
+ [] 0 setdash
+newpath 178.72105 -155.99484 moveto
+178.72105 -168.49472 lineto stroke
+ 0 0.5 dtransform truncate idtransform setlinewidth pop
+newpath 178.72105 -168.49472 moveto
+183.72105 -155.99484 lineto stroke
+newpath 178.72105 -168.49472 moveto
+173.72105 -155.99484 lineto stroke
 showpage
 %%EOF
