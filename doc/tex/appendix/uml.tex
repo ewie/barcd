@@ -1,11 +1,14 @@
 \chapter{Klassendiagramme}
 
+\newlength{\imgwidth}
 \newcounter{imagenumber}
 \forloop{imagenumber}{0}{\value{imagenumber} < 1000}{
   \IfFileExists{img/uml/uml.\arabic{imagenumber}}{
     \begin{figure}[H]
       \centering
-      \includegraphics{img/uml/uml.\arabic{imagenumber}}
+      \settowidth{\imgwidth}{\includegraphics{img/uml/uml.\arabic{imagenumber}}}
+      \setlength{\imgwidth}{\minof{\imgwidth}{\textwidth}}
+      \includegraphics[width=\imgwidth]{img/uml/uml.\arabic{imagenumber}}
     \end{figure}
   }{}
 }
