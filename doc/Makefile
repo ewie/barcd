@@ -8,6 +8,7 @@ $(MAIN).pdf: $(MAIN).tex uml
 
 uml:
 	cd ./img/uml; \
+	rm -f `ls | grep -P "\.\d+"`; \
 	mpost $(UML).mp; \
 	cd -
 

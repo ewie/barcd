@@ -1,10 +1,11 @@
 %!PS
-%%BoundingBox: -1 -43 238 1 
-%%HiResBoundingBox: -0.25 -42.76373 237.6442 0.25 
+%%BoundingBox: -1 -47 336 4 
+%%HiResBoundingBox: -0.25 -46.36603 335.1593 3.8523 
 %%Creator: MetaPost 1.208
-%%CreationDate: 2013.04.26:0029
+%%CreationDate: 2013.04.27:0130
 %%Pages: 1
-%*Font: ptmr8r 9.96265 9.96265 20:80e2fde07f5fffb55fcfbe4
+%*Font: ptmr8r 9.96265 9.96265 20:80c0002a2c4000005fcfae
+%*Font: ptmr8r 6.97382 9.96265 3c:a00000000564228
 %%BeginProlog
 %%EndProlog
 %%Page: 1 1
@@ -80,5 +81,85 @@ newpath 7.95004 -35.06378 moveto
 3.04996 -34.01382 lineto
 2 -35.06378 lineto
  closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 259.6442 2.6023 moveto
+335.1593 2.6023 lineto
+335.1593 -19.88046 lineto
+259.6442 -19.88046 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 258.6442 3.6023 moveto
+334.1593 3.6023 lineto
+334.1593 -18.88046 lineto
+258.6442 -18.88046 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+newpath 258.6442 3.6023 moveto
+334.1593 3.6023 lineto
+334.1593 -18.88046 lineto
+258.6442 -18.88046 lineto
+ closepath stroke
+newpath 258.6442 -18.88046 moveto
+334.1593 -18.88046 lineto stroke
+newpath 258.6442 -18.88046 moveto
+334.1593 -18.88046 lineto stroke
+279.8384 -4.12589 moveto
+(<<interface>>) ptmr8r 6.97382 fshow
+265.1442 -13.88046 moveto
+(ImageEnhancer) ptmr8r 9.96265 fshow
+ 0.7 0.7 0.7 setrgbcolor
+newpath 261.57695 -29.88046 moveto
+333.22655 -29.88046 lineto
+333.22655 -46.36603 lineto
+261.57695 -46.36603 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 260.57695 -28.88046 moveto
+332.22655 -28.88046 lineto
+332.22655 -45.36603 lineto
+260.57695 -45.36603 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 260.57695 -28.88046 moveto
+332.22655 -28.88046 lineto
+332.22655 -45.36603 lineto
+260.57695 -45.36603 lineto
+ closepath stroke
+newpath 260.57695 -45.36603 moveto
+332.22655 -45.36603 lineto stroke
+newpath 260.57695 -45.36603 moveto
+332.22655 -45.36603 lineto stroke
+267.07695 -40.36603 moveto
+(ImproveImage) ptmr8r 9.96265 fshow
+ [3 3 ] 0 setdash
+newpath 236.6442 -7.63908 moveto
+246.14432 -7.63908 lineto stroke
+ 1 1 1 setrgbcolor
+newpath 246.14432 -7.63908 moveto
+246.14432 -2.63908 lineto
+258.6442 -7.63908 lineto
+246.14432 -12.63908 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0.5
+ 0 dtransform exch truncate exch idtransform pop setlinewidth [] 0 setdash
+newpath 246.14432 -7.63908 moveto
+246.14432 -2.63908 lineto stroke
+newpath 246.14432 -7.63908 moveto
+246.14432 -12.63908 lineto stroke
+ 0 0.5 dtransform truncate idtransform setlinewidth pop
+newpath 258.6442 -7.63908 moveto
+246.14432 -2.63908 lineto stroke
+newpath 258.6442 -7.63908 moveto
+246.14432 -12.63908 lineto stroke
+ [3 3 ] 0 setdash
+newpath 236.6442 -37.12325 moveto
+248.07703 -37.12325 lineto stroke
+ [] 0 setdash
+newpath 248.07703 -37.12325 moveto
+260.57695 -37.12325 lineto stroke
+newpath 260.57695 -37.12325 moveto
+248.07703 -32.12325 lineto stroke
+newpath 260.57695 -37.12325 moveto
+248.07703 -42.12325 lineto stroke
 showpage
 %%EOF

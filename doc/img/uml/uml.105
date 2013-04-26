@@ -1,10 +1,11 @@
 %!PS
-%%BoundingBox: -1 -33 261 1 
-%%HiResBoundingBox: -0.25 -32.75916 260.88675 0.25 
+%%BoundingBox: -1 -33 348 1 
+%%HiResBoundingBox: -0.25 -32.75916 347.03441 0.25 
 %%Creator: MetaPost 1.208
-%%CreationDate: 2013.04.26:0029
+%%CreationDate: 2013.04.27:0130
 %%Pages: 1
-%*Font: ptmr8r 9.96265 9.96265 20:80e2fde07f5fffb55f4fbe4
+%*Font: ptmr8r 9.96265 9.96265 20:80c0002a294008005f4f3e4
+%*Font: ptmr8r 6.97382 9.96265 3c:a00000000564228
 %%BeginProlog
 %%EndProlog
 %%Page: 1 1
@@ -55,5 +56,51 @@ newpath 7.95004 -25.0592 moveto
 3.04996 -24.00925 lineto
 2 -25.0592 lineto
  closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 290.88675 -5.6382 moveto
+347.03441 -5.6382 lineto
+347.03441 -28.12096 lineto
+290.88675 -28.12096 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 289.88675 -4.6382 moveto
+346.03441 -4.6382 lineto
+346.03441 -27.12096 lineto
+289.88675 -27.12096 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 289.88675 -4.6382 moveto
+346.03441 -4.6382 lineto
+346.03441 -27.12096 lineto
+289.88675 -27.12096 lineto
+ closepath stroke
+newpath 289.88675 -27.12096 moveto
+346.03441 -27.12096 lineto stroke
+newpath 289.88675 -27.12096 moveto
+346.03441 -27.12096 lineto stroke
+301.39723 -12.36638 moveto
+(<<interface>>) ptmr8r 6.97382 fshow
+296.38675 -22.12096 moveto
+(Grayscaler) ptmr8r 9.96265 fshow
+ [3 3 ] 0 setdash
+newpath 259.888 -15.87958 moveto
+277.3856 -15.87958 lineto stroke
+ 1 1 1 setrgbcolor
+newpath 277.3856 -15.87958 moveto
+277.3856 -10.87958 lineto
+289.88571 -15.87958 lineto
+277.3856 -20.87958 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0.5
+ 0 dtransform exch truncate exch idtransform pop setlinewidth [] 0 setdash
+newpath 277.3856 -15.87958 moveto
+277.3856 -10.87958 lineto stroke
+newpath 277.3856 -15.87958 moveto
+277.3856 -20.87958 lineto stroke
+ 0 0.5 dtransform truncate idtransform setlinewidth pop
+newpath 289.88571 -15.87958 moveto
+277.3856 -10.87958 lineto stroke
+newpath 289.88571 -15.87958 moveto
+277.3856 -20.87958 lineto stroke
 showpage
 %%EOF

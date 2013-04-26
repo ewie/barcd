@@ -1,10 +1,10 @@
 %!PS
-%%BoundingBox: -1 -37 173 1 
-%%HiResBoundingBox: -0.25 -36.98734 172.39943 0.25 
+%%BoundingBox: -1 -37 245 1 
+%%HiResBoundingBox: -0.25 -36.98734 244.18127 0.25 
 %%Creator: MetaPost 1.208
-%%CreationDate: 2013.04.26:0029
+%%CreationDate: 2013.04.27:0130
 %%Pages: 1
-%*Font: ptmr8r 6.97382 9.96265 20:80ea802a7201a0147f4fbec
+%*Font: ptmr8r 6.97382 9.96265 2e:b0028000000015908a
 %*Font: ptmro8r 9.96265 9.96265 42:9f02c001773ce9
 %*Font: ptmr8r 9.96265 9.96265 20:80c0002000002000754b38
 %%BeginProlog
@@ -58,5 +58,39 @@ newpath 7.95004 -29.28738 moveto
 3.04996 -28.23743 lineto
 2 -29.28738 lineto
  closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 202.39943 -10.61638 moveto
+244.18127 -10.61638 lineto
+244.18127 -27.37096 lineto
+202.39943 -27.37096 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 201.39943 -9.61638 moveto
+243.18127 -9.61638 lineto
+243.18127 -26.37096 lineto
+201.39943 -26.37096 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 201.39943 -9.61638 moveto
+243.18127 -9.61638 lineto
+243.18127 -26.37096 lineto
+201.39943 -26.37096 lineto
+ closepath stroke
+newpath 201.39943 -26.37096 moveto
+243.18127 -26.37096 lineto stroke
+newpath 201.39943 -26.37096 moveto
+243.18127 -26.37096 lineto stroke
+207.89943 -21.37096 moveto
+(Region) ptmr8r 9.96265 fshow
+ [3 3 ] 0 setdash
+newpath 171.40027 -17.99367 moveto
+188.9002 -17.99367 lineto stroke
+ [] 0 setdash
+newpath 188.9002 -17.99367 moveto
+201.4004 -17.99367 lineto stroke
+newpath 201.4004 -17.99367 moveto
+188.9002 -12.99367 lineto stroke
+newpath 201.4004 -17.99367 moveto
+188.9002 -22.99367 lineto stroke
 showpage
 %%EOF

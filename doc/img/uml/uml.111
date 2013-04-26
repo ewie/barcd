@@ -1,10 +1,10 @@
 %!PS
-%%BoundingBox: -1 -74 292 1 
-%%HiResBoundingBox: -0.25 -73.4729 291.05318 0.25 
+%%BoundingBox: -1 -37 360 1 
+%%HiResBoundingBox: -0.25 -36.98734 359.50742 0.25 
 %%Creator: MetaPost 1.208
-%%CreationDate: 2013.04.26:0029
+%%CreationDate: 2013.04.27:0130
 %%Pages: 1
-%*Font: ptmr8r 6.97382 9.96265 20:80ea802a220220147f4f3c
+%*Font: ptmr8r 6.97382 9.96265 2a:800028000000015908a
 %*Font: ptmro8r 9.96265 9.96265 42:8a008001703c8
 %*Font: ptmr8r 9.96265 9.96265 20:80c80020224000004fce24
 %%BeginProlog
@@ -60,40 +60,38 @@ newpath 7.95004 -29.28738 moveto
 2 -29.28738 lineto
  closepath fill
  0.7 0.7 0.7 setrgbcolor
-newpath 126.79947 -56.98734 moveto
-165.25372 -56.98734 lineto
-165.25372 -73.4729 lineto
-126.79947 -73.4729 lineto
+newpath 321.05318 -10.75089 moveto
+359.50742 -10.75089 lineto
+359.50742 -27.23645 lineto
+321.05318 -27.23645 lineto
  closepath fill
  0.9 0.9 0.9 setrgbcolor
-newpath 125.79947 -55.98734 moveto
-164.25372 -55.98734 lineto
-164.25372 -72.4729 lineto
-125.79947 -72.4729 lineto
+newpath 320.05318 -9.75089 moveto
+358.50742 -9.75089 lineto
+358.50742 -26.23645 lineto
+320.05318 -26.23645 lineto
  closepath fill
  0 0 0 setrgbcolor
-newpath 125.79947 -55.98734 moveto
-164.25372 -55.98734 lineto
-164.25372 -72.4729 lineto
-125.79947 -72.4729 lineto
+newpath 320.05318 -9.75089 moveto
+358.50742 -9.75089 lineto
+358.50742 -26.23645 lineto
+320.05318 -26.23645 lineto
  closepath stroke
-newpath 125.79947 -72.4729 moveto
-164.25372 -72.4729 lineto stroke
-newpath 125.79947 -72.4729 moveto
-164.25372 -72.4729 lineto stroke
-132.29947 -67.4729 moveto
+newpath 320.05318 -26.23645 moveto
+358.50742 -26.23645 lineto stroke
+newpath 320.05318 -26.23645 moveto
+358.50742 -26.23645 lineto stroke
+326.55318 -21.23645 moveto
 (Frame) ptmr8r 9.96265 fshow
- 0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
  [3 3 ] 0 setdash
-newpath 145.0266 -35.98706 moveto
-145.0266 -43.48761 lineto stroke
+newpath 290.0529 -17.99367 moveto
+307.55243 -17.99367 lineto stroke
  [] 0 setdash
-newpath 145.0266 -43.48761 moveto
-145.0266 -55.98767 lineto stroke
- 0 0.5 dtransform truncate idtransform setlinewidth pop
-newpath 145.0266 -55.98767 moveto
-150.0266 -43.48761 lineto stroke
-newpath 145.0266 -55.98767 moveto
-140.0266 -43.48761 lineto stroke
+newpath 307.55243 -17.99367 moveto
+320.05235 -17.99367 lineto stroke
+newpath 320.05235 -17.99367 moveto
+307.55243 -12.99367 lineto stroke
+newpath 320.05235 -17.99367 moveto
+307.55243 -22.99367 lineto stroke
 showpage
 %%EOF
