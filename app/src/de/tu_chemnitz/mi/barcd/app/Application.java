@@ -218,7 +218,7 @@ public class Application extends Worker {
             URL schemaUrl = options.getXmlSchemaUrl();
             if (schemaUrl != null) {
                 sj.setSchemaLocation(options.getXmlSchemaUrl());
-                sj.setValidation(true);
+                sj.setValidate(true);
             }
         } catch (XmlSerializerException ex) {
             throw new ApplicationException("could not set XML schema location", ex);

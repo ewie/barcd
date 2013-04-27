@@ -279,7 +279,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     /**
      * @return true if to validate the XML on marshalling and unmarshalling
      */
-    public boolean getValidation() {
+    public boolean getValidate() {
         return validate;
     }
 
@@ -290,7 +290,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
      *
      * @throws XmlSerializerException if no schema has been specified
      */
-    public void setValidation(boolean validate)
+    public void setValidate(boolean validate)
         throws XmlSerializerException
     {
         if (validate && schema == null) {
