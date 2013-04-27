@@ -1,12 +1,14 @@
 MAIN = document
 UML = uml
 
-pdf: $(MAIN).pdf
+.PHONY: all $(MAIN) $(UML) clean cleanaux
 
-$(MAIN).pdf: $(MAIN).tex uml
-	pdflatex $(MAIN).tex
+all: $(UML) $(MAIN)
 
-uml:
+$(MAIN): $(MAIN).tex
+	pdflatex $<
+
+$(UML):
 	cd ./img/uml; \
 	rm -f `ls | grep -P "\.\d+"`; \
 	mpost $(UML).mp; \
