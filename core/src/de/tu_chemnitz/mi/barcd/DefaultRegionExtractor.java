@@ -159,10 +159,11 @@ public class DefaultRegionExtractor implements RegionExtractor {
         int i = 0;
         for (List<Point> points : labelPointsMap.values()) {
             // Because we used a down-scaled image to extract a region's
-            // coordinates the number of coordinates is smaller than if had used
-            // image in its original size. Therefore we have to scale the
-            // number of generating coordinates by the squared scaling factor
-            // (the vertical and horizontal scaling factors are the same).
+            // coordinates the number of coordinates is smaller than the number
+            // of coordinates if the image in its original size had been used.
+            // Therefore we have to scale the number of generating coordinates
+            // by the squared scaling factor (the vertical and horizontal
+            // scaling factors are the same).
             int generatingPointCount = (int) (points.size() * scalingFactor2);
             regions[i++] = Region.createFromPoints(points, generatingPointCount);
         }
