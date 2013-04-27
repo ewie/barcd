@@ -1,47 +1,50 @@
 %!PS
-%%BoundingBox: -1 -65 216 1 
-%%HiResBoundingBox: -0.25 -64.25916 215.00041 0.25 
+%%BoundingBox: -1 -75 215 1 
+%%HiResBoundingBox: -0.25 -74.75916 214.49081 0.25 
 %%Creator: MetaPost 1.208
 %%CreationDate: 2013.04.27:2306
 %%Pages: 1
-%*Font: ptmr8r 9.96265 9.96265 20:80e8082e5285b3147fcffff4
+%*Font: ptmr8r 9.96265 9.96265 20:80e8882e7bcdb3157fdffff4
 %%BeginProlog
 %%EndProlog
 %%Page: 1 1
  0.7 0.7 0.7 setrgbcolor
 newpath 1 -1 moveto
-150.95956 -1 lineto
-150.95956 -64.25916 lineto
-1 -64.25916 lineto
+214.49081 -1 lineto
+214.49081 -74.75916 lineto
+1 -74.75916 lineto
  closepath fill
  0.9 0.9 0.9 setrgbcolor
 newpath 0 0 moveto
-149.95956 0 lineto
-149.95956 -63.25916 lineto
-0 -63.25916 lineto
+213.49081 0 lineto
+213.49081 -73.75916 lineto
+0 -73.75916 lineto
  closepath fill
  0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
  [] 0 setdash 1 setlinejoin 10 setmiterlimit
 newpath 0 0 moveto
-149.95956 0 lineto
-149.95956 -63.25916 lineto
-0 -63.25916 lineto
+213.49081 0 lineto
+213.49081 -73.75916 lineto
+0 -73.75916 lineto
  closepath stroke
  1 setlinecap
 newpath 0 -12.75458 moveto
-149.95956 -12.75458 lineto stroke
+213.49081 -12.75458 lineto stroke
 newpath 0 -17.25458 moveto
-149.95956 -17.25458 lineto stroke
-21.35632 -9.75458 moveto
-(ConvexPolygon\040{abstract}) ptmr8r 9.96265 fshow
+213.49081 -17.25458 lineto stroke
+72.71342 -9.75458 moveto
+(DilationOperator) ptmr8r 9.96265 fshow
 13 -27.75916 moveto
-(contains\(p:\040Point\)) ptmr8r 9.96265 fshow
+(DilationOperator\(size:\040int\)) ptmr8r 9.96265 fshow
 13 -38.25916 moveto
-(computeArea\(\):\040double) ptmr8r 9.96265 fshow
+(DilationOperator\(width:\040int,\040height:\040int\)) ptmr8r 9.96265 fshow
 13 -48.75916 moveto
-(getSize\(\):\040int) ptmr8r 9.96265 fshow
+(apply\(pixels:\040int[*],\040width:\040int,\040height:\040int\):\040int[*])
+ ptmr8r 9.96265 fshow
 13 -59.25916 moveto
-(getVertices\(\):\040Point[*]\040{abstract}) ptmr8r 9.96265 fshow
+(getWindowHeight\(\):\040int) ptmr8r 9.96265 fshow
+13 -69.75916 moveto
+(getWindowWidth\(\):\040int) ptmr8r 9.96265 fshow
  0.4 0.4 0.4 setrgbcolor
 newpath 2 -25.0592 moveto
 7.95004 -25.0592 lineto
@@ -114,39 +117,23 @@ newpath 7.95004 -56.5592 moveto
 3.04996 -55.50925 lineto
 2 -56.5592 lineto
  closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -67.0592 moveto
+7.95004 -67.0592 lineto
+7.95004 -69.75916 lineto
+2 -69.75916 lineto
+ closepath fill
  0.7 0.7 0.7 setrgbcolor
-newpath 180.95956 -24.25229 moveto
-215.00041 -24.25229 lineto
-215.00041 -41.00687 lineto
-180.95956 -41.00687 lineto
+newpath 7.95004 -69.75916 moveto
+9 -68.7092 lineto
+9 -66.00925 lineto
+7.95004 -67.0592 lineto
  closepath fill
- 0.9 0.9 0.9 setrgbcolor
-newpath 179.95956 -23.25229 moveto
-214.00041 -23.25229 lineto
-214.00041 -40.00687 lineto
-179.95956 -40.00687 lineto
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -67.0592 moveto
+9 -66.00925 lineto
+3.04996 -66.00925 lineto
+2 -67.0592 lineto
  closepath fill
- 0 0 0 setrgbcolor
-newpath 179.95956 -23.25229 moveto
-214.00041 -23.25229 lineto
-214.00041 -40.00687 lineto
-179.95956 -40.00687 lineto
- closepath stroke
-newpath 179.95956 -40.00687 moveto
-214.00041 -40.00687 lineto stroke
-newpath 179.95956 -40.00687 moveto
-214.00041 -40.00687 lineto stroke
-186.45956 -35.00687 moveto
-(Point) ptmr8r 9.96265 fshow
- [3 3 ] 0 setdash
-newpath 149.96033 -31.62958 moveto
-167.45976 -31.62958 lineto stroke
- [] 0 setdash
-newpath 167.45976 -31.62958 moveto
-179.95961 -31.62958 lineto stroke
-newpath 179.95961 -31.62958 moveto
-167.45976 -26.62958 lineto stroke
-newpath 179.95961 -31.62958 moveto
-167.45976 -36.62958 lineto stroke
 showpage
 %%EOF

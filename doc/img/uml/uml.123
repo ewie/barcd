@@ -2,7 +2,7 @@
 %%BoundingBox: -1 -65 140 38 
 %%HiResBoundingBox: -0.25 -64.25916 139.34357 37.00458 
 %%Creator: MetaPost 1.208
-%%CreationDate: 2013.04.27:0130
+%%CreationDate: 2013.04.27:2306
 %%Pages: 1
 %*Font: ptmr8r 9.96265 9.96265 20:80c8082e5285b3147fcffff4
 %%BeginProlog
@@ -27,7 +27,7 @@ newpath 0 0 moveto
 138.34357 -63.25916 lineto
 0 -63.25916 lineto
  closepath stroke
- 0 setlinecap
+ 1 setlinecap
 newpath 0 -12.75458 moveto
 138.34357 -12.75458 lineto stroke
 newpath 0 -17.25458 moveto

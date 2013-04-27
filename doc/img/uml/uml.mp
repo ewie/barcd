@@ -89,7 +89,8 @@ beginfig(9);
     BufferedImageProvider;
 
   Class.BufferedImageSource("BufferedImageSource")
-    ("-images: BufferedSourcemage[*]")
+%    ("-images: BufferedSourcemage[*]")
+    ()
     ("+BufferedImageSource(images: BufferedImage[*])",
      "+createImageProvider(frameNumber: int): BufferedImageProvider");
 
@@ -113,7 +114,8 @@ beginfig(10);
     RemoteImageProvider;
 
   Class.ImageCollectionSource("ImageCollectionSource")
-    ("-urls: URL[*]")
+%    ("-urls: URL[*]")
+    ()
     ("+ImageCollectionSource(urls: URL[*])",
      "+createImageProvider(frameNumber: int): RemoteImageProvider",
      "+getUrls(): URL[*]");
@@ -140,7 +142,8 @@ beginfig(11);
     G;
 
   Class.ImageSequenceSource("ImageSequenceSource")
-    ("-sequence: TemplatedUrlSequence")
+%    ("-sequence: TemplatedUrlSequence")
+    ()
     ("+ImageSequenceSource(sequence: TemplatedUrlSequence)",
      "+createImageProvider(frameNumber: int): RemoteImageProvider",
      "+getUrlSequence(): TemplatedUrlSequence");
@@ -170,7 +173,8 @@ beginfig(12);
     RemoteImageProvider;
 
   Class.ImageSnapshotServiceSource("ImageSnapshotServiceSource")
-    ("-url: URL")
+%    ("-url: URL")
+    ()
     ("+ImageSnapshotServiceSource(url: URL)",
      "+createImageProvider(frameNumber: int): RemoteImageProvider",
      "+getUrl(): URL");
@@ -197,7 +201,8 @@ beginfig(13);
     G;
 
   Class.VideoDeviceSource("VideoDeviceSource")
-    ("-deviceId: int")
+%    ("-deviceId: int")
+    ()
     ("+VideoDeviceSource(deviceId: int)",
      "+createImageProvider(frameNumber: int): VideoImageProvider",
      "+getDeviceId(): int");
@@ -230,7 +235,8 @@ beginfig(14);
     G;
 
   Class.VideoStreamSource("VideoStreamSource")
-    ("-url: URL")
+%    ("-url: URL")
+    ()
     ("+VideoStreamSource(url: URL)",
      "+createImageProvider(frameNumber: int): VideoImageProvider",
      "+getUrl(): URL");
@@ -260,7 +266,8 @@ beginfig(15);
     ImageProvider;
 
   Class.BufferedImageProvider("BufferedImageProvider")
-    ("-images: Iterator<BufferedImage>")
+%    ("-images: Iterator<BufferedImage>")
+    ()
     ("+BufferedImageProvider(images: Iterator<BufferedImage>)",
      "+consume(): BufferedImage",
      "+hasMore(): boolean");
@@ -283,7 +290,8 @@ beginfig(16);
     ImageProvider;
 
   Class.RemoteImageProvider("RemoteImageProvider")
-    ("-urls: Iterator<URL>")
+%    ("-urls: Iterator<URL>")
+    ()
     ("+RemoteImageProvider(urls: Iterator<URL>)",
      "+consume(): BufferedImage",
      "+hasMore(): boolean");
@@ -307,7 +315,8 @@ beginfig(17);
     FrameReader;
 
   Class.VideoImageProvider("VideoImageProvider")
-    ("-frameReader: FrameReader")
+%    ("-frameReader: FrameReader")
+    ()
     ("+VideoImageProvider(frameReader: FrameReader)",
      "+consume(): BufferedImage",
      "+hasMore(): boolean");
@@ -336,10 +345,11 @@ beginfig(101);
        G;
 
   Class.Barcode("Barcode")
-    ("-anchorPoints: Point[*]",
-     "-bytes: byte[*]",
-     "-text: string",
-     "-type: BarcodeType")
+%    ("-anchorPoints: Point[*]",
+%     "-bytes: byte[*]",
+%     "-text: string",
+%     "-type: BarcodeType")
+    ()
     ("+Barcode(type: BarcodeType, text: string, bytes: byte[*], points: Point[*])",
      "+getAnchorPoints(): Point[*]",
      "+getBytes(): byte[*]",
@@ -418,15 +428,17 @@ beginfig(104);
     G;
 
   Class.DefaultBarcodeReader("DefaultBarcodeReader")
-    ("-multiFormatReader: MultiFormatReader",
-     "-multipleBarcodeReader: MultipleBarcodeReader")
-    ("-createBitmap(image: BufferedImage): BinaryBitmap",
-     "+read(image: BufferedImage): Barcode",
+%    ("-multiFormatReader: MultiFormatReader",
+%     "-multipleBarcodeReader: MultipleBarcodeReader")
+    ()
+%    ("-createBitmap(image: BufferedImage): BinaryBitmap",
+    ("+read(image: BufferedImage): Barcode",
      "+readMultiple(image: BufferedImage): Barcode[*]",
-     "-translateBarcodeFormat(format: BarcodeFormat): BarcodeType",
-     "-translateResult(result: Result): Barcode",
-     "-translateResultPoints(points: ResultPoint[*]): Point[*]",
-     "-translateResults(results: Result[*]): Barcode[*]");
+%     "-translateBarcodeFormat(format: BarcodeFormat): BarcodeType",
+%     "-translateResult(result: Result): Barcode",
+%     "-translateResultPoints(points: ResultPoint[*]): Point[*]",
+%     "-translateResults(results: Result[*]): Barcode[*]");
+    );
 
   ClassName.BarcodeReader("BarcodeReader");
   classStereotypes.BarcodeReader("<<interface>>");
@@ -473,7 +485,8 @@ beginfig(106);
     G;
 
   Class.DefaultImageEnhancer("DefaultImageEnhancer")
-    ("-improve: ImproveImage")
+%    ("-improve: ImproveImage")
+    ()
     ("+enhanceImage(image: BufferedImage): BufferedImage");
 
   ClassName.ImageEnhancer("ImageEnhancer");
@@ -502,14 +515,17 @@ beginfig(107);
     G;
 
   Class.DefaultRegionExtractor("DefaultRegionExtractor")
-    ("-gx: ConvolveOp",
-     "-gy: ConvolveOp",
-     "-dilate: DilationOperator",
-     "-scale: ScalingOperator")
-    ("-createRegions(pixels: int[*], width: int, height: int, scale: double): Region[*]",
-     "-extractEdges(raster: Raster): int[*]",
+%    ("-gx: ConvolveOp",
+%     "-gy: ConvolveOp",
+%     "-dilate: DilationOperator",
+%     "-scale: ScalingOperator")
+    ()
+    (
+%    "-createRegions(pixels: int[*], width: int, height: int, scale: double): Region[*]",
+%     "-extractEdges(raster: Raster): int[*]",
      "+extractRegions(image: BufferedImage): Region[*]",
-     "-performSegmentation(pixels: int[*], width: int, height: int)");
+%     "-performSegmentation(pixels: int[*], width: int, height: int)");
+    );
 
   ClassName.Region("Region");
   ClassName.DilationOperator("DilationOperator");
@@ -566,19 +582,20 @@ beginfig(109);
        RegionSelector;
 
   Class.Extractor("Exractor")
-    ("-enhancer: ImageEnhancer",
-     "-frameHandler: FrameHandler",
-     "-grayscaler: Grayscaler",
-     "-imageProvider: ImageProvider",
-     "-job: Job",
-     "-reader: BarcodeReader",
-     "-regionExtractor: RegionExtractor",
-     "-regionSelector: RegionSelector")
+%    ("-enhancer: ImageEnhancer",
+%     "-frameHandler: FrameHandler",
+%     "-grayscaler: Grayscaler",
+%     "-imageProvider: ImageProvider",
+%     "-job: Job",
+%     "-reader: BarcodeReader",
+%     "-regionExtractor: RegionExtractor",
+%     "-regionSelector: RegionSelector")
+    ()
     ("+Extractor(job: Job)",
      "+getJob(): Job",
      "+hasMoreImages(): boolean",
      "+processNextImage()",
-     "-reportFrame(frame: Frame, image: BufferedImage)",
+%     "-reportFrame(frame: Frame, image: BufferedImage)",
      "+setBarcodeReader(reader: BarcodeReader)",
      "+setFrameHandler(handler: FrameHandler)",
      "+setGrayscaler(grayscaler: Grayscaler)",
@@ -635,9 +652,10 @@ beginfig(110);
     Frame;
 
   Class.Frame("Frame")
-    ("-number: int",
-     "-regionlessBarcodes: Barcode[*]",
-     "-regions: Region[*]")
+%    ("-number: int",
+%     "-regionlessBarcodes: Barcode[*]",
+%     "-regions: Region[*]")
+    ()
     ("+Frame(number: int)",
      "+Frame(number: int, regions: Region[*], barcodes: Barcode[*])",
      "+addRegion(region: Region)",
@@ -726,10 +744,11 @@ beginfig(115);
     G;
 
   Class.Job("Job")
-    ("-frames: Frame[*]",
-     "-initialFrameNumber: int",
-     "-nextFrameNumber: int",
-     "-source: Source")
+%    ("-frames: Frame[*]",
+%     "-initialFrameNumber: int",
+%     "-nextFrameNumber: int",
+%     "-source: Source")
+    ()
     ("+Job(source: Source, initialFrameNumber: int = 0)",
      "+createFrame(): Frame",
      "+createImageProvider(): ImageProvider",
@@ -738,10 +757,7 @@ beginfig(115);
      "+nextFrameNumber(): int");
 
   ClassName.Frame("Frame");
-  ClassName.Source("Source");
-
-  classStereotypes.Source("<<interface>>");
-  Source.info.iName.top := 0;
+  ClassName.Source("Source {abstract}");
 
   Group.G(Frame, Source);
   topToBottom(30)(Source, Frame);
@@ -763,15 +779,17 @@ beginfig(116);
     ConvexPolygon,
     AxisAlignedRectangle,
     OrientedRectangle,
+    GenericConvexPolygon,
     G,
     F;
 
   Class.Region("Region")
-    ("-axisAlignedRectangle: AxisAlignedRectangle",
-     "-barcode: Barcode",
-     "-convexPolygon: ConvexPolygon",
-     "-coverage: double",
-     "-orientedRectangle: OrientedRectangle")
+%    ("-axisAlignedRectangle: AxisAlignedRectangle",
+%     "-barcode: Barcode",
+%     "-convexPolygon: ConvexPolygon",
+%     "-coverage: double",
+%     "-orientedRectangle: OrientedRectangle")
+    ()
     ("+Region(polygon: ConvexPolygon, coverage: double)",
      "+contains(point: Point): boolean",
      "+getAxisAlignedRectangle(): AxisAlignedRectangle",
@@ -789,21 +807,24 @@ beginfig(116);
 
   ClassName.AxisAlignedRectangle("AxisAlignedRectangle");
   ClassName.OrientedRectangle("OrientedRectangle");
+  ClassName.GenericConvexPolygon("GenericConvexPolygon");
 
   Group.G(Barcode, ConvexPolygon);
   Group.F(AxisAlignedRectangle, OrientedRectangle);
 
   topToBottom.left(20)(Region, G);
   topToBottom.right(50)(Region, F);
+  topToBottom.left(80)(Region, GenericConvexPolygon);
   leftToRight(10)(Barcode, ConvexPolygon);
   leftToRight(10)(AxisAlignedRectangle, OrientedRectangle);
 
-  drawObjects(Region, G, F);
+  drawObjects(Region, GenericConvexPolygon, G, F);
 
   link(aggregation)(pathVertical(Barcode.n, Region.bottom));
   link(aggregation)(pathVertical(ConvexPolygon.n, Region.bottom));
   link(dependency)(rpathVertical(AxisAlignedRectangle.ne + (-10, 0), Region.bottom));
   link(dependency)(rpathVertical(OrientedRectangle.n, Region.bottom));
+  link(dependency)(rpathVertical(GenericConvexPolygon.n + (-1, 0), Region.bottom));
 
   item(iStereo)("<<create>>")(obj.w = AxisAlignedRectangle.ne + (-10, 20));
   item(iStereo)("<<create>>")(obj.w = OrientedRectangle.n + (0, 20));
@@ -957,8 +978,9 @@ beginfig(121);
     G;
 
   Class.AxisAlignedRectangle("AxisAlignedRectangle")
-    ("-min: Point",
-     "-max: Point")
+%    ("-min: Point",
+%     "-max: Point")
+    ()
     ("+AxisAlignedRectangle(min: Point, max: Point)",
      "+contains(p: Point): boolean",
      "+getHeight(): double",
@@ -998,9 +1020,10 @@ beginfig(122);
     G;
 
   Class.OrientedRectangle("OrientedRectangle")
-    ("-origin: Point",
-     "-height: Vector",
-     "-width: Vector")
+%    ("-origin: Point",
+%     "-height: Vector",
+%     "-width: Vector")
+    ()
     ("+OrientedRectangle(origin: Point, width: Vector, height: Vector)",
      "+OrientedRectangle(origin: Point, q: Point, r: Point)",
      "+contains(p: Point): boolean",
@@ -1077,23 +1100,541 @@ endfig;
 beginfig(125);
   save
     GenericConvexPolygon,
-    ConvexPolygon;
+    ConvexPolygon,
+    ConvexHullAlgorithm;
 
   Class.GenericConvexPolygon("GenericConvexPolygon")
-    ("-vertices: Point[*]")
+%    ("-vertices: Point[*]")
+    ()
     ("+GenericConvexPolygon(vertices: Point[*])",
      "+getVertices(): Point[*]",
      "+createFromConvexHull(point: Point[*]): GenericConvexPolygon");
 
   ClassName.ConvexPolygon("ConvexPolygon {abstract}");
+  ClassName.ConvexHullAlgorithm("ConvexHullAlgorithm");
 
-  topToBottom(20)(ConvexPolygon, GenericConvexPolygon);
+  topToBottom(20)(
+    ConvexPolygon,
+    GenericConvexPolygon,
+    ConvexHullAlgorithm);
 
-  drawObjects(GenericConvexPolygon, ConvexPolygon);
+  drawObjects(
+    GenericConvexPolygon,
+    ConvexPolygon,
+    ConvexHullAlgorithm);
 
   clink(inheritance)(GenericConvexPolygon, ConvexPolygon);
+  clink(dependency)(GenericConvexPolygon, ConvexHullAlgorithm);
 
   draw GenericConvexPolygon.sw+(13,3) -- GenericConvexPolygon.se+(-20,3);
+endfig;
+
+beginfig(126);
+  save
+    ImproveImage,
+    ImageProcessing;
+
+  Class.ImproveImage("ImproveImage")
+%    ("-ipNew: ImageProcessing")
+    ()
+    ("+checkBlur(image: BufferedImage): BufferedImage",
+     "+checkBrightness(image: BufferedImage): BufferedImage",
+     "+checkImage(image: BufferedImage): BufferedImage",
+     "+checkRotation(image: BufferedImage): BufferedImage",
+     "+checkShadow(image: BufferedImage): BufferedImage");
+
+  ClassName.ImageProcessing("ImageProcessing");
+
+  leftToRight(30)(ImproveImage, ImageProcessing);
+
+  drawObjects(ImproveImage, ImageProcessing);
+
+  clink(dependency)(ImproveImage, ImageProcessing);
+endfig;
+
+beginfig(127);
+  save
+    ImageProcessing;
+
+  Class.ImageProcessing("ImageProcessing")
+    ()
+    ("+blurBufferedImage_gaussian(image: BufferedImage): BufferedImage",
+     "+blurBufferedImage_mean(image: BufferedImage): BufferedImage",
+     "+brightenBufferedImage_linear(image: BufferedImage): BufferedImage",
+     "+brightenBufferedImage_quadratic(image: BufferedImage): BufferedImage",
+     "+cutoffRectangleBufferedImage(image: BufferedImage, x: int, y: int, width: int, height: int): BufferedImage",
+     "+edgeDetectBufferedImage(image: BufferedImage): BufferedImage",
+     "+findShades(image: BufferedImage): BufferedImage",
+     "+giveHistogram(image: BufferedImage): BufferedImage",
+     "+hasShade(image: BufferedImage, exactness: int): BufferedImage",
+     "+interpolateBufferedImage(image: BufferedImage, rect: Point[4], brightness: float): BufferedImage",
+     "+isBlurry(image: BufferedImage): int",
+     "+isDark(image: BufferedImage): int",
+     "+isRotated(image: BufferedImage): int",
+     "+isSlope(image: BufferedImage): Integer",
+     "+negativBufferedImage(image: BufferedImage): BufferedImage",
+     "+rotateBufferedImage(image: BufferedImage): BufferedImage",
+     "+sharpenBufferedImage(image: BufferedImage): BufferedImage");
+
+  drawObjects(ImageProcessing);
+endfig;
+
+beginfig(128);
+  save
+    ConnectedComponentsLabeler;
+
+  Class.ConnectedComponentsLabeler("ConnectedComponentsLabeler")
+    ()
+    ("+process(pixels: int[*], width: int, height: int, backgroundValue: int = 0): int[*]");
+
+  drawObjects(ConnectedComponentsLabeler);
+endfig;
+
+beginfig(129);
+  save
+    DilationOperator;
+
+  Class.DilationOperator("DilationOperator")
+%    ("-windowHeight: int",
+%     "-windowWidth: int")
+    ()
+    ("+DilationOperator(size: int)",
+     "+DilationOperator(width: int, height: int)",
+     "+apply(pixels: int[*], width: int, height: int): int[*]",
+     "+getWindowHeight(): int",
+     "+getWindowWidth(): int");
+
+  drawObjects(DilationOperator);
+endfig;
+
+beginfig(130);
+  save
+    ScalingOperator;
+
+  Class.ScalingOperator("ScalingOperator")
+    ()
+    ("+apply(image: BufferedImage, width: int): BufferedImage");
+
+  drawObjects(ScalingOperator);
+endfig;
+
+beginfig(131);
+  save
+    ConvexHullAlgorithm,
+    Point;
+
+  Class.ConvexHullAlgorithm("ConvexHullAlgorithm")
+%    ("-lexicalPointComparator: Comparator<Point>")
+    ()
+    ("+computeConvexHull(points: Point[*]): Point[*]",
+%     "-cross(origin: Point, p: Point, q: Point): double");
+    );
+
+  ClassName.Point("Point");
+
+  leftToRight(30)(ConvexHullAlgorithm, Point);
+
+  drawObjects(ConvexHullAlgorithm, Point);
+
+  clink(dependency)(ConvexHullAlgorithm, Point);
+endfig;
+
+beginfig(132);
+  save
+    Point,
+    Vector;
+
+  Class.Point("Point")
+%    ("-x: double",
+%     "-y: double")
+    ()
+    ("+Point(x: double, y: double)",
+     "+getX(): double",
+     "+getY(): double",
+     "+translate(v: Vector): Point");
+
+  ClassName.Vector("Vector");
+
+  leftToRight(30)(Point, Vector);
+
+  drawObjects(Point, Vector);
+
+  clink(dependency)(Point, Vector);
+endfig;
+
+beginfig(133);
+  save
+    Vector,
+    Point;
+
+  Class.Vector("Vector")
+%    ("-x: double",
+%     "-y: double")
+    ()
+    ("+Vector(x: double, y: double)",
+     "+Vector(p: Point, q: Point)",
+     "+computeAngle(v: Vector): double",
+     "+getLength(): double",
+     "+getX(): double",
+     "+getY(): double",
+%     "-inner(v: Vector): double");
+    );
+
+  ClassName.Point("Point");
+
+  leftToRight(30)(Vector, Point);
+
+  drawObjects(Vector, Point);
+
+  clink(dependency)(Vector, Point);
+endfig;
+
+beginfig(134);
+  save
+    OpenCvDeviceFrameReader,
+    OpenCvFrameReader,
+    JavaCV;
+
+  Class.OpenCvDeviceFrameReader("OpenCvDeviceFrameReader")
+%    ("-deviceNumber: int")
+    ()
+    ("#OpenCvDeviceFrameReader(deviceNumber: int, frameGrabber: OpenCVFrameGrabber)",
+     "+getDeviceNumber(): int",
+     "+hasMoreFrames(): boolean",
+     "+open(deviceNumber: int): OpenCvDeviceFrameReader");
+
+  ClassName.OpenCvFrameReader("OpenCvFrameReader {abstract}");
+
+  Package.JavaCV("com.googlecode.javacv")();
+
+  topToBottom(20)(
+    OpenCvFrameReader,
+    OpenCvDeviceFrameReader,
+    JavaCV);
+
+  drawObjects(
+    OpenCvDeviceFrameReader,
+    OpenCvFrameReader,
+    JavaCV);
+
+  clink(inheritance)(OpenCvDeviceFrameReader, OpenCvFrameReader);
+  clink(dependency)(OpenCvDeviceFrameReader, JavaCV);
+
+  draw OpenCvDeviceFrameReader.sw+(13,3) -- OpenCvDeviceFrameReader.se+(-139,3);
+endfig;
+
+beginfig(135);
+  save
+    OpenCvFileFrameReader,
+    OpenCvFrameReader,
+    SeekableFrameReader,
+    JavaCV,
+    G;
+
+  Class.OpenCvFileFrameReader("OpenCvFileFrameReader")
+%    ("-url: URL")
+    ()
+    ("#OpenCvFileFrameReader(url: URL, frameGrabber: OpenCVFrameGrabber)",
+     "+getUrl(): URL",
+     "+hasMoreFrames(): boolean",
+     "+setFrameNumber(frameNumber: int)",
+     "+skipFrames(count: int)",
+     "+open(url: URL): OpenCvFileFrameReader");
+
+  ClassName.OpenCvFrameReader("OpenCvFrameReader {abstract}");
+
+  ClassName.SeekableFrameReader("SeekableFrameReader");
+  classStereotypes.SeekableFrameReader("<<interface>>");
+  SeekableFrameReader.info.iName.top := 0;
+
+  Package.JavaCV("com.googlecode.javacv")();
+
+  Group.G(OpenCvFrameReader, SeekableFrameReader);
+
+  topToBottom(20)(
+    G,
+    OpenCvFileFrameReader,
+    JavaCV);
+
+  leftToRight(30)(OpenCvFrameReader, SeekableFrameReader);
+
+  drawObjects(
+    OpenCvFileFrameReader,
+    G,
+    JavaCV);
+
+  link(inheritance)(rpathVertical(OpenCvFrameReader.s, OpenCvFileFrameReader.top));
+  link(realization)(rpathVertical(SeekableFrameReader.s, OpenCvFileFrameReader.top));
+  clink(dependency)(OpenCvFileFrameReader, JavaCV);
+
+  draw OpenCvFileFrameReader.sw+(13,3) -- OpenCvFileFrameReader.se+(-139,3);
+endfig;
+
+beginfig(136);
+  save
+    OpenCvFrameReader,
+    FrameReader,
+    JavaCV;
+
+  Class.OpenCvFrameReader("OpenCvFrameReader {abstract}")
+    ("#frameGrabber: OpenCVFrameGrabber")
+    ("#OpenCvFrameReader(frameGrabber: OpenCVFrameGrabber)",
+     "+getCurrentFrameNumber(): int",
+     "+getHeight(): int",
+     "+getNextFrame(): BufferedImage",
+     "+getWidth(): int",
+%     "-readFrame(): IplImage");
+    );
+
+  ClassName.FrameReader("FrameReader");
+  classStereotypes.FrameReader("<<interface>>");
+  FrameReader.info.iName.top := 0;
+
+  Package.JavaCV("com.googlecode.javacv")();
+
+  topToBottom(20)(
+    FrameReader,
+    OpenCvFrameReader,
+    JavaCV);
+
+  drawObjects(
+    OpenCvFrameReader,
+    FrameReader,
+    JavaCV);
+
+  clink(realization)(OpenCvFrameReader, FrameReader);
+  clink(dependency)(OpenCvFrameReader, JavaCV);
+endfig;
+
+beginfig(137);
+  save
+    SeekableFrameReader,
+    FrameReader;
+
+  Interface.SeekableFrameReader("SeekableFrameReader")
+    ("+getLengthInFrames(): int",
+     "+setFrameNumber(frameNumber: int)",
+     "+skipFrames(count: int)");
+
+  classStereotypes.SeekableFrameReader("<<interface>>");
+
+  Interface.FrameReader("FrameReader")
+    ("+getCurrentFrameNumber(): int",
+     "+getHeight(): int",
+     "+getNextFrame(): BufferedImage",
+     "+getWidth(): int",
+     "+hasMoreFrames(): boolean");
+
+  classStereotypes.FrameReader("<<interface>>");
+
+  leftToRight(20)(FrameReader, SeekableFrameReader);
+
+  drawObjects(
+    SeekableFrameReader,
+    FrameReader);
+
+  clink(inheritance)(SeekableFrameReader, FrameReader);
+endfig;
+
+beginfig(138);
+  save
+    Serializer,
+    SerializerTemplate;
+
+  Interface.Serializer("Serializer")
+    ("+serialize(model: T, out: OutputStream)",
+     "+serialize(model: T, out: Writer)",
+     "+unserialize(in: InputStream): T",
+     "+unserialize(in: Reader): T");
+
+  classStereotypes.Serializer("<<interface>>");
+
+  ClassTemplate.SerializerTemplate("T")(Serializer);
+
+  drawObjects(Serializer, SerializerTemplate);
+endfig;
+
+beginfig(139);
+  save
+    XmlSerializer,
+    XmlSerializerTemplate,
+    Serializer,
+    SerializerTemplate,
+    XmlSerializerValidationError,
+    JavaXml,
+    DOM,
+    G;
+
+  Class.XmlSerializer("XmlSerializer {abstract}")
+%    ("-context: JAXBContext",
+%     "-includeSchemaLocation: boolean",
+%     "-includeXmlDeclaration: boolean",
+%     "-pretty: boolean",
+%     "-schema: Schema",
+%     "-schemaLocation: URL",
+%     "-urlContext: URL",
+%     "-validate: boolean")
+    ()
+    ("+XmlSerializer(contextPath: string)",
+     "+appendTo(model: T, node: Node)",
+%     "-createMarshaller(element: JAXBElement<E>): Marshaller",
+     "#createRootElement(model: T): JAXBElement<E> {abstract}",
+%     "-createUnmarshaller(): Unmarshaller",
+     "+extractFrom(node: Node): T",
+     "+getIncludeSchemaLocation(): boolean",
+     "+getIncludeXmlDeclaration(): boolean",
+     "+getPretty(): boolean",
+     "+getSchema(): Schema",
+     "+getSchemaLocation(): URL",
+     "+getUrlContext(): URL",
+     "+getValidate(): boolean",
+%     "-marshall(model: T, target: Object)",
+     "#relativizeUrl(url: URL): URL",
+     "#resolveUrl(uri: URI): URL",
+     "#resolveUrl(url: URL): URL",
+     "#restoreT(element: JAXBElement<E>): T {abstract}",
+     "+serialize(model: T, out: OutputStream)",
+     "+serialize(model: T, out: Writer)",
+     "+setIncludeSchemaLocation(include: boolean)",
+     "+setIncludeXmlDeclaration(include: boolean)",
+     "+setPretty(pretty: boolean)",
+     "+setSchema(schema: Schema)",
+     "+setSchemaLocation(url: URL, useSchema: boolean = true)",
+     "+setUrlContext(context: URL)",
+     "+setValidate(validate: boolean)",
+%     "-translateValidationErrors(validation: ValidationEventCollector): XmlSerializerValidationError[*]",
+%     "-unmarshall(source: Object): T",
+     "+unserialize(in: InputStream): T",
+     "+unserialize(in: Reader): T",
+%     "#uri2url(uri: URI): URL",
+%     "#url2uri(url: URL): URI");
+    );
+
+  ClassName.Serializer("Serializer");
+
+  ClassName.XmlSerializerValidationError("XmlSerializerValidationError");
+
+  Package.JavaXml("javax.xml")();
+  Package.DOM("org.w3c.dom")();
+
+  Group.G(XmlSerializerValidationError, JavaXml, DOM);
+
+  ClassTemplate.XmlSerializerTemplate("T, E")(XmlSerializer);
+  ClassTemplate.SerializerTemplate("T")(Serializer);
+
+  topToBottom(20)(
+    Serializer,
+    XmlSerializer,
+    G);
+
+  leftToRight(20)(XmlSerializerValidationError, JavaXml, DOM);
+
+  drawObjects(
+    XmlSerializer,
+    XmlSerializerTemplate,
+    Serializer,
+    SerializerTemplate,
+    G);
+
+  clink(realization)(XmlSerializer, Serializer);
+  link(dependency)(rpathVertical(XmlSerializerValidationError.n, XmlSerializer.bottom));
+  link(dependency)(rpathVertical(JavaXml.n, XmlSerializer.bottom));
+  link(dependency)(rpathVertical(DOM.n, XmlSerializer.bottom));
+endfig;
+
+beginfig(140);
+  save
+    XmlJobSerializer,
+    XmlSerializer,
+    Job,
+    Bindings,
+    BindingsNote,
+    G;
+
+  Class.XmlJobSerializer("XmlJobSerializer")
+%    ("-elements: ObjectFactory")
+    ()
+    ("+XmlJobSerializer()",
+%     "-createImageCollectionSourceElement(source: ImageCollectionSource): ImageCollectionSourceElement",
+%     "-createImageSequenceSourceElement(source: ImageSequenceSource): ImageSequenceSourceElement",
+%     "-createJobElement(job: Job): JobElement",
+%     "-createResourceElement(url: URL): ResourceElement",
+     "#createRootElement(job: Job): JAXBElement<JobElement>",
+%     "-createSnapshotSourceElement(source: ImageSnapshotServiceSource): SnapshotSourceElement",
+%     "-createSourceChoiceElement(source: Source): SourceChoiceElement",
+%     "-createVideoDeviceSourceElement(source: VideoDeviceSource): VideoDeviceSourceElement",
+%     "-createVideoStreamSourceElement(source: VideoStreamSource): VideoStreamSourceElement",
+%     "-restoreImageSource(element: SourceChoiceElement): Source",
+     "#restoreModel(element: JAXBElement<JobElement>): Job");
+
+  ClassName.XmlSerializer("XmlSerializer {abstract}");
+  ClassName.Job("Job");
+
+  Package.Bindings("de.tu_chemnitz.mi.barcd.xml.binding")();
+  Note.BindingsNote("mit JAXB, auf Basis des XML Schemas,", "automatisch erstellte Klassen");
+
+  Group.G(Job, Bindings);
+
+  topToBottom(20)(XmlSerializer, XmlJobSerializer, G);
+  leftToRight(30)(Job, Bindings);
+  topToBottom.right(10)(Bindings, BindingsNote);
+
+  drawObjects(XmlJobSerializer, XmlSerializer, G, BindingsNote);
+
+  clink(inheritance)(XmlJobSerializer, XmlSerializer);
+  link(dependency)(rpathVertical(Job.n, XmlJobSerializer.bottom));
+  link(dependency)(rpathVertical(Bindings.n, XmlJobSerializer.bottom));
+  link(dashedLink)(rpathVertical(BindingsNote.n, Bindings.bottom));
+endfig;
+
+beginfig(141);
+  save
+    XmlFrameSerializer,
+    XmlSerializer,
+    Frame,
+    Bindings,
+    BindingsNote,
+    G;
+
+  Class.XmlFrameSerializer("XmlFrameSerializer")
+%    ("-elements: ObjectFactory")
+    ()
+    ("+XmlFrameSerializer()",
+%     "-createBarcodeElement(barcode: Barcode): BarcodeElement",
+%     "-createBarcodesElement(barcodes: Barcode[*]): BarcodesElement",
+%     "-createFrameElement(frame: Frame): FrameElement",
+%     "-createPointElement(point: Point): PointElement",
+%     "-createPointsElement(points: Point[*]): PointsElement",
+%     "-createRegionElement(region: Region): RegionElement",
+%     "-createRegionsElement(regions: Region[*]): RegionsElement",
+     "#createRootElement(frame: Frame): JAXBElement<FrameElement>",
+%     "-restoreBarcode(element: BarcodeElement): Barcode",
+     "#restoreModel(element: JAXBElement<FrameElement>): Frame",
+%     "-restorePoints(element: PointsElement): Points[*]",
+%     "-restorePolygon(points: string): GenericConvexPolygon",
+%     "-restoreRegion(element: RegionElement): Region",
+%     "-restoreRegionlessBarcodes(element: BarcodesElement): Barcode[*]",
+%     "-restoreRegions(element: RegionsElement): Region[*]");
+    );
+
+  ClassName.XmlSerializer("XmlSerializer {abstract}");
+  ClassName.Frame("Frame");
+
+  Package.Bindings("de.tu_chemnitz.mi.barcd.xml.binding")();
+  Note.BindingsNote("mit JAXB, auf Basis des XML Schemas,", "automatisch erstellte Klassen");
+
+  Group.G(Frame, Bindings);
+
+  topToBottom(20)(XmlSerializer, XmlFrameSerializer, G);
+  leftToRight(30)(Frame, Bindings);
+  topToBottom.right(10)(Bindings, BindingsNote);
+
+  drawObjects(XmlFrameSerializer, XmlSerializer, G, BindingsNote);
+
+  clink(inheritance)(XmlFrameSerializer, XmlSerializer);
+  link(dependency)(rpathVertical(Frame.n, XmlFrameSerializer.bottom));
+  link(dependency)(rpathVertical(Bindings.n, XmlFrameSerializer.bottom));
+  link(dashedLink)(rpathVertical(BindingsNote.n, Bindings.bottom));
 endfig;
 
 end

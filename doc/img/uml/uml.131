@@ -1,0 +1,93 @@
+%!PS
+%%BoundingBox: -1 -33 272 1 
+%%HiResBoundingBox: -0.25 -32.75916 271.88707 0.25 
+%%Creator: MetaPost 1.208
+%%CreationDate: 2013.04.27:2306
+%%Pages: 1
+%*Font: ptmr8r 9.96265 9.96265 20:80e8882e7bcdb3157fdffff4
+%%BeginProlog
+%%EndProlog
+%%Page: 1 1
+ 0.7 0.7 0.7 setrgbcolor
+newpath 1 -1 moveto
+207.84622 -1 lineto
+207.84622 -32.75916 lineto
+1 -32.75916 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 0 0 moveto
+206.84622 0 lineto
+206.84622 -31.75916 lineto
+0 -31.75916 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+ [] 0 setdash 1 setlinejoin 10 setmiterlimit
+newpath 0 0 moveto
+206.84622 0 lineto
+206.84622 -31.75916 lineto
+0 -31.75916 lineto
+ closepath stroke
+ 1 setlinecap
+newpath 0 -12.75458 moveto
+206.84622 -12.75458 lineto stroke
+newpath 0 -17.25458 moveto
+206.84622 -17.25458 lineto stroke
+58.31267 -9.75458 moveto
+(ConvexHullAlgorithm) ptmr8r 9.96265 fshow
+13 -27.75916 moveto
+(computeConvexHull\(points:\040Point[*]\):\040Point[*]) ptmr8r
+ 9.96265 fshow
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -25.0592 moveto
+7.95004 -25.0592 lineto
+7.95004 -27.75916 lineto
+2 -27.75916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -27.75916 moveto
+9 -26.7092 lineto
+9 -24.00925 lineto
+7.95004 -25.0592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -25.0592 moveto
+9 -24.00925 lineto
+3.04996 -24.00925 lineto
+2 -25.0592 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 237.84622 -8.50229 moveto
+271.88707 -8.50229 lineto
+271.88707 -25.25687 lineto
+237.84622 -25.25687 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 236.84622 -7.50229 moveto
+270.88707 -7.50229 lineto
+270.88707 -24.25687 lineto
+236.84622 -24.25687 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 236.84622 -7.50229 moveto
+270.88707 -7.50229 lineto
+270.88707 -24.25687 lineto
+236.84622 -24.25687 lineto
+ closepath stroke
+newpath 236.84622 -24.25687 moveto
+270.88707 -24.25687 lineto stroke
+newpath 236.84622 -24.25687 moveto
+270.88707 -24.25687 lineto stroke
+243.34622 -19.25687 moveto
+(Point) ptmr8r 9.96265 fshow
+ [3 3 ] 0 setdash
+newpath 206.84616 -15.87958 moveto
+224.3472 -15.87958 lineto stroke
+ [] 0 setdash
+newpath 224.3472 -15.87958 moveto
+236.84741 -15.87958 lineto stroke
+newpath 236.84741 -15.87958 moveto
+224.3472 -10.87958 lineto stroke
+newpath 236.84741 -15.87958 moveto
+224.3472 -20.87958 lineto stroke
+showpage
+%%EOF

@@ -1,0 +1,138 @@
+%!PS
+%%BoundingBox: -1 -69 180 7 
+%%HiResBoundingBox: -0.25 -68.48734 179.1962 6.41849 
+%%Creator: MetaPost 1.208
+%%CreationDate: 2013.04.27:2306
+%%Pages: 1
+%*Font: ptmr8r 6.97382 9.96265 20:80c0002a32ce01007fdfbc8
+%*Font: ptmro8r 9.96265 9.96265 42:9f02c001f77ceb8
+%*Font: ptmr8r 9.96265 9.96265 20:80c80020004139004c4fbc2
+%*Font: ptmr8r 8.96632 9.96265 54:8
+%%BeginProlog
+%%EndProlog
+%%Page: 1 1
+ 0.7 0.7 0.7 setrgbcolor
+newpath 1 -1 moveto
+172.957 -1 lineto
+172.957 -68.48734 lineto
+1 -68.48734 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 0 0 moveto
+171.957 0 lineto
+171.957 -67.48734 lineto
+0 -67.48734 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+ [] 0 setdash 1 setlinejoin 10 setmiterlimit
+newpath 0 0 moveto
+171.957 0 lineto
+171.957 -67.48734 lineto
+0 -67.48734 lineto
+ closepath stroke
+ 0 setlinecap
+newpath 0 -21.48276 moveto
+171.957 -21.48276 lineto stroke
+newpath 0 -21.48276 moveto
+171.957 -21.48276 lineto stroke
+69.41515 -7.72818 moveto
+(<<interface>>) ptmr8r 6.97382 fshow
+66.89041 -18.48276 moveto
+(Serializer) ptmro8r 9.96265 fshow
+13 -31.98734 moveto
+(serialize\(model:\040T,\040out:\040OutputStream\)) ptmr8r 9.96265 fshow
+13 -42.48734 moveto
+(serialize\(model:\040T,\040out:\040Writer\)) ptmr8r 9.96265 fshow
+13 -52.98734 moveto
+(unserialize\(in:\040InputStream\):\040T) ptmr8r 9.96265 fshow
+13 -63.48734 moveto
+(unserialize\(in:\040Reader\):\040T) ptmr8r 9.96265 fshow
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -29.28738 moveto
+7.95004 -29.28738 lineto
+7.95004 -31.98734 lineto
+2 -31.98734 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -31.98734 moveto
+9 -30.93738 lineto
+9 -28.23743 lineto
+7.95004 -29.28738 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -29.28738 moveto
+9 -28.23743 lineto
+3.04996 -28.23743 lineto
+2 -29.28738 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -39.78738 moveto
+7.95004 -39.78738 lineto
+7.95004 -42.48734 lineto
+2 -42.48734 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -42.48734 moveto
+9 -41.43738 lineto
+9 -38.73743 lineto
+7.95004 -39.78738 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -39.78738 moveto
+9 -38.73743 lineto
+3.04996 -38.73743 lineto
+2 -39.78738 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -50.28738 moveto
+7.95004 -50.28738 lineto
+7.95004 -52.98734 lineto
+2 -52.98734 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -52.98734 moveto
+9 -51.93738 lineto
+9 -49.23743 lineto
+7.95004 -50.28738 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -50.28738 moveto
+9 -49.23743 lineto
+3.04996 -49.23743 lineto
+2 -50.28738 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -60.78738 moveto
+7.95004 -60.78738 lineto
+7.95004 -63.48734 lineto
+2 -63.48734 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -63.48734 moveto
+9 -62.43738 lineto
+9 -59.73743 lineto
+7.95004 -60.78738 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -60.78738 moveto
+9 -59.73743 lineto
+3.04996 -59.73743 lineto
+2 -60.78738 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 165.21779 5.91849 moveto
+178.6962 5.91849 lineto
+178.6962 -5.91849 lineto
+165.21779 -5.91849 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 1 dtransform truncate idtransform setlinewidth pop
+ [2.40001 2.40001 ] 0 setdash
+newpath 165.21779 5.91849 moveto
+178.6962 5.91849 lineto
+178.6962 -5.91849 lineto
+165.21779 -5.91849 lineto
+ closepath stroke
+169.21779 -2.91849 moveto
+(T) ptmr8r 8.96632 fshow
+showpage
+%%EOF

@@ -1,0 +1,392 @@
+%!PS
+%%BoundingBox: -1 -201 445 1 
+%%HiResBoundingBox: -0.25 -200.75916 444.65549 0.25 
+%%Creator: MetaPost 1.208
+%%CreationDate: 2013.04.27:2306
+%%Pages: 1
+%*Font: ptmr8r 9.96265 9.96265 20:80e8082e7bc5b3157fdffff4
+%%BeginProlog
+%%EndProlog
+%%Page: 1 1
+ 0.7 0.7 0.7 setrgbcolor
+newpath 1 -1 moveto
+444.65549 -1 lineto
+444.65549 -200.75916 lineto
+1 -200.75916 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 0 0 moveto
+443.65549 0 lineto
+443.65549 -199.75916 lineto
+0 -199.75916 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+ [] 0 setdash 1 setlinejoin 10 setmiterlimit
+newpath 0 0 moveto
+443.65549 0 lineto
+443.65549 -199.75916 lineto
+0 -199.75916 lineto
+ closepath stroke
+ 1 setlinecap
+newpath 0 -12.75458 moveto
+443.65549 -12.75458 lineto stroke
+newpath 0 -17.25458 moveto
+443.65549 -17.25458 lineto stroke
+187.79573 -9.75458 moveto
+(ImageProcessing) ptmr8r 9.96265 fshow
+13 -27.75916 moveto
+(blurBufferedImage_gaussian\(image:\040BufferedImage\):\040BufferedImage)
+ ptmr8r 9.96265 fshow
+13 -38.25916 moveto
+(blurBufferedImage_mean\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+ 9.96265 fshow
+13 -48.75916 moveto
+(brightenBufferedImage_linear\(image:\040BufferedImage\):\040BufferedImage)
+ ptmr8r 9.96265 fshow
+13 -59.25916 moveto
+(brightenBufferedImage_quadratic\(image:\040BufferedImage\):\040BufferedIma\
+ge) ptmr8r 9.96265 fshow
+13 -69.75916 moveto
+(cutoffRectangleBufferedImage\(image:\040BufferedImage,\040x:\040int,\040y:\
+\040int,\040width:\040int,\040height:\040int\):\040BufferedImage) ptmr8r
+ 9.96265 fshow
+13 -80.25916 moveto
+(edgeDetectBufferedImage\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+ 9.96265 fshow
+13 -90.75916 moveto
+(findShades\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+ 9.96265 fshow
+13 -101.25916 moveto
+(giveHistogram\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+ 9.96265 fshow
+13 -111.75916 moveto
+(hasShade\(image:\040BufferedImage,\040exactness:\040int\):\040BufferedImag\
+e) ptmr8r 9.96265 fshow
+13 -122.25916 moveto
+(interpolateBufferedImage\(image:\040BufferedImage,\040rect:\040Point[4],\040\
+brightness:\040float\):\040BufferedImage) ptmr8r 9.96265 fshow
+13 -132.75916 moveto
+(isBlurry\(image:\040BufferedImage\):\040int) ptmr8r 9.96265 fshow
+13 -143.25916 moveto
+(isDark\(image:\040BufferedImage\):\040int) ptmr8r 9.96265 fshow
+13 -153.75916 moveto
+(isRotated\(image:\040BufferedImage\):\040int) ptmr8r 9.96265 fshow
+13 -164.25916 moveto
+(isSlope\(image:\040BufferedImage\):\040Integer) ptmr8r 9.96265 fshow
+13 -174.75916 moveto
+(negativBufferedImage\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+ 9.96265 fshow
+13 -185.25916 moveto
+(rotateBufferedImage\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+ 9.96265 fshow
+13 -195.75916 moveto
+(sharpenBufferedImage\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+ 9.96265 fshow
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -25.0592 moveto
+7.95004 -25.0592 lineto
+7.95004 -27.75916 lineto
+2 -27.75916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -27.75916 moveto
+9 -26.7092 lineto
+9 -24.00925 lineto
+7.95004 -25.0592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -25.0592 moveto
+9 -24.00925 lineto
+3.04996 -24.00925 lineto
+2 -25.0592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -35.5592 moveto
+7.95004 -35.5592 lineto
+7.95004 -38.25916 lineto
+2 -38.25916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -38.25916 moveto
+9 -37.2092 lineto
+9 -34.50925 lineto
+7.95004 -35.5592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -35.5592 moveto
+9 -34.50925 lineto
+3.04996 -34.50925 lineto
+2 -35.5592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -46.0592 moveto
+7.95004 -46.0592 lineto
+7.95004 -48.75916 lineto
+2 -48.75916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -48.75916 moveto
+9 -47.7092 lineto
+9 -45.00925 lineto
+7.95004 -46.0592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -46.0592 moveto
+9 -45.00925 lineto
+3.04996 -45.00925 lineto
+2 -46.0592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -56.5592 moveto
+7.95004 -56.5592 lineto
+7.95004 -59.25916 lineto
+2 -59.25916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -59.25916 moveto
+9 -58.2092 lineto
+9 -55.50925 lineto
+7.95004 -56.5592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -56.5592 moveto
+9 -55.50925 lineto
+3.04996 -55.50925 lineto
+2 -56.5592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -67.0592 moveto
+7.95004 -67.0592 lineto
+7.95004 -69.75916 lineto
+2 -69.75916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -69.75916 moveto
+9 -68.7092 lineto
+9 -66.00925 lineto
+7.95004 -67.0592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -67.0592 moveto
+9 -66.00925 lineto
+3.04996 -66.00925 lineto
+2 -67.0592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -77.5592 moveto
+7.95004 -77.5592 lineto
+7.95004 -80.25916 lineto
+2 -80.25916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -80.25916 moveto
+9 -79.2092 lineto
+9 -76.50925 lineto
+7.95004 -77.5592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -77.5592 moveto
+9 -76.50925 lineto
+3.04996 -76.50925 lineto
+2 -77.5592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -88.0592 moveto
+7.95004 -88.0592 lineto
+7.95004 -90.75916 lineto
+2 -90.75916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -90.75916 moveto
+9 -89.7092 lineto
+9 -87.00925 lineto
+7.95004 -88.0592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -88.0592 moveto
+9 -87.00925 lineto
+3.04996 -87.00925 lineto
+2 -88.0592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -98.5592 moveto
+7.95004 -98.5592 lineto
+7.95004 -101.25916 lineto
+2 -101.25916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -101.25916 moveto
+9 -100.2092 lineto
+9 -97.50925 lineto
+7.95004 -98.5592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -98.5592 moveto
+9 -97.50925 lineto
+3.04996 -97.50925 lineto
+2 -98.5592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -109.0592 moveto
+7.95004 -109.0592 lineto
+7.95004 -111.75916 lineto
+2 -111.75916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -111.75916 moveto
+9 -110.7092 lineto
+9 -108.00925 lineto
+7.95004 -109.0592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -109.0592 moveto
+9 -108.00925 lineto
+3.04996 -108.00925 lineto
+2 -109.0592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -119.5592 moveto
+7.95004 -119.5592 lineto
+7.95004 -122.25916 lineto
+2 -122.25916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -122.25916 moveto
+9 -121.2092 lineto
+9 -118.50925 lineto
+7.95004 -119.5592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -119.5592 moveto
+9 -118.50925 lineto
+3.04996 -118.50925 lineto
+2 -119.5592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -130.0592 moveto
+7.95004 -130.0592 lineto
+7.95004 -132.75916 lineto
+2 -132.75916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -132.75916 moveto
+9 -131.7092 lineto
+9 -129.00925 lineto
+7.95004 -130.0592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -130.0592 moveto
+9 -129.00925 lineto
+3.04996 -129.00925 lineto
+2 -130.0592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -140.5592 moveto
+7.95004 -140.5592 lineto
+7.95004 -143.25916 lineto
+2 -143.25916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -143.25916 moveto
+9 -142.2092 lineto
+9 -139.50925 lineto
+7.95004 -140.5592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -140.5592 moveto
+9 -139.50925 lineto
+3.04996 -139.50925 lineto
+2 -140.5592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -151.0592 moveto
+7.95004 -151.0592 lineto
+7.95004 -153.75916 lineto
+2 -153.75916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -153.75916 moveto
+9 -152.7092 lineto
+9 -150.00925 lineto
+7.95004 -151.0592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -151.0592 moveto
+9 -150.00925 lineto
+3.04996 -150.00925 lineto
+2 -151.0592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -161.5592 moveto
+7.95004 -161.5592 lineto
+7.95004 -164.25916 lineto
+2 -164.25916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -164.25916 moveto
+9 -163.2092 lineto
+9 -160.50925 lineto
+7.95004 -161.5592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -161.5592 moveto
+9 -160.50925 lineto
+3.04996 -160.50925 lineto
+2 -161.5592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -172.0592 moveto
+7.95004 -172.0592 lineto
+7.95004 -174.75916 lineto
+2 -174.75916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -174.75916 moveto
+9 -173.7092 lineto
+9 -171.00925 lineto
+7.95004 -172.0592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -172.0592 moveto
+9 -171.00925 lineto
+3.04996 -171.00925 lineto
+2 -172.0592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -182.5592 moveto
+7.95004 -182.5592 lineto
+7.95004 -185.25916 lineto
+2 -185.25916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -185.25916 moveto
+9 -184.2092 lineto
+9 -181.50925 lineto
+7.95004 -182.5592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -182.5592 moveto
+9 -181.50925 lineto
+3.04996 -181.50925 lineto
+2 -182.5592 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -193.0592 moveto
+7.95004 -193.0592 lineto
+7.95004 -195.75916 lineto
+2 -195.75916 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -195.75916 moveto
+9 -194.7092 lineto
+9 -192.00925 lineto
+7.95004 -193.0592 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -193.0592 moveto
+9 -192.00925 lineto
+3.04996 -192.00925 lineto
+2 -193.0592 lineto
+ closepath fill
+showpage
+%%EOF

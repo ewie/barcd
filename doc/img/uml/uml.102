@@ -2,7 +2,7 @@
 %%BoundingBox: -1 -48 313 1 
 %%HiResBoundingBox: -0.25 -47.48734 312.28024 0.25 
 %%Creator: MetaPost 1.208
-%%CreationDate: 2013.04.27:0130
+%%CreationDate: 2013.04.27:2306
 %%Pages: 1
 %*Font: ptmr8r 6.97382 9.96265 3c:a0000000056472c
 %*Font: ptmro8r 9.96265 9.96265 42:8000800170048
@@ -29,7 +29,7 @@ newpath 0 0 moveto
 215.085 -46.48734 lineto
 0 -46.48734 lineto
  closepath stroke
- 0 setlinecap
+ 1 setlinecap
 newpath 0 -21.48276 moveto
 215.085 -21.48276 lineto stroke
 newpath 0 -21.48276 moveto
