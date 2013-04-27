@@ -336,18 +336,6 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
         }
     }
 
-    protected URL resolveUrl(String rawUrl)
-        throws XmlSerializerException
-    {
-        URL url;
-        try {
-            url = new URL(rawUrl);
-        } catch (MalformedURLException ex) {
-            throw new XmlSerializerException("invalid URL", ex);
-        }
-        return resolveUrl(url);
-    }
-
     protected URL resolveUrl(URI uri)
         throws XmlSerializerException
     {
