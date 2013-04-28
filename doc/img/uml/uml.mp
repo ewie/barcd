@@ -89,7 +89,6 @@ beginfig(9);
     BufferedImageProvider;
 
   Class.BufferedImageSource("BufferedImageSource")
-%    ("-images: BufferedSourcemage[*]")
     ()
     ("+BufferedImageSource(images: BufferedImage[*])",
      "+createImageProvider(frameNumber: int): BufferedImageProvider");
@@ -114,7 +113,6 @@ beginfig(10);
     RemoteImageProvider;
 
   Class.ImageCollectionSource("ImageCollectionSource")
-%    ("-urls: URL[*]")
     ()
     ("+ImageCollectionSource(urls: URL[*])",
      "+createImageProvider(frameNumber: int): RemoteImageProvider",
@@ -142,7 +140,6 @@ beginfig(11);
     G;
 
   Class.ImageSequenceSource("ImageSequenceSource")
-%    ("-sequence: TemplatedUrlSequence")
     ()
     ("+ImageSequenceSource(sequence: TemplatedUrlSequence)",
      "+createImageProvider(frameNumber: int): RemoteImageProvider",
@@ -173,7 +170,6 @@ beginfig(12);
     RemoteImageProvider;
 
   Class.ImageSnapshotServiceSource("ImageSnapshotServiceSource")
-%    ("-url: URL")
     ()
     ("+ImageSnapshotServiceSource(url: URL)",
      "+createImageProvider(frameNumber: int): RemoteImageProvider",
@@ -201,7 +197,6 @@ beginfig(13);
     G;
 
   Class.VideoDeviceSource("VideoDeviceSource")
-%    ("-deviceId: int")
     ()
     ("+VideoDeviceSource(deviceId: int)",
      "+createImageProvider(frameNumber: int): VideoImageProvider",
@@ -235,7 +230,6 @@ beginfig(14);
     G;
 
   Class.VideoStreamSource("VideoStreamSource")
-%    ("-url: URL")
     ()
     ("+VideoStreamSource(url: URL)",
      "+createImageProvider(frameNumber: int): VideoImageProvider",
@@ -266,7 +260,6 @@ beginfig(15);
     ImageProvider;
 
   Class.BufferedImageProvider("BufferedImageProvider")
-%    ("-images: Iterator<BufferedImage>")
     ()
     ("+BufferedImageProvider(images: Iterator<BufferedImage>)",
      "+consume(): BufferedImage",
@@ -290,7 +283,6 @@ beginfig(16);
     ImageProvider;
 
   Class.RemoteImageProvider("RemoteImageProvider")
-%    ("-urls: Iterator<URL>")
     ()
     ("+RemoteImageProvider(urls: Iterator<URL>)",
      "+consume(): BufferedImage",
@@ -315,7 +307,6 @@ beginfig(17);
     FrameReader;
 
   Class.VideoImageProvider("VideoImageProvider")
-%    ("-frameReader: FrameReader")
     ()
     ("+VideoImageProvider(frameReader: FrameReader)",
      "+consume(): BufferedImage",
@@ -345,10 +336,6 @@ beginfig(101);
        G;
 
   Class.Barcode("Barcode")
-%    ("-anchorPoints: Point[*]",
-%     "-bytes: byte[*]",
-%     "-text: string",
-%     "-type: BarcodeType")
     ()
     ("+Barcode(type: BarcodeType, text: string, bytes: byte[*], points: Point[*])",
      "+getAnchorPoints(): Point[*]",
@@ -428,17 +415,9 @@ beginfig(104);
     G;
 
   Class.DefaultBarcodeReader("DefaultBarcodeReader")
-%    ("-multiFormatReader: MultiFormatReader",
-%     "-multipleBarcodeReader: MultipleBarcodeReader")
     ()
-%    ("-createBitmap(image: BufferedImage): BinaryBitmap",
     ("+read(image: BufferedImage): Barcode",
-     "+readMultiple(image: BufferedImage): Barcode[*]",
-%     "-translateBarcodeFormat(format: BarcodeFormat): BarcodeType",
-%     "-translateResult(result: Result): Barcode",
-%     "-translateResultPoints(points: ResultPoint[*]): Point[*]",
-%     "-translateResults(results: Result[*]): Barcode[*]");
-    );
+     "+readMultiple(image: BufferedImage): Barcode[*]");
 
   ClassName.BarcodeReader("BarcodeReader");
   classStereotypes.BarcodeReader("<<interface>>");
@@ -485,7 +464,6 @@ beginfig(106);
     G;
 
   Class.DefaultImageEnhancer("DefaultImageEnhancer")
-%    ("-improve: ImproveImage")
     ()
     ("+enhanceImage(image: BufferedImage): BufferedImage");
 
@@ -515,17 +493,8 @@ beginfig(107);
     G;
 
   Class.DefaultRegionExtractor("DefaultRegionExtractor")
-%    ("-gx: ConvolveOp",
-%     "-gy: ConvolveOp",
-%     "-dilate: DilationOperator",
-%     "-scale: ScalingOperator")
     ()
-    (
-%    "-createRegions(pixels: int[*], width: int, height: int, scale: double): Region[*]",
-%     "-extractEdges(raster: Raster): int[*]",
-     "+extractRegions(image: BufferedImage): Region[*]",
-%     "-performSegmentation(pixels: int[*], width: int, height: int)");
-    );
+    ("+extractRegions(image: BufferedImage): Region[*]");
 
   ClassName.Region("Region");
   ClassName.DilationOperator("DilationOperator");
@@ -582,20 +551,11 @@ beginfig(109);
        RegionSelector;
 
   Class.Extractor("Exractor")
-%    ("-enhancer: ImageEnhancer",
-%     "-frameHandler: FrameHandler",
-%     "-grayscaler: Grayscaler",
-%     "-imageProvider: ImageProvider",
-%     "-job: Job",
-%     "-reader: BarcodeReader",
-%     "-regionExtractor: RegionExtractor",
-%     "-regionSelector: RegionSelector")
     ()
     ("+Extractor(job: Job)",
      "+getJob(): Job",
      "+hasMoreImages(): boolean",
      "+processNextImage()",
-%     "-reportFrame(frame: Frame, image: BufferedImage)",
      "+setBarcodeReader(reader: BarcodeReader)",
      "+setFrameHandler(handler: FrameHandler)",
      "+setGrayscaler(grayscaler: Grayscaler)",
@@ -652,9 +612,6 @@ beginfig(110);
     Frame;
 
   Class.Frame("Frame")
-%    ("-number: int",
-%     "-regionlessBarcodes: Barcode[*]",
-%     "-regions: Region[*]")
     ()
     ("+Frame(number: int)",
      "+Frame(number: int, regions: Region[*], barcodes: Barcode[*])",
@@ -744,10 +701,6 @@ beginfig(115);
     G;
 
   Class.Job("Job")
-%    ("-frames: Frame[*]",
-%     "-initialFrameNumber: int",
-%     "-nextFrameNumber: int",
-%     "-source: Source")
     ()
     ("+Job(source: Source, initialFrameNumber: int = 0)",
      "+createFrame(): Frame",
@@ -784,11 +737,6 @@ beginfig(116);
     F;
 
   Class.Region("Region")
-%    ("-axisAlignedRectangle: AxisAlignedRectangle",
-%     "-barcode: Barcode",
-%     "-convexPolygon: ConvexPolygon",
-%     "-coverage: double",
-%     "-orientedRectangle: OrientedRectangle")
     ()
     ("+Region(polygon: ConvexPolygon, coverage: double)",
      "+contains(point: Point): boolean",
@@ -978,8 +926,6 @@ beginfig(121);
     G;
 
   Class.AxisAlignedRectangle("AxisAlignedRectangle")
-%    ("-min: Point",
-%     "-max: Point")
     ()
     ("+AxisAlignedRectangle(min: Point, max: Point)",
      "+contains(p: Point): boolean",
@@ -1020,9 +966,6 @@ beginfig(122);
     G;
 
   Class.OrientedRectangle("OrientedRectangle")
-%    ("-origin: Point",
-%     "-height: Vector",
-%     "-width: Vector")
     ()
     ("+OrientedRectangle(origin: Point, width: Vector, height: Vector)",
      "+OrientedRectangle(origin: Point, q: Point, r: Point)",
@@ -1104,7 +1047,6 @@ beginfig(125);
     ConvexHullAlgorithm;
 
   Class.GenericConvexPolygon("GenericConvexPolygon")
-%    ("-vertices: Point[*]")
     ()
     ("+GenericConvexPolygon(vertices: Point[*])",
      "+getVertices(): Point[*]",
@@ -1135,7 +1077,6 @@ beginfig(126);
     ImageProcessing;
 
   Class.ImproveImage("ImproveImage")
-%    ("-ipNew: ImageProcessing")
     ()
     ("+checkBlur(image: BufferedImage): BufferedImage",
      "+checkBrightness(image: BufferedImage): BufferedImage",
@@ -1195,8 +1136,6 @@ beginfig(129);
     DilationOperator;
 
   Class.DilationOperator("DilationOperator")
-%    ("-windowHeight: int",
-%     "-windowWidth: int")
     ()
     ("+DilationOperator(size: int)",
      "+DilationOperator(width: int, height: int)",
@@ -1224,11 +1163,8 @@ beginfig(131);
     Point;
 
   Class.ConvexHullAlgorithm("ConvexHullAlgorithm")
-%    ("-lexicalPointComparator: Comparator<Point>")
     ()
-    ("+computeConvexHull(points: Point[*]): Point[*]",
-%     "-cross(origin: Point, p: Point, q: Point): double");
-    );
+    ("+computeConvexHull(points: Point[*]): Point[*]");
 
   ClassName.Point("Point");
 
@@ -1245,8 +1181,6 @@ beginfig(132);
     Vector;
 
   Class.Point("Point")
-%    ("-x: double",
-%     "-y: double")
     ()
     ("+Point(x: double, y: double)",
      "+getX(): double",
@@ -1268,17 +1202,13 @@ beginfig(133);
     Point;
 
   Class.Vector("Vector")
-%    ("-x: double",
-%     "-y: double")
     ()
     ("+Vector(x: double, y: double)",
      "+Vector(p: Point, q: Point)",
      "+computeAngle(v: Vector): double",
      "+getLength(): double",
      "+getX(): double",
-     "+getY(): double",
-%     "-inner(v: Vector): double");
-    );
+     "+getY(): double");
 
   ClassName.Point("Point");
 
@@ -1296,7 +1226,6 @@ beginfig(134);
     JavaCV;
 
   Class.OpenCvDeviceFrameReader("OpenCvDeviceFrameReader")
-%    ("-deviceNumber: int")
     ()
     ("#OpenCvDeviceFrameReader(deviceNumber: int, frameGrabber: OpenCVFrameGrabber)",
      "+getDeviceNumber(): int",
@@ -1332,7 +1261,6 @@ beginfig(135);
     G;
 
   Class.OpenCvFileFrameReader("OpenCvFileFrameReader")
-%    ("-url: URL")
     ()
     ("#OpenCvFileFrameReader(url: URL, frameGrabber: OpenCVFrameGrabber)",
      "+getUrl(): URL",
@@ -1382,9 +1310,7 @@ beginfig(136);
      "+getCurrentFrameNumber(): int",
      "+getHeight(): int",
      "+getNextFrame(): BufferedImage",
-     "+getWidth(): int",
-%     "-readFrame(): IplImage");
-    );
+     "+getWidth(): int");
 
   ClassName.FrameReader("FrameReader");
   classStereotypes.FrameReader("<<interface>>");
@@ -1466,20 +1392,10 @@ beginfig(139);
     G;
 
   Class.XmlSerializer("XmlSerializer {abstract}")
-%    ("-context: JAXBContext",
-%     "-includeSchemaLocation: boolean",
-%     "-includeXmlDeclaration: boolean",
-%     "-pretty: boolean",
-%     "-schema: Schema",
-%     "-schemaLocation: URL",
-%     "-urlContext: URL",
-%     "-validate: boolean")
     ()
     ("+XmlSerializer(contextPath: string)",
      "+appendTo(model: T, node: Node)",
-%     "-createMarshaller(element: JAXBElement<E>): Marshaller",
      "#createRootElement(model: T): JAXBElement<E> {abstract}",
-%     "-createUnmarshaller(): Unmarshaller",
      "+extractFrom(node: Node): T",
      "+getIncludeSchemaLocation(): boolean",
      "+getIncludeXmlDeclaration(): boolean",
@@ -1488,7 +1404,6 @@ beginfig(139);
      "+getSchemaLocation(): URL",
      "+getUrlContext(): URL",
      "+getValidate(): boolean",
-%     "-marshall(model: T, target: Object)",
      "#relativizeUrl(url: URL): URL",
      "#resolveUrl(uri: URI): URL",
      "#resolveUrl(url: URL): URL",
@@ -1502,13 +1417,10 @@ beginfig(139);
      "+setSchemaLocation(url: URL, useSchema: boolean = true)",
      "+setUrlContext(context: URL)",
      "+setValidate(validate: boolean)",
-%     "-translateValidationErrors(validation: ValidationEventCollector): XmlSerializerValidationError[*]",
-%     "-unmarshall(source: Object): T",
      "+unserialize(in: InputStream): T",
      "+unserialize(in: Reader): T",
-%     "#uri2url(uri: URI): URL",
-%     "#url2uri(url: URL): URI");
-    );
+     "#uri2url(uri: URI): URL",
+     "#url2uri(url: URL): URI");
 
   ClassName.Serializer("Serializer");
 
@@ -1552,19 +1464,9 @@ beginfig(140);
     G;
 
   Class.XmlJobSerializer("XmlJobSerializer")
-%    ("-elements: ObjectFactory")
     ()
     ("+XmlJobSerializer()",
-%     "-createImageCollectionSourceElement(source: ImageCollectionSource): ImageCollectionSourceElement",
-%     "-createImageSequenceSourceElement(source: ImageSequenceSource): ImageSequenceSourceElement",
-%     "-createJobElement(job: Job): JobElement",
-%     "-createResourceElement(url: URL): ResourceElement",
      "#createRootElement(job: Job): JAXBElement<JobElement>",
-%     "-createSnapshotSourceElement(source: ImageSnapshotServiceSource): SnapshotSourceElement",
-%     "-createSourceChoiceElement(source: Source): SourceChoiceElement",
-%     "-createVideoDeviceSourceElement(source: VideoDeviceSource): VideoDeviceSourceElement",
-%     "-createVideoStreamSourceElement(source: VideoStreamSource): VideoStreamSourceElement",
-%     "-restoreImageSource(element: SourceChoiceElement): Source",
      "#restoreModel(element: JAXBElement<JobElement>): Job");
 
   ClassName.XmlSerializer("XmlSerializer {abstract}");
@@ -1597,25 +1499,10 @@ beginfig(141);
     G;
 
   Class.XmlFrameSerializer("XmlFrameSerializer")
-%    ("-elements: ObjectFactory")
     ()
     ("+XmlFrameSerializer()",
-%     "-createBarcodeElement(barcode: Barcode): BarcodeElement",
-%     "-createBarcodesElement(barcodes: Barcode[*]): BarcodesElement",
-%     "-createFrameElement(frame: Frame): FrameElement",
-%     "-createPointElement(point: Point): PointElement",
-%     "-createPointsElement(points: Point[*]): PointsElement",
-%     "-createRegionElement(region: Region): RegionElement",
-%     "-createRegionsElement(regions: Region[*]): RegionsElement",
      "#createRootElement(frame: Frame): JAXBElement<FrameElement>",
-%     "-restoreBarcode(element: BarcodeElement): Barcode",
-     "#restoreModel(element: JAXBElement<FrameElement>): Frame",
-%     "-restorePoints(element: PointsElement): Points[*]",
-%     "-restorePolygon(points: string): GenericConvexPolygon",
-%     "-restoreRegion(element: RegionElement): Region",
-%     "-restoreRegionlessBarcodes(element: BarcodesElement): Barcode[*]",
-%     "-restoreRegions(element: RegionsElement): Region[*]");
-    );
+     "#restoreModel(element: JAXBElement<FrameElement>): Frame");
 
   ClassName.XmlSerializer("XmlSerializer {abstract}");
   ClassName.Frame("Frame");
