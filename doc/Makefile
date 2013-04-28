@@ -12,6 +12,9 @@ $(UML):
 	cd ./img/uml; \
 	rm -f `ls | grep -P "\.\d+"`; \
 	mpost $(UML).mp; \
+	for file in `ls | grep -P "\.\d+"`; do \
+		sed -i -E 's/(%%CreationDate:).*/\1 [STRIPPED]/' $$file; \
+	done; \
 	cd -
 
 cleanaux:
