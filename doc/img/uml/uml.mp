@@ -1661,5 +1661,19 @@ beginfig(141);
   link(dashedLink)(rpathVertical(BindingsNote.n, Bindings.bottom));
 endfig;
 
+beginfig(142);
+  save
+    XmlSerializerValidationError;
+
+  Class.XmlSerializerValidationError("XmlSerializerValidationError")
+    ()
+    ("+XmlSerializerValidationError(message: string, line: int, column: int)",
+     "+getColumn(): int",
+     "+getLine(): int",
+     "+getMessage(): string");
+
+  drawObjects(XmlSerializerValidationError);
+endfig;
+
 end
 
