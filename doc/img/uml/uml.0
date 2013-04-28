@@ -5,7 +5,7 @@
 %%CreationDate: [STRIPPED]
 %%Pages: 1
 %*Font: ptmr8r 9.96265 9.96265 20:8000000026e0b0007d4f3e94
-%*Font: ptmr8r 6.97382 9.96265 2a:8b002800000001591cf1
+%*Font: ptmr8r 6.97382 9.96265 2a:8b002800000001591cf
 %%BeginProlog
 %%EndProlog
 %%Page: 1 1
@@ -207,10 +207,8 @@ newpath -216.67152 76.62007 moveto
 -132.96751 76.62007 lineto stroke
 -210.17152 81.62007 moveto
 (Source\040{abstract}) ptmr8r 9.96265 fshow
- [3 3 ] 0 setdash
 newpath -98.98302 30.13466 moveto
 -150.8229 -15.15623 lineto stroke
- [] 0 setdash
 newpath -150.8229 -15.15623 moveto
 -160.23567 -23.37987 lineto stroke
 newpath -160.23567 -23.37987 moveto
@@ -240,10 +238,8 @@ newpath 3.87132 77.04033 moveto
 newpath 3.87132 77.04033 moveto
 -5.76665 67.64024 lineto stroke
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
- [3 3 ] 0 setdash
 newpath -89.54851 46.61987 moveto
 -89.54851 64.1205 lineto stroke
- [] 0 setdash
 newpath -89.54851 64.1205 moveto
 -89.54851 76.62042 lineto stroke
  0 0.5 dtransform truncate idtransform setlinewidth pop
@@ -251,10 +247,8 @@ newpath -89.54851 76.62042 moveto
 -94.54851 64.1205 lineto stroke
 newpath -89.54851 76.62042 moveto
 -84.54851 64.1205 lineto stroke
- [3 3 ] 0 setdash
 newpath -85.55383 30.13466 moveto
 -64.34332 -13.63138 lineto stroke
- [] 0 setdash
 newpath -64.34332 -13.63138 moveto
 -58.89182 -24.88014 lineto stroke
 newpath -58.89182 -24.88014 moveto
@@ -366,18 +360,18 @@ newpath 13.09763 64.25443 moveto
 13.09763 76.75458 lineto
 18.09763 70.5045 lineto
  closepath stroke
--130.184 -2.8874 moveto
-(<<consume>>) ptmr8r 6.97382 fshow
--74.6145 -1.2361 moveto
-(<<notify>>) ptmr8r 6.97382 fshow
 -172.81952 70.67993 moveto
 (<<create>>) ptmr8r 6.97382 fshow
--49.41489 63.68732 moveto
+-62.51321 40.37729 moveto
 (<<create>>) ptmr8r 6.97382 fshow
--59.41487 40.31003 moveto
+-49.41489 68.68732 moveto
 (<<create>>) ptmr8r 6.97382 fshow
--31.22543 12.96266 moveto
+-49.41487 22.06725 moveto
 (<<create>>) ptmr8r 6.97382 fshow
+-130.184 -2.72005 moveto
+(consumes) ptmr8r 6.97382 fshow
+-69.49623 0.2632 moveto
+(notifies) ptmr8r 6.97382 fshow
 -1.61641 86.99736 moveto
 (*) ptmr8r 6.97382 fshow
 15.09763 48.75458 moveto

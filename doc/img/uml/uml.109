@@ -393,30 +393,24 @@ newpath 139.16829 -169.9729 moveto
 (<<interface>>) ptmr8r 6.97382 fshow
 145.66829 -164.9729 moveto
 (RegionSelector) ptmr8r 9.96265 fshow
- [3 3 ] 0 setdash
 newpath 207.0751 -15.26231 moveto
 227.12816 -15.26231 lineto stroke
- [] 0 setdash
 newpath 227.12816 -15.26231 moveto
 239.62808 -15.26231 lineto stroke
 newpath 239.62808 -15.26231 moveto
 227.12816 -10.26231 lineto stroke
 newpath 239.62808 -15.26231 moveto
 227.12816 -20.26231 lineto stroke
- [3 3 ] 0 setdash
 newpath 207.0751 -57.74507 moveto
 236.25867 -57.74507 lineto stroke
- [] 0 setdash
 newpath 236.25867 -57.74507 moveto
 248.75882 -57.74507 lineto stroke
 newpath 248.75882 -57.74507 moveto
 236.25867 -52.74507 lineto stroke
 newpath 248.75882 -57.74507 moveto
 236.25867 -62.74507 lineto stroke
- [3 3 ] 0 setdash
 newpath 207.0751 -100.22783 moveto
 226.5751 -100.22783 lineto stroke
- [] 0 setdash
 newpath 226.5751 -100.22783 moveto
 239.0751 -100.22783 lineto stroke
 newpath 239.0751 -100.22783 moveto
@@ -424,10 +418,8 @@ newpath 239.0751 -100.22783 moveto
 newpath 239.0751 -100.22783 moveto
 226.5751 -105.22783 lineto stroke
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
- [3 3 ] 0 setdash
 newpath 79.74208 -115.49014 moveto
 79.74208 -134.99014 lineto stroke
- [] 0 setdash
 newpath 79.74208 -134.99014 moveto
 79.74208 -147.49014 lineto stroke
  0 0.5 dtransform truncate idtransform setlinewidth pop
@@ -436,10 +428,8 @@ newpath 79.74208 -147.49014 moveto
 newpath 79.74208 -147.49014 moveto
 74.74208 -134.99014 lineto stroke
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
- [3 3 ] 0 setdash
 newpath 176.38277 -115.49014 moveto
 176.38277 -134.99014 lineto stroke
- [] 0 setdash
 newpath 176.38277 -134.99014 moveto
 176.38277 -147.49014 lineto stroke
  0 0.5 dtransform truncate idtransform setlinewidth pop
@@ -448,10 +438,8 @@ newpath 176.38277 -147.49014 moveto
 newpath 176.38277 -147.49014 moveto
 171.38277 -134.99014 lineto stroke
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
- [3 3 ] 0 setdash
 newpath 6.89685 -115.49014 moveto
 6.89685 -137.85422 lineto stroke
- [] 0 setdash
 newpath 6.89685 -137.85422 moveto
 6.89685 -150.35423 lineto stroke
  0 0.5 dtransform truncate idtransform setlinewidth pop

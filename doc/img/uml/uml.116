@@ -5,7 +5,7 @@
 %%CreationDate: [STRIPPED]
 %%Pages: 1
 %*Font: ptmr8r 9.96265 9.96265 20:80e800207301a0147d4fbed4
-%*Font: ptmr8r 6.97382 9.96265 2e:b0028000000015000a
+%*Font: ptmr8r 6.97382 9.96265 2e:b0000000000015000e
 %%BeginProlog
 %%EndProlog
 %%Page: 1 1
@@ -388,10 +388,8 @@ newpath 118.3187 -138.75903 moveto
 123.3187 -132.5091 lineto
  closepath stroke
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
- [3 3 ] 0 setdash
 newpath 188.75244 -126.25916 moveto
 188.75244 -165.75905 lineto stroke
- [] 0 setdash
 newpath 188.75244 -165.75905 moveto
 188.75244 -178.25916 lineto stroke
  0 0.5 dtransform truncate idtransform setlinewidth pop
@@ -400,10 +398,8 @@ newpath 188.75244 -178.25916 moveto
 newpath 188.75244 -178.25916 moveto
 183.75244 -165.75905 lineto stroke
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
- [3 3 ] 0 setdash
 newpath 252.60194 -126.25916 moveto
 252.60194 -165.75905 lineto stroke
- [] 0 setdash
 newpath 252.60194 -165.75905 moveto
 252.60194 -178.25916 lineto stroke
  0 0.5 dtransform truncate idtransform setlinewidth pop
@@ -412,10 +408,8 @@ newpath 252.60194 -178.25916 moveto
 newpath 252.60194 -178.25916 moveto
 247.60194 -165.75905 lineto stroke
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
- [3 3 ] 0 setdash
 newpath 53.3702 -126.25916 moveto
 53.3702 -193.75914 lineto stroke
- [] 0 setdash
 newpath 53.3702 -193.75914 moveto
 53.3702 -206.25916 lineto stroke
  0 0.5 dtransform truncate idtransform setlinewidth pop
@@ -424,9 +418,11 @@ newpath 53.3702 -206.25916 moveto
 newpath 53.3702 -206.25916 moveto
 48.3702 -193.75914 lineto stroke
 190.75244 -134.1993 moveto
-(<<create>>) ptmr8r 6.97382 fshow
+(creates) ptmr8r 6.97382 fshow
 254.60194 -134.1993 moveto
-(<<create>>) ptmr8r 6.97382 fshow
+(creates) ptmr8r 6.97382 fshow
+56.3702 -132.1993 moveto
+(creates) ptmr8r 6.97382 fshow
 12.63689 -146.25916 moveto
 (0..1) ptmr8r 6.97382 fshow
 newpath 13 -112.75916 moveto

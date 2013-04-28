@@ -55,11 +55,11 @@ beginfig(0);
     Region,
     Source);
 
-  clink(dependency)(Extractor, ImageProvider);
+  clink(associationUni)(Extractor, ImageProvider);
   clink(dependency)(Source, ImageProvider);
   clink(dependency)(Extractor, Frame);
-  clink(dependency)(Extractor, Job);
-  clink(dependency)(Extractor, FrameHandler);
+  clink(associationUni)(Extractor, Job);
+  clink(associationUni)(Extractor, FrameHandler);
   clink(dependency)(Extractor, Barcode);
   clink(dependency)(Extractor, Region);
   link(dependency)(pathStepX(FrameHandler.e, Frame.e, 80));
@@ -70,12 +70,13 @@ beginfig(0);
   link(aggregation)(pathVertical(Barcode.n + (-10, 0), Region.bottom));
   link(aggregation)(pathVertical(Region.n + (10, 0), Frame.bottom));
 
-  item(iStereo)("<<consume>>")(obj.w = .5[ImageProvider.s, Extractor.n]);
-  item(iStereo)("<<notify>>")(obj.w = .5[Extractor.e, FrameHandler.w]);
   item(iStereo)("<<create>>")(obj.nw = Source.s);
-  item(iStereo)("<<create>>")(obj.s = .5[Frame.s, Extractor.n]);
-  item(iStereo)("<<create>>")(obj.s = .5[Extractor.n, Region.s]);
-  item(iStereo)("<<create>>")(obj.w = .5[Extractor.n, Barcode.s]);
+  item(iStereo)("<<create>>")(obj.sw = Extractor.e);
+  item(iStereo)("<<create>>")(obj.s = .5[Frame.s, Extractor.n] + (0, 5));
+  item(iStereo)("<<create>>")(obj.s = .5[Extractor.s, Barcode.n] + (0, 5));
+
+  item(iAssoc)("consumes")(obj.w = .5[ImageProvider.s, Extractor.n]);
+  item(iAssoc)("notifies")(obj.w = .5[Extractor.s, FrameHandler.n]);
 
   item(iAssoc)("*")(obj.se = Frame.w);
   item(iAssoc)("*")(obj.sw = Region.n + (10, 0));
@@ -180,7 +181,7 @@ beginfig(11);
 
   clink(inheritance)(ImageSequenceSource, Source);
   link(dependency)(rpathVertical(RemoteImageProvider.n, ImageSequenceSource.bottom));
-  link(dependency)(rpathVertical(TemplatedUrlSequence.n, ImageSequenceSource.bottom));
+  link(associationUni)(rpathVertical(TemplatedUrlSequence.n, ImageSequenceSource.bottom));
 
   item(iStereo)("<<create>>")(obj.nw = RemoteImageProvider.n + (0, 20));
 endfig;
@@ -252,10 +253,10 @@ beginfig(13);
 
   clink(inheritance)(VideoDeviceSource, Source);
   link(dependency)(rpathVertical(VideoImageProvider.n, VideoDeviceSource.bottom));
-  link(dependency)(rpathVertical(OpenCvDeviceFrameReader.n, VideoDeviceSource.bottom));
+  link(associationUni)(rpathVertical(OpenCvDeviceFrameReader.n, VideoDeviceSource.bottom));
 
   item(iStereo)("<<create>>")(obj.nw = VideoImageProvider.n + (0, 20));
-  item(iStereo)("<<create>>")(obj.nw = OpenCvDeviceFrameReader.n + (0, 20));
+  item(iAssoc)("creates")(obj.nw = OpenCvDeviceFrameReader.n + (0, 20));
 endfig;
 
 beginfig(14);
@@ -294,10 +295,10 @@ beginfig(14);
 
   clink(inheritance)(VideoStreamSource, Source);
   link(dependency)(rpathVertical(VideoImageProvider.n, VideoStreamSource.bottom));
-  link(dependency)(rpathVertical(OpenCvFileFrameReader.n, VideoStreamSource.bottom));
+  link(associationUni)(rpathVertical(OpenCvFileFrameReader.n, VideoStreamSource.bottom));
 
   item(iStereo)("<<create>>")(obj.nw = VideoImageProvider.n + (0, 20));
-  item(iStereo)("<<create>>")(obj.nw = OpenCvFileFrameReader.n + (0, 20));
+  item(iAssoc)("creates")(obj.nw = OpenCvFileFrameReader.n + (0, 20));
 endfig;
 
 beginfig(15);
@@ -386,7 +387,7 @@ beginfig(17);
     FrameReader);
 
   clink(realization)(VideoImageProvider, ImageProvider);
-  clink(dependency)(VideoImageProvider, FrameReader);
+  clink(associationUni)(VideoImageProvider, FrameReader);
 endfig;
 
 beginfig(101);
@@ -424,8 +425,8 @@ beginfig(101);
     Barcode,
     G);
 
-  link(dependency)(rpathVertical(Point.n, Barcode.bottom));
-  link(dependency)(rpathVertical(BarcodeType.n, Barcode.bottom));
+  link(associationUni)(rpathVertical(Point.n, Barcode.bottom));
+  link(associationUni)(rpathVertical(BarcodeType.n, Barcode.bottom));
 endfig;
 
 beginfig(102);
@@ -713,12 +714,12 @@ beginfig(109);
     G,
     F);
 
-  link(dependency)(rpathHorizontal(BarcodeReader.w, Extractor.right));
-  link(dependency)(rpathHorizontal(Grayscaler.w, Extractor.right));
-  link(dependency)(rpathHorizontal(ImageEnhancer.w, Extractor.right));
-  link(dependency)(rpathVertical(RegionExtractor.n, Extractor.bottom));
-  link(dependency)(rpathVertical(RegionSelector.n, Extractor.bottom));
-  link(dependency)(rpathVertical(Job.n, Extractor.bottom));
+  link(associationUni)(rpathHorizontal(BarcodeReader.w, Extractor.right));
+  link(associationUni)(rpathHorizontal(Grayscaler.w, Extractor.right));
+  link(associationUni)(rpathHorizontal(ImageEnhancer.w, Extractor.right));
+  link(associationUni)(rpathVertical(RegionExtractor.n, Extractor.bottom));
+  link(associationUni)(rpathVertical(RegionSelector.n, Extractor.bottom));
+  link(associationUni)(rpathVertical(Job.n, Extractor.bottom));
 endfig;
 
 beginfig(110);
@@ -905,12 +906,13 @@ beginfig(116);
 
   link(aggregation)(pathVertical(Barcode.n, Region.bottom));
   link(aggregation)(pathVertical(ConvexPolygon.n, Region.bottom));
-  link(dependency)(rpathVertical(AxisAlignedRectangle.ne + (-10, 0), Region.bottom));
-  link(dependency)(rpathVertical(OrientedRectangle.n, Region.bottom));
-  link(dependency)(rpathVertical(GenericConvexPolygon.n + (-1, 0), Region.bottom));
+  link(associationUni)(rpathVertical(AxisAlignedRectangle.ne + (-10, 0), Region.bottom));
+  link(associationUni)(rpathVertical(OrientedRectangle.n, Region.bottom));
+  link(associationUni)(rpathVertical(GenericConvexPolygon.n + (-1, 0), Region.bottom));
 
-  item(iStereo)("<<create>>")(obj.nw = AxisAlignedRectangle.ne + (-10, 50));
-  item(iStereo)("<<create>>")(obj.nw = OrientedRectangle.n + (0, 50));
+  item(iAssoc)("creates")(obj.nw = AxisAlignedRectangle.ne + (-10, 50));
+  item(iAssoc)("creates")(obj.nw = OrientedRectangle.n + (0, 50));
+  item(iAssoc)("creates")(obj.nw = GenericConvexPolygon.n + (0, 80));
 
   item(iAssoc)("0..1")(obj.se = Barcode.n);
 
@@ -1086,7 +1088,7 @@ beginfig(121);
 
   link(inheritance)(rpathVertical(Rectangle.s, AxisAlignedRectangle.top));
   link(dependency)(rpathVertical(ConvexPolygon.n, AxisAlignedRectangle.bottom));
-  link(dependency)(rpathVertical(Point.n, AxisAlignedRectangle.bottom));
+  link(associationUni)(rpathVertical(Point.n, AxisAlignedRectangle.bottom));
 
   draw AxisAlignedRectangle.sw+(13, 3) -- AxisAlignedRectangle.se+(-4, 3);
 endfig;
@@ -1127,8 +1129,8 @@ beginfig(122);
 
   link(inheritance)(rpathVertical(Rectangle.s, OrientedRectangle.top));
   link(dependency)(rpathVertical(ConvexPolygon.n, OrientedRectangle.bottom));
-  link(dependency)(rpathVertical(Point.n, OrientedRectangle.bottom));
-  link(dependency)(rpathVertical(Vector.n, OrientedRectangle.bottom));
+  link(associationUni)(rpathVertical(Point.n, OrientedRectangle.bottom));
+  link(associationUni)(rpathVertical(Vector.n, OrientedRectangle.bottom));
 
   draw OrientedRectangle.sw+(13, 3) -- OrientedRectangle.se+(-4, 3);
 endfig;

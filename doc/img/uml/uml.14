@@ -5,7 +5,7 @@
 %%CreationDate: [STRIPPED]
 %%Pages: 1
 %*Font: ptmr8r 9.96265 9.96265 20:80c0002a124bb6007f4fbe14
-%*Font: ptmr8r 6.97382 9.96265 3c:a00000000540028
+%*Font: ptmr8r 6.97382 9.96265 3c:a00000000540038
 %%BeginProlog
 %%EndProlog
 %%Page: 1 1
@@ -199,10 +199,8 @@ newpath 114.53952 -111.51373 moveto
 newpath 114.53952 -111.51373 moveto
 109.53952 -99.01385 lineto stroke
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
- [3 3 ] 0 setdash
 newpath -21.42598 -89.51373 moveto
 -21.42598 -99.01385 lineto stroke
- [] 0 setdash
 newpath -21.42598 -99.01385 moveto
 -21.42598 -111.51373 lineto stroke
  0 0.5 dtransform truncate idtransform setlinewidth pop
@@ -213,6 +211,6 @@ newpath -21.42598 -111.51373 moveto
 116.53952 -97.45387 moveto
 (<<create>>) ptmr8r 6.97382 fshow
 -19.42598 -97.45387 moveto
-(<<create>>) ptmr8r 6.97382 fshow
+(creates) ptmr8r 6.97382 fshow
 showpage
 %%EOF

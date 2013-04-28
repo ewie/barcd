@@ -299,10 +299,8 @@ newpath 20.91861 -164.01373 moveto
 newpath 20.91861 -164.01373 moveto
 15.91861 -151.51385 lineto stroke
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
- [3 3 ] 0 setdash
 newpath 118.0625 -142.01373 moveto
 118.0625 -151.51385 lineto stroke
- [] 0 setdash
 newpath 118.0625 -151.51385 moveto
 118.0625 -164.01373 lineto stroke
  0 0.5 dtransform truncate idtransform setlinewidth pop
