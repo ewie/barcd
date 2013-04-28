@@ -2,7 +2,7 @@
 %%BoundingBox: -1 -225 300 1 
 %%HiResBoundingBox: -0.25 -224.01373 299.45145 0.25 
 %%Creator: MetaPost 1.208
-%%CreationDate: 2013.04.28:1748
+%%CreationDate: [STRIPPED]
 %%Pages: 1
 %*Font: ptmr8r 9.96265 9.96265 20:80e800207301a0147d4fbed4
 %*Font: ptmr8r 6.97382 9.96265 2e:b0028000000015000a
@@ -423,9 +423,9 @@ newpath 53.3702 -206.25916 moveto
 58.3702 -193.75914 lineto stroke
 newpath 53.3702 -206.25916 moveto
 48.3702 -193.75914 lineto stroke
-190.75244 -160.22923 moveto
+190.75244 -134.1993 moveto
 (<<create>>) ptmr8r 6.97382 fshow
-254.60194 -160.22923 moveto
+254.60194 -134.1993 moveto
 (<<create>>) ptmr8r 6.97382 fshow
 12.63689 -146.25916 moveto
 (0..1) ptmr8r 6.97382 fshow

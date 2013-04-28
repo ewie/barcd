@@ -9,15 +9,16 @@ iClassNameOnly.iName.bottom := 5;
 %iPackage.foreColor := (.95, .95, .95);
 
 beginfig(0);
-  save Barcode,
-       Extractor,
-       Frame,
-       FrameHandler,
-       ImageProvider,
-       ImproveImage,
-       Job,
-       Region,
-       Source;
+  save
+    Barcode,
+    Extractor,
+    Frame,
+    FrameHandler,
+    ImageProvider,
+    ImproveImage,
+    Job,
+    Region,
+    Source;
 
   ClassName.Barcode("Barcode");
   ClassName.Extractor("Extractor");
@@ -71,7 +72,7 @@ beginfig(0);
 
   item(iStereo)("<<consume>>")(obj.w = .5[ImageProvider.s, Extractor.n]);
   item(iStereo)("<<notify>>")(obj.w = .5[Extractor.e, FrameHandler.w]);
-  item(iStereo)("<<create>>")(obj.e = .5[ImageProvider.s, Source.n]);
+  item(iStereo)("<<create>>")(obj.nw = Source.s);
   item(iStereo)("<<create>>")(obj.s = .5[Frame.s, Extractor.n]);
   item(iStereo)("<<create>>")(obj.s = .5[Extractor.n, Region.s]);
   item(iStereo)("<<create>>")(obj.w = .5[Extractor.n, Barcode.s]);
@@ -96,14 +97,20 @@ beginfig(9);
   ClassName.Source("Source {abstract}");
   ClassName.BufferedImageProvider("BufferedImageProvider");
 
-  topToBottom(20)(Source, BufferedImageSource, BufferedImageProvider);
+  topToBottom(20)(
+    Source,
+    BufferedImageSource,
+    BufferedImageProvider);
 
-  drawObjects(Source, BufferedImageSource, BufferedImageProvider);
+  drawObjects(
+    Source,
+    BufferedImageSource,
+    BufferedImageProvider);
 
   clink(inheritance)(BufferedImageSource, Source);
   clink(dependency)(BufferedImageSource, BufferedImageProvider);
 
-  item(iStereo)("<<create>>")(obj.w = .5[BufferedImageSource.s, BufferedImageProvider.n]);
+  item(iStereo)("<<create>>")(obj.nw = BufferedImageSource.s);
 endfig;
 
 beginfig(10);
@@ -121,14 +128,20 @@ beginfig(10);
   ClassName.Source("Source {abstract}");
   ClassName.RemoteImageProvider("RemoteImageProvider");
 
-  topToBottom(20)(Source, ImageCollectionSource, RemoteImageProvider);
+  topToBottom(20)(
+    Source,
+    ImageCollectionSource,
+    RemoteImageProvider);
 
-  drawObjects(Source, ImageCollectionSource, RemoteImageProvider);
+  drawObjects(
+    Source,
+    ImageCollectionSource,
+    RemoteImageProvider);
 
   clink(inheritance)(ImageCollectionSource, Source);
   clink(dependency)(ImageCollectionSource, RemoteImageProvider);
 
-  item(iStereo)("<<create>>")(obj.w = .5[ImageCollectionSource.s, RemoteImageProvider.n]);
+  item(iStereo)("<<create>>")(obj.nw = ImageCollectionSource.s);
 endfig;
 
 beginfig(11);
@@ -151,16 +164,25 @@ beginfig(11);
 
   Group.G(RemoteImageProvider, TemplatedUrlSequence);
 
-  topToBottom(20)(Source, ImageSequenceSource, G);
-  leftToRight(30)(TemplatedUrlSequence, RemoteImageProvider);
+  topToBottom(20)(
+    Source,
+    ImageSequenceSource,
+    G);
 
-  drawObjects(Source, ImageSequenceSource, G);
+  leftToRight(30)(
+    TemplatedUrlSequence,
+    RemoteImageProvider);
+
+  drawObjects(
+    Source,
+    ImageSequenceSource,
+    G);
 
   clink(inheritance)(ImageSequenceSource, Source);
   link(dependency)(rpathVertical(RemoteImageProvider.n, ImageSequenceSource.bottom));
   link(dependency)(rpathVertical(TemplatedUrlSequence.n, ImageSequenceSource.bottom));
 
-  item(iStereo)("<<create>>")(obj.w = RemoteImageProvider.n + (0, 10));
+  item(iStereo)("<<create>>")(obj.nw = RemoteImageProvider.n + (0, 20));
 endfig;
 
 beginfig(12);
@@ -178,14 +200,20 @@ beginfig(12);
   ClassName.Source("Source {abstract}");
   ClassName.RemoteImageProvider("RemoteImageProvider");
 
-  topToBottom(20)(Source, ImageSnapshotServiceSource, RemoteImageProvider);
+  topToBottom(20)(
+    Source,
+    ImageSnapshotServiceSource,
+    RemoteImageProvider);
 
-  drawObjects(Source, ImageSnapshotServiceSource, RemoteImageProvider);
+  drawObjects(
+    Source,
+    ImageSnapshotServiceSource,
+    RemoteImageProvider);
 
   clink(inheritance)(ImageSnapshotServiceSource, Source);
   clink(dependency)(ImageSnapshotServiceSource, RemoteImageProvider);
 
-  item(iStereo)("<<create>>")(obj.w = .5[ImageSnapshotServiceSource.s, RemoteImageProvider.n]);
+  item(iStereo)("<<create>>")(obj.nw = ImageSnapshotServiceSource.s);
 endfig;
 
 beginfig(13);
@@ -208,17 +236,26 @@ beginfig(13);
 
   Group.G(VideoImageProvider, OpenCvDeviceFrameReader);
 
-  topToBottom(20)(Source, VideoDeviceSource, G);
-  leftToRight(30)(OpenCvDeviceFrameReader, VideoImageProvider);
+  topToBottom(20)(
+    Source,
+    VideoDeviceSource,
+    G);
 
-  drawObjects(Source, VideoDeviceSource, G);
+  leftToRight(30)(
+    OpenCvDeviceFrameReader,
+    VideoImageProvider);
+
+  drawObjects(
+    Source,
+    VideoDeviceSource,
+    G);
 
   clink(inheritance)(VideoDeviceSource, Source);
   link(dependency)(rpathVertical(VideoImageProvider.n, VideoDeviceSource.bottom));
   link(dependency)(rpathVertical(OpenCvDeviceFrameReader.n, VideoDeviceSource.bottom));
 
-  item(iStereo)("<<create>>")(obj.w = VideoImageProvider.n + (0, 10));
-  item(iStereo)("<<create>>")(obj.w = OpenCvDeviceFrameReader.n + (0, 10));
+  item(iStereo)("<<create>>")(obj.nw = VideoImageProvider.n + (0, 20));
+  item(iStereo)("<<create>>")(obj.nw = OpenCvDeviceFrameReader.n + (0, 20));
 endfig;
 
 beginfig(14);
@@ -241,17 +278,26 @@ beginfig(14);
 
   Group.G(VideoImageProvider, OpenCvFileFrameReader);
 
-  topToBottom(20)(Source, VideoStreamSource, G);
-  leftToRight(30)(OpenCvFileFrameReader, VideoImageProvider);
+  topToBottom(20)(
+    Source,
+    VideoStreamSource,
+    G);
 
-  drawObjects(Source, VideoStreamSource, G);
+  leftToRight(30)(
+    OpenCvFileFrameReader,
+    VideoImageProvider);
+
+  drawObjects(
+    Source,
+    VideoStreamSource,
+    G);
 
   clink(inheritance)(VideoStreamSource, Source);
   link(dependency)(rpathVertical(VideoImageProvider.n, VideoStreamSource.bottom));
   link(dependency)(rpathVertical(OpenCvFileFrameReader.n, VideoStreamSource.bottom));
 
-  item(iStereo)("<<create>>")(obj.w = VideoImageProvider.n + (0, 10));
-  item(iStereo)("<<create>>")(obj.w = OpenCvFileFrameReader.n + (0, 10));
+  item(iStereo)("<<create>>")(obj.nw = VideoImageProvider.n + (0, 20));
+  item(iStereo)("<<create>>")(obj.nw = OpenCvFileFrameReader.n + (0, 20));
 endfig;
 
 beginfig(15);
@@ -270,9 +316,13 @@ beginfig(15);
   classStereotypes.ImageProvider("<<interface>>");
   ImageProvider.info.iName.top := 0;
 
-  topToBottom(20)(ImageProvider, BufferedImageProvider);
+  topToBottom(20)(
+    ImageProvider,
+    BufferedImageProvider);
 
-  drawObjects(ImageProvider, BufferedImageProvider);
+  drawObjects(
+    ImageProvider,
+    BufferedImageProvider);
 
   clink(realization)(BufferedImageProvider, ImageProvider);
 endfig;
@@ -293,9 +343,13 @@ beginfig(16);
   classStereotypes.ImageProvider("<<interface>>");
   ImageProvider.info.iName.top := 0;
 
-  topToBottom(20)(ImageProvider, RemoteImageProvider);
+  topToBottom(20)(
+    ImageProvider,
+    RemoteImageProvider);
 
-  drawObjects(ImageProvider, RemoteImageProvider);
+  drawObjects(
+    ImageProvider,
+    RemoteImageProvider);
 
   clink(realization)(RemoteImageProvider, ImageProvider);
 endfig;
@@ -321,19 +375,26 @@ beginfig(17);
   classStereotypes.FrameReader("<<interface>>");
   FrameReader.info.iName.top := 0;
 
-  topToBottom(20)(ImageProvider, VideoImageProvider, FrameReader);
+  topToBottom(20)(
+    ImageProvider,
+    VideoImageProvider,
+    FrameReader);
 
-  drawObjects(ImageProvider, VideoImageProvider, FrameReader);
+  drawObjects(
+    ImageProvider,
+    VideoImageProvider,
+    FrameReader);
 
   clink(realization)(VideoImageProvider, ImageProvider);
   clink(dependency)(VideoImageProvider, FrameReader);
 endfig;
 
 beginfig(101);
-  save Barcode,
-       BarcodeType,
-       Point,
-       G;
+  save
+    Barcode,
+    BarcodeType,
+    Point,
+    G;
 
   Class.Barcode("Barcode")
     ()
@@ -351,17 +412,26 @@ beginfig(101);
 
   Group.G(Point, BarcodeType);
 
-  leftToRight(30)(Point, BarcodeType);
-  topToBottom(20)(Barcode, G);
+  leftToRight(30)(
+    Point,
+    BarcodeType);
 
-  drawObjects(Barcode, G);
+  topToBottom(20)(
+    Barcode,
+    G);
+
+  drawObjects(
+    Barcode,
+    G);
 
   link(dependency)(rpathVertical(Point.n, Barcode.bottom));
   link(dependency)(rpathVertical(BarcodeType.n, Barcode.bottom));
 endfig;
 
 beginfig(102);
-  save BarcodeReader, Barcode;
+  save
+    BarcodeReader,
+    Barcode;
 
   Interface.BarcodeReader("BarcodeReader")
     ("+read(image: BufferedImage): Barcode",
@@ -371,17 +441,22 @@ beginfig(102);
 
   ClassName.Barcode("Barcode");
 
-  leftToRight(50)(BarcodeReader, Barcode);
+  leftToRight(50)(
+    BarcodeReader,
+    Barcode);
 
-  drawObjects(BarcodeReader, Barcode);
+  drawObjects(
+    BarcodeReader,
+    Barcode);
 
   clink(dependency)(BarcodeReader, Barcode);
 
-  item(iStereo)("<<create>>")(obj.s = .5[BarcodeReader.e, Barcode.w]);
+  item(iStereo)("<<create>>")(obj.sw = BarcodeReader.e);
 endfig;
 
 beginfig(103);
-  save BarcodeType;
+  save
+    BarcodeType;
 
   Class.BarcodeType("BarcodeType")
     ("+AZTEC_CODE",
@@ -411,8 +486,7 @@ beginfig(104);
   save
     BarcodeReader,
     DefaultBarcodeReader,
-    ZXing,
-    G;
+    ZXing;
 
   Class.DefaultBarcodeReader("DefaultBarcodeReader")
     ()
@@ -425,15 +499,18 @@ beginfig(104);
 
   Package.ZXing("com.google.ZXing")();
 
-  Group.G(BarcodeReader, ZXing);
+  topToBottom(20)(
+    BarcodeReader,
+    DefaultBarcodeReader,
+    ZXing);
 
-  leftToRight(20)(DefaultBarcodeReader, G);
-  topToBottom(30)(BarcodeReader, ZXing);
+  drawObjects(
+    DefaultBarcodeReader,
+    BarcodeReader,
+    ZXing);
 
-  drawObjects(DefaultBarcodeReader, G);
-
-  link(realization)(rpathHorizontal(BarcodeReader.w, DefaultBarcodeReader.right));
-  link(dependency)(rpathHorizontal(ZXing.w, DefaultBarcodeReader.right));
+  clink(realization)(DefaultBarcodeReader, BarcodeReader);
+  clink(dependency)(DefaultBarcodeReader, ZXing);
 endfig;
 
 beginfig(105);
@@ -449,9 +526,13 @@ beginfig(105);
   classStereotypes.Grayscaler("<<interface>>");
   Grayscaler.info.iName.top := 0;
 
-  leftToRight(30)(DefaultGrayscaler, Grayscaler);
+  topToBottom(20)(
+    Grayscaler,
+    DefaultGrayscaler);
 
-  drawObjects(DefaultGrayscaler, Grayscaler);
+  drawObjects(
+    DefaultGrayscaler,
+    Grayscaler);
 
   clink(realization)(DefaultGrayscaler, Grayscaler);
 endfig;
@@ -460,8 +541,7 @@ beginfig(106);
   save
     DefaultImageEnhancer,
     ImageEnhancer,
-    ImproveImage,
-    G;
+    ImproveImage;
 
   Class.DefaultImageEnhancer("DefaultImageEnhancer")
     ()
@@ -473,15 +553,18 @@ beginfig(106);
 
   ClassName.ImproveImage("ImproveImage");
 
-  Group.G(ImageEnhancer, ImproveImage);
+  topToBottom(20)(
+    ImageEnhancer,
+    DefaultImageEnhancer,
+    ImproveImage);
 
-  leftToRight(20)(DefaultImageEnhancer, G);
-  topToBottom(10)(ImageEnhancer, ImproveImage);
+  drawObjects(
+    DefaultImageEnhancer,
+    ImageEnhancer,
+    ImproveImage);
 
-  drawObjects(DefaultImageEnhancer, G);
-
-  link(realization)(rpathHorizontal(ImageEnhancer.w, DefaultImageEnhancer.right));
-  link(dependency)(rpathHorizontal(ImproveImage.w, DefaultImageEnhancer.right));
+  clink(realization)(DefaultImageEnhancer, ImageEnhancer);
+  clink(dependency)(DefaultImageEnhancer, ImproveImage);
 endfig;
 
 beginfig(107);
@@ -503,19 +586,32 @@ beginfig(107);
   classStereotypes.RegionExtractor("<<interface>>");
   RegionExtractor.info.iName.top := 0;
 
-  Group.G(Region, DilationOperator, ScalingOperator);
+  Group.G(
+    Region,
+    DilationOperator,
+    ScalingOperator);
 
-  topToBottom(20)(RegionExtractor, DefaultRegionExtractor, G);
-  leftToRight(20)(Region, DilationOperator, ScalingOperator);
+  topToBottom(20)(
+    RegionExtractor,
+    DefaultRegionExtractor,
+    G);
 
-  drawObjects(DefaultRegionExtractor, RegionExtractor, G);
+  leftToRight(20)(
+    Region,
+    DilationOperator,
+    ScalingOperator);
+
+  drawObjects(
+    DefaultRegionExtractor,
+    RegionExtractor,
+    G);
 
   link(realization)(rpathVertical(RegionExtractor.s, DefaultRegionExtractor.top));
   link(dependency)(rpathVertical(Region.n, DefaultRegionExtractor.bottom));
   link(dependency)(rpathVertical(DilationOperator.n, DefaultRegionExtractor.bottom));
   link(dependency)(rpathVertical(ScalingOperator.n, DefaultRegionExtractor.bottom));
 
-  item(iStereo)("<<create>>")(obj.e = Region.n + (0, 15));
+  item(iStereo)("<<create>>")(obj.nw = Region.n + (0, 20));
 endfig;
 
 beginfig(108);
@@ -534,21 +630,31 @@ beginfig(108);
 
   ClassName.Region("Region");
 
-  leftToRight(30)(RegionSelector, DefaultRegionSelector, Region);
+  topToBottom(20)(
+    RegionSelector,
+    DefaultRegionSelector,
+    Region);
 
-  drawObjects(DefaultRegionSelector, RegionSelector, Region);
+  drawObjects(
+    DefaultRegionSelector,
+    RegionSelector,
+    Region);
 
   clink(realization)(DefaultRegionSelector, RegionSelector);
   clink(dependency)(DefaultRegionSelector, Region);
 endfig;
 
 beginfig(109);
-  save Extractor,
-       BarcodeReader,
-       Grayscaler,
-       ImageEnhancer,
-       RegionExtractor,
-       RegionSelector;
+  save
+    Extractor,
+    BarcodeReader,
+    Grayscaler,
+    ImageEnhancer,
+    RegionExtractor,
+    RegionSelector,
+    G,
+    F,
+    Job;
 
   Class.Extractor("Exractor")
     ()
@@ -561,6 +667,8 @@ beginfig(109);
      "+setGrayscaler(grayscaler: Grayscaler)",
      "+setRegionExtractor(extractor: RegionExtractor)",
      "+setRegionSelector(selector: RegionSelector)");
+
+  ClassName.Job("Job");
 
   ClassName.BarcodeReader("BarcodeReader");
   ClassName.Grayscaler("Grayscaler");
@@ -583,28 +691,34 @@ beginfig(109);
   classStereotypes.RegionSelector("<<interface>>");
   RegionSelector.info.iName.top := 0;
 
-  leftToRight(30)(Extractor, ImageEnhancer);
+  Group.G(BarcodeReader, Grayscaler, ImageEnhancer);
+  Group.F(Job, RegionExtractor, RegionSelector);
+
+  leftToRight(30)(Extractor, G);
+  topToBottom(30)(Extractor, F);
 
   topToBottom(20)(
     BarcodeReader,
     Grayscaler,
-    ImageEnhancer,
+    ImageEnhancer);
+
+  leftToRight(20)(
+    Job,
     RegionExtractor,
     RegionSelector);
 
   drawObjects(
     Extractor,
-    BarcodeReader,
-    Grayscaler,
-    ImageEnhancer,
-    RegionExtractor,
-    RegionSelector);
+    Job,
+    G,
+    F);
 
   link(dependency)(rpathHorizontal(BarcodeReader.w, Extractor.right));
   link(dependency)(rpathHorizontal(Grayscaler.w, Extractor.right));
   link(dependency)(rpathHorizontal(ImageEnhancer.w, Extractor.right));
-  link(dependency)(rpathHorizontal(RegionExtractor.w, Extractor.right));
-  link(dependency)(rpathHorizontal(RegionSelector.w, Extractor.right));
+  link(dependency)(rpathVertical(RegionExtractor.n, Extractor.bottom));
+  link(dependency)(rpathVertical(RegionSelector.n, Extractor.bottom));
+  link(dependency)(rpathVertical(Job.n, Extractor.bottom));
 endfig;
 
 beginfig(110);
@@ -660,37 +774,40 @@ beginfig(111);
 endfig;
 
 beginfig(112);
-  save I;
+  save
+    Grayscaler;
 
-  Interface.I("Grayscaler")
+  Interface.Grayscaler("Grayscaler")
     ("+convertToGrayscale(image: BufferedImage): BufferedImage");
 
-  classStereotypes.I("<<interface>>");
+  classStereotypes.Grayscaler("<<interface>>");
 
-  drawObjects(I);
+  drawObjects(Grayscaler);
 endfig;
 
 beginfig(113);
-  save I;
+  save
+    ImageEnhancer;
 
-  Interface.I("ImageEnhancer")
+  Interface.ImageEnhancer("ImageEnhancer")
     ("+enhanceImage(): BufferedImage");
 
-  classStereotypes.I("<<interface>>");
+  classStereotypes.ImageEnhancer("<<interface>>");
 
-  drawObjects(I);
+  drawObjects(ImageEnhancer);
 endfig;
 
 beginfig(114);
-  save I;
+  save
+    ImageProvider;
 
-  Interface.I("ImageProvider")
+  Interface.ImageProvider("ImageProvider")
     ("+consume(): BufferedImage",
      "+hasMore(): boolean");
 
-  classStereotypes.I("<<interface>>");
+  classStereotypes.ImageProvider("<<interface>>");
 
-  drawObjects(I);
+  drawObjects(ImageProvider);
 endfig;
 
 beginfig(115);
@@ -760,13 +877,31 @@ beginfig(116);
   Group.G(Barcode, ConvexPolygon);
   Group.F(AxisAlignedRectangle, OrientedRectangle);
 
-  topToBottom.left(20)(Region, G);
-  topToBottom.right(50)(Region, F);
-  topToBottom.left(80)(Region, GenericConvexPolygon);
-  leftToRight(10)(Barcode, ConvexPolygon);
-  leftToRight(10)(AxisAlignedRectangle, OrientedRectangle);
+  topToBottom.left(20)(
+    Region,
+    G);
 
-  drawObjects(Region, GenericConvexPolygon, G, F);
+  topToBottom.right(50)(
+    Region,
+    F);
+
+  topToBottom.left(80)(
+    Region,
+    GenericConvexPolygon);
+
+  leftToRight(10)(
+    Barcode,
+    ConvexPolygon);
+
+  leftToRight(10)(
+    AxisAlignedRectangle,
+    OrientedRectangle);
+
+  drawObjects(
+    Region,
+    GenericConvexPolygon,
+    G,
+    F);
 
   link(aggregation)(pathVertical(Barcode.n, Region.bottom));
   link(aggregation)(pathVertical(ConvexPolygon.n, Region.bottom));
@@ -774,8 +909,8 @@ beginfig(116);
   link(dependency)(rpathVertical(OrientedRectangle.n, Region.bottom));
   link(dependency)(rpathVertical(GenericConvexPolygon.n + (-1, 0), Region.bottom));
 
-  item(iStereo)("<<create>>")(obj.w = AxisAlignedRectangle.ne + (-10, 20));
-  item(iStereo)("<<create>>")(obj.w = OrientedRectangle.n + (0, 20));
+  item(iStereo)("<<create>>")(obj.nw = AxisAlignedRectangle.ne + (-10, 50));
+  item(iStereo)("<<create>>")(obj.nw = OrientedRectangle.n + (0, 50));
 
   item(iAssoc)("0..1")(obj.se = Barcode.n);
 
@@ -821,7 +956,7 @@ beginfig(118);
 
   clink(dependency)(RegionExtractor, Region);
 
-  item(iStereo)("<<create>>")(obj.s = .5[RegionExtractor.e, Region.w]);
+  item(iStereo)("<<create>>")(obj.sw = RegionExtractor.e);
 endfig;
 
 beginfig(119);
@@ -844,7 +979,7 @@ beginfig(119);
 
   clink(dependency)(Source, ImageProvider);
 
-  item(iStereo)("<<create>>")(obj.e = .5[Source.s, ImageProvider.n]);
+  item(iStereo)("<<create>>")(obj.nw = Source.s);
 endfig;
 
 beginfig(120);
@@ -906,7 +1041,7 @@ beginfig(120);
   link(dependency)(rpathManhattanX(VideoStreamSource.w, SourceFactory.s));
   link(dependency)(rpathVertical(TemplatedUrlSequence.n, SourceFactory.bottom));
 
-  item(iStereo)("<<create>>")(obj.w = SourceFactory.s + (0, -10));
+  item(iStereo)("<<create>>")(obj.nw = SourceFactory.s);
 
   % mark static methods
   draw SourceFactory.sw+(13,55.) -- SourceFactory.se+(-15,55.5);
@@ -1016,7 +1151,7 @@ beginfig(123);
 
   drawObjects(Rectangle, ConvexPolygon);
 
-  clink(realization)(Rectangle, ConvexPolygon);
+  clink(inheritance)(Rectangle, ConvexPolygon);
 endfig;
 
 beginfig(124);
