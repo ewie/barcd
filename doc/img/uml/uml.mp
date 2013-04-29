@@ -816,31 +816,36 @@ beginfig(115);
     Job,
     Frame,
     Source,
+    TemplatedUrlSequence,
     G;
 
   Class.Job("Job")
     ()
-    ("+Job(source: Source, initialFrameNumber: int = 0)",
+    ("+Job(source: Source, frameUrlTemplate: TemplatedUrlSequence, initialFrameNumber: int = 0)",
      "+createFrame(): Frame",
      "+createImageProvider(): ImageProvider",
      "+getFrames(): Frame[*]",
+     "+getFrameUrlTemplate(): TemplatedUrlSequence",
      "+getSource(): Source",
      "+nextFrameNumber(): int");
 
   ClassName.Frame("Frame");
   ClassName.Source("Source {abstract}");
+  ClassName.TemplatedUrlSequence("TemplatedUrlSequence");
 
-  Group.G(Frame, Source);
-  topToBottom(30)(Source, Frame);
+  Group.G(Frame, Source, TemplatedUrlSequence);
 
-  leftToRight(30)(Job, G);
+  topToBottom(30)(Job, G);
+
+  leftToRight(30)(Source, Frame, TemplatedUrlSequence);
 
   drawObjects(Job, G);
 
-  link(aggregation)(pathHorizontal(Frame.w, Job.right));
-  link(aggregation)(pathHorizontal(Source.w, Job.right));
+  link(aggregation)(pathVertical(Frame.n, Job.bottom));
+  link(aggregation)(pathVertical(Source.n, Job.bottom));
+  link(aggregation)(pathVertical(TemplatedUrlSequence.n, Job.bottom));
 
-  item(iAssoc)("*")(obj.se = Frame.w);
+  item(iAssoc)("*")(obj.sw = Frame.n);
 endfig;
 
 beginfig(116);
