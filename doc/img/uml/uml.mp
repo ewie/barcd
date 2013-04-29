@@ -1680,5 +1680,85 @@ beginfig(142);
   drawObjects(XmlSerializerValidationError);
 endfig;
 
+beginfig(143);
+  save
+    TemplatedUrlSequence,
+    TemplatedUrlSequenceIterator,
+    Range,
+    G;
+
+  Class.TemplatedUrlSequence("TemplatedUrlSequence")
+    ()
+    ("+TemplatedUrlSequence(template: URL, tag: string, range: Range, padding: int",
+     "+getPadding(): int",
+     "+getRange(): Range",
+     "+getTag(): string",
+     "+getTemplate(): URL",
+     "+getUrl(index: int): URL",
+     "+iterator(): TemplatedUrlSequenceIterator");
+
+  Class.TemplatedUrlSequenceIterator("TemplatedUrlSequenceIterator")
+    ()
+    ("+TemplatedUrlSequenceIterator(sequence: TemplatedUrlSequence)",
+     "+hasNext(): boolean",
+     "+next(): URL");
+
+  ClassName.Range("Range");
+
+  Group.G(
+    TemplatedUrlSequenceIterator,
+    Range);
+
+  topToBottom(20)(
+    TemplatedUrlSequence,
+    G);
+
+  leftToRight(20)(Range, TemplatedUrlSequenceIterator);
+
+  drawObjects(
+    TemplatedUrlSequence,
+    G);
+
+  link(dependency)(rpathVertical(TemplatedUrlSequenceIterator.n, TemplatedUrlSequence.bottom));
+  link(associationUni)(rpathVertical(Range.n, TemplatedUrlSequence.bottom));
+
+  item(iStereo)("<<create>>")(obj.nw = TemplatedUrlSequenceIterator.n + (0, 20));
+endfig;
+
+beginfig(144);
+  save
+    Range,
+    RangeIterator;
+
+  Class.Range("Range")
+    ()
+    ("+Range(start: long, end: long, step: long)",
+     "+Range(start: long, end: long)",
+     "+get(index: long): long",
+     "+getEnd(): long",
+     "+getLength(): long",
+     "+getStart(): long",
+     "+getStep(): long",
+     "+iterator(): RangeIterator");
+
+  Class.RangeIterator("RangeIterator")
+    ()
+    ("+RangeIterator(range: Range)",
+     "+hasNext(): boolean",
+     "+next(): long");
+
+  topToBottom(20)(
+    Range,
+    RangeIterator);
+
+  drawObjects(
+    Range,
+    RangeIterator);
+
+  clink(dependency)(Range, RangeIterator);
+
+  item(iStereo)("<<create>>")(obj.nw = Range.s);
+endfig;
+
 end
 
