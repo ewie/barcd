@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;all>
  *         &lt;element name="source" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}SourceChoiceType"/>
  *         &lt;element name="next-frame-number" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}uint" minOccurs="0"/>
+ *         &lt;element name="frames" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}UrlTemplateType"/>
  *       &lt;/all>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -44,6 +45,8 @@ public class JobElement {
     protected SourceChoiceElement source;
     @XmlElement(name = "next-frame-number", defaultValue = "0")
     protected Integer nextFrameNumber;
+    @XmlElement(required = true)
+    protected UrlTemplateElement frames;
 
     /**
      * Gets the value of the source property.
@@ -91,6 +94,30 @@ public class JobElement {
      */
     public void setNextFrameNumber(Integer value) {
         this.nextFrameNumber = value;
+    }
+
+    /**
+     * Gets the value of the frames property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link UrlTemplateElement }
+     *     
+     */
+    public UrlTemplateElement getFrames() {
+        return frames;
+    }
+
+    /**
+     * Sets the value of the frames property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link UrlTemplateElement }
+     *     
+     */
+    public void setFrames(UrlTemplateElement value) {
+        this.frames = value;
     }
 
 }

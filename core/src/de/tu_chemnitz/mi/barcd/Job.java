@@ -3,6 +3,8 @@ package de.tu_chemnitz.mi.barcd;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import de.tu_chemnitz.mi.barcd.util.TemplatedUrlSequence;
+
 /**
  * Provides the information to perform an extraction job and resume a job after
  * it has been stopped.
@@ -18,6 +20,8 @@ public class Job {
 
     private int nextFrameNumber;
 
+    private TemplatedUrlSequence frameUrlTemplate;
+
     /**
      * Create a job with a specific initial frame number. Use this constructor
      * to create job which should be resumed after being stopped.
@@ -25,8 +29,10 @@ public class Job {
      * @param source the image source
      * @param initialFrameNumber the number of the first frame an image provider
      *   of the given source should provide
+     * @param frameUrlTemplate the URL template to generate a URL for each
+     *   frame to be persisted
      */
-    public Job(Source source, int initialFrameNumber) {
+    public Job(Source source, TemplatedUrlSequence frameUrlTemplate, int initialFrameNumber) {
         if (initialFrameNumber < Source.INITIAL_FRAME_NUMBER) {
             throw new IllegalArgumentException("+initialFrameNumber+ must be greater " + Source.INITIAL_FRAME_NUMBER);
         }
@@ -34,15 +40,18 @@ public class Job {
         this.initialFrameNumber = initialFrameNumber;
         nextFrameNumber = initialFrameNumber;
         frames = new LinkedList<Frame>();
+        this.frameUrlTemplate = frameUrlTemplate;
     }
 
     /**
      * Create a job with initial frame number zero.
      *
      * @param source the image source
+     * @param frameUrlTemplate the URL template to generate a URL for each
+     *   frame to be persisted
      */
-    public Job(Source source) {
-        this(source, Source.INITIAL_FRAME_NUMBER);
+    public Job(Source source, TemplatedUrlSequence frameUrlTemplate) {
+        this(source, frameUrlTemplate, Source.INITIAL_FRAME_NUMBER);
     }
 
     /**
@@ -50,6 +59,13 @@ public class Job {
      */
     public Source getSource() {
         return source;
+    }
+
+    /**
+     * @return the frame URL template
+     */
+    public TemplatedUrlSequence getFrameUrlTemplate() {
+        return frameUrlTemplate;
     }
 
     /**

@@ -151,7 +151,7 @@ public class Application extends Worker {
         throws ApplicationException
     {
         URI frameUri;
-        TemplatedUrlSequence frameUrlSequence = options.getFrameUrlSequence();
+        TemplatedUrlSequence frameUrlSequence = job.getFrameUrlTemplate();
         try {
             URL frameUrl = frameUrlSequence.getUrl(frame.getNumber());
             frameUri = frameUrl.toURI();
@@ -171,6 +171,19 @@ public class Application extends Worker {
 
         XmlFrameSerializer fs = new XmlFrameSerializer();
         fs.setPretty(true);
+
+        try {
+            fs.setSchemaLocation(options.getXmlSchemaUrl());
+        } catch (XmlSerializerException ex) {
+            throw new ApplicationException("could not open XML schema", ex);
+        } finally {
+            try {
+                frameOut.close();
+            } catch (IOException ex) {
+                throw new ApplicationException("could not close frame file", ex);
+            }
+        }
+
         try {
             fs.serialize(frame, frameOut);
         } catch (XmlSerializerException ex) {
@@ -192,6 +205,20 @@ public class Application extends Worker {
 
         XmlJobSerializer js = new XmlJobSerializer();
         js.setPretty(true);
+
+        try {
+            js.setSchemaLocation(options.getXmlSchemaUrl());
+        } catch (XmlSerializerException ex) {
+            throw new ApplicationException("could not open XML schema", ex);
+        } finally {
+            try {
+                jobOut.close();
+            } catch (IOException ex) {
+                throw new ApplicationException("could not close job file", ex);
+            }
+        }
+
+        js.setIncludeSchemaLocation(true);
         try {
             js.serialize(job, jobOut);
         } catch (XmlSerializerException ex) {

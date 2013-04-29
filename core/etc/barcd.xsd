@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="http://www.tu-chemnitz.de/informatik/mi/barcd"
   xmlns="http://www.tu-chemnitz.de/informatik/mi/barcd"
+  targetNamespace="http://www.tu-chemnitz.de/informatik/mi/barcd"
   elementFormDefault="qualified">
   
   <xs:element name="job" type="JobType"/>
@@ -17,6 +17,7 @@
     <xs:all>
       <xs:element name="source" type="SourceChoiceType"/>
       <xs:element name="next-frame-number" type="uint" default="0" minOccurs="0"/>
+      <xs:element name="frames" type="UrlTemplateType"/>
     </xs:all>
   </xs:complexType>
   

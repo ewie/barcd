@@ -46,10 +46,11 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
         JobElement je = (JobElement) e.getValue();
         Source source = restoreImageSource(je.getSource());
         Integer nextFrameNumber = je.getNextFrameNumber();
+        TemplatedUrlSequence urls = restoreTemplatedUrlSequence(je.getFrames());
         if (nextFrameNumber == null) {
-            return new Job(source);
+            return new Job(source, urls);
         } else {
-            return new Job(source, nextFrameNumber);
+            return new Job(source, urls, nextFrameNumber);
         }
     }
 
@@ -66,6 +67,7 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
         JobElement je = elements.createJobElement();
         je.setSource(createSourceChoiceElement(job.getSource()));
         je.setNextFrameNumber(job.nextFrameNumber());
+        je.setFrames(createUrlTemplateElement(job.getFrameUrlTemplate()));
         return je;
     }
 
@@ -158,6 +160,16 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
         return fe;
     }
 
+    private UrlTemplateElement createUrlTemplateElement(TemplatedUrlSequence sequence)
+        throws XmlSerializerException
+    {
+        UrlTemplateElement ute = elements.createUrlTemplateElement();
+        ute.setPadding(sequence.getPadding());
+        ute.setTag(sequence.getTag());
+        ute.setValue(url2uri(sequence.getTemplate()));
+        return ute;
+    }
+
     private Source restoreImageSource(SourceChoiceElement e)
         throws XmlSerializerException
     {
@@ -210,5 +222,15 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
             }
         }
         throw new XmlSerializerException();
+    }
+
+    private TemplatedUrlSequence restoreTemplatedUrlSequence(UrlTemplateElement e)
+        throws XmlSerializerException
+    {
+        URL url = uri2url(e.getValue());
+        String tag = e.getTag();
+        int padding = e.getPadding();
+        Range range = new Range(0, Integer.MAX_VALUE);
+        return new TemplatedUrlSequence(url, tag, range, padding);
     }
 }
