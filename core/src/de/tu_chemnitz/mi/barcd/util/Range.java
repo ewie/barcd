@@ -1,26 +1,30 @@
 package de.tu_chemnitz.mi.barcd.util;
 
 /**
- * A range of integers.
+ * A range of non-negative longs.
  *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class Range implements Iterable<Integer> {
-    private final int start;
-    private final int end;
-    private final int step;
-    private final int length;
+public class Range implements Iterable<Long> {
+    private final long start;
+    private final long end;
+    private final long step;
+    private final long length;
 
     /**
      * Create a range with a custom step size.
      *
-     * @param start the inclusive start
-     * @param end the exclusive end
+     * @param start the inclusive non-negative start
+     * @param end the exclusive non-negative end
      * @param step the step size, must not be zero
      */
-    public Range(int start, int end, int step) {
+    public Range(long start, long end, long step) {
         if (step == 0) {
             throw new IllegalArgumentException("step must not be zero");
+        }
+
+        if (start < 0 || end < 0) {
+            throw new IllegalArgumentException("start and step must be non-negative");
         }
 
         if (start < end && step < 0) {
@@ -33,7 +37,7 @@ public class Range implements Iterable<Integer> {
         this.end = end;
         this.step = step;
 
-        int len = (end - start) / step;
+        long len = (end - start) / step;
 
         if ((end - start) % step != 0) {
             len += 1;
@@ -46,38 +50,38 @@ public class Range implements Iterable<Integer> {
      *
      * The step size will be 1 if start > end or -1 if start < end.
      *
-     * @param start the inclusive start
-     * @param end the exclusive end
+     * @param start the inclusive non-negative start
+     * @param end the exclusive non-negative end
      */
-    public Range(int start, int end) {
+    public Range(long start, long end) {
         this(start, end, start < end ? 1 : -1);
     }
 
     /**
      * @return the start
      */
-    public int getStart() {
+    public long getStart() {
         return start;
     }
 
     /**
      * @return the exclusive end
      */
-    public int getEnd() {
+    public long getEnd() {
         return end;
     }
 
     /**
      * @return the step size
      */
-    public int getStep() {
+    public long getStep() {
         return step;
     }
 
     /**
      * @return the number of integers within the range
      */
-    public int getLength() {
+    public long getLength() {
         return length;
     }
 
@@ -88,7 +92,7 @@ public class Range implements Iterable<Integer> {
      *
      * @return the integer at the given index
      */
-    public int get(int index) {
+    public long get(long index) {
         if (index < 0 || index >= length) {
             throw new IllegalArgumentException(
                 String.format("index must be in %d..%d", 0, length));

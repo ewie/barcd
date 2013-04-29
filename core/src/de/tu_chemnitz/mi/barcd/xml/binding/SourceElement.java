@@ -33,11 +33,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SourceType")
 @XmlSeeAlso({
-    ImageCollectionSourceElement.class,
     ImageSequenceSourceElement.class,
+    VideoStreamSourceElement.class,
+    ImageCollectionSourceElement.class,
     SnapshotSourceElement.class,
-    VideoDeviceSourceElement.class,
-    VideoStreamSourceElement.class
+    VideoDeviceSourceElement.class
 })
 public class SourceElement {
 

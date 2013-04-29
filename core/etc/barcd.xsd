@@ -13,6 +13,12 @@
     </xs:restriction>
   </xs:simpleType>
   
+  <xs:simpleType name="ulong">
+    <xs:restriction base="xs:long">
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
   <xs:complexType name="JobType">
     <xs:all>
       <xs:element name="source" type="SourceChoiceType"/>
@@ -83,9 +89,9 @@
   </xs:complexType>
   
   <xs:complexType name="RangeType">
-    <xs:attribute name="start" type="uint" default="0"/>
-    <xs:attribute name="end" type="uint"/>
-    <xs:attribute name="step" type="xs:int" default="1"/>
+    <xs:attribute name="start" type="ulong" default="0"/>
+    <xs:attribute name="end" type="ulong"/>
+    <xs:attribute name="step" type="xs:long" default="1"/>
   </xs:complexType>
   
   <xs:complexType name="ImageCollectionSourceType">

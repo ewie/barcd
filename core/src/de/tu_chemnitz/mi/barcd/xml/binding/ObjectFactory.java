@@ -58,6 +58,62 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SourceChoiceElement }
+     * 
+     */
+    public SourceChoiceElement createSourceChoiceElement() {
+        return new SourceChoiceElement();
+    }
+
+    /**
+     * Create an instance of {@link RangeElement }
+     * 
+     */
+    public RangeElement createRangeElement() {
+        return new RangeElement();
+    }
+
+    /**
+     * Create an instance of {@link RegionElement }
+     * 
+     */
+    public RegionElement createRegionElement() {
+        return new RegionElement();
+    }
+
+    /**
+     * Create an instance of {@link ImageSequenceSourceElement }
+     * 
+     */
+    public ImageSequenceSourceElement createImageSequenceSourceElement() {
+        return new ImageSequenceSourceElement();
+    }
+
+    /**
+     * Create an instance of {@link ResourceElement }
+     * 
+     */
+    public ResourceElement createResourceElement() {
+        return new ResourceElement();
+    }
+
+    /**
+     * Create an instance of {@link BarcodesElement }
+     * 
+     */
+    public BarcodesElement createBarcodesElement() {
+        return new BarcodesElement();
+    }
+
+    /**
+     * Create an instance of {@link VideoStreamSourceElement }
+     * 
+     */
+    public VideoStreamSourceElement createVideoStreamSourceElement() {
+        return new VideoStreamSourceElement();
+    }
+
+    /**
      * Create an instance of {@link BarcodeElement }
      * 
      */
@@ -82,14 +138,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SourceChoiceElement }
-     * 
-     */
-    public SourceChoiceElement createSourceChoiceElement() {
-        return new SourceChoiceElement();
-    }
-
-    /**
      * Create an instance of {@link SourceElement }
      * 
      */
@@ -98,43 +146,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RegionElement }
-     * 
-     */
-    public RegionElement createRegionElement() {
-        return new RegionElement();
-    }
-
-    /**
-     * Create an instance of {@link RangeElement }
-     * 
-     */
-    public RangeElement createRangeElement() {
-        return new RangeElement();
-    }
-
-    /**
-     * Create an instance of {@link ImageSequenceSourceElement }
-     * 
-     */
-    public ImageSequenceSourceElement createImageSequenceSourceElement() {
-        return new ImageSequenceSourceElement();
-    }
-
-    /**
      * Create an instance of {@link SnapshotSourceElement }
      * 
      */
     public SnapshotSourceElement createSnapshotSourceElement() {
         return new SnapshotSourceElement();
-    }
-
-    /**
-     * Create an instance of {@link ResourceElement }
-     * 
-     */
-    public ResourceElement createResourceElement() {
-        return new ResourceElement();
     }
 
     /**
@@ -154,14 +170,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link VideoDeviceSourceElement }
-     * 
-     */
-    public VideoDeviceSourceElement createVideoDeviceSourceElement() {
-        return new VideoDeviceSourceElement();
-    }
-
-    /**
      * Create an instance of {@link UrlTemplateElement }
      * 
      */
@@ -170,19 +178,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link BarcodesElement }
+     * Create an instance of {@link VideoDeviceSourceElement }
      * 
      */
-    public BarcodesElement createBarcodesElement() {
-        return new BarcodesElement();
-    }
-
-    /**
-     * Create an instance of {@link VideoStreamSourceElement }
-     * 
-     */
-    public VideoStreamSourceElement createVideoStreamSourceElement() {
-        return new VideoStreamSourceElement();
+    public VideoDeviceSourceElement createVideoDeviceSourceElement() {
+        return new VideoDeviceSourceElement();
     }
 
     /**

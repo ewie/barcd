@@ -23,9 +23,9 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType name="RangeType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="start" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}uint" default="0" />
- *       &lt;attribute name="end" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}uint" />
- *       &lt;attribute name="step" type="{http://www.w3.org/2001/XMLSchema}int" default="1" />
+ *       &lt;attribute name="start" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}ulong" default="0" />
+ *       &lt;attribute name="end" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}ulong" />
+ *       &lt;attribute name="step" type="{http://www.w3.org/2001/XMLSchema}long" default="1" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -38,23 +38,23 @@ import javax.xml.bind.annotation.XmlType;
 public class RangeElement {
 
     @XmlAttribute(name = "start")
-    protected Integer start;
+    protected Long start;
     @XmlAttribute(name = "end")
-    protected Integer end;
+    protected Long end;
     @XmlAttribute(name = "step")
-    protected Integer step;
+    protected Long step;
 
     /**
      * Gets the value of the start property.
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link Long }
      *     
      */
-    public int getStart() {
+    public long getStart() {
         if (start == null) {
-            return  0;
+            return  0L;
         } else {
             return start;
         }
@@ -65,10 +65,10 @@ public class RangeElement {
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link Long }
      *     
      */
-    public void setStart(Integer value) {
+    public void setStart(Long value) {
         this.start = value;
     }
 
@@ -77,10 +77,10 @@ public class RangeElement {
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link Long }
      *     
      */
-    public Integer getEnd() {
+    public Long getEnd() {
         return end;
     }
 
@@ -89,10 +89,10 @@ public class RangeElement {
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link Long }
      *     
      */
-    public void setEnd(Integer value) {
+    public void setEnd(Long value) {
         this.end = value;
     }
 
@@ -101,12 +101,12 @@ public class RangeElement {
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link Long }
      *     
      */
-    public int getStep() {
+    public long getStep() {
         if (step == null) {
-            return  1;
+            return  1L;
         } else {
             return step;
         }
@@ -117,10 +117,10 @@ public class RangeElement {
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link Long }
      *     
      */
-    public void setStep(Integer value) {
+    public void setStep(Long value) {
         this.step = value;
     }
 

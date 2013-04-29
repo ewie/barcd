@@ -7,9 +7,9 @@ import java.util.Iterator;
  *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class RangeIterator implements Iterator<Integer> {
+public class RangeIterator implements Iterator<Long> {
     private final Range range;
-    private int index = 0;
+    private long index = 0;
 
     /**
      * @param range
@@ -24,7 +24,7 @@ public class RangeIterator implements Iterator<Integer> {
     }
 
     @Override
-    public Integer next() {
+    public Long next() {
         return range.get(index++);
     }
 
