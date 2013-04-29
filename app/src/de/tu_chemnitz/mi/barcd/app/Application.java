@@ -169,20 +169,7 @@ public class Application extends Worker {
             throw new ApplicationException("could not open or create frame file: " + frameFile.toString(), ex);
         }
 
-        XmlFrameSerializer fs = new XmlFrameSerializer();
-        fs.setPretty(true);
-
-        try {
-            fs.setSchemaLocation(options.getXmlSchemaUrl());
-        } catch (XmlSerializerException ex) {
-            throw new ApplicationException("could not open XML schema", ex);
-        } finally {
-            try {
-                frameOut.close();
-            } catch (IOException ex) {
-                throw new ApplicationException("could not close frame file", ex);
-            }
-        }
+        XmlFrameSerializer fs = createFrameSerializer();
 
         try {
             fs.serialize(frame, frameOut);
@@ -203,27 +190,59 @@ public class Application extends Worker {
             throw new ApplicationException("could not open or create job file: " + jobFile.toString(), ex);
         }
 
-        XmlJobSerializer js = new XmlJobSerializer();
-        js.setPretty(true);
+        XmlJobSerializer js = createJobSerializer();
 
-        try {
-            js.setSchemaLocation(options.getXmlSchemaUrl());
-        } catch (XmlSerializerException ex) {
-            throw new ApplicationException("could not open XML schema", ex);
-        } finally {
-            try {
-                jobOut.close();
-            } catch (IOException ex) {
-                throw new ApplicationException("could not close job file", ex);
-            }
-        }
-
-        js.setIncludeSchemaLocation(true);
         try {
             js.serialize(job, jobOut);
         } catch (XmlSerializerException ex) {
             throw new ApplicationException("could not serialize or persist job", ex);
         }
+    }
+
+    private XmlFrameSerializer createFrameSerializer()
+        throws ApplicationException
+    {
+        XmlFrameSerializer serializer = new XmlFrameSerializer();
+
+        try {
+            serializer.setSchemaLocation(options.getXmlSchemaUrl());
+        } catch (XmlSerializerException ex) {
+            throw new ApplicationException("could not open XML schema", ex);
+        }
+
+        try {
+            serializer.setValidate(true);
+        } catch (XmlSerializerException ex) {
+            throw new ApplicationException("XML schema not loaded", ex);
+        }
+
+        serializer.setIncludeSchemaLocation(true);
+        serializer.setPretty(true);
+
+        return serializer;
+    }
+
+    private XmlJobSerializer createJobSerializer()
+        throws ApplicationException
+    {
+        XmlJobSerializer serializer = new XmlJobSerializer();
+
+        try {
+            serializer.setSchemaLocation(options.getXmlSchemaUrl());
+        } catch (XmlSerializerException ex) {
+            throw new ApplicationException("could not open XML schema", ex);
+        }
+
+        try {
+            serializer.setValidate(true);
+        } catch (XmlSerializerException ex) {
+            throw new ApplicationException("XML schema not loaded", ex);
+        }
+
+        serializer.setIncludeSchemaLocation(true);
+        serializer.setPretty(true);
+
+        return serializer;
     }
 
     private Job loadJob(File file)
