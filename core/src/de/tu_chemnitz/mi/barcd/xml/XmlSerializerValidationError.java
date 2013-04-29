@@ -1,5 +1,8 @@
 package de.tu_chemnitz.mi.barcd.xml;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class XmlSerializerValidationError {
     private final String message;
     private final int line;

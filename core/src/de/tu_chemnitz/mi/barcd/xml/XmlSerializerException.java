@@ -2,6 +2,9 @@ package de.tu_chemnitz.mi.barcd.xml;
 
 import de.tu_chemnitz.mi.barcd.SerializerException;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class XmlSerializerException extends SerializerException {
     private static final long serialVersionUID = 1L;
 

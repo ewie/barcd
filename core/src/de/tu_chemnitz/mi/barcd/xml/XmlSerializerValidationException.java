@@ -3,6 +3,9 @@ package de.tu_chemnitz.mi.barcd.xml;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class XmlSerializerValidationException extends XmlSerializerException {
     private static final long serialVersionUID = 1L;
 

@@ -26,6 +26,11 @@ import de.tu_chemnitz.mi.barcd.xml.binding.PointsElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.RegionElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.RegionsElement;
 
+/**
+ * XML serializer/unserializer for {@link Frame}.
+ *
+ * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+ */
 public class XmlFrameSerializer extends XmlSerializer<Frame> {
     private final ObjectFactory elements = new ObjectFactory();
 
