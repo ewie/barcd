@@ -22,7 +22,7 @@ public class ExtractionWorker extends Worker {
      * @throws ExtractorException
      */
     @Override
-    public void work()
+    protected void work()
         throws ExtractorException
     {
         while (!shouldTerminate() && extractor.hasMoreImages()) {

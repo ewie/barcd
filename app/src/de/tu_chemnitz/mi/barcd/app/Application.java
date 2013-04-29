@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 
 import de.tu_chemnitz.mi.barcd.Extractor;
 import de.tu_chemnitz.mi.barcd.ExtractorException;
@@ -49,6 +50,26 @@ public class Application extends Worker {
 
     private ImageDisplay display;
 
+    // A collection of frames that will be persisted when the runtime shuts
+    // down.
+    private final LinkedList<Frame> framesToPersist = new LinkedList<Frame>();
+
+    // Sometimes the final persistence does not complete when the application
+    // is stopped by the user. Causing the job file to be empty. So to ensure
+    // the all remaining frames get persisted and the job file does not get lost
+    // we perform a final persistence of all remaining frames and the job.
+    private final Thread persistAtShutdownHook = new Thread(new Worker() {
+        @Override
+        protected void work() throws ApplicationException {
+            while (!framesToPersist.isEmpty()) {
+                System.out.printf("persist frame %d\n", framesToPersist.getFirst().getNumber());
+                persistFrame(framesToPersist.remove());
+            }
+            System.out.println("persist job");
+            persistJob(job);
+        }
+    });
+
     public Application(Options options)
         throws ApplicationException
     {
@@ -57,6 +78,7 @@ public class Application extends Worker {
         ExtractionWorker extractionWorker = createExtractionWorker();
         extractionThread = new Thread(extractionWorker);
         terminal = createTerminal(extractionThread, extractionWorker);
+        Runtime.getRuntime().addShutdownHook(persistAtShutdownHook);
     }
 
     @Override
@@ -150,6 +172,8 @@ public class Application extends Worker {
     private void persistFrame(Frame frame)
         throws ApplicationException
     {
+        framesToPersist.addLast(frame);
+
         URI frameUri;
         TemplatedUrlSequence frameUrlSequence = job.getFrameUrlTemplate();
         try {
@@ -176,6 +200,8 @@ public class Application extends Worker {
         } catch (XmlSerializerException ex) {
             throw new ApplicationException("could not serialize or persist frame", ex);
         }
+
+        framesToPersist.removeLast();
     }
 
     private void persistJob(Job job)

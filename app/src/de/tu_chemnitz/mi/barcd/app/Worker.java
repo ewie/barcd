@@ -52,5 +52,5 @@ public abstract class Worker implements Runnable {
      *
      * @see Runnable#run
      */
-    public abstract void work() throws Exception;
+    protected abstract void work() throws Exception;
 }
