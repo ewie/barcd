@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedList;
 
 import de.tu_chemnitz.mi.barcd.Extractor;
 import de.tu_chemnitz.mi.barcd.ExtractorException;
@@ -44,41 +42,67 @@ public class Application extends Worker {
 
     private final Thread extractionThread;
 
+    private final PersistenceWorker persistenceWorker;
+
+    private final Thread persistenceThread;
+
     private final Terminal terminal;
 
     private final Options options;
 
     private ImageDisplay display;
 
-    // A collection of frames that will be persisted when the runtime shuts
-    // down.
-    private final LinkedList<Frame> framesToPersist = new LinkedList<Frame>();
-
-    // Sometimes the final persistence does not complete when the application
-    // is stopped by the user. Causing the job file to be empty. So to ensure
-    // the all remaining frames get persisted and the job file does not get lost
-    // we perform a final persistence of all remaining frames and the job.
-    private final Thread persistAtShutdownHook = new Thread(new Worker() {
-        @Override
-        protected void work() throws ApplicationException {
-            while (!framesToPersist.isEmpty()) {
-                System.out.printf("persist frame %d\n", framesToPersist.getFirst().getNumber());
-                persistFrame(framesToPersist.remove());
-            }
-            System.out.println("persist job");
-            persistJob(job);
-        }
-    });
-
     public Application(Options options)
         throws ApplicationException
     {
         this.options = options;
+
         job = loadJob(options.getJobFile());
+
         ExtractionWorker extractionWorker = createExtractionWorker();
+        persistenceWorker = createPersistenceWorker();
+
         extractionThread = new Thread(extractionWorker);
-        terminal = createTerminal(extractionThread, extractionWorker);
-        Runtime.getRuntime().addShutdownHook(persistAtShutdownHook);
+        persistenceThread = new Thread(persistenceWorker);
+
+        terminal = createTerminal(extractionThread, extractionWorker, persistenceThread, persistenceWorker);
+    }
+
+    private PersistenceWorker createPersistenceWorker()
+        throws ApplicationException
+    {
+        Mapper<Frame, File> frameFileMapper = new Mapper<Frame, File>() {
+            @Override
+            public File map(Frame frame)
+                throws MapperException
+            {
+                TemplatedUrlSequence urls = job.getFrameUrlTemplate();
+                URL url;
+                try {
+                    url = urls.getUrl(frame.getNumber());
+                } catch (MalformedURLException ex) {
+                    throw new MapperException("invalid frame URL", ex);
+                }
+                URI uri;
+                try {
+                    uri = url.toURI();
+                } catch (URISyntaxException ex) {
+                    throw new MapperException(ex);
+                }
+                return new File(uri);
+            }
+        };
+
+        XmlJobSerializer jobSerializer = createJobSerializer();
+        XmlFrameSerializer frameSerializer = createFrameSerializer();
+
+        return new PersistenceWorker(
+            job,
+            options.getJobFile(),
+            frameFileMapper,
+            jobSerializer,
+            frameSerializer,
+            64);
     }
 
     @Override
@@ -86,6 +110,7 @@ public class Application extends Worker {
         throws Exception
     {
         extractionThread.start();
+        persistenceThread.start();
         while (extractionThread.isAlive()) {
             try {
                 terminal.processNextLine();
@@ -127,7 +152,13 @@ public class Application extends Worker {
         throws ApplicationException
     {
         displayFrame(frame, image);
-        persistFrameAndJob(frame, job);
+        if (options.getPersist()) {
+            try {
+                persistenceWorker.queueFrame(frame);
+            } catch (PersistenceWorkerException ex) {
+                throw new ApplicationException("could not persist the next frame", ex);
+            }
+        }
     }
 
     private void displayFrame(Frame frame, BufferedImage image) {
@@ -159,70 +190,6 @@ public class Application extends Worker {
 
         g.dispose();
         display.setImage(im);
-    }
-
-    private void persistFrameAndJob(Frame frame, Job job)
-        throws ApplicationException
-    {
-        if (!options.getPersist()) return;
-        persistFrame(frame);
-        persistJob(job);
-    }
-
-    private void persistFrame(Frame frame)
-        throws ApplicationException
-    {
-        framesToPersist.addLast(frame);
-
-        URI frameUri;
-        TemplatedUrlSequence frameUrlSequence = job.getFrameUrlTemplate();
-        try {
-            URL frameUrl = frameUrlSequence.getUrl(frame.getNumber());
-            frameUri = frameUrl.toURI();
-        } catch (MalformedURLException ex) {
-            throw new ApplicationException("invalid file URL for frame " + frame.getNumber(), ex);
-        } catch (URISyntaxException ex) {
-            throw new ApplicationException("invalid file URL for frame " + frame.getNumber(), ex);
-        }
-
-        File frameFile = new File(frameUri);
-        FileOutputStream frameOut;
-        try {
-            frameOut = new FileOutputStream(frameFile);
-        } catch (FileNotFoundException ex) {
-            throw new ApplicationException("could not open or create frame file: " + frameFile.toString(), ex);
-        }
-
-        XmlFrameSerializer fs = createFrameSerializer();
-
-        try {
-            fs.serialize(frame, frameOut);
-        } catch (XmlSerializerException ex) {
-            throw new ApplicationException("could not serialize or persist frame", ex);
-        }
-
-        framesToPersist.removeLast();
-    }
-
-    private void persistJob(Job job)
-        throws ApplicationException
-    {
-        File jobFile = options.getJobFile();
-        FileOutputStream jobOut;
-
-        try {
-            jobOut = new FileOutputStream(jobFile);
-        } catch (FileNotFoundException ex) {
-            throw new ApplicationException("could not open or create job file: " + jobFile.toString(), ex);
-        }
-
-        XmlJobSerializer js = createJobSerializer();
-
-        try {
-            js.serialize(job, jobOut);
-        } catch (XmlSerializerException ex) {
-            throw new ApplicationException("could not serialize or persist job", ex);
-        }
     }
 
     private XmlFrameSerializer createFrameSerializer()
@@ -315,7 +282,10 @@ public class Application extends Worker {
         return job;
     }
 
-    private Terminal createTerminal(final Thread thread, final ExtractionWorker worker)
+    private Terminal createTerminal(final Thread extractionThread,
+                                    final ExtractionWorker extractionWorker,
+                                    final Thread persistenceThread,
+                                    final PersistenceWorker persistenceWorker)
         throws ApplicationException
     {
         Terminal terminal = new Terminal(System.in, System.out, TERMINAL_PREFIX);
@@ -323,12 +293,23 @@ public class Application extends Worker {
         Routine stopRoutine = new Routine() {
             @Override
             public void execute(Terminal terminal, String args) {
-                worker.terminate();
+                extractionWorker.terminate();
+
                 try {
-                    thread.join();
+                    extractionThread.join();
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
+
+                persistenceWorker.terminate();
+
+                try {
+                    persistenceThread.join();
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                display.dispose();
             }
         };
 
