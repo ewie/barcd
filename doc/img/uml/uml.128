@@ -1,10 +1,10 @@
 %!PS
-%%BoundingBox: -1 -33 330 1 
-%%HiResBoundingBox: -0.25 -32.75916 329.39894 0.25 
+%%BoundingBox: -1 -117 330 1 
+%%HiResBoundingBox: -0.25 -116.01831 329.39894 0.25 
 %%Creator: MetaPost 1.208
 %%CreationDate: [STRIPPED]
 %%Pages: 1
-%*Font: ptmr8r 9.96265 9.96265 20:80e8882e7bcdb3157fdffff4
+%*Font: ptmr8r 9.96265 9.96265 20:80e8882e7bcdb7157ffffff4
 %%BeginProlog
 %%EndProlog
 %%Page: 1 1
@@ -55,5 +55,122 @@ newpath 7.95004 -25.0592 moveto
 3.04996 -24.00925 lineto
 2 -25.0592 lineto
  closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 116.15698 -52.75916 moveto
+214.24197 -52.75916 lineto
+214.24197 -116.01831 lineto
+116.15698 -116.01831 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 115.15698 -51.75916 moveto
+213.24197 -51.75916 lineto
+213.24197 -115.01831 lineto
+115.15698 -115.01831 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 115.15698 -51.75916 moveto
+213.24197 -51.75916 lineto
+213.24197 -115.01831 lineto
+115.15698 -115.01831 lineto
+ closepath stroke
+newpath 115.15698 -64.51373 moveto
+213.24197 -64.51373 lineto stroke
+newpath 115.15698 -69.01373 moveto
+213.24197 -69.01373 lineto stroke
+142.61057 -61.51373 moveto
+(UnionFind) ptmr8r 9.96265 fshow
+128.15698 -79.51831 moveto
+(UnionFind\(size:\040int\)) ptmr8r 9.96265 fshow
+128.15698 -90.01831 moveto
+(find\(i:\040int\):\040int) ptmr8r 9.96265 fshow
+128.15698 -100.51831 moveto
+(getSize\(\):\040int) ptmr8r 9.96265 fshow
+128.15698 -111.01831 moveto
+(union\(i:\040int,\040j:\040int\)) ptmr8r 9.96265 fshow
+ 0.4 0.4 0.4 setrgbcolor
+newpath 117.15698 -76.81836 moveto
+123.10703 -76.81836 lineto
+123.10703 -79.51831 lineto
+117.15698 -79.51831 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 123.10703 -79.51831 moveto
+124.15698 -78.46835 lineto
+124.15698 -75.7684 lineto
+123.10703 -76.81836 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 123.10703 -76.81836 moveto
+124.15698 -75.7684 lineto
+118.20694 -75.7684 lineto
+117.15698 -76.81836 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 117.15698 -87.31836 moveto
+123.10703 -87.31836 lineto
+123.10703 -90.01831 lineto
+117.15698 -90.01831 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 123.10703 -90.01831 moveto
+124.15698 -88.96835 lineto
+124.15698 -86.2684 lineto
+123.10703 -87.31836 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 123.10703 -87.31836 moveto
+124.15698 -86.2684 lineto
+118.20694 -86.2684 lineto
+117.15698 -87.31836 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 117.15698 -97.81836 moveto
+123.10703 -97.81836 lineto
+123.10703 -100.51831 lineto
+117.15698 -100.51831 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 123.10703 -100.51831 moveto
+124.15698 -99.46835 lineto
+124.15698 -96.7684 lineto
+123.10703 -97.81836 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 123.10703 -97.81836 moveto
+124.15698 -96.7684 lineto
+118.20694 -96.7684 lineto
+117.15698 -97.81836 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 117.15698 -108.31836 moveto
+123.10703 -108.31836 lineto
+123.10703 -111.01831 lineto
+117.15698 -111.01831 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 123.10703 -111.01831 moveto
+124.15698 -109.96835 lineto
+124.15698 -107.2684 lineto
+123.10703 -108.31836 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 123.10703 -108.31836 moveto
+124.15698 -107.2684 lineto
+118.20694 -107.2684 lineto
+117.15698 -108.31836 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0.5
+ 0 dtransform exch truncate exch idtransform pop setlinewidth
+ [3 3 ] 0 setdash
+newpath 164.19948 -31.75871 moveto
+164.19948 -39.25967 lineto stroke
+ [] 0 setdash
+newpath 164.19948 -39.25967 moveto
+164.19948 -51.75969 lineto stroke
+ 0 0.5 dtransform truncate idtransform setlinewidth pop
+newpath 164.19948 -51.75969 moveto
+169.19948 -39.25967 lineto stroke
+newpath 164.19948 -51.75969 moveto
+159.19948 -39.25967 lineto stroke
 showpage
 %%EOF

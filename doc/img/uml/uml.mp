@@ -1264,13 +1264,29 @@ endfig;
 
 beginfig(128);
   save
-    ConnectedComponentsLabeler;
+    ConnectedComponentsLabeler,
+    UnionFind;
 
   Class.ConnectedComponentsLabeler("ConnectedComponentsLabeler")
     ()
     ("+process(pixels: int[*], width: int, height: int, backgroundValue: int = 0): int[*]");
 
-  drawObjects(ConnectedComponentsLabeler);
+  Class.UnionFind("UnionFind")
+    ()
+    ("+UnionFind(size: int)",
+     "+find(i: int): int",
+     "+getSize(): int",
+     "+union(i: int, j: int)");
+
+  topToBottom(20)(
+    ConnectedComponentsLabeler,
+    UnionFind);
+
+  drawObjects(
+    ConnectedComponentsLabeler,
+    UnionFind);
+
+  clink(dependency)(ConnectedComponentsLabeler, UnionFind);
 endfig;
 
 beginfig(129);
