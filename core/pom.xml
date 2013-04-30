@@ -62,11 +62,6 @@
   		<artifactId>slf4j-api</artifactId>
   		<version>1.7.2</version>
   	</dependency>
-  	<dependency>
-  		<groupId>org.boofcv</groupId>
-  		<artifactId>boofcv</artifactId>
-  		<version>0.12</version>
-  	</dependency>
     <dependency>
         <groupId>com.googlecode.javacv</groupId>
         <artifactId>javacv</artifactId>
@@ -83,11 +78,6 @@
         <artifactId>javacv</artifactId>
         <classifier>linux-x86_64</classifier>
         <version>0.3</version>
-    </dependency>
-    <dependency>
-    	<groupId>org.apache.directory.studio</groupId>
-    	<artifactId>org.apache.commons.codec</artifactId>
-    	<version>1.6</version>
     </dependency>
     <dependency>
 	    <groupId>gov.nih.imagej</groupId>
