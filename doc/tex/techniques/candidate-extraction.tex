@@ -45,3 +45,43 @@ Unter der Annahme, dass Barcodes rechteckig sind (ShotCode stellt dabei eine Au�
 Dieses Rechteck, auch "`minimum area enclosing rectangle"' genannt, lässt sich mittels Rotating Calipers berechnen.
 Die Berechnung dieses Rechtecks macht es zudem möglich die Orientierung des Barcodes zu ermitteln, vorausgesetzt dass die Breite eines Barcodes größer als seine Höhe ist.
 \end{enumerate}
+
+\renewcommand{\thesubfigure}{\scriptsize\alph{subfigure}}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[t]{0.32\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{img/techniques/candidate-extraction/grayscale}
+    \caption{\scriptsize Grauwerte}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.32\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{img/techniques/candidate-extraction/edges}
+    \caption{\scriptsize Kantenbild unter Verwendung des \textsc{Roberts}-Operator}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.32\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{img/techniques/candidate-extraction/dilation}
+    \caption{\scriptsize Dilation mit einem 5$\times$5-Strukturelement}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.32\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{img/techniques/candidate-extraction/binary}
+    \caption{\scriptsize Binärbild}
+  \end{subfigure}
+  \begin{subfigure}[t]{.32\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{img/techniques/candidate-extraction/components}
+    \caption{\scriptsize zusammenhängende Komponenten farblich hervorgehoben}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.32\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{img/techniques/candidate-extraction/candidates}
+    \caption{\scriptsize ermittelte Regionen (rot) mit umschließendem Rechteck minimaler Fläche (blau)}
+  \end{subfigure}
+  \caption[Einzelschritte beim Auffinden potentieller Barcodes]{Einzelschritte beim Auffinden potentieller Barcodes in einem Bild\protect\footnotemark}
+\end{figure}
+
+\footnotetext{\url{http://commons.wikimedia.org/wiki/File:Drahtb\%C3\%BCgeltasche_A6.jpg}}
+
