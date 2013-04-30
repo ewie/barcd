@@ -826,8 +826,8 @@ beginfig(115);
      "+createImageProvider(): ImageProvider",
      "+getFrames(): Frame[*]",
      "+getFrameUrlTemplate(): TemplatedUrlSequence",
-     "+getSource(): Source",
-     "+nextFrameNumber(): int");
+     "+getNextFrameNumber(): int",
+     "+getSource(): Source");
 
   ClassName.Frame("Frame");
   ClassName.Source("Source {abstract}");

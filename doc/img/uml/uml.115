@@ -47,9 +47,9 @@ nitialFrameNumber:\040int\040=\0400\)) ptmr8r 9.96265 fshow
 13 -69.75916 moveto
 (getFrameUrlTemplate\(\):\040TemplatedUrlSequence) ptmr8r 9.96265 fshow
 13 -80.25916 moveto
-(getSource\(\):\040Source) ptmr8r 9.96265 fshow
+(getNextFrameNumber\(\):\040int) ptmr8r 9.96265 fshow
 13 -90.75916 moveto
-(nextFrameNumber\(\):\040int) ptmr8r 9.96265 fshow
+(getSource\(\):\040Source) ptmr8r 9.96265 fshow
  0.4 0.4 0.4 setrgbcolor
 newpath 2 -25.0592 moveto
 7.95004 -25.0592 lineto
