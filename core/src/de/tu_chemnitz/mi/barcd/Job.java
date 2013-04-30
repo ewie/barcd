@@ -70,11 +70,11 @@ public class Job {
 
     /**
      * Get the next frame number starting from the initial frame number and
-     * advancing by 1 with each processed frame.
+     * advancing by 1 with each created frame.
      *
      * @return the next frame number
      */
-    public int nextFrameNumber() {
+    public int getNextFrameNumber() {
         return nextFrameNumber;
     }
 

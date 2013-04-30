@@ -66,7 +66,7 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
     {
         JobElement je = elements.createJobElement();
         je.setSource(createSourceChoiceElement(job.getSource()));
-        je.setNextFrameNumber(job.nextFrameNumber());
+        je.setNextFrameNumber(job.getNextFrameNumber());
         je.setFrames(createUrlTemplateElement(job.getFrameUrlTemplate()));
         return je;
     }
