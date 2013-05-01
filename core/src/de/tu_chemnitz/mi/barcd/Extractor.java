@@ -3,7 +3,9 @@ package de.tu_chemnitz.mi.barcd;
 import java.awt.image.BufferedImage;
 
 import de.tu_chemnitz.mi.barcd.geometry.AxisAlignedRectangle;
+import de.tu_chemnitz.mi.barcd.geometry.OrientedRectangle;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
+import de.tu_chemnitz.mi.barcd.geometry.Vector;
 import de.tu_chemnitz.mi.barcd.util.RegionHashTable;
 
 /**
@@ -128,40 +130,13 @@ public class Extractor {
 
         Frame frame = job.createFrame();
 
-//        for (Region r : regions) {
-//            if (regionSelector == null || regionSelector.selectRegion(r)) {
-//                frame.addRegion(r);
-//                regionHashTable.insert(r);
-//            }
-//        }
-
         for (Region region : regions) {
             if (regionSelector == null || regionSelector.selectRegion(region)) {
+                regionHashTable.insert(region);
+
                 frame.addRegion(region);
 
-                AxisAlignedRectangle rect = region.getAxisAlignedRectangle();
-                Point min = rect.getMin();
-
-                // TODO fix padding
-                int x = (int) min.getX() - 10;
-                int y = (int) min.getY() - 10;
-                int width = (int) rect.getWidth() + 20;
-                int height = (int) rect.getHeight() + 20;
-
-                if (x < 0) {
-                    x = 0;
-                }
-                if (y < 0) {
-                    y = 0;
-                }
-                if (x + width > image.getWidth()) {
-                    width = image.getWidth() - x;
-                }
-                if (y + height > image.getHeight()) {
-                    height = image.getHeight() - y;
-                }
-
-                BufferedImage sub = image.getSubimage(x, y, width, height);
+                BufferedImage sub = createRegionImage(region, image);
 
                 BufferedImage enhanced;
                 try {
@@ -179,32 +154,93 @@ public class Extractor {
             }
         }
 
-//        Barcode[] barcodes = decoder.decodeMultiple(image);
-//
-//        if (barcodes != null) {
-//            for (Barcode barcode : barcodes) {
-//                Region r = null;
-//
-//                // Try each anchor point until we find a region containing it.
-//                Point[] pp = barcode.getAnchorPoints();
-//                for (Point p : pp) {
-//                    r = regionHashTable.find(p);
-//                    if (r != null) {
-//                        break;
-//                    }
-//                }
-//
-//                if (r == null) {
-//                    frame.addRegionlessBarcode(barcode);
-//                } else {
-//                    r.setBarcode(barcode);
-//                }
-//            }
-//        }
+        Barcode[] barcodes = barcodeReader.readMultiple(image);
 
-//        regionHashTable.clear();
+        if (barcodes != null) {
+            for (Barcode barcode : barcodes) {
+                Region region = null;
+
+                // Try each anchor point until we find a region containing it.
+                Point[] points = barcode.getAnchorPoints();
+                for (Point p : points) {
+                    region = regionHashTable.find(p);
+                    if (region != null) {
+                        break;
+                    }
+                }
+
+                if (region == null) {
+                    frame.addRegionlessBarcode(barcode);
+                } else {
+                    region.setBarcode(barcode);
+                }
+            }
+        }
+
+        regionHashTable.clear();
 
         reportFrame(frame, image);
+    }
+
+    /**
+     * Get the image within the region's axis aligned bounding rectangle.
+     *
+     * @param region the region
+     * @param image the frame image from which the region originates
+     *
+     * @return the region's sub image
+     */
+    private BufferedImage createRegionImage(Region region, BufferedImage image) {
+        OrientedRectangle rect = createRegionRectangleWithQuietZone(region);
+
+        AxisAlignedRectangle aar = AxisAlignedRectangle.createFromPolygon(rect);
+        Point min = aar.getMin();
+        Point max = aar.getMax();
+
+        // Ensure the axis aligned rectangle lies within the frame image.
+        int xmin = Math.max((int) min.getX(), 0);
+        int ymin = Math.max((int) min.getY(), 0);
+        int xmax = Math.min((int) max.getX(), image.getWidth() - 1);
+        int ymax = Math.min((int) max.getY(), image.getHeight() - 1);
+
+        int width = xmax - xmin;
+        int height = ymax - ymin;
+
+        return image.getSubimage(xmin, ymin, width, height);
+    }
+
+    /**
+     * Create an expanded version of a region's oriented rectangle to provide
+     * a quiet zone.
+     *
+     * @param region the region
+     *
+     * @return the region's expanded oriented rectangle
+     */
+    private OrientedRectangle createRegionRectangleWithQuietZone(Region region) {
+        OrientedRectangle rect = region.getOrientedRectangle();
+        Point[] points = rect.getVertices();
+
+        // Let the size of the quiet zone depend on the rectangle's width.
+        double quietZoneWidth = rect.getWidth() / 10;
+
+        // The displacement vectors along the rectangle's width and height used
+        // to add a quiet zone.
+        Vector dw = new Vector(points[1], points[0]).applyLength(quietZoneWidth);
+        Vector dh = new Vector(points[3], points[0]).applyLength(quietZoneWidth);
+
+        // Move the rectangle's origin outwards.
+        Point origin = points[0].translate(dw).translate(dh);
+
+        // The vectors along the rectangle's width and height.
+        Vector vw = new Vector(points[0], points[1]);
+        Vector vh = new Vector(points[0], points[3]);
+
+        // Add the quiet zone's width to the rectangle's width and height.
+        vw = vw.applyLength(vw.getLength() + dw.getLength() * 2);
+        vh = vh.applyLength(vh.getLength() + dw.getLength() * 2);
+
+        return new OrientedRectangle(origin, vw, vh);
     }
 
     /**

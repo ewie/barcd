@@ -61,6 +61,41 @@ public class Vector {
     }
 
     /**
+     * Apply the given length to this vector.
+     *
+     * @param length the length
+     *
+     * @return a new vector with same direction but the given length
+     */
+    public Vector applyLength(double length) {
+        return normalize().scale(length);
+    }
+
+    /**
+     * Normalize this vector.
+     *
+     * @return a normalized version of this vector
+     */
+    public Vector normalize() {
+        double len = getLength();
+        if (len == 0) {
+            return this;
+        }
+        return scale(1 / len);
+    }
+
+    /**
+     * Scale this vector by a factor.
+     *
+     * @param scale the factor
+     *
+     * @return a scaled version of this vector
+     */
+    public Vector scale(double scale) {
+        return new Vector(x * scale, y * scale);
+    }
+
+    /**
      * Compute the inner product of this and a given vector
      *
      * @param other the other vector
