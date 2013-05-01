@@ -13,6 +13,7 @@ import java.util.Map;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.image.ConnectedComponentLabeler;
 import de.tu_chemnitz.mi.barcd.image.DilationOperator;
+import de.tu_chemnitz.mi.barcd.image.RectangularDilationOperator;
 import de.tu_chemnitz.mi.barcd.image.ScalingOperator;
 
 /**
@@ -21,63 +22,75 @@ import de.tu_chemnitz.mi.barcd.image.ScalingOperator;
 public class DefaultRegionExtractor implements RegionExtractor {
     private static final int PROCESSING_IMAGE_WIDTH = 1000;
 
-    private final ConvolveOp gx;
-    private final ConvolveOp gy;
-    private final DilationOperator dilate;
-    private final ScalingOperator scale = new ScalingOperator();
+    private final ConvolveOp edgeOperatorX;
+    private final ConvolveOp edgeOperatorY;
+    private final DilationOperator dilationOperator;
+    private final ScalingOperator scalingOperator = new ScalingOperator();
 
-    public DefaultRegionExtractor() {
+    /**
+     * Create a default region extractor with custom dilation operator.
+     *
+     * @param dilationOperator the dilation operator to use
+     */
+    public DefaultRegionExtractor(DilationOperator dilationOperator) {
+        this.dilationOperator = dilationOperator;
+
         // Robert's operator
-        gx = new ConvolveOp(new Kernel(2, 2, new float[] {
+        edgeOperatorX = new ConvolveOp(new Kernel(2, 2, new float[] {
             1,  0,
             0, -1
         }));
 
-        gy = new ConvolveOp(new Kernel(2, 2, new float[] {
+        edgeOperatorY = new ConvolveOp(new Kernel(2, 2, new float[] {
              0, 1,
             -1, 0
         }));
 
         // Sobel operator
-//        gx = new ConvolveOp(new Kernel(3, 3, new float[] {
+//        edgeOperatorX = new ConvolveOp(new Kernel(3, 3, new float[] {
 //            -1, -2, -1,
 //             0,  0,  0,
 //             1,  2,  1
 //        }));
 //
-//        gy = new ConvolveOp(new Kernel(3, 3, new float[] {
+//        edgeOperatorY = new ConvolveOp(new Kernel(3, 3, new float[] {
 //             -1, 0, 1,
 //             -2, 0, 2,
 //             -1, 0, 1
 //        }));
 
         // Scharr operator
-//        gx = new ConvolveOp(new Kernel(3, 3, new float[] {
+//        edgeOperatorX = new ConvolveOp(new Kernel(3, 3, new float[] {
 //            -3, -10, -3,
 //             0,   0,  0,
 //             3,  10,  3
 //        }));
 //
-//        gy = new ConvolveOp(new Kernel(3, 3, new float[] {
+//        edgeOperatorY = new ConvolveOp(new Kernel(3, 3, new float[] {
 //             -3, 0,  3,
 //            -10, 0, 10,
 //             -3, 0,  3
 //        }));
 
         // Prewitt operator
-//        gx = new ConvolveOp(new Kernel(3, 3, new float[] {
+//        edgeOperatorX = new ConvolveOp(new Kernel(3, 3, new float[] {
 //            -1, -1, -1,
 //             0,  0,  0,
 //             1,  1,  1
 //        }));
 //
-//        gy = new ConvolveOp(new Kernel(3, 3, new float[] {
+//        edgeOperatorY = new ConvolveOp(new Kernel(3, 3, new float[] {
 //             -1, 0, 1,
 //             -1, 0, 1,
 //             -1, 0, 1
 //        }));
+    }
 
-        dilate = new DilationOperator(5, 5);
+    /**
+     * Create a default region extractor with default dilation operator (5x5).
+     */
+    public DefaultRegionExtractor() {
+        this(new RectangularDilationOperator(5, 5));
     }
 
     @Override
@@ -85,7 +98,7 @@ public class DefaultRegionExtractor implements RegionExtractor {
         double scalingFactor = 1;
         if (image.getWidth() > PROCESSING_IMAGE_WIDTH) {
             scalingFactor = (double) image.getWidth() / PROCESSING_IMAGE_WIDTH;
-            image = scale.apply(image, PROCESSING_IMAGE_WIDTH);
+            image = scalingOperator.apply(image, PROCESSING_IMAGE_WIDTH);
         }
         int width = image.getWidth();
         int height = image.getHeight();
@@ -98,14 +111,14 @@ public class DefaultRegionExtractor implements RegionExtractor {
         int width = input.getWidth();
         int height = input.getHeight();
 
-        WritableRaster rx = gx.createCompatibleDestRaster(input);
-        WritableRaster ry = gy.createCompatibleDestRaster(input);
+        WritableRaster rx = edgeOperatorX.createCompatibleDestRaster(input);
+        WritableRaster ry = edgeOperatorY.createCompatibleDestRaster(input);
 
         // The gradient values should be in the interval [-255, 255] but
         // ConvolveOp#filter() probably uses the absolute value [0,255]
         // thereby losing any information about the gradient's direction.
-        gx.filter(input, rx);
-        gy.filter(input, ry);
+        edgeOperatorX.filter(input, rx);
+        edgeOperatorY.filter(input, ry);
 
         int[] px = rx.getPixels(0, 0, width, height, (int[]) null);
         int[] py = ry.getPixels(0, 0, width, height, (int[]) null);
@@ -122,7 +135,7 @@ public class DefaultRegionExtractor implements RegionExtractor {
     }
 
     private int[] performSegmentation(int[] in, int w, int h) {
-        int[] p = dilate.apply(in, w, h);
+        int[] p = dilationOperator.apply(in, w, h);
 
         long mean = 0;
         for (int i = 0; i < p.length; ++i) {
