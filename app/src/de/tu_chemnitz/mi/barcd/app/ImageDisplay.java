@@ -19,7 +19,7 @@ public class ImageDisplay extends JFrame {
     public ImageDisplay() {
         super();
         imageComponent = new ImageComponent();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         getContentPane().add(imageComponent);
         setVisible(true);
         pack();
