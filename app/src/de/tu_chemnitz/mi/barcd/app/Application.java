@@ -68,43 +68,6 @@ public class Application extends Worker {
         terminal = createTerminal(extractionThread, extractionWorker, persistenceThread, persistenceWorker);
     }
 
-    private PersistenceWorker createPersistenceWorker()
-        throws ApplicationException
-    {
-        Mapper<Frame, File> frameFileMapper = new Mapper<Frame, File>() {
-            @Override
-            public File map(Frame frame)
-                throws MapperException
-            {
-                TemplatedUrlSequence urls = job.getFrameUrlTemplate();
-                URL url;
-                try {
-                    url = urls.getUrl(frame.getNumber());
-                } catch (MalformedURLException ex) {
-                    throw new MapperException("invalid frame URL", ex);
-                }
-                URI uri;
-                try {
-                    uri = url.toURI();
-                } catch (URISyntaxException ex) {
-                    throw new MapperException(ex);
-                }
-                return new File(uri);
-            }
-        };
-
-        XmlJobSerializer jobSerializer = createJobSerializer();
-        XmlFrameSerializer frameSerializer = createFrameSerializer();
-
-        return new PersistenceWorker(
-            job,
-            options.getJobFile(),
-            frameFileMapper,
-            jobSerializer,
-            frameSerializer,
-            64);
-    }
-
     @Override
     public void work()
         throws Exception
@@ -146,6 +109,43 @@ public class Application extends Worker {
         });
 
         return extractionWorker;
+    }
+
+    private PersistenceWorker createPersistenceWorker()
+        throws ApplicationException
+    {
+        Mapper<Frame, File> frameFileMapper = new Mapper<Frame, File>() {
+            @Override
+            public File map(Frame frame)
+                throws MapperException
+            {
+                TemplatedUrlSequence urls = job.getFrameUrlTemplate();
+                URL url;
+                try {
+                    url = urls.getUrl(frame.getNumber());
+                } catch (MalformedURLException ex) {
+                    throw new MapperException("invalid frame URL", ex);
+                }
+                URI uri;
+                try {
+                    uri = url.toURI();
+                } catch (URISyntaxException ex) {
+                    throw new MapperException(ex);
+                }
+                return new File(uri);
+            }
+        };
+
+        XmlJobSerializer jobSerializer = createJobSerializer();
+        XmlFrameSerializer frameSerializer = createFrameSerializer();
+
+        return new PersistenceWorker(
+            job,
+            options.getJobFile(),
+            frameFileMapper,
+            jobSerializer,
+            frameSerializer,
+            64);
     }
 
     private void handleFrame(Frame frame, BufferedImage image)
