@@ -82,11 +82,14 @@ public class DefaultRegionExtractor implements RegionExtractor {
 
     @Override
     public Region[] extractRegions(BufferedImage image) {
-        double scalingFactor = (double) image.getWidth() / PROCESSING_IMAGE_WIDTH;
-        BufferedImage scaledImage = scale.apply(image, PROCESSING_IMAGE_WIDTH);
-        int width = scaledImage.getWidth();
-        int height = scaledImage.getHeight();
-        int[] g = extractEdges(scaledImage.getData());
+        double scalingFactor = 1;
+        if (image.getWidth() > PROCESSING_IMAGE_WIDTH) {
+            scalingFactor = (double) image.getWidth() / PROCESSING_IMAGE_WIDTH;
+            image = scale.apply(image, PROCESSING_IMAGE_WIDTH);
+        }
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int[] g = extractEdges(image.getData());
         int[] s = performSegmentation(g, width, height);
         return createRegions(s, width, height, scalingFactor);
     }
