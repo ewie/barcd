@@ -114,7 +114,25 @@ public class Extractor {
     public void processNextImage()
         throws ExtractorException
     {
+        BufferedImage image = consumeNextImage();
+        Region[] regions = extractRegions(image);
+        Frame frame = createFrame(regions, image);
+        reportFrame(frame, image);
+    }
+
+    /**
+     * Consume the next image from the image provider.
+     *
+     * @return the next image
+     *
+     * @throws ExtractorException if the image provider can not provide the next
+     *   image
+     */
+    private BufferedImage consumeNextImage()
+        throws ExtractorException
+    {
         BufferedImage image;
+
         try {
             image = imageProvider.consume();
         } catch (ImageProviderException ex) {
@@ -125,35 +143,79 @@ public class Extractor {
             throw new ExtractorException("next image is null");
         }
 
-        BufferedImage lum = grayscaler.convertToGrayscale(image);
-        Region[] regions = regionExtractor.extractRegions(lum);
+        return image;
+    }
 
+    /**
+     * Extract regions from the given frame image.
+     *
+     * @param image the frame image
+     *
+     * @return all extracted regions
+     */
+    private Region[] extractRegions(BufferedImage image) {
+        BufferedImage lum = grayscaler.convertToGrayscale(image);
+        return regionExtractor.extractRegions(lum);
+    }
+
+    /**
+     * Create a frame for the given regions and image.
+     *
+     * @param regions the regions extracted from the current frame
+     * @param image the image the current frame's image
+     *
+     * @return the current frame
+     */
+    private Frame createFrame(Region[] regions, BufferedImage image) {
         Frame frame = job.createFrame();
 
         for (Region region : regions) {
             if (regionSelector == null || regionSelector.selectRegion(region)) {
                 regionHashTable.insert(region);
-
                 frame.addRegion(region);
-
-                BufferedImage sub = createRegionImage(region, image);
-
-                BufferedImage enhanced;
-                try {
-                    enhanced = enhancer.enhanceImage(sub);
-                } catch (ImageEnhancerException ex) {
-                    // TODO pass original image to ZXing
-                    continue;
-                }
-
-                Barcode barcode = barcodeReader.read(enhanced);
-
-                if (barcode != null) {
-                    region.setBarcode(barcode);
-                }
+                processRegionBarcode(region, image);
             }
         }
 
+        processAllBarcodes(frame, image);
+        regionHashTable.clear();
+
+        return frame;
+    }
+
+    /**
+     * Process the eventual barcode within the given region.
+     *
+     * @param region the region may containing a barcode
+     * @param image the image from which the region originates
+     */
+    private void processRegionBarcode(Region region, BufferedImage image) {
+        BufferedImage sub = createRegionImage(region, image);
+
+        BufferedImage enhanced;
+        try {
+            enhanced = enhancer.enhanceImage(sub);
+        } catch (ImageEnhancerException ex) {
+            // TODO pass original image to ZXing
+            return;
+        }
+
+        Barcode barcode = barcodeReader.read(enhanced);
+
+        if (barcode != null) {
+            region.setBarcode(barcode);
+        }
+    }
+
+    /**
+     * Process all barcodes found within the entire frame image. This will add
+     * any barcodes not covered by a region as region-less barcode to the given
+     * frame.
+     *
+     * @param frame the frame
+     * @param image the frame image
+     */
+    private void processAllBarcodes(Frame frame, BufferedImage image) {
         Barcode[] barcodes = barcodeReader.readMultiple(image);
 
         if (barcodes != null) {
@@ -176,10 +238,6 @@ public class Extractor {
                 }
             }
         }
-
-        regionHashTable.clear();
-
-        reportFrame(frame, image);
     }
 
     /**
