@@ -131,14 +131,4 @@ public class Region {
         AxisAlignedRectangle ar = getAxisAlignedRectangle();
         return ar.contains(p) && convexPolygon.contains(p);
     }
-
-    /**
-     * Get the ratio of the convex polygon's area and the oriented rectangle's
-     * area.
-     *
-     * @return the discrepancy in the range (0, 1]
-     */
-    public double getDiscrepancy() {
-        return convexPolygon.computeArea() / getOrientedRectangle().computeArea();
-    }
 }

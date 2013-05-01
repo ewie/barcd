@@ -16,10 +16,6 @@ public class DefaultRegionSelector implements RegionSelector {
         if (rect.getWidth() < 20 || rect.getHeight() < 20) {
             return false;
         }
-        double dis = region.getDiscrepancy();
-        if (dis < 0.85) {
-            return false;
-        }
         return true;
     }
 }
