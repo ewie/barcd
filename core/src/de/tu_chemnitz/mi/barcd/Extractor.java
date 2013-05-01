@@ -22,7 +22,7 @@ public class Extractor {
 
     private final RegionHashTable regionHashTable = new RegionHashTable(10, 400);
 
-    private BarcodeReader reader = new DefaultBarcodeReader();
+    private BarcodeReader barcodeReader = new DefaultBarcodeReader();
 
     private Grayscaler grayscaler = new DefaultGrayscaler();
 
@@ -81,10 +81,10 @@ public class Extractor {
     /**
      * Set the barcode reader.
      *
-     * @param reader
+     * @param barcodeReader
      */
-    public void setBarcodeReader(BarcodeReader reader) {
-        this.reader = reader;
+    public void setBarcodeReader(BarcodeReader barcodeReader) {
+        this.barcodeReader = barcodeReader;
     }
 
     /**
@@ -167,11 +167,11 @@ public class Extractor {
                 try {
                     enhanced = enhancer.enhanceImage(sub);
                 } catch (ImageEnhancerException ex) {
-                    // TODO pass original image zo ZXing
+                    // TODO pass original image to ZXing
                     continue;
                 }
 
-                Barcode barcode = reader.read(enhanced);
+                Barcode barcode = barcodeReader.read(enhanced);
 
                 if (barcode != null) {
                     region.setBarcode(barcode);
