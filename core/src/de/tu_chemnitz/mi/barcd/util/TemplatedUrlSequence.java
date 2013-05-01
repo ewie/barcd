@@ -4,7 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * An sequence of URLs determined by a template string. The template string
+ * An sequence of URLs defined by a template string. The template string
  * contains a tag which will be substituted for an integer in the given range.
  * The integer can be padded with zeros to a certain length.
  *
