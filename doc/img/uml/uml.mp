@@ -435,8 +435,8 @@ beginfig(102);
     Barcode;
 
   Interface.BarcodeReader("BarcodeReader")
-    ("+read(image: BufferedImage): Barcode",
-     "+readMultiple(image: BufferedImage): Barcode[*]");
+    ("+readBarcode(image: BufferedImage): Barcode",
+     "+readMultipleBarcodes(image: BufferedImage): Barcode[*]");
 
   classStereotypes.BarcodeReader("<<interface>>");
 
@@ -491,8 +491,8 @@ beginfig(104);
 
   Class.DefaultBarcodeReader("DefaultBarcodeReader")
     ()
-    ("+read(image: BufferedImage): Barcode",
-     "+readMultiple(image: BufferedImage): Barcode[*]");
+    ("+readBarcode(image: BufferedImage): Barcode",
+     "+readMultipleBarcodes(image: BufferedImage): Barcode[*]");
 
   ClassName.BarcodeReader("BarcodeReader");
   classStereotypes.BarcodeReader("<<interface>>");
