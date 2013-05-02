@@ -76,9 +76,12 @@ public class PersistenceWorker extends Worker {
     protected void work()
         throws PersistenceWorkerException
     {
+        boolean persistJob = false;
+
         while (!shouldTerminate()) {
             while (frames.size() > maxQueueSize) {
                 persistFrame(frames.remove());
+                persistJob = true;
             }
 
             // Without sleeping this while loop runs infinitely even if
@@ -93,8 +96,13 @@ public class PersistenceWorker extends Worker {
         // Persist all remaining frames.
         while (!frames.isEmpty()) {
             persistFrame(frames.remove());
+            persistJob = true;
         }
-        persistJob();
+
+        // Persist the job only if at least one frame has been persisted.
+        if (persistJob) {
+            persistJob();
+        }
     }
 
     private void persistFrame(Frame frame)
