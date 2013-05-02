@@ -33,7 +33,7 @@ public class DefaultBarcodeReader implements BarcodeReader {
         new GenericMultipleBarcodeReader(multiFormatReader);
 
     @Override
-    public Barcode read(BufferedImage image) {
+    public Barcode readBarcode(BufferedImage image) {
         BinaryBitmap bitmap = createBitmap(image);
         Result result;
         try {
@@ -48,7 +48,7 @@ public class DefaultBarcodeReader implements BarcodeReader {
     }
 
     @Override
-    public Barcode[] readMultiple(BufferedImage image) {
+    public Barcode[] readMultipleBarcodes(BufferedImage image) {
         BinaryBitmap bitmap = createBitmap(image);
         Result[] results;
         try {

@@ -13,7 +13,7 @@ public interface BarcodeReader {
      *
      * @return the read barcode, null if none was found or could not be decoded
      */
-    public Barcode read(BufferedImage image);
+    public Barcode readBarcode(BufferedImage image);
 
     /**
      * Read multiple barcodes in an image.
@@ -22,5 +22,5 @@ public interface BarcodeReader {
      *
      * @return the read barcodes, null if none were found or could not be decoded
      */
-    public Barcode[] readMultiple(BufferedImage image);
+    public Barcode[] readMultipleBarcodes(BufferedImage image);
 }

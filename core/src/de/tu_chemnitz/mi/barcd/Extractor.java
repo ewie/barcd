@@ -200,7 +200,7 @@ public class Extractor {
             return;
         }
 
-        Barcode barcode = barcodeReader.read(enhanced);
+        Barcode barcode = barcodeReader.readBarcode(enhanced);
 
         if (barcode != null) {
             region.setBarcode(barcode);
@@ -216,7 +216,7 @@ public class Extractor {
      * @param image the frame image
      */
     private void processAllBarcodes(Frame frame, BufferedImage image) {
-        Barcode[] barcodes = barcodeReader.readMultiple(image);
+        Barcode[] barcodes = barcodeReader.readMultipleBarcodes(image);
 
         if (barcodes != null) {
             for (Barcode barcode : barcodes) {
