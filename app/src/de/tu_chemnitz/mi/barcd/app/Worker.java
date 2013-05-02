@@ -12,6 +12,17 @@ package de.tu_chemnitz.mi.barcd.app;
 public abstract class Worker implements Runnable {
     private boolean terminate = false;
 
+    private WorkerExceptionHandler exceptionHandler;
+
+    /**
+     * Set the handler to process exceptions thrown by {@link #work()}.
+     *
+     * @param exceptionHandler the exception handler
+     */
+    public void setExceptionHandler(WorkerExceptionHandler exceptionHandler) {
+        this.exceptionHandler = exceptionHandler;
+    }
+
     /**
      * Signal the worker to terminate on the next possible occasion.
      */
@@ -38,10 +49,8 @@ public abstract class Worker implements Runnable {
     public final void run() {
         try {
             work();
-        } catch (WorkerException ex) {
-            throw ex;
         } catch (Exception ex) {
-            throw new WorkerException(ex);
+            handleException(ex);
         }
     }
 
@@ -53,4 +62,11 @@ public abstract class Worker implements Runnable {
      * @see Runnable#run
      */
     protected abstract void work() throws Exception;
+
+    private void handleException(Exception exception) {
+        if (exceptionHandler == null) {
+            throw new WorkerException(exception);
+        }
+        exceptionHandler.handleException(this, exception);
+    }
 }

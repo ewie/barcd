@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class Terminal {
+public class Terminal extends Worker {
     /**
      * The pattern to extract a command's name and arguments.
      */
@@ -71,8 +71,16 @@ public class Terminal {
      *
      * @return a read-only collection of all registered commands
      */
-    public Collection<Command> commands() {
+    public Collection<Command> getCommands() {
         return Collections.unmodifiableCollection(commands.values());
+    }
+
+    public BoundCommand getBoundCommand(String name) {
+        Command command = commands.get(name);
+        if (command == null) {
+            return null;
+        }
+        return new BoundCommand(command, this);
     }
 
     /**
@@ -105,30 +113,63 @@ public class Terminal {
         printer.println(x);
     }
 
-    /**
-     * Indicate the terminal to process the next input line.
-     *
-     * @throws IOException
-     */
-    public void processNextLine()
-        throws IOException
+    @Override
+    protected void work()
+        throws Exception
     {
-        printf(prefix + " ");
-        String line = reader.readLine();
-        if (line != null) {
-            Matcher matcher = COMMAND_LINE_PATTERN.matcher(line);
-            if (matcher.matches()) {
-                String name = matcher.group(1);
-                String args = matcher.group(2).trim();
-                Command command = commands.get(name);
-                if (command == null) {
-                    println("!!! unrecognized command \"" + name + "\"");
-                } else {
-                    command.execute(this, args);
-                }
-            } else {
-                println("!!! malformed command \"" + line + "\"");
+        LineReader lineReader = new LineReader(reader);
+        boolean newLine = true;
+        while (!shouldTerminate()) {
+            if (newLine) {
+                print(prefix + " ");
             }
+            newLine = false;
+            String line = lineReader.readLine();
+            if (line == null) {
+                continue;
+            }
+            if (!line.isEmpty()) {
+                Matcher matcher = COMMAND_LINE_PATTERN.matcher(line);
+                if (matcher.matches()) {
+                    String name = matcher.group(1);
+                    String args = matcher.group(2).trim();
+                    Command command = commands.get(name);
+                    if (command == null) {
+                        println("!!! unknown command \"" + name + "\"");
+                    } else {
+                        command.execute(this, args);
+                    }
+                } else {
+                    println("!!! malformed command \"" + line + "\"");
+                }
+            }
+            newLine = true;
+        }
+    }
+
+    /**
+     * A command bound to a specific terminal.
+     *
+     * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+     */
+    public static class BoundCommand {
+        private Command command;
+        private Terminal terminal;
+
+        /**
+         * @param command the command
+         * @param terminal the terminal the command should be bound to
+         */
+        public BoundCommand(Command command, Terminal terminal) {
+            this.command = command;
+            this.terminal = terminal;
+        }
+
+        /**
+         * @param args
+         */
+        public void execute(String args) {
+            command.execute(terminal, args);
         }
     }
 
@@ -204,5 +245,60 @@ public class Terminal {
          * @param args the raw argument string passed along with the command
          */
         public void execute(Terminal terminal, String args);
+    }
+
+    /**
+     * A non-blocking line reader.
+     *
+     * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
+     */
+    private static class LineReader {
+        private final BufferedReader reader;
+        private StringBuilder lineBuffer;
+
+        /**
+         * @param reader the underlying reader
+         */
+        public LineReader(BufferedReader reader) {
+            this.reader = reader;
+        }
+
+        /**
+         * Read the next character if the underlying reader is ready. Returns a
+         * string if a full line (indicated by a line feed U+000A or carriage
+         * return U+000D).
+         *
+         * @return a complete line without line feed or carriage return, null if
+         *   no complete line has been read so far
+         */
+        public String readLine() {
+            if (lineBuffer == null) {
+                lineBuffer = new StringBuilder();
+            }
+            boolean ready = false;
+            try {
+                ready = reader.ready();
+            } catch (IOException ex) {
+                return null;
+            }
+            if (ready) {
+                int c;
+                try {
+                    c = reader.read();
+                } catch (IOException ex) {
+                    return null;
+                }
+                boolean complete = c == '\n' || c == '\r';
+                if (!complete) {
+                    lineBuffer.append((char) c);
+                }
+                if (complete) {
+                    String s = lineBuffer.toString();
+                    lineBuffer = null;
+                    return s;
+                }
+            }
+            return null;
+        }
     }
 }

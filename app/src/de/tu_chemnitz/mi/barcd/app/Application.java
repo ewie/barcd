@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,6 +22,7 @@ import de.tu_chemnitz.mi.barcd.Frame;
 import de.tu_chemnitz.mi.barcd.FrameHandler;
 import de.tu_chemnitz.mi.barcd.Job;
 import de.tu_chemnitz.mi.barcd.Region;
+import de.tu_chemnitz.mi.barcd.app.Terminal.BoundCommand;
 import de.tu_chemnitz.mi.barcd.app.Terminal.Command;
 import de.tu_chemnitz.mi.barcd.app.Terminal.Routine;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
@@ -46,11 +46,15 @@ public class Application extends Worker {
 
     private final Thread persistenceThread;
 
-    private final Terminal terminal;
+    private final Thread terminalThread;
 
     private final Options options;
 
     private ImageDisplay display;
+
+    private Terminal terminalWorker;
+
+    private ExtractionWorker extractionWorker;
 
     public Application(Options options)
         throws ApplicationException
@@ -59,13 +63,14 @@ public class Application extends Worker {
 
         job = loadJob(options.getJobFile());
 
-        ExtractionWorker extractionWorker = createExtractionWorker();
+        extractionWorker = createExtractionWorker();
         persistenceWorker = createPersistenceWorker();
 
         extractionThread = new Thread(extractionWorker);
         persistenceThread = new Thread(persistenceWorker);
 
-        terminal = createTerminal(extractionThread, extractionWorker, persistenceThread, persistenceWorker);
+        terminalWorker = createTerminal(extractionThread, extractionWorker, persistenceThread, persistenceWorker);
+        terminalThread = new Thread(terminalWorker);
     }
 
     @Override
@@ -74,13 +79,21 @@ public class Application extends Worker {
     {
         extractionThread.start();
         persistenceThread.start();
-        while (extractionThread.isAlive()) {
-            try {
-                terminal.processNextLine();
-            } catch (IOException ex) {
-                // TODO maybe just ignore?
-                throw new RuntimeException(ex);
-            }
+        terminalThread.start();
+    }
+
+    private void handleWorkerException(Exception ex) {
+        terminalWorker.println(ex.getMessage());
+        BoundCommand command = terminalWorker.getBoundCommand("stop");
+        command.execute("");
+    }
+
+    private void stop() {
+        extractionWorker.terminate();
+        persistenceWorker.terminate();
+        terminalWorker.terminate();
+        if (display != null) {
+            display.dispose();
         }
     }
 
@@ -105,6 +118,13 @@ public class Application extends Worker {
                 } catch (ApplicationException ex) {
                     throw new WorkerException(ex);
                 }
+            }
+        });
+
+        extractionWorker.setExceptionHandler(new WorkerExceptionHandler() {
+            @Override
+            public void handleException(Worker worker, Exception ex) {
+                handleWorkerException(ex);
             }
         });
 
@@ -293,30 +313,14 @@ public class Application extends Worker {
         Routine stopRoutine = new Routine() {
             @Override
             public void execute(Terminal terminal, String args) {
-                extractionWorker.terminate();
-
-                try {
-                    extractionThread.join();
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-                persistenceWorker.terminate();
-
-                try {
-                    persistenceThread.join();
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-                display.dispose();
+                stop();
             }
         };
 
         Routine helpRoutine = new Routine() {
             @Override
             public void execute(Terminal terminal, String args) {
-                Collection<Command> cc = terminal.commands();
+                Collection<Command> cc = terminal.getCommands();
                 ArrayList<Command> cl = new ArrayList<Command>(cc);
                 Collections.sort(cl, new Comparator<Command>() {
                     @Override
