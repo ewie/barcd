@@ -1,10 +1,11 @@
 %!PS
-%%BoundingBox: -1 -75 215 1 
-%%HiResBoundingBox: -0.25 -74.75916 214.49081 0.25 
+%%BoundingBox: -1 -75 215 43 
+%%HiResBoundingBox: -0.25 -74.75916 214.49081 42.73276 
 %%Creator: MetaPost 1.208
 %%CreationDate: [STRIPPED]
 %%Pages: 1
 %*Font: ptmr8r 9.96265 9.96265 20:80e8882e7bcdb7157ffffff4
+%*Font: ptmr8r 6.97382 9.96265 3c:a00000000564228
 %%BeginProlog
 %%EndProlog
 %%Page: 1 1
@@ -32,8 +33,8 @@ newpath 0 -12.75458 moveto
 213.49081 -12.75458 lineto stroke
 newpath 0 -17.25458 moveto
 213.49081 -17.25458 lineto stroke
-72.71342 -9.75458 moveto
-(DilationOperator) ptmr8r 9.96265 fshow
+48.64395 -9.75458 moveto
+(RectangularDilationOperator) ptmr8r 9.96265 fshow
 13 -27.75916 moveto
 (DilationOperator\(size:\040int\)) ptmr8r 9.96265 fshow
 13 -38.25916 moveto
@@ -135,5 +136,51 @@ newpath 7.95004 -67.0592 moveto
 3.04996 -66.00925 lineto
 2 -67.0592 lineto
  closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 67.21342 41.48276 moveto
+148.27739 41.48276 lineto
+148.27739 19 lineto
+67.21342 19 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 66.21342 42.48276 moveto
+147.27739 42.48276 lineto
+147.27739 20 lineto
+66.21342 20 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 66.21342 42.48276 moveto
+147.27739 42.48276 lineto
+147.27739 20 lineto
+66.21342 20 lineto
+ closepath stroke
+newpath 66.21342 20 moveto
+147.27739 20 lineto stroke
+newpath 66.21342 20 moveto
+147.27739 20 lineto stroke
+90.18205 34.75458 moveto
+(<<interface>>) ptmr8r 6.97382 fshow
+72.71342 25 moveto
+(DilationOperator) ptmr8r 9.96265 fshow
+ 0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
+ [3 3 ] 0 setdash
+newpath 106.7454 -0.00012 moveto
+106.7454 7.49979 lineto stroke
+ 1 1 1 setrgbcolor
+newpath 106.7454 7.49979 moveto
+101.7454 7.49979 lineto
+106.7454 19.99966 lineto
+111.7454 7.49979 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+ [] 0 setdash
+newpath 106.7454 7.49979 moveto
+101.7454 7.49979 lineto stroke
+newpath 106.7454 7.49979 moveto
+111.7454 7.49979 lineto stroke
+newpath 106.7454 19.99966 moveto
+101.7454 7.49979 lineto stroke
+newpath 106.7454 19.99966 moveto
+111.7454 7.49979 lineto stroke
 showpage
 %%EOF

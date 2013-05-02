@@ -578,7 +578,8 @@ beginfig(107);
 
   Class.DefaultRegionExtractor("DefaultRegionExtractor")
     ()
-    ("+extractRegions(image: BufferedImage): Region[*]");
+    ("+DefaultRegionExtractor(dilationOperator: DilationOperator)",
+     "+extractRegions(image: BufferedImage): Region[*]");
 
   ClassName.Region("Region");
   ClassName.DilationOperator("DilationOperator");
@@ -1291,9 +1292,10 @@ endfig;
 
 beginfig(129);
   save
+    RectangularDilationOperator,
     DilationOperator;
 
-  Class.DilationOperator("DilationOperator")
+  Class.RectangularDilationOperator("RectangularDilationOperator")
     ()
     ("+DilationOperator(size: int)",
      "+DilationOperator(width: int, height: int)",
@@ -1301,7 +1303,19 @@ beginfig(129);
      "+getWindowHeight(): int",
      "+getWindowWidth(): int");
 
-  drawObjects(DilationOperator);
+  ClassName.DilationOperator("DilationOperator");
+  classStereotypes.DilationOperator("<<interface>>");
+  DilationOperator.info.iName.top := 0;
+
+  topToBottom(20)(
+    DilationOperator,
+    RectangularDilationOperator);
+
+  drawObjects(
+    RectangularDilationOperator,
+    DilationOperator);
+
+  clink(realization)(RectangularDilationOperator, DilationOperator);
 endfig;
 
 beginfig(130);
@@ -1774,6 +1788,18 @@ beginfig(144);
   clink(dependency)(Range, RangeIterator);
 
   item(iStereo)("<<create>>")(obj.nw = Range.s);
+endfig;
+
+beginfig(145);
+  save
+    DilationOperator;
+
+  Interface.DilationOperator("DilationOperator")
+    ("+apply(pixels: int[*], width: int, height: int): int[*]");
+
+  classStereotypes.DilationOperator("<<interface>>");
+
+  drawObjects(DilationOperator);
 endfig;
 
 end
