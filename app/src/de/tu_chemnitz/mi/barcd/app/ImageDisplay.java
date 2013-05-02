@@ -21,8 +21,6 @@ public class ImageDisplay extends JFrame {
         imageComponent = new ImageComponent();
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         getContentPane().add(imageComponent);
-        setVisible(true);
-        pack();
     }
 
     public void setImage(Image image) {

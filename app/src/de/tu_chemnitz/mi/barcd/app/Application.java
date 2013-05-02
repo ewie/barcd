@@ -24,7 +24,6 @@ import de.tu_chemnitz.mi.barcd.Job;
 import de.tu_chemnitz.mi.barcd.Region;
 import de.tu_chemnitz.mi.barcd.app.Terminal.BoundCommand;
 import de.tu_chemnitz.mi.barcd.app.Terminal.Command;
-import de.tu_chemnitz.mi.barcd.app.Terminal.Routine;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.image.ScalingOperator;
 import de.tu_chemnitz.mi.barcd.util.TemplatedUrlSequence;
@@ -50,11 +49,11 @@ public class Application extends Worker {
 
     private final Options options;
 
-    private ImageDisplay display;
+    private final ImageDisplay display;
 
-    private Terminal terminalWorker;
+    private final Terminal terminalWorker;
 
-    private ExtractionWorker extractionWorker;
+    private final ExtractionWorker extractionWorker;
 
     public Application(Options options)
         throws ApplicationException
@@ -71,6 +70,9 @@ public class Application extends Worker {
 
         terminalWorker = createTerminal(extractionThread, extractionWorker, persistenceThread, persistenceWorker);
         terminalThread = new Thread(terminalWorker);
+
+        display = new ImageDisplay();
+        display.setVisible(options.getDisplay());
     }
 
     @Override
@@ -92,9 +94,7 @@ public class Application extends Worker {
         extractionWorker.terminate();
         persistenceWorker.terminate();
         terminalWorker.terminate();
-        if (display != null) {
-            display.dispose();
-        }
+        display.dispose();
     }
 
     private ExtractionWorker createExtractionWorker()
@@ -182,8 +182,9 @@ public class Application extends Worker {
     }
 
     private void displayFrame(Frame frame, BufferedImage image) {
-        if (!options.getDisplay()) return;
-        if (display == null) display = new ImageDisplay();
+        if (!display.isVisible()) {
+            return;
+        }
 
         ScalingOperator scaling = new ScalingOperator();
         BufferedImage im = scaling.apply(image, 1000);
@@ -209,6 +210,7 @@ public class Application extends Worker {
         }
 
         g.dispose();
+
         display.setImage(im);
     }
 
@@ -310,14 +312,14 @@ public class Application extends Worker {
     {
         Terminal terminal = new Terminal(System.in, System.out, TERMINAL_PREFIX);
 
-        Routine stopRoutine = new Routine() {
+        Command stopCommand = new Command("stop", "stop the extraction process") {
             @Override
             public void execute(Terminal terminal, String args) {
                 stop();
             }
         };
 
-        Routine helpRoutine = new Routine() {
+        Command helpCommand = new Command("help", "display this help") {
             @Override
             public void execute(Terminal terminal, String args) {
                 Collection<Command> cc = terminal.getCommands();
@@ -343,13 +345,27 @@ public class Application extends Worker {
             }
         };
 
-        Command stopCommand = new Command("stop", stopRoutine, "stop the extraction process");
+        Command displayCommad = new Command("display", "toggle display [display on|off]") {
+            private static final String OPTION_ON = "on";
 
-        Command helpCommand = new Command("help", helpRoutine, "display this help");
+            private static final String OPTION_OFF = "off";
+
+            @Override
+            public void execute(Terminal terminal, String args) {
+                if (args.equals(OPTION_ON)) {
+                    display.setVisible(true);
+                } else if (args.equals(OPTION_OFF)) {
+                    display.setVisible(false);
+                } else {
+                    terminal.println("!!! unrecognized display option \"" + args + "\"");
+                }
+            }
+        };
 
         try {
             terminal.registerCommand(stopCommand);
             terminal.registerCommand(helpCommand);
+            terminal.registerCommand(displayCommad);
         } catch (TerminalException ex) {
             throw new ApplicationException("could not setup terminal", ex);
         }

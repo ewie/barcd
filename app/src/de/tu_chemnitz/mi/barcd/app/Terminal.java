@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,6 +34,8 @@ public class Terminal extends Worker {
     private final PrintStream printer;
 
     private final String prefix;
+
+    private LinkedList<String> history = new LinkedList<String>();
 
     /**
      * Create a new terminal with input and print stream.
@@ -75,6 +78,13 @@ public class Terminal extends Worker {
         return Collections.unmodifiableCollection(commands.values());
     }
 
+    /**
+     * Get the command registered under the given name bounded to this terminal.
+     *
+     * @param name the command name
+     *
+     * @return the bound command or null if the command is no registered
+     */
     public BoundCommand getBoundCommand(String name) {
         Command command = commands.get(name);
         if (command == null) {
@@ -128,22 +138,46 @@ public class Terminal extends Worker {
             if (line == null) {
                 continue;
             }
-            if (!line.isEmpty()) {
-                Matcher matcher = COMMAND_LINE_PATTERN.matcher(line);
-                if (matcher.matches()) {
-                    String name = matcher.group(1);
-                    String args = matcher.group(2).trim();
-                    Command command = commands.get(name);
-                    if (command == null) {
-                        println("!!! unknown command \"" + name + "\"");
-                    } else {
-                        command.execute(this, args);
-                    }
-                } else {
-                    println("!!! malformed command \"" + line + "\"");
-                }
+            if (line.isEmpty()) {
+                executeLastCommand();
+            } else {
+                executeCommand(line, true);
             }
             newLine = true;
+        }
+    }
+
+    private void executeLastCommand() {
+        if (history.size() == 0) {
+            println("!!! nothing to repeat");
+        } else {
+            String line = history.getFirst();
+            println("[repeat] " + line);
+            executeCommand(line, false);
+        }
+    }
+
+    /**
+     * @param line the command line to execute
+     * @param record whether to record the command (only possible if the command
+     *   is recordable)
+     */
+    private void executeCommand(String line, boolean record) {
+        Matcher matcher = COMMAND_LINE_PATTERN.matcher(line);
+        if (matcher.matches()) {
+            String name = matcher.group(1);
+            String args = matcher.group(2).trim();
+            Command command = commands.get(name);
+            if (command == null) {
+                println("!!! unknown command \"" + name + "\"");
+            } else {
+                command.execute(this, args);
+                if (record) {
+                    history.addFirst(line);
+                }
+            }
+        } else {
+            println("!!! malformed command \"" + line + "\"");
         }
     }
 
@@ -179,32 +213,29 @@ public class Terminal extends Worker {
      *
      * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
      */
-    public static class Command {
+    public static abstract class Command {
         private String name;
         private String description;
-        private Routine routine;
 
         /**
          * Create a command with description.
          *
          * @param name the command's name
-         * @param routine the command's routine
          * @param description the command's description
          */
-        public Command(String name, Routine routine, String description) {
+        public Command(String name, String description) {
             this.name = name;
             this.description = description;
-            this.routine = routine;
         }
 
         /**
-         * Create a command with its description set to null.
+         * Create a recordable command with its description set to null.
          *
          * @param name the command's name
          * @param routine the command's routine
          */
-        public Command(String name, Routine routine) {
-            this(name, routine, null);
+        public Command(String name) {
+            this(name, null);
         }
 
         /**
@@ -229,22 +260,7 @@ public class Terminal extends Worker {
          * @param terminal the terminal this routine's command is registered in
          * @param args the raw argument string passed along with the command
          */
-        public void execute(Terminal terminal, String args) {
-            routine.execute(terminal, args);
-        }
-    }
-
-    /**
-     * The routine implementing a command's action.
-     *
-     * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
-     */
-    public static interface Routine {
-        /**
-         * @param terminal the terminal this routine's command is registered in
-         * @param args the raw argument string passed along with the command
-         */
-        public void execute(Terminal terminal, String args);
+        public abstract void execute(Terminal terminal, String args);
     }
 
     /**
