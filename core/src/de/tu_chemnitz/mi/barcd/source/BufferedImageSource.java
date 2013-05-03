@@ -1,7 +1,6 @@
 package de.tu_chemnitz.mi.barcd.source;
 
 import java.awt.image.BufferedImage;
-import java.util.Collection;
 import java.util.Iterator;
 
 import de.tu_chemnitz.mi.barcd.ImageProviderException;
@@ -16,9 +15,9 @@ import de.tu_chemnitz.mi.barcd.provider.BufferedImageProvider;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class BufferedImageSource extends Source {
-    private final Collection<BufferedImage> images;
+    private final Iterable<BufferedImage> images;
 
-    public BufferedImageSource(Collection<BufferedImage> images) {
+    public BufferedImageSource(Iterable<BufferedImage> images) {
         this.images = images;
     }
 

@@ -1,7 +1,6 @@
 package de.tu_chemnitz.mi.barcd.source;
 
 import java.net.URL;
-import java.util.Collection;
 import java.util.Iterator;
 
 import de.tu_chemnitz.mi.barcd.ImageProviderException;
@@ -15,13 +14,13 @@ import de.tu_chemnitz.mi.barcd.provider.RemoteImageProvider;
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class ImageCollectionSource extends Source {
-    private final Collection<URL> urls;
+    private final Iterable<URL> urls;
 
-    public ImageCollectionSource(Collection<URL> urls) {
+    public ImageCollectionSource(Iterable<URL> urls) {
         this.urls = urls;
     }
 
-    public Collection<URL> getUrls() {
+    public Iterable<URL> getUrls() {
         return urls;
     }
 
