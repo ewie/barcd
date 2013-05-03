@@ -618,32 +618,41 @@ endfig;
 
 beginfig(108);
   save
-    DefaultRegionSelector,
+    DefaultRegionFilter,
     Region,
-    RegionSelector;
+    Filter,
+    FilterTemplate;
 
-  Class.DefaultRegionSelector("DefaultRegionSelector")
+  Class.DefaultRegionFilter("DefaultRegionFilter")
     ()
-    ("+selectRegion(region: Region): boolean");
+    ("+filter(regions: Region[*]): Region[*]");
 
-  ClassName.RegionSelector("RegionSelector");
-  classStereotypes.RegionSelector("<<interface>>");
-  RegionSelector.info.iName.top := 0;
+  ClassName.Filter("Filter");
+  classStereotypes.Filter("<<interface>>");
+  Filter.info.iName.top := 0;
 
   ClassName.Region("Region");
+  ClassTemplate.FilterTemplate("T")(Filter);
+
+  topToBottom(30)(
+    Filter,
+    DefaultRegionFilter);
 
   topToBottom(20)(
-    RegionSelector,
-    DefaultRegionSelector,
+    DefaultRegionFilter,
     Region);
 
   drawObjects(
-    DefaultRegionSelector,
-    RegionSelector,
+    DefaultRegionFilter,
+    Filter,
+    FilterTemplate,
     Region);
 
-  clink(realization)(DefaultRegionSelector, RegionSelector);
-  clink(dependency)(DefaultRegionSelector, Region);
+  clink(realization)(DefaultRegionFilter, Filter);
+  clink(dependency)(DefaultRegionFilter, Region);
+
+  item(iStereo)("<<bind>>")(obj.sw = .5[Filter.s, DefaultRegionFilter.n]);
+  item(iStereo)("<T -> Region>")(obj.nw = .5[Filter.s, DefaultRegionFilter.n]);
 endfig;
 
 beginfig(109);
@@ -653,7 +662,7 @@ beginfig(109);
     Grayscaler,
     ImageEnhancer,
     RegionExtractor,
-    RegionSelector,
+    Filter,
     G,
     F,
     Job;
@@ -668,7 +677,7 @@ beginfig(109);
      "+setFrameHandler(handler: FrameHandler)",
      "+setGrayscaler(grayscaler: Grayscaler)",
      "+setRegionExtractor(extractor: RegionExtractor)",
-     "+setRegionSelector(selector: RegionSelector)");
+     "+setRegionFilter(filter: Filter<Region>)");
 
   ClassName.Job("Job");
 
@@ -676,7 +685,7 @@ beginfig(109);
   ClassName.Grayscaler("Grayscaler");
   ClassName.ImageEnhancer("ImageEnhancer");
   ClassName.RegionExtractor("RegionExtractor");
-  ClassName.RegionSelector("RegionSelector");
+  ClassName.Filter("Filter");
 
   classStereotypes.BarcodeReader("<<interface>>");
   BarcodeReader.info.iName.top := 0;
@@ -690,11 +699,13 @@ beginfig(109);
   classStereotypes.RegionExtractor("<<interface>>");
   RegionExtractor.info.iName.top := 0;
 
-  classStereotypes.RegionSelector("<<interface>>");
-  RegionSelector.info.iName.top := 0;
+  classStereotypes.Filter("<<interface>>");
+  Filter.info.iName.top := 0;
+
+  ClassTemplate.FilterTemplate("T")(Filter);
 
   Group.G(BarcodeReader, Grayscaler, ImageEnhancer);
-  Group.F(Job, RegionExtractor, RegionSelector);
+  Group.F(Job, RegionExtractor, Filter);
 
   leftToRight(30)(Extractor, G);
   topToBottom(30)(Extractor, F);
@@ -707,20 +718,24 @@ beginfig(109);
   leftToRight(20)(
     Job,
     RegionExtractor,
-    RegionSelector);
+    Filter);
 
   drawObjects(
     Extractor,
     Job,
     G,
-    F);
+    F,
+    FilterTemplate);
 
   link(associationUni)(rpathHorizontal(BarcodeReader.w, Extractor.right));
   link(associationUni)(rpathHorizontal(Grayscaler.w, Extractor.right));
   link(associationUni)(rpathHorizontal(ImageEnhancer.w, Extractor.right));
   link(associationUni)(rpathVertical(RegionExtractor.n, Extractor.bottom));
-  link(associationUni)(rpathVertical(RegionSelector.n, Extractor.bottom));
+  link(associationUni)(rpathVertical(Filter.n, Extractor.bottom));
   link(associationUni)(rpathVertical(Job.n, Extractor.bottom));
+
+  item(iStereo)("<<bind>>")(obj.sw = Filter.n + (0, 20));
+  item(iStereo)("<T -> Region>")(obj.nw = Filter.n + (0, 20));
 endfig;
 
 beginfig(110);
@@ -929,21 +944,17 @@ endfig;
 
 beginfig(117);
   save
-    RegionSelector,
-    Region;
+    Filter,
+    FilterTemplate;
 
-  Interface.RegionSelector("RegionSelector")
-    ("+selectRegion(region: Region): boolean");
+  Interface.Filter("Filter")
+    ("+filter(values: T[*]): T[*]");
 
-  classStereotypes.RegionSelector("<<interface>>");
+  classStereotypes.Filter("<<interface>>");
 
-  ClassName.Region("Region");
+  ClassTemplate.FilterTemplate("T")(Filter);
 
-  leftToRight(30)(RegionSelector, Region);
-
-  drawObjects(RegionSelector, Region);
-
-  clink(dependency)(RegionSelector, Region);
+  drawObjects(Filter, FilterTemplate);
 endfig;
 
 beginfig(118);
