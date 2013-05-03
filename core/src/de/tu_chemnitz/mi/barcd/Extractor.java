@@ -1,6 +1,7 @@
 package de.tu_chemnitz.mi.barcd;
 
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 import de.tu_chemnitz.mi.barcd.geometry.AxisAlignedRectangle;
 import de.tu_chemnitz.mi.barcd.geometry.OrientedRectangle;
@@ -20,7 +21,7 @@ public class Extractor {
 
     private RegionExtractor regionExtractor = new DefaultRegionExtractor();
 
-    private RegionSelector regionSelector = new DefaultRegionSelector();
+    private Filter<Region> regionFilter = new DefaultRegionFilter();
 
     private final RegionHashTable regionHashTable = new RegionHashTable(10, 400);
 
@@ -72,12 +73,12 @@ public class Extractor {
     }
 
     /**
-     * Set a region filter.
+     * Set the region filter.
      *
-     * @param regionSelector
+     * @param regionFilter
      */
-    public void setRegionSelector(RegionSelector regionSelector) {
-        this.regionSelector = regionSelector;
+    public void setRegionFilter(Filter<Region> regionFilter) {
+        this.regionFilter = regionFilter;
     }
 
     /**
@@ -169,18 +170,34 @@ public class Extractor {
     private Frame createFrame(Region[] regions, BufferedImage image) {
         Frame frame = job.createFrame();
 
-        for (Region region : regions) {
-            if (regionSelector == null || regionSelector.selectRegion(region)) {
-                regionHashTable.insert(region);
-                frame.addRegion(region);
-                processRegionBarcode(region, image);
-            }
+        Iterable<Region> selection = filterRegions(regions);
+
+        for (Region region : selection) {
+            regionHashTable.insert(region);
+            frame.addRegion(region);
+            processRegionBarcode(region, image);
         }
 
         processAllBarcodes(frame, image);
         regionHashTable.clear();
 
         return frame;
+    }
+
+    /**
+     * Filter the given regions. Uses the region filter if it's set otherwise
+     * no filter is applied and all regions will be returned.
+     *
+     * @param regions the regions to filter
+     *
+     * @return the filtered regions
+     */
+    private Iterable<Region> filterRegions(Region[] regions) {
+        Iterable<Region> iterable = Arrays.asList(regions);
+        if (regionFilter != null) {
+            iterable = regionFilter.filter(iterable);
+        }
+        return iterable;
     }
 
     /**
