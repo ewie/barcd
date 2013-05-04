@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import de.tu_chemnitz.mi.barcd.geometry.ConvexHullAlgorithm;
+import de.tu_chemnitz.mi.barcd.geometry.GenericConvexPolygon;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.image.ConnectedComponentLabeler;
 import de.tu_chemnitz.mi.barcd.image.DilationOperator;
@@ -187,9 +189,27 @@ public class DefaultRegionExtractor implements RegionExtractor {
             // by the squared scaling factor (the vertical and horizontal
             // scaling factors are the same).
             int generatingPointCount = (int) (points.size() * scalingFactor2);
-            regions[i++] = Region.createFromPoints(points, generatingPointCount);
+            regions[i++] = createRegion(points, generatingPointCount);
         }
 
         return regions;
+    }
+
+    /**
+     * Create a region from a list of points and the number of points supposed
+     * to generate the region.
+     *
+     * @param points the list of points
+     * @param generatingPointCount the number of points supposed to generate the
+     *   region
+     *
+     * @return a new region
+     */
+    private Region createRegion(List<Point> points, int generatingPointCount) {
+        ConvexHullAlgorithm cha = new ConvexHullAlgorithm();
+        Point[] hull = cha.computeConvexHull(points);
+        GenericConvexPolygon polygon = new GenericConvexPolygon(hull);
+        double coverage = generatingPointCount / polygon.computeArea();
+        return new Region(polygon, coverage);
     }
 }

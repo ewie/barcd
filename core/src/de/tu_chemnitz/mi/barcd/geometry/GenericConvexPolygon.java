@@ -1,7 +1,5 @@
 package de.tu_chemnitz.mi.barcd.geometry;
 
-import java.util.List;
-
 /**
  * A generic n-sides convex polygon.
  *
@@ -25,17 +23,5 @@ public class GenericConvexPolygon extends ConvexPolygon {
     @Override
     public Point[] getVertices() {
         return vertices;
-    }
-
-    /**
-     * Create a convex polygon from the convex hull of the given points.
-     *
-     * @param points the points whose convex hull is computed
-     *
-     * @return the convex polygon containg all given points
-     */
-    public static GenericConvexPolygon createFromConvexHull(List<Point> points) {
-        ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm();
-        return new GenericConvexPolygon(convexHull.computeConvexHull(points));
     }
 }

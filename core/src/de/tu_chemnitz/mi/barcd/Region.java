@@ -1,10 +1,7 @@
 package de.tu_chemnitz.mi.barcd;
 
-import java.util.List;
-
 import de.tu_chemnitz.mi.barcd.geometry.AxisAlignedRectangle;
 import de.tu_chemnitz.mi.barcd.geometry.ConvexPolygon;
-import de.tu_chemnitz.mi.barcd.geometry.GenericConvexPolygon;
 import de.tu_chemnitz.mi.barcd.geometry.OrientedRectangle;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 
@@ -29,32 +26,6 @@ public class Region {
     private Barcode barcode;
 
     private final double coverage;
-
-    /**
-     * Create a region from a collection of points.
-     *
-     * @param points a collection of points generating a region
-     *
-     * @return a region described by the given points
-     */
-    public static Region createFromPoints(List<Point> points) {
-        return createFromPoints(points, points.size());
-    }
-
-    /**
-     * Create a region from a collection of points.
-     *
-     * @param points a collection of points generating a region
-     * @param generatingPointCount the number of points generating the region
-     *   (use this if the {@code points} do not provide all generating points)
-     *
-     * @return a region described by the given points
-     */
-    public static Region createFromPoints(List<Point> points, int generatingPointCount) {
-        GenericConvexPolygon polygon = GenericConvexPolygon.createFromConvexHull(points);
-        double coverage = generatingPointCount / polygon.computeArea();
-        return new Region(polygon, coverage);
-    }
 
     /**
      * @param convexPolygon the convex polygon describing the region
