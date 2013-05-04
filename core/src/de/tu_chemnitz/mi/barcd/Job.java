@@ -28,7 +28,7 @@ public class Job {
      *
      * @param source the image source
      * @param extractionUrlTemplate the URL template to generate a URL for each
-     *   frame to be persisted
+     *   extraction to be persisted
      * @param initialFrameNumber the number of the first frame an image provider
      *   of the given source should provide
      */
@@ -48,7 +48,7 @@ public class Job {
      *
      * @param source the image source
      * @param frameUrlTemplate the URL template to generate a URL for each
-     *   frame to be persisted
+     *   extraction to be persisted
      */
     public Job(Source source, TemplatedUrlSequence frameUrlTemplate) {
         this(source, frameUrlTemplate, Source.INITIAL_FRAME_NUMBER);
