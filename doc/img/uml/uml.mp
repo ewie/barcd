@@ -12,8 +12,8 @@ beginfig(0);
   save
     Barcode,
     Extractor,
-    Frame,
-    FrameHandler,
+    Extraction,
+    ExtractionHandler,
     ImageProvider,
     ImproveImage,
     Job,
@@ -22,15 +22,15 @@ beginfig(0);
 
   ClassName.Barcode("Barcode");
   ClassName.Extractor("Extractor");
-  ClassName.Frame("Frame");
-  ClassName.FrameHandler("FrameHandler");
+  ClassName.Extraction("Extraction");
+  ClassName.ExtractionHandler("ExtractionHandler");
   ClassName.ImageProvider("ImageProvider");
   ClassName.Job("Job");
   ClassName.Region("Region");
   ClassName.Source("Source {abstract}");
 
-  classStereotypes.FrameHandler("<<interface>>");
-  FrameHandler.info.iName.top := 0;
+  classStereotypes.ExtractionHandler("<<interface>>");
+  ExtractionHandler.info.iName.top := 0;
 
   classStereotypes.ImageProvider("<<interface>>");
   ImageProvider.iName.top := 0;
@@ -39,17 +39,17 @@ beginfig(0);
   topToBottom(100)(Source, ImageProvider);
 
   leftToRight(30)(Source, Job);
-  leftToRight(80)(Job, Frame);
-  leftToRight(50)(ImageProvider, FrameHandler);
+  leftToRight(80)(Job, Extraction);
+  leftToRight(50)(ImageProvider, ExtractionHandler);
 
-  Region.n = Frame.s + (-20, -30);
+  Region.n = Extraction.s + (-20, -30);
   Barcode.n = Region.s + (20, -30);
 
   drawObjects(
     Barcode,
     Extractor,
-    Frame,
-    FrameHandler,
+    Extraction,
+    ExtractionHandler,
     ImageProvider,
     Job,
     Region,
@@ -57,28 +57,28 @@ beginfig(0);
 
   clink(associationUni)(Extractor, ImageProvider);
   clink(dependency)(Source, ImageProvider);
-  clink(dependency)(Extractor, Frame);
+  clink(dependency)(Extractor, Extraction);
   clink(associationUni)(Extractor, Job);
-  clink(associationUni)(Extractor, FrameHandler);
+  clink(associationUni)(Extractor, ExtractionHandler);
   clink(dependency)(Extractor, Barcode);
   clink(dependency)(Extractor, Region);
-  link(dependency)(pathStepX(FrameHandler.e, Frame.e, 80));
+  link(dependency)(pathStepX(ExtractionHandler.e, Extraction.e, 80));
 
   clink(aggregation)(Source, Job);
-  clink(aggregation)(Frame, Job);
-  link(aggregation)(pathVertical(Barcode.n + (10, 0), Frame.bottom));
+  clink(aggregation)(Extraction, Job);
+  link(aggregation)(pathVertical(Barcode.n + (10, 0), Extraction.bottom));
   link(aggregation)(pathVertical(Barcode.n + (-10, 0), Region.bottom));
-  link(aggregation)(pathVertical(Region.n + (10, 0), Frame.bottom));
+  link(aggregation)(pathVertical(Region.n + (10, 0), Extraction.bottom));
 
   item(iStereo)("<<create>>")(obj.nw = Source.s);
   item(iStereo)("<<create>>")(obj.sw = Extractor.e);
-  item(iStereo)("<<create>>")(obj.s = .5[Frame.s, Extractor.n] + (0, 5));
+  item(iStereo)("<<create>>")(obj.s = .5[Extraction.s, Extractor.n] + (0, 5));
   item(iStereo)("<<create>>")(obj.s = .5[Extractor.s, Barcode.n] + (0, 5));
 
   item(iAssoc)("consumes")(obj.w = .5[ImageProvider.s, Extractor.n]);
-  item(iAssoc)("notifies")(obj.w = .5[Extractor.s, FrameHandler.n]);
+  item(iAssoc)("notifies")(obj.w = .5[Extractor.s, ExtractionHandler.n]);
 
-  item(iAssoc)("*")(obj.se = Frame.w);
+  item(iAssoc)("*")(obj.se = Extraction.w);
   item(iAssoc)("*")(obj.sw = Region.n + (10, 0));
   item(iAssoc)("*")(obj.sw = Barcode.n + (10, 0));
   item(iAssoc)("0..1")(obj.sw = Barcode.n + (-10, 0));
@@ -674,7 +674,7 @@ beginfig(109);
      "+hasMoreImages(): boolean",
      "+processNextImage()",
      "+setBarcodeReader(reader: BarcodeReader)",
-     "+setFrameHandler(handler: FrameHandler)",
+     "+setExtractionHandler(handler: ExtractionHandler)",
      "+setGrayscaler(grayscaler: Grayscaler)",
      "+setRegionExtractor(extractor: RegionExtractor)",
      "+setRegionFilter(filter: Filter<Region>)");
@@ -740,16 +740,16 @@ endfig;
 
 beginfig(110);
   save
-    Frame;
+    Extraction;
 
-  Class.Frame("Frame")
+  Class.Extraction("Extraction")
     ()
-    ("+Frame(number: int)",
-     "+Frame(number: int, regions: Region[*], barcodes: Barcode[*])",
+    ("+Extraction(frameNumber: int)",
+     "+Extraction(frameNumber: int, regions: Region[*], barcodes: Barcode[*])",
      "+addRegion(region: Region)",
      "+addRegionlessBarcode(barcode: Barcode)",
      "+getBarcodes(): Barcode[*]",
-     "+getNumber(): int",
+     "+getFrameNumber(): int",
      "+getRegionBarcodes(): Barcode[*]",
      "+getRegionlessBarcodes(): Barcode[*]",
      "+getRegions(): Region[*]");
@@ -760,12 +760,12 @@ beginfig(110);
   Group.G(Barcode, Region);
 
   topToBottom(30)(Region, Barcode);
-  leftToRight(30)(Frame, G);
+  leftToRight(30)(Extraction, G);
 
-  drawObjects(Frame, G);
+  drawObjects(Extraction, G);
 
-  link(aggregation)(pathHorizontal(Region.w, Frame.right));
-  link(aggregation)(pathHorizontal(Barcode.w, Frame.right));
+  link(aggregation)(pathHorizontal(Region.w, Extraction.right));
+  link(aggregation)(pathHorizontal(Barcode.w, Extraction.right));
 
   item(iAssoc)("*")(obj.se = Region.w);
   item(iAssoc)("*")(obj.se = Barcode.w);
@@ -773,21 +773,21 @@ endfig;
 
 beginfig(111);
   save
-    FrameHandler,
-    Frame;
+    ExtractionHandler,
+    Extraction;
 
-  Interface.FrameHandler("FrameHandler")
-    ("+handleFrame(frame: Frame, image: BufferedImage): BufferedImage");
+  Interface.ExtractionHandler("ExtractionHandler")
+    ("+handleExtraction(extraction: Extraction, image: BufferedImage): BufferedImage");
 
-  classStereotypes.FrameHandler("<<interface>>");
+  classStereotypes.ExtractionHandler("<<interface>>");
 
-  ClassName.Frame("Frame");
+  ClassName.Extraction("Extraction");
 
-  leftToRight(30)(FrameHandler, Frame);
+  topToBottom(20)(ExtractionHandler, Extraction);
 
-  drawObjects(FrameHandler, Frame);
+  drawObjects(ExtractionHandler, Extraction);
 
-  clink(dependency)(FrameHandler, Frame);
+  clink(dependency)(ExtractionHandler, Extraction);
 endfig;
 
 beginfig(112);
@@ -830,38 +830,38 @@ endfig;
 beginfig(115);
   save
     Job,
-    Frame,
+    Extraction,
     Source,
     TemplatedUrlSequence,
     G;
 
   Class.Job("Job")
     ()
-    ("+Job(source: Source, frameUrlTemplate: TemplatedUrlSequence, initialFrameNumber: int = 0)",
-     "+createFrame(): Frame",
+    ("+Job(source: Source, extractionUrlTemplate: TemplatedUrlSequence, initialFrameNumber: int = 0)",
+     "+createExtraction(): Extraction",
      "+createImageProvider(): ImageProvider",
-     "+getFrames(): Frame[*]",
-     "+getFrameUrlTemplate(): TemplatedUrlSequence",
+     "+getExtractions(): Extraction[*]",
+     "+getExtractionUrlTemplate(): TemplatedUrlSequence",
      "+getNextFrameNumber(): int",
      "+getSource(): Source");
 
-  ClassName.Frame("Frame");
+  ClassName.Extraction("Extraction");
   ClassName.Source("Source {abstract}");
   ClassName.TemplatedUrlSequence("TemplatedUrlSequence");
 
-  Group.G(Frame, Source, TemplatedUrlSequence);
+  Group.G(Extraction, Source, TemplatedUrlSequence);
 
-  topToBottom(30)(Job, G);
+  topToBottom(20)(Job, G);
 
-  leftToRight(30)(Source, Frame, TemplatedUrlSequence);
+  leftToRight(30)(Source, Extraction, TemplatedUrlSequence);
 
   drawObjects(Job, G);
 
-  link(aggregation)(pathVertical(Frame.n, Job.bottom));
+  link(aggregation)(pathVertical(Extraction.n, Job.bottom));
   link(aggregation)(pathVertical(Source.n, Job.bottom));
   link(aggregation)(pathVertical(TemplatedUrlSequence.n, Job.bottom));
 
-  item(iAssoc)("*")(obj.sw = Frame.n);
+  item(iAssoc)("*")(obj.sw = Extraction.n);
 endfig;
 
 beginfig(116);
@@ -1660,7 +1660,8 @@ beginfig(140);
 
   Group.G(Job, Bindings);
 
-  topToBottom(20)(XmlSerializer, XmlJobSerializer, G);
+  topToBottom(30)(XmlSerializer, XmlJobSerializer);
+  topToBottom(20)(XmlJobSerializer, G);
   leftToRight(30)(Job, Bindings);
   topToBottom.right(10)(Bindings, BindingsNote);
 
@@ -1670,41 +1671,48 @@ beginfig(140);
   link(dependency)(rpathVertical(Job.n, XmlJobSerializer.bottom));
   link(dependency)(rpathVertical(Bindings.n, XmlJobSerializer.bottom));
   link(dashedLink)(rpathVertical(BindingsNote.n, Bindings.bottom));
+
+  item(iStereo)("<<bind>>")(obj.sw = .5[XmlSerializer.s, XmlJobSerializer.n]);
+  item(iStereo)("<T -> Job, E -> JobElement>")(obj.nw = .5[XmlSerializer.s, XmlJobSerializer.n]);
 endfig;
 
 beginfig(141);
   save
-    XmlFrameSerializer,
+    XmlExtractionSerializer,
     XmlSerializer,
-    Frame,
+    Extraction,
     Bindings,
     BindingsNote,
     G;
 
-  Class.XmlFrameSerializer("XmlFrameSerializer")
+  Class.XmlExtractionSerializer("XmlExtractionSerializer")
     ()
-    ("+XmlFrameSerializer()",
-     "#createRootElement(frame: Frame): JAXBElement<FrameElement>",
-     "#restoreModel(element: JAXBElement<FrameElement>): Frame");
+    ("+XmlExtractionSerializer()",
+     "#createRootElement(frame: Extraction): JAXBElement<ExtractionElement>",
+     "#restoreModel(element: JAXBElement<ExtractionElement>): Extraction");
 
   ClassName.XmlSerializer("XmlSerializer {abstract}");
-  ClassName.Frame("Frame");
+  ClassName.Extraction("Extraction");
 
   Package.Bindings("de.tu_chemnitz.mi.barcd.xml.binding")();
   Note.BindingsNote("mit JAXB, auf Basis des XML Schemas,", "automatisch erstellte Klassen");
 
-  Group.G(Frame, Bindings);
+  Group.G(Extraction, Bindings);
 
-  topToBottom(20)(XmlSerializer, XmlFrameSerializer, G);
-  leftToRight(30)(Frame, Bindings);
+  topToBottom(30)(XmlSerializer, XmlExtractionSerializer);
+  topToBottom(20)(XmlExtractionSerializer, G);
+  leftToRight(30)(Extraction, Bindings);
   topToBottom.right(10)(Bindings, BindingsNote);
 
-  drawObjects(XmlFrameSerializer, XmlSerializer, G, BindingsNote);
+  drawObjects(XmlExtractionSerializer, XmlSerializer, G, BindingsNote);
 
-  clink(inheritance)(XmlFrameSerializer, XmlSerializer);
-  link(dependency)(rpathVertical(Frame.n, XmlFrameSerializer.bottom));
-  link(dependency)(rpathVertical(Bindings.n, XmlFrameSerializer.bottom));
+  clink(inheritance)(XmlExtractionSerializer, XmlSerializer);
+  link(dependency)(rpathVertical(Extraction.n, XmlExtractionSerializer.bottom));
+  link(dependency)(rpathVertical(Bindings.n, XmlExtractionSerializer.bottom));
   link(dashedLink)(rpathVertical(BindingsNote.n, Bindings.bottom));
+
+  item(iStereo)("<<bind>>")(obj.sw = .5[XmlSerializer.s, XmlExtractionSerializer.n]);
+  item(iStereo)("<T -> Extraction, E -> ExtractionElement>")(obj.nw = .5[XmlSerializer.s, XmlExtractionSerializer.n]);
 endfig;
 
 beginfig(142);

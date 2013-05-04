@@ -1,51 +1,52 @@
 %!PS
-%%BoundingBox: -1 -145 394 1 
-%%HiResBoundingBox: -0.25 -144.51373 393.54756 0.25 
+%%BoundingBox: -1 -135 411 1 
+%%HiResBoundingBox: -0.25 -134.51373 410.15508 0.25 
 %%Creator: MetaPost 1.208
 %%CreationDate: [STRIPPED]
 %%Pages: 1
-%*Font: ptmr8r 9.96265 9.96265 20:80e8802422669c147fcffe94
+%*Font: ptmr8r 9.96265 9.96265 20:80e8802426669c147fcffe94
 %*Font: ptmr8r 6.97382 9.96265 2a:8
 %%BeginProlog
 %%EndProlog
 %%Page: 1 1
  0.7 0.7 0.7 setrgbcolor
 newpath 1 -1 moveto
-393.54756 -1 lineto
-393.54756 -95.75916 lineto
+410.15508 -1 lineto
+410.15508 -95.75916 lineto
 1 -95.75916 lineto
  closepath fill
  0.9 0.9 0.9 setrgbcolor
 newpath 0 0 moveto
-392.54756 0 lineto
-392.54756 -94.75916 lineto
+409.15508 0 lineto
+409.15508 -94.75916 lineto
 0 -94.75916 lineto
  closepath fill
  0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
  [] 0 setdash 1 setlinejoin 10 setmiterlimit
 newpath 0 0 moveto
-392.54756 0 lineto
-392.54756 -94.75916 lineto
+409.15508 0 lineto
+409.15508 -94.75916 lineto
 0 -94.75916 lineto
  closepath stroke
  1 setlinecap
 newpath 0 -12.75458 moveto
-392.54756 -12.75458 lineto stroke
+409.15508 -12.75458 lineto stroke
 newpath 0 -17.25458 moveto
-392.54756 -17.25458 lineto stroke
-189.35478 -9.75458 moveto
+409.15508 -17.25458 lineto stroke
+197.65854 -9.75458 moveto
 (Job) ptmr8r 9.96265 fshow
 13 -27.75916 moveto
-(Job\(source:\040Source,\040frameUrlTemplate:\040TemplatedUrlSequence,\040i\
-nitialFrameNumber:\040int\040=\0400\)) ptmr8r 9.96265 fshow
+(Job\(source:\040Source,\040extractionUrlTemplate:\040TemplatedUrlSequence,\
+\040initialFrameNumber:\040int\040=\0400\)) ptmr8r 9.96265 fshow
 13 -38.25916 moveto
-(createFrame\(\):\040Frame) ptmr8r 9.96265 fshow
+(createExtraction\(\):\040Extraction) ptmr8r 9.96265 fshow
 13 -48.75916 moveto
 (createImageProvider\(\):\040ImageProvider) ptmr8r 9.96265 fshow
 13 -59.25916 moveto
-(getFrames\(\):\040Frame[*]) ptmr8r 9.96265 fshow
+(getExtractions\(\):\040Extraction[*]) ptmr8r 9.96265 fshow
 13 -69.75916 moveto
-(getFrameUrlTemplate\(\):\040TemplatedUrlSequence) ptmr8r 9.96265 fshow
+(getExtractionUrlTemplate\(\):\040TemplatedUrlSequence) ptmr8r
+ 9.96265 fshow
 13 -80.25916 moveto
 (getNextFrameNumber\(\):\040int) ptmr8r 9.96265 fshow
 13 -90.75916 moveto
@@ -177,123 +178,123 @@ newpath 7.95004 -88.0592 moveto
 2 -88.0592 lineto
  closepath fill
  0.7 0.7 0.7 setrgbcolor
-newpath 166.36551 -127.89366 moveto
-204.81975 -127.89366 lineto
-204.81975 -144.37923 lineto
-166.36551 -144.37923 lineto
+newpath 166.64442 -117.75916 moveto
+221.14833 -117.75916 lineto
+221.14833 -134.51373 lineto
+166.64442 -134.51373 lineto
  closepath fill
  0.9 0.9 0.9 setrgbcolor
-newpath 165.36551 -126.89366 moveto
-203.81975 -126.89366 lineto
-203.81975 -143.37923 lineto
-165.36551 -143.37923 lineto
+newpath 165.64442 -116.75916 moveto
+220.14833 -116.75916 lineto
+220.14833 -133.51373 lineto
+165.64442 -133.51373 lineto
  closepath fill
  0 0 0 setrgbcolor
-newpath 165.36551 -126.89366 moveto
-203.81975 -126.89366 lineto
-203.81975 -143.37923 lineto
-165.36551 -143.37923 lineto
+newpath 165.64442 -116.75916 moveto
+220.14833 -116.75916 lineto
+220.14833 -133.51373 lineto
+165.64442 -133.51373 lineto
  closepath stroke
-newpath 165.36551 -143.37923 moveto
-203.81975 -143.37923 lineto stroke
-newpath 165.36551 -143.37923 moveto
-203.81975 -143.37923 lineto stroke
-171.86551 -138.37923 moveto
-(Frame) ptmr8r 9.96265 fshow
+newpath 165.64442 -133.51373 moveto
+220.14833 -133.51373 lineto stroke
+newpath 165.64442 -133.51373 moveto
+220.14833 -133.51373 lineto stroke
+172.14442 -128.51373 moveto
+(Extraction) ptmr8r 9.96265 fshow
  0.7 0.7 0.7 setrgbcolor
-newpath 52.6615 -127.75916 moveto
-136.36551 -127.75916 lineto
-136.36551 -144.51373 lineto
-52.6615 -144.51373 lineto
+newpath 52.94041 -117.75916 moveto
+136.64442 -117.75916 lineto
+136.64442 -134.51373 lineto
+52.94041 -134.51373 lineto
  closepath fill
  0.9 0.9 0.9 setrgbcolor
-newpath 51.6615 -126.75916 moveto
-135.36551 -126.75916 lineto
-135.36551 -143.51373 lineto
-51.6615 -143.51373 lineto
+newpath 51.94041 -116.75916 moveto
+135.64442 -116.75916 lineto
+135.64442 -133.51373 lineto
+51.94041 -133.51373 lineto
  closepath fill
  0 0 0 setrgbcolor
-newpath 51.6615 -126.75916 moveto
-135.36551 -126.75916 lineto
-135.36551 -143.51373 lineto
-51.6615 -143.51373 lineto
+newpath 51.94041 -116.75916 moveto
+135.64442 -116.75916 lineto
+135.64442 -133.51373 lineto
+51.94041 -133.51373 lineto
  closepath stroke
-newpath 51.6615 -143.51373 moveto
-135.36551 -143.51373 lineto stroke
-newpath 51.6615 -143.51373 moveto
-135.36551 -143.51373 lineto stroke
-58.1615 -138.51373 moveto
+newpath 51.94041 -133.51373 moveto
+135.64442 -133.51373 lineto stroke
+newpath 51.94041 -133.51373 moveto
+135.64442 -133.51373 lineto stroke
+58.44041 -128.51373 moveto
 (Source\040{abstract}) ptmr8r 9.96265 fshow
  0.7 0.7 0.7 setrgbcolor
-newpath 234.81975 -127.75916 moveto
-341.88608 -127.75916 lineto
-341.88608 -144.51373 lineto
-234.81975 -144.51373 lineto
+newpath 251.14833 -117.75916 moveto
+358.21466 -117.75916 lineto
+358.21466 -134.51373 lineto
+251.14833 -134.51373 lineto
  closepath fill
  0.9 0.9 0.9 setrgbcolor
-newpath 233.81975 -126.75916 moveto
-340.88608 -126.75916 lineto
-340.88608 -143.51373 lineto
-233.81975 -143.51373 lineto
+newpath 250.14833 -116.75916 moveto
+357.21466 -116.75916 lineto
+357.21466 -133.51373 lineto
+250.14833 -133.51373 lineto
  closepath fill
  0 0 0 setrgbcolor
-newpath 233.81975 -126.75916 moveto
-340.88608 -126.75916 lineto
-340.88608 -143.51373 lineto
-233.81975 -143.51373 lineto
+newpath 250.14833 -116.75916 moveto
+357.21466 -116.75916 lineto
+357.21466 -133.51373 lineto
+250.14833 -133.51373 lineto
  closepath stroke
-newpath 233.81975 -143.51373 moveto
-340.88608 -143.51373 lineto stroke
-newpath 233.81975 -143.51373 moveto
-340.88608 -143.51373 lineto stroke
-240.31975 -138.51373 moveto
+newpath 250.14833 -133.51373 moveto
+357.21466 -133.51373 lineto stroke
+newpath 250.14833 -133.51373 moveto
+357.21466 -133.51373 lineto stroke
+256.64833 -128.51373 moveto
 (TemplatedUrlSequence) ptmr8r 9.96265 fshow
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
-newpath 184.59264 -126.89366 moveto
-184.59264 -107.25922 lineto stroke
+newpath 192.89638 -116.75916 moveto
+192.89638 -107.25903 lineto stroke
  1 1 1 setrgbcolor
-newpath 184.59264 -107.25922 moveto
-179.59264 -101.00919 lineto
-184.59264 -94.75916 lineto
-189.59264 -101.00919 lineto
+newpath 192.89638 -107.25903 moveto
+187.89638 -101.0091 lineto
+192.89638 -94.75916 lineto
+197.89638 -101.0091 lineto
  closepath fill
  0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
-newpath 184.59264 -107.25922 moveto
-179.59264 -101.00919 lineto
-184.59264 -94.75916 lineto
-189.59264 -101.00919 lineto
+newpath 192.89638 -107.25903 moveto
+187.89638 -101.0091 lineto
+192.89638 -94.75916 lineto
+197.89638 -101.0091 lineto
  closepath stroke
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
-newpath 93.5135 -126.75916 moveto
-93.5135 -107.25916 lineto stroke
+newpath 93.79242 -116.75916 moveto
+93.79242 -107.25903 lineto stroke
  1 1 1 setrgbcolor
-newpath 93.5135 -107.25916 moveto
-88.5135 -101.00916 lineto
-93.5135 -94.75916 lineto
-98.5135 -101.00916 lineto
+newpath 93.79242 -107.25903 moveto
+88.79242 -101.0091 lineto
+93.79242 -94.75916 lineto
+98.79242 -101.0091 lineto
  closepath fill
  0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
-newpath 93.5135 -107.25916 moveto
-88.5135 -101.00916 lineto
-93.5135 -94.75916 lineto
-98.5135 -101.00916 lineto
+newpath 93.79242 -107.25903 moveto
+88.79242 -101.0091 lineto
+93.79242 -94.75916 lineto
+98.79242 -101.0091 lineto
  closepath stroke
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
-newpath 287.35292 -126.75916 moveto
-287.35292 -107.25916 lineto stroke
+newpath 303.6815 -116.75916 moveto
+303.6815 -107.25903 lineto stroke
  1 1 1 setrgbcolor
-newpath 287.35292 -107.25916 moveto
-282.35292 -101.00916 lineto
-287.35292 -94.75916 lineto
-292.35292 -101.00916 lineto
+newpath 303.6815 -107.25903 moveto
+298.6815 -101.0091 lineto
+303.6815 -94.75916 lineto
+308.6815 -101.0091 lineto
  closepath fill
  0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
-newpath 287.35292 -107.25916 moveto
-282.35292 -101.00916 lineto
-287.35292 -94.75916 lineto
-292.35292 -101.00916 lineto
+newpath 303.6815 -107.25903 moveto
+298.6815 -101.0091 lineto
+303.6815 -94.75916 lineto
+308.6815 -101.0091 lineto
  closepath stroke
-186.59264 -124.89366 moveto
+194.89638 -114.75916 moveto
 (*) ptmr8r 6.97382 fshow
 showpage
 %%EOF
