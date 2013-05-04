@@ -1,6 +1,6 @@
 %!PS
-%%BoundingBox: -1 -117 387 1 
-%%HiResBoundingBox: -0.25 -116.75916 386.42412 0.25 
+%%BoundingBox: -1 -156 309 1 
+%%HiResBoundingBox: -0.25 -155.51373 308.22888 0.25 
 %%Creator: MetaPost 1.208
 %%CreationDate: [STRIPPED]
 %%Pages: 1
@@ -217,84 +217,86 @@ newpath 7.95004 -109.0592 moveto
 2 -109.0592 lineto
  closepath fill
  0.7 0.7 0.7 setrgbcolor
-newpath 340.22888 -73.87958 moveto
-386.42412 -73.87958 lineto
-386.42412 -90.63416 lineto
-340.22888 -90.63416 lineto
+newpath 167.40775 -138.75916 moveto
+213.60298 -138.75916 lineto
+213.60298 -155.51373 lineto
+167.40775 -155.51373 lineto
  closepath fill
  0.9 0.9 0.9 setrgbcolor
-newpath 339.22888 -72.87958 moveto
-385.42412 -72.87958 lineto
-385.42412 -89.63416 lineto
-339.22888 -89.63416 lineto
+newpath 166.40775 -137.75916 moveto
+212.60298 -137.75916 lineto
+212.60298 -154.51373 lineto
+166.40775 -154.51373 lineto
  closepath fill
  0 0 0 setrgbcolor
-newpath 339.22888 -72.87958 moveto
-385.42412 -72.87958 lineto
-385.42412 -89.63416 lineto
-339.22888 -89.63416 lineto
+newpath 166.40775 -137.75916 moveto
+212.60298 -137.75916 lineto
+212.60298 -154.51373 lineto
+166.40775 -154.51373 lineto
  closepath stroke
-newpath 339.22888 -89.63416 moveto
-385.42412 -89.63416 lineto stroke
-newpath 339.22888 -89.63416 moveto
-385.42412 -89.63416 lineto stroke
-345.72888 -84.63416 moveto
+newpath 166.40775 -154.51373 moveto
+212.60298 -154.51373 lineto stroke
+newpath 166.40775 -154.51373 moveto
+212.60298 -154.51373 lineto stroke
+172.90775 -149.51373 moveto
 (Barcode) ptmr8r 9.96265 fshow
  0.7 0.7 0.7 setrgbcolor
-newpath 342.43558 -27.125 moveto
-384.21744 -27.125 lineto
-384.21744 -43.87958 lineto
-342.43558 -43.87958 lineto
+newpath 95.6259 -138.75916 moveto
+137.40775 -138.75916 lineto
+137.40775 -155.51373 lineto
+95.6259 -155.51373 lineto
  closepath fill
  0.9 0.9 0.9 setrgbcolor
-newpath 341.43558 -26.125 moveto
-383.21744 -26.125 lineto
-383.21744 -42.87958 lineto
-341.43558 -42.87958 lineto
+newpath 94.6259 -137.75916 moveto
+136.40775 -137.75916 lineto
+136.40775 -154.51373 lineto
+94.6259 -154.51373 lineto
  closepath fill
  0 0 0 setrgbcolor
-newpath 341.43558 -26.125 moveto
-383.21744 -26.125 lineto
-383.21744 -42.87958 lineto
-341.43558 -42.87958 lineto
+newpath 94.6259 -137.75916 moveto
+136.40775 -137.75916 lineto
+136.40775 -154.51373 lineto
+94.6259 -154.51373 lineto
  closepath stroke
-newpath 341.43558 -42.87958 moveto
-383.21744 -42.87958 lineto stroke
-newpath 341.43558 -42.87958 moveto
-383.21744 -42.87958 lineto stroke
-347.93558 -37.87958 moveto
+newpath 94.6259 -154.51373 moveto
+136.40775 -154.51373 lineto stroke
+newpath 94.6259 -154.51373 moveto
+136.40775 -154.51373 lineto stroke
+101.12589 -149.51373 moveto
 (Region) ptmr8r 9.96265 fshow
-newpath 341.43558 -34.50229 moveto
-319.72913 -34.50229 lineto stroke
+ 0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
+newpath 115.51682 -137.75916 moveto
+115.51682 -128.25903 lineto stroke
  1 1 1 setrgbcolor
-newpath 319.72913 -34.50229 moveto
-313.479 -39.50229 lineto
-307.22888 -34.50229 lineto
-313.479 -29.50229 lineto
+newpath 115.51682 -128.25903 moveto
+110.51682 -122.0091 lineto
+115.51682 -115.75916 lineto
+120.51682 -122.0091 lineto
  closepath fill
- 0 0 0 setrgbcolor
-newpath 319.72913 -34.50229 moveto
-313.479 -39.50229 lineto
-307.22888 -34.50229 lineto
-313.479 -29.50229 lineto
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+newpath 115.51682 -128.25903 moveto
+110.51682 -122.0091 lineto
+115.51682 -115.75916 lineto
+120.51682 -122.0091 lineto
  closepath stroke
-newpath 339.22888 -81.25687 moveto
-319.72888 -81.25687 lineto stroke
+ 0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
+newpath 189.50537 -137.75916 moveto
+189.50537 -128.25903 lineto stroke
  1 1 1 setrgbcolor
-newpath 319.72888 -81.25687 moveto
-313.47888 -86.25687 lineto
-307.22888 -81.25687 lineto
-313.47888 -76.25687 lineto
+newpath 189.50537 -128.25903 moveto
+184.50537 -122.0091 lineto
+189.50537 -115.75916 lineto
+194.50537 -122.0091 lineto
  closepath fill
- 0 0 0 setrgbcolor
-newpath 319.72888 -81.25687 moveto
-313.47888 -86.25687 lineto
-307.22888 -81.25687 lineto
-313.47888 -76.25687 lineto
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+newpath 189.50537 -128.25903 moveto
+184.50537 -122.0091 lineto
+189.50537 -115.75916 lineto
+194.50537 -122.0091 lineto
  closepath stroke
-335.94867 -32.50229 moveto
+117.51682 -135.75916 moveto
 (*) ptmr8r 6.97382 fshow
-333.74197 -79.25687 moveto
+191.50537 -135.75916 moveto
 (*) ptmr8r 6.97382 fshow
 showpage
 %%EOF

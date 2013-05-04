@@ -759,16 +759,16 @@ beginfig(110);
 
   Group.G(Barcode, Region);
 
-  topToBottom(30)(Region, Barcode);
-  leftToRight(30)(Extraction, G);
+  topToBottom(20)(Extraction, G);
+  leftToRight(30)(Region, Barcode);
 
   drawObjects(Extraction, G);
 
-  link(aggregation)(pathHorizontal(Region.w, Extraction.right));
-  link(aggregation)(pathHorizontal(Barcode.w, Extraction.right));
+  link(aggregation)(pathVertical(Region.n, Extraction.bottom));
+  link(aggregation)(pathVertical(Barcode.n, Extraction.bottom));
 
-  item(iAssoc)("*")(obj.se = Region.w);
-  item(iAssoc)("*")(obj.se = Barcode.w);
+  item(iAssoc)("*")(obj.sw = Region.n);
+  item(iAssoc)("*")(obj.sw = Barcode.n);
 endfig;
 
 beginfig(111);
