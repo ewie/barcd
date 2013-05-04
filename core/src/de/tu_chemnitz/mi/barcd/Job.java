@@ -27,10 +27,10 @@ public class Job {
      * to create job which should be resumed after being stopped.
      *
      * @param source the image source
-     * @param initialFrameNumber the number of the first frame an image provider
-     *   of the given source should provide
      * @param extractionUrlTemplate the URL template to generate a URL for each
      *   frame to be persisted
+     * @param initialFrameNumber the number of the first frame an image provider
+     *   of the given source should provide
      */
     public Job(Source source, TemplatedUrlSequence extractionUrlTemplate, int initialFrameNumber) {
         if (initialFrameNumber < Source.INITIAL_FRAME_NUMBER) {
