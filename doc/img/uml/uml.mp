@@ -871,7 +871,6 @@ beginfig(116);
     ConvexPolygon,
     AxisAlignedRectangle,
     OrientedRectangle,
-    GenericConvexPolygon,
     G,
     F;
 
@@ -884,9 +883,7 @@ beginfig(116);
      "+getConvexPolygon(): ConvexPolygon",
      "+getCoverage(): double",
      "+getOrientedRectangle(): OrientedRectangle",
-     "+setBarcode(barcode: Barcode)",
-     "+createFromPoints(points: Point[*]): Region",
-     "+createFromPoints(points: Point[*], generatingPointCount: int): Region");
+     "+setBarcode(barcode: Barcode)");
 
   ClassName.Barcode("Barcode");
 
@@ -894,7 +891,6 @@ beginfig(116);
 
   ClassName.AxisAlignedRectangle("AxisAlignedRectangle");
   ClassName.OrientedRectangle("OrientedRectangle");
-  ClassName.GenericConvexPolygon("GenericConvexPolygon");
 
   Group.G(Barcode, ConvexPolygon);
   Group.F(AxisAlignedRectangle, OrientedRectangle);
@@ -907,10 +903,6 @@ beginfig(116);
     Region,
     F);
 
-  topToBottom.left(80)(
-    Region,
-    GenericConvexPolygon);
-
   leftToRight(10)(
     Barcode,
     ConvexPolygon);
@@ -921,25 +913,18 @@ beginfig(116);
 
   drawObjects(
     Region,
-    GenericConvexPolygon,
     G,
     F);
 
   link(aggregation)(pathVertical(Barcode.n, Region.bottom));
   link(aggregation)(pathVertical(ConvexPolygon.n, Region.bottom));
-  link(associationUni)(rpathVertical(AxisAlignedRectangle.ne + (-10, 0), Region.bottom));
-  link(associationUni)(rpathVertical(OrientedRectangle.n, Region.bottom));
-  link(associationUni)(rpathVertical(GenericConvexPolygon.n + (-1, 0), Region.bottom));
+  link(associationUni)(rpathVertical(AxisAlignedRectangle.n + (-23, 0), Region.bottom));
+  link(associationUni)(rpathVertical(OrientedRectangle.n + (20, 0), Region.bottom));
 
-  item(iAssoc)("creates")(obj.nw = AxisAlignedRectangle.ne + (-10, 50));
-  item(iAssoc)("creates")(obj.nw = OrientedRectangle.n + (0, 50));
-  item(iAssoc)("creates")(obj.nw = GenericConvexPolygon.n + (0, 80));
+  item(iAssoc)("creates")(obj.nw = AxisAlignedRectangle.n + (-23, 50));
+  item(iAssoc)("creates")(obj.nw = OrientedRectangle.n + (20, 50));
 
   item(iAssoc)("0..1")(obj.se = Barcode.n);
-
-  % mark static methods
-  draw Region.sw+(13,13.5) -- Region.se+(-112,13.5);
-  draw Region.sw+(13,3) -- Region.se+(-4,3);
 endfig;
 
 beginfig(117);
@@ -1197,32 +1182,24 @@ endfig;
 beginfig(125);
   save
     GenericConvexPolygon,
-    ConvexPolygon,
-    ConvexHullAlgorithm;
+    ConvexPolygon;
 
   Class.GenericConvexPolygon("GenericConvexPolygon")
     ()
     ("+GenericConvexPolygon(vertices: Point[*])",
-     "+getVertices(): Point[*]",
-     "+createFromConvexHull(point: Point[*]): GenericConvexPolygon");
+     "+getVertices(): Point[*]");
 
   ClassName.ConvexPolygon("ConvexPolygon {abstract}");
-  ClassName.ConvexHullAlgorithm("ConvexHullAlgorithm");
 
   topToBottom(20)(
     ConvexPolygon,
-    GenericConvexPolygon,
-    ConvexHullAlgorithm);
+    GenericConvexPolygon);
 
   drawObjects(
     GenericConvexPolygon,
-    ConvexPolygon,
-    ConvexHullAlgorithm);
+    ConvexPolygon);
 
   clink(inheritance)(GenericConvexPolygon, ConvexPolygon);
-  clink(dependency)(GenericConvexPolygon, ConvexHullAlgorithm);
-
-  draw GenericConvexPolygon.sw+(13,3) -- GenericConvexPolygon.se+(-20,3);
 endfig;
 
 beginfig(126);
