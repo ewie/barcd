@@ -1253,23 +1253,23 @@ beginfig(127);
 
   Class.ImageProcessing("ImageProcessing")
     ()
-    ("+blurBufferedImage_gaussian(image: BufferedImage): BufferedImage",
-     "+blurBufferedImage_mean(image: BufferedImage): BufferedImage",
-     "+brightenBufferedImage_linear(image: BufferedImage): BufferedImage",
-     "+brightenBufferedImage_quadratic(image: BufferedImage): BufferedImage",
-     "+cutoffRectangleBufferedImage(image: BufferedImage, x: int, y: int, width: int, height: int): BufferedImage",
-     "+edgeDetectBufferedImage(image: BufferedImage): BufferedImage",
+    ("+blur_gaussian(image: BufferedImage): BufferedImage",
+     "+blur_mean(image: BufferedImage): BufferedImage",
+     "+brighten_linear(image: BufferedImage): BufferedImage",
+     "+brighten_quadratic(image: BufferedImage): BufferedImage",
+     "+cutoffRectangle(image: BufferedImage, x: int, y: int, width: int, height: int): BufferedImage",
+     "+edgeDetect(image: BufferedImage): BufferedImage",
      "+findShades(image: BufferedImage): BufferedImage",
      "+giveHistogram(image: BufferedImage): BufferedImage",
      "+hasShade(image: BufferedImage, exactness: int): BufferedImage",
-     "+interpolateBufferedImage(image: BufferedImage, rect: Point[4], brightness: float): BufferedImage",
+     "+interpolate(image: BufferedImage, rect: Point[4], brightness: float): BufferedImage",
      "+isBlurry(image: BufferedImage): int",
      "+isDark(image: BufferedImage): int",
      "+isRotated(image: BufferedImage): int",
      "+isSlope(image: BufferedImage): Integer",
-     "+negativBufferedImage(image: BufferedImage): BufferedImage",
-     "+rotateBufferedImage(image: BufferedImage): BufferedImage",
-     "+sharpenBufferedImage(image: BufferedImage): BufferedImage");
+     "+negativ(image: BufferedImage): BufferedImage",
+     "+rotate(image: BufferedImage): BufferedImage",
+     "+sharpen(image: BufferedImage): BufferedImage");
 
   drawObjects(ImageProcessing);
 endfig;

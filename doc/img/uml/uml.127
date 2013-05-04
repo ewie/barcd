@@ -1,6 +1,6 @@
 %!PS
-%%BoundingBox: -1 -201 445 1 
-%%HiResBoundingBox: -0.25 -200.75916 444.65549 0.25 
+%%BoundingBox: -1 -201 385 1 
+%%HiResBoundingBox: -0.25 -200.75916 384.35217 0.25 
 %%Creator: MetaPost 1.208
 %%CreationDate: [STRIPPED]
 %%Pages: 1
@@ -10,48 +10,47 @@
 %%Page: 1 1
  0.7 0.7 0.7 setrgbcolor
 newpath 1 -1 moveto
-444.65549 -1 lineto
-444.65549 -200.75916 lineto
+384.35217 -1 lineto
+384.35217 -200.75916 lineto
 1 -200.75916 lineto
  closepath fill
  0.9 0.9 0.9 setrgbcolor
 newpath 0 0 moveto
-443.65549 0 lineto
-443.65549 -199.75916 lineto
+383.35217 0 lineto
+383.35217 -199.75916 lineto
 0 -199.75916 lineto
  closepath fill
  0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
  [] 0 setdash 1 setlinejoin 10 setmiterlimit
 newpath 0 0 moveto
-443.65549 0 lineto
-443.65549 -199.75916 lineto
+383.35217 0 lineto
+383.35217 -199.75916 lineto
 0 -199.75916 lineto
  closepath stroke
  1 setlinecap
 newpath 0 -12.75458 moveto
-443.65549 -12.75458 lineto stroke
+383.35217 -12.75458 lineto stroke
 newpath 0 -17.25458 moveto
-443.65549 -17.25458 lineto stroke
-187.79573 -9.75458 moveto
+383.35217 -17.25458 lineto stroke
+157.64407 -9.75458 moveto
 (ImageProcessing) ptmr8r 9.96265 fshow
 13 -27.75916 moveto
-(blurBufferedImage_gaussian\(image:\040BufferedImage\):\040BufferedImage)
- ptmr8r 9.96265 fshow
+(blur_gaussian\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+ 9.96265 fshow
 13 -38.25916 moveto
-(blurBufferedImage_mean\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+(blur_mean\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
  9.96265 fshow
 13 -48.75916 moveto
-(brightenBufferedImage_linear\(image:\040BufferedImage\):\040BufferedImage)
- ptmr8r 9.96265 fshow
-13 -59.25916 moveto
-(brightenBufferedImage_quadratic\(image:\040BufferedImage\):\040BufferedIma\
-ge) ptmr8r 9.96265 fshow
-13 -69.75916 moveto
-(cutoffRectangleBufferedImage\(image:\040BufferedImage,\040x:\040int,\040y:\
-\040int,\040width:\040int,\040height:\040int\):\040BufferedImage) ptmr8r
+(brighten_linear\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
  9.96265 fshow
+13 -59.25916 moveto
+(brighten_quadratic\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+ 9.96265 fshow
+13 -69.75916 moveto
+(cutoffRectangle\(image:\040BufferedImage,\040x:\040int,\040y:\040int,\040w\
+idth:\040int,\040height:\040int\):\040BufferedImage) ptmr8r 9.96265 fshow
 13 -80.25916 moveto
-(edgeDetectBufferedImage\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+(edgeDetect\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
  9.96265 fshow
 13 -90.75916 moveto
 (findShades\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
@@ -63,8 +62,8 @@ ge) ptmr8r 9.96265 fshow
 (hasShade\(image:\040BufferedImage,\040exactness:\040int\):\040BufferedImag\
 e) ptmr8r 9.96265 fshow
 13 -122.25916 moveto
-(interpolateBufferedImage\(image:\040BufferedImage,\040rect:\040Point[4],\040\
-brightness:\040float\):\040BufferedImage) ptmr8r 9.96265 fshow
+(interpolate\(image:\040BufferedImage,\040rect:\040Point[4],\040brightness:\
+\040float\):\040BufferedImage) ptmr8r 9.96265 fshow
 13 -132.75916 moveto
 (isBlurry\(image:\040BufferedImage\):\040int) ptmr8r 9.96265 fshow
 13 -143.25916 moveto
@@ -74,14 +73,11 @@ brightness:\040float\):\040BufferedImage) ptmr8r 9.96265 fshow
 13 -164.25916 moveto
 (isSlope\(image:\040BufferedImage\):\040Integer) ptmr8r 9.96265 fshow
 13 -174.75916 moveto
-(negativBufferedImage\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
- 9.96265 fshow
+(negativ\(image:\040BufferedImage\):\040BufferedImage) ptmr8r 9.96265 fshow
 13 -185.25916 moveto
-(rotateBufferedImage\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
- 9.96265 fshow
+(rotate\(image:\040BufferedImage\):\040BufferedImage) ptmr8r 9.96265 fshow
 13 -195.75916 moveto
-(sharpenBufferedImage\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
- 9.96265 fshow
+(sharpen\(image:\040BufferedImage\):\040BufferedImage) ptmr8r 9.96265 fshow
  0.4 0.4 0.4 setrgbcolor
 newpath 2 -25.0592 moveto
 7.95004 -25.0592 lineto
