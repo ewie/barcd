@@ -5,7 +5,7 @@
   elementFormDefault="qualified">
   
   <xs:element name="job" type="JobType"/>
-  <xs:element name="frame" type="FrameType"/>
+  <xs:element name="extraction" type="ExtractionType"/>
   
   <xs:simpleType name="uint">
     <xs:restriction base="xs:int">
@@ -23,7 +23,7 @@
     <xs:all>
       <xs:element name="source" type="SourceChoiceType"/>
       <xs:element name="next-frame-number" type="uint" default="0" minOccurs="0"/>
-      <xs:element name="frames" type="UrlTemplateType"/>
+      <xs:element name="extractions" type="UrlTemplateType"/>
     </xs:all>
   </xs:complexType>
   
@@ -104,9 +104,9 @@
     </xs:complexContent>
   </xs:complexType>
   
-  <xs:complexType name="FrameType">
+  <xs:complexType name="ExtractionType">
     <xs:all>
-      <xs:element name="number" type="uint"/>
+      <xs:element name="frame-number" type="uint"/>
       <xs:element name="barcodes" type="BarcodesType"/>
       <xs:element name="regions" type="RegionsType"/>
     </xs:all>

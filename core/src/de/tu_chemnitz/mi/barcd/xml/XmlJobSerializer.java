@@ -46,7 +46,7 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
         JobElement je = (JobElement) e.getValue();
         Source source = restoreImageSource(je.getSource());
         Integer nextFrameNumber = je.getNextFrameNumber();
-        TemplatedUrlSequence urls = restoreTemplatedUrlSequence(je.getFrames());
+        TemplatedUrlSequence urls = restoreTemplatedUrlSequence(je.getExtractions());
         if (nextFrameNumber == null) {
             return new Job(source, urls);
         } else {
@@ -67,7 +67,7 @@ public class XmlJobSerializer extends XmlSerializer<Job> {
         JobElement je = elements.createJobElement();
         je.setSource(createSourceChoiceElement(job.getSource()));
         je.setNextFrameNumber(job.getNextFrameNumber());
-        je.setFrames(createUrlTemplateElement(job.getFrameUrlTemplate()));
+        je.setExtractions(createUrlTemplateElement(job.getExtractionUrlTemplate()));
         return je;
     }
 

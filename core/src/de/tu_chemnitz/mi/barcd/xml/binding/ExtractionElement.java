@@ -15,16 +15,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for FrameType complex type.
+ * <p>Java class for ExtractionType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="FrameType">
+ * &lt;complexType name="ExtractionType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;all>
- *         &lt;element name="number" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}uint"/>
+ *         &lt;element name="frame-number" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}uint"/>
  *         &lt;element name="barcodes" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}BarcodesType"/>
  *         &lt;element name="regions" type="{http://www.tu-chemnitz.de/informatik/mi/barcd}RegionsType"/>
  *       &lt;/all>
@@ -36,31 +36,32 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FrameType", propOrder = {
+@XmlType(name = "ExtractionType", propOrder = {
 
 })
-public class FrameElement {
+public class ExtractionElement {
 
-    protected int number;
+    @XmlElement(name = "frame-number")
+    protected int frameNumber;
     @XmlElement(required = true)
     protected BarcodesElement barcodes;
     @XmlElement(required = true)
     protected RegionsElement regions;
 
     /**
-     * Gets the value of the number property.
+     * Gets the value of the frameNumber property.
      * 
      */
-    public int getNumber() {
-        return number;
+    public int getFrameNumber() {
+        return frameNumber;
     }
 
     /**
-     * Sets the value of the number property.
+     * Sets the value of the frameNumber property.
      * 
      */
-    public void setNumber(int value) {
-        this.number = value;
+    public void setFrameNumber(int value) {
+        this.frameNumber = value;
     }
 
     /**

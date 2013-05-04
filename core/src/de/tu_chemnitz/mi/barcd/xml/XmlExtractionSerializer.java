@@ -11,7 +11,7 @@ import javax.xml.bind.JAXBElement;
 
 import de.tu_chemnitz.mi.barcd.Barcode;
 import de.tu_chemnitz.mi.barcd.BarcodeType;
-import de.tu_chemnitz.mi.barcd.Frame;
+import de.tu_chemnitz.mi.barcd.Extraction;
 import de.tu_chemnitz.mi.barcd.Region;
 import de.tu_chemnitz.mi.barcd.geometry.ConvexPolygon;
 import de.tu_chemnitz.mi.barcd.geometry.GenericConvexPolygon;
@@ -19,7 +19,7 @@ import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.xml.binding.BarcodeElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.BarcodeFormat;
 import de.tu_chemnitz.mi.barcd.xml.binding.BarcodesElement;
-import de.tu_chemnitz.mi.barcd.xml.binding.FrameElement;
+import de.tu_chemnitz.mi.barcd.xml.binding.ExtractionElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.ObjectFactory;
 import de.tu_chemnitz.mi.barcd.xml.binding.PointElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.PointsElement;
@@ -27,39 +27,39 @@ import de.tu_chemnitz.mi.barcd.xml.binding.RegionElement;
 import de.tu_chemnitz.mi.barcd.xml.binding.RegionsElement;
 
 /**
- * XML serializer/unserializer for {@link Frame}.
+ * XML serializer/unserializer for {@link Extraction}.
  *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class XmlFrameSerializer extends XmlSerializer<Frame> {
+public class XmlExtractionSerializer extends XmlSerializer<Extraction> {
     private final ObjectFactory elements = new ObjectFactory();
 
-    public XmlFrameSerializer() {
-        super(FrameElement.class.getPackage().getName());
+    public XmlExtractionSerializer() {
+        super(ExtractionElement.class.getPackage().getName());
     }
 
     @Override
-    protected Frame restoreModel(JAXBElement<?> e)
+    protected Extraction restoreModel(JAXBElement<?> e)
         throws XmlSerializerException
     {
-        FrameElement fe = (FrameElement) e.getValue();
-        int number = fe.getNumber();
+        ExtractionElement fe = (ExtractionElement) e.getValue();
+        int number = fe.getFrameNumber();
         Collection<Region> regions = restoreRegions(fe.getRegions());
         Collection<Barcode> barcodes = restoreRegionlessBarcodes(fe.getBarcodes(), fe.getRegions());
-        return new Frame(number, regions, barcodes);
+        return new Extraction(number, regions, barcodes);
     }
 
     @Override
-    protected JAXBElement<?> createRootElement(Frame frame)
+    protected JAXBElement<?> createRootElement(Extraction extraction)
         throws XmlSerializerException
     {
-        return elements.createFrame(createFrameElement(frame));
+        return elements.createExtraction(createExtractionElement(extraction));
     }
 
-    private FrameElement createFrameElement(Frame frame) {
-        FrameElement fe = elements.createFrameElement();
+    private ExtractionElement createExtractionElement(Extraction frame) {
+        ExtractionElement fe = elements.createExtractionElement();
         fe.setRegions(createRegionsElement(frame.getRegions()));
-        fe.setNumber(frame.getNumber());
+        fe.setFrameNumber(frame.getFrameNumber());
         fe.setBarcodes(createBarcodesElement(frame.getBarcodes()));
         return fe;
     }

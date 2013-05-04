@@ -31,8 +31,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _Extraction_QNAME = new QName("http://www.tu-chemnitz.de/informatik/mi/barcd", "extraction");
     private final static QName _Job_QNAME = new QName("http://www.tu-chemnitz.de/informatik/mi/barcd", "job");
-    private final static QName _Frame_QNAME = new QName("http://www.tu-chemnitz.de/informatik/mi/barcd", "frame");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.tu_chemnitz.mi.barcd.xml.binding
@@ -42,19 +42,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link FrameElement }
-     * 
-     */
-    public FrameElement createFrameElement() {
-        return new FrameElement();
-    }
-
-    /**
      * Create an instance of {@link JobElement }
      * 
      */
     public JobElement createJobElement() {
         return new JobElement();
+    }
+
+    /**
+     * Create an instance of {@link ExtractionElement }
+     * 
+     */
+    public ExtractionElement createExtractionElement() {
+        return new ExtractionElement();
     }
 
     /**
@@ -186,21 +186,21 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ExtractionElement }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.tu-chemnitz.de/informatik/mi/barcd", name = "extraction")
+    public JAXBElement<ExtractionElement> createExtraction(ExtractionElement value) {
+        return new JAXBElement<ExtractionElement>(_Extraction_QNAME, ExtractionElement.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link JobElement }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.tu-chemnitz.de/informatik/mi/barcd", name = "job")
     public JAXBElement<JobElement> createJob(JobElement value) {
         return new JAXBElement<JobElement>(_Job_QNAME, JobElement.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link FrameElement }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://www.tu-chemnitz.de/informatik/mi/barcd", name = "frame")
-    public JAXBElement<FrameElement> createFrame(FrameElement value) {
-        return new JAXBElement<FrameElement>(_Frame_QNAME, FrameElement.class, null, value);
     }
 
 }

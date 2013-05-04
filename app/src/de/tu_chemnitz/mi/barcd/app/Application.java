@@ -18,8 +18,8 @@ import java.util.Comparator;
 
 import de.tu_chemnitz.mi.barcd.Extractor;
 import de.tu_chemnitz.mi.barcd.ExtractorException;
-import de.tu_chemnitz.mi.barcd.Frame;
-import de.tu_chemnitz.mi.barcd.FrameHandler;
+import de.tu_chemnitz.mi.barcd.Extraction;
+import de.tu_chemnitz.mi.barcd.ExtractionHandler;
 import de.tu_chemnitz.mi.barcd.Job;
 import de.tu_chemnitz.mi.barcd.Region;
 import de.tu_chemnitz.mi.barcd.app.Terminal.BoundCommand;
@@ -27,7 +27,7 @@ import de.tu_chemnitz.mi.barcd.app.Terminal.Command;
 import de.tu_chemnitz.mi.barcd.geometry.Point;
 import de.tu_chemnitz.mi.barcd.image.ScalingOperator;
 import de.tu_chemnitz.mi.barcd.util.TemplatedUrlSequence;
-import de.tu_chemnitz.mi.barcd.xml.XmlFrameSerializer;
+import de.tu_chemnitz.mi.barcd.xml.XmlExtractionSerializer;
 import de.tu_chemnitz.mi.barcd.xml.XmlJobSerializer;
 import de.tu_chemnitz.mi.barcd.xml.XmlSerializerException;
 
@@ -110,11 +110,11 @@ public class Application extends Worker {
 
         ExtractionWorker extractionWorker = new ExtractionWorker(extractor);
 
-        extractionWorker.setFrameHandler(new FrameHandler() {
+        extractionWorker.setExtractionHandler(new ExtractionHandler() {
             @Override
-            public void handleFrame(Frame frame, BufferedImage image) {
+            public void handleExtraction(Extraction extraction, BufferedImage image) {
                 try {
-                    Application.this.handleFrame(frame, image);
+                    Application.this.handleExtraction(extraction, image);
                 } catch (ApplicationException ex) {
                     throw new WorkerException(ex);
                 }
@@ -134,15 +134,15 @@ public class Application extends Worker {
     private PersistenceWorker createPersistenceWorker()
         throws ApplicationException
     {
-        Mapper<Frame, File> frameFileMapper = new Mapper<Frame, File>() {
+        Mapper<Extraction, File> extractionFileMapper = new Mapper<Extraction, File>() {
             @Override
-            public File map(Frame frame)
+            public File map(Extraction extraction)
                 throws MapperException
             {
-                TemplatedUrlSequence urls = job.getFrameUrlTemplate();
+                TemplatedUrlSequence urls = job.getExtractionUrlTemplate();
                 URL url;
                 try {
-                    url = urls.getUrl(frame.getNumber());
+                    url = urls.getUrl(extraction.getFrameNumber());
                 } catch (MalformedURLException ex) {
                     throw new MapperException("invalid frame URL", ex);
                 }
@@ -157,31 +157,31 @@ public class Application extends Worker {
         };
 
         XmlJobSerializer jobSerializer = createJobSerializer();
-        XmlFrameSerializer frameSerializer = createFrameSerializer();
+        XmlExtractionSerializer extractionSerializer = createExtractionSerializer();
 
         return new PersistenceWorker(
             job,
             options.getJobFile(),
-            frameFileMapper,
+            extractionFileMapper,
             jobSerializer,
-            frameSerializer,
+            extractionSerializer,
             64);
     }
 
-    private void handleFrame(Frame frame, BufferedImage image)
+    private void handleExtraction(Extraction extraction, BufferedImage image)
         throws ApplicationException
     {
-        displayFrame(frame, image);
+        displayFrame(extraction, image);
         if (options.getPersist()) {
             try {
-                persistenceWorker.queueFrame(frame);
+                persistenceWorker.queueExtraction(extraction);
             } catch (PersistenceWorkerException ex) {
                 throw new ApplicationException("could not persist the next frame", ex);
             }
         }
     }
 
-    private void displayFrame(Frame frame, BufferedImage image) {
+    private void displayFrame(Extraction extraction, BufferedImage image) {
         if (!display.isVisible()) {
             return;
         }
@@ -192,7 +192,7 @@ public class Application extends Worker {
 
         Graphics2D g = im.createGraphics();
 
-        for (Region r : frame.getRegions()) {
+        for (Region r : extraction.getRegions()) {
             Polygon polygon = new Polygon();
             for (Point p : r.getOrientedRectangle().getVertices()) {
                 polygon.addPoint((int) (p.getX() * scale), (int) (p.getY() * scale));
@@ -214,10 +214,10 @@ public class Application extends Worker {
         display.setImage(im);
     }
 
-    private XmlFrameSerializer createFrameSerializer()
+    private XmlExtractionSerializer createExtractionSerializer()
         throws ApplicationException
     {
-        XmlFrameSerializer serializer = new XmlFrameSerializer();
+        XmlExtractionSerializer serializer = new XmlExtractionSerializer();
 
         try {
             serializer.setSchemaLocation(options.getXmlSchemaUrl());

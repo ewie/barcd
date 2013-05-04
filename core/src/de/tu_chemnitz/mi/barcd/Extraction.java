@@ -11,22 +11,23 @@ import java.util.LinkedList;
  *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
-public class Frame {
-    private final int number;
+public class Extraction {
+    private final int frameNumber;
 
     private final Collection<Region> regions;
 
     private final Collection<Barcode> regionlessBarcodes;
 
     /**
-     * Create a frame with number, regions and region-less barcodes.
+     * Create an extraction with frame number, regions and region-less barcodes.
      *
-     * @param number the frame number
-     * @param regions the regions within this frame
-     * @param regionlessBarcodes the barcodes within this frame not captured by regions
+     * @param frameNumber the frame number
+     * @param regions the regions within this extraction
+     * @param regionlessBarcodes the barcodes within this extraction not
+     *   captured by regions
      */
-    public Frame(int number, Collection<Region> regions, Collection<Barcode> regionlessBarcodes) {
-        this.number = number;
+    public Extraction(int frameNumber, Collection<Region> regions, Collection<Barcode> regionlessBarcodes) {
+        this.frameNumber = frameNumber;
         if (regions == null) {
             this.regions = new LinkedList<Region>();
         } else {
@@ -40,22 +41,27 @@ public class Frame {
     }
 
     /**
-     * Create a frame with number.
+     * Create an extraction with a frame number and no regions or region-less
+     * barcodes.
      *
-     * @param number the frame number
+     * @param frameNumber the frame number
      */
-    public Frame(int number) {
-        this(number, null, null);
+    public Extraction(int frameNumber) {
+        this(frameNumber, null, null);
     }
 
     /**
+     * Get the frame number of this extraction's respective frame.
+     *
      * @return the frame number
      */
-    public int getNumber() {
-        return number;
+    public int getFrameNumber() {
+        return frameNumber;
     }
 
     /**
+     * Get all regions of this extraction.
+     *
      * @return the regions
      */
     public Collection<Region> getRegions() {
@@ -63,7 +69,7 @@ public class Frame {
     }
 
     /**
-     * Add a region to this frame.
+     * Add a region.
      *
      * @param region the region to add
      */

@@ -14,13 +14,13 @@ import de.tu_chemnitz.mi.barcd.util.TemplatedUrlSequence;
 public class Job {
     private final Source source;
 
-    private final Collection<Frame> frames;
+    private final Collection<Extraction> extractions;
 
     private final int initialFrameNumber;
 
     private int nextFrameNumber;
 
-    private TemplatedUrlSequence frameUrlTemplate;
+    private TemplatedUrlSequence extractionUrlTemplate;
 
     /**
      * Create a job with a specific initial frame number. Use this constructor
@@ -29,18 +29,18 @@ public class Job {
      * @param source the image source
      * @param initialFrameNumber the number of the first frame an image provider
      *   of the given source should provide
-     * @param frameUrlTemplate the URL template to generate a URL for each
+     * @param extractionUrlTemplate the URL template to generate a URL for each
      *   frame to be persisted
      */
-    public Job(Source source, TemplatedUrlSequence frameUrlTemplate, int initialFrameNumber) {
+    public Job(Source source, TemplatedUrlSequence extractionUrlTemplate, int initialFrameNumber) {
         if (initialFrameNumber < Source.INITIAL_FRAME_NUMBER) {
             throw new IllegalArgumentException("+initialFrameNumber+ must be greater " + Source.INITIAL_FRAME_NUMBER);
         }
         this.source = source;
         this.initialFrameNumber = initialFrameNumber;
         nextFrameNumber = initialFrameNumber;
-        frames = new LinkedList<Frame>();
-        this.frameUrlTemplate = frameUrlTemplate;
+        extractions = new LinkedList<Extraction>();
+        this.extractionUrlTemplate = extractionUrlTemplate;
     }
 
     /**
@@ -62,10 +62,10 @@ public class Job {
     }
 
     /**
-     * @return the frame URL template
+     * @return the extraction URL template
      */
-    public TemplatedUrlSequence getFrameUrlTemplate() {
-        return frameUrlTemplate;
+    public TemplatedUrlSequence getExtractionUrlTemplate() {
+        return extractionUrlTemplate;
     }
 
     /**
@@ -93,23 +93,23 @@ public class Job {
     }
 
     /**
-     * Get all frames processed so far.
+     * Get all extractions produced so far.
      *
      * @return a collection of processed frames
      */
-    public Collection<Frame> getFrames() {
-        return frames;
+    public Collection<Extraction> getExtractions() {
+        return extractions;
     }
 
     /**
-     * Create a new frame assigning the next frame number. Advances the next
+     * Create a new extraction assigning the next frame number. Advance the next
      * frame number by 1.
      *
      * @return the created frame
      */
-    public Frame createFrame() {
-        Frame frame = new Frame(nextFrameNumber++);
-        frames.add(frame);
+    public Extraction createExtraction() {
+        Extraction frame = new Extraction(nextFrameNumber++);
+        extractions.add(frame);
         return frame;
     }
 }

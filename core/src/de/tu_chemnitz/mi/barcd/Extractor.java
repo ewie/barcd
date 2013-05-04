@@ -17,7 +17,7 @@ public class Extractor {
 
     private final ImageProvider imageProvider;
 
-    private FrameHandler frameHandler;
+    private ExtractionHandler extractionHandler;
 
     private RegionExtractor regionExtractor = new DefaultRegionExtractor();
 
@@ -34,7 +34,7 @@ public class Extractor {
     /**
      * @param job the job to process
      *
-     * @throws ExtractorException if the image provider could no be created
+     * @throws ExtractorException if the image provider could not be created
      */
     public Extractor(Job job)
         throws ExtractorException
@@ -91,12 +91,12 @@ public class Extractor {
     }
 
     /**
-     * Register a frame handler.
+     * Set the extraction handler.
      *
-     * @param frameHandler
+     * @param extractionHandler
      */
-    public void setFrameHandler(FrameHandler frameHandler) {
-        this.frameHandler = frameHandler;
+    public void setExtractionHandler(ExtractionHandler extractionHandler) {
+        this.extractionHandler = extractionHandler;
     }
 
     /**
@@ -117,8 +117,8 @@ public class Extractor {
     {
         BufferedImage image = consumeNextImage();
         Region[] regions = extractRegions(image);
-        Frame frame = createFrame(regions, image);
-        reportFrame(frame, image);
+        Extraction extraction = createExtraction(regions, image);
+        reportExtraction(extraction, image);
     }
 
     /**
@@ -148,9 +148,9 @@ public class Extractor {
     }
 
     /**
-     * Extract regions from the given frame image.
+     * Extract regions from the given source image.
      *
-     * @param image the frame image
+     * @param image the source image
      *
      * @return all extracted regions
      */
@@ -160,32 +160,32 @@ public class Extractor {
     }
 
     /**
-     * Create a frame for the given regions and image.
+     * Create an extraction for the given regions and source image.
      *
-     * @param regions the regions extracted from the current frame
-     * @param image the image the current frame's image
+     * @param regions the regions extracted from the source image
+     * @param image the source image
      *
-     * @return the current frame
+     * @return a new extraction
      */
-    private Frame createFrame(Region[] regions, BufferedImage image) {
-        Frame frame = job.createFrame();
+    private Extraction createExtraction(Region[] regions, BufferedImage image) {
+        Extraction extraction = job.createExtraction();
 
         Iterable<Region> selection = filterRegions(regions);
 
         for (Region region : selection) {
             regionHashTable.insert(region);
-            frame.addRegion(region);
+            extraction.addRegion(region);
             processRegionBarcode(region, image);
         }
 
-        processAllBarcodes(frame, image);
+        processAllBarcodes(extraction, image);
         regionHashTable.clear();
 
-        return frame;
+        return extraction;
     }
 
     /**
-     * Filter the given regions. Uses the region filter if it's set otherwise
+     * Filter the given regions. Uses the region filter if it's set, otherwise
      * no filter is applied and all regions will be returned.
      *
      * @param regions the regions to filter
@@ -204,7 +204,7 @@ public class Extractor {
      * Process the eventual barcode within the given region.
      *
      * @param region the region may containing a barcode
-     * @param image the image from which the region originates
+     * @param image the image from which the region has been extracted
      */
     private void processRegionBarcode(Region region, BufferedImage image) {
         BufferedImage sub = createRegionImage(region, image);
@@ -225,14 +225,14 @@ public class Extractor {
     }
 
     /**
-     * Process all barcodes found within the entire frame image. This will add
+     * Process all barcodes found within the entire source image. This will add
      * any barcodes not covered by a region as region-less barcode to the given
-     * frame.
+     * extraction.
      *
-     * @param frame the frame
-     * @param image the frame image
+     * @param extraction the extraction
+     * @param image the source image
      */
-    private void processAllBarcodes(Frame frame, BufferedImage image) {
+    private void processAllBarcodes(Extraction extraction, BufferedImage image) {
         Barcode[] barcodes = barcodeReader.readMultipleBarcodes(image);
 
         if (barcodes != null) {
@@ -249,7 +249,7 @@ public class Extractor {
                 }
 
                 if (region == null) {
-                    frame.addRegionlessBarcode(barcode);
+                    extraction.addRegionlessBarcode(barcode);
                 } else {
                     region.setBarcode(barcode);
                 }
@@ -319,15 +319,15 @@ public class Extractor {
     }
 
     /**
-     * Report a frame along with an image if the there's a registered frame
-     * handler.
+     * Report an extraction along with the source image if an extraction handler
+     * is set.
      *
-     * @param frame the frame to report
+     * @param extraction the extraction to report
      * @param image the image to pass along with the frame
      */
-    private void reportFrame(Frame frame, BufferedImage image) {
-        if (frameHandler != null) {
-            frameHandler.handleFrame(frame, image);
+    private void reportExtraction(Extraction extraction, BufferedImage image) {
+        if (extractionHandler != null) {
+            extractionHandler.handleExtraction(extraction, image);
         }
     }
 }

@@ -2,7 +2,7 @@ package de.tu_chemnitz.mi.barcd.app;
 
 import de.tu_chemnitz.mi.barcd.Extractor;
 import de.tu_chemnitz.mi.barcd.ExtractorException;
-import de.tu_chemnitz.mi.barcd.FrameHandler;
+import de.tu_chemnitz.mi.barcd.ExtractionHandler;
 
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
@@ -14,8 +14,8 @@ public class ExtractionWorker extends Worker {
         this.extractor = extractor;
     }
 
-    public void setFrameHandler(FrameHandler frameHandler) {
-        extractor.setFrameHandler(frameHandler);
+    public void setExtractionHandler(ExtractionHandler frameHandler) {
+        extractor.setExtractionHandler(frameHandler);
     }
 
     /**

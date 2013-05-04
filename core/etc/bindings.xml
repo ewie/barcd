@@ -12,14 +12,14 @@
     <jxb:bindings node="//xs:complexType[@name='BarcodesType']">
       <jxb:class name="BarcodesElement"/>
     </jxb:bindings>
+    <jxb:bindings node="//xs:complexType[@name='ExtractionType']">
+      <jxb:class name="ExtractionElement"/>
+    </jxb:bindings>
     <jxb:bindings node="//xs:complexType[@name='ImageSequenceSourceType']">
       <jxb:class name="ImageSequenceSourceElement"/>
     </jxb:bindings>
     <jxb:bindings node="//xs:complexType[@name='ImageCollectionSourceType']">
       <jxb:class name="ImageCollectionSourceElement"/>
-    </jxb:bindings>
-    <jxb:bindings node="//xs:complexType[@name='FrameType']">
-      <jxb:class name="FrameElement"/>
     </jxb:bindings>
     <jxb:bindings node="//xs:complexType[@name='JobType']">
       <jxb:class name="JobElement"/>

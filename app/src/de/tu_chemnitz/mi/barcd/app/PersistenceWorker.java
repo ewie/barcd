@@ -5,71 +5,71 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.LinkedList;
 
-import de.tu_chemnitz.mi.barcd.Frame;
+import de.tu_chemnitz.mi.barcd.Extraction;
 import de.tu_chemnitz.mi.barcd.Job;
 import de.tu_chemnitz.mi.barcd.Serializer;
 import de.tu_chemnitz.mi.barcd.SerializerException;
 
 /**
- * A worker performing the persistence of frames and the job.
+ * A worker performing the persistence of a job and its extractions
  *
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>
  */
 public class PersistenceWorker extends Worker {
     private final Serializer<Job> jobSerializer;
 
-    private final Serializer<Frame> frameSerializer;
+    private final Serializer<Extraction> extractionSerializer;
 
     private final Job job;
 
     private final File jobFile;
 
-    private final Mapper<Frame, File> frameFileMapper;
+    private final Mapper<Extraction, File> extractionFileMapper;
 
-    private final LinkedList<Frame> frames = new LinkedList<Frame>();
+    private final LinkedList<Extraction> extractions = new LinkedList<Extraction>();
 
     private final int maxQueueSize;
 
     /**
      * @param job the job to persist
      * @param jobFile the job file
-     * @param frameFileMapper a mapper to get a frame's file
+     * @param extractionFileMapper a mapper to get an extraction's file
      * @param jobSerializer the job serializer
-     * @param frameSerializer the frame serializer
+     * @param extractionSerializer the extraction serializer
      * @param maxQueueSize the maximum number of frames to be queued before
      *   being persisted in one go
      */
     public PersistenceWorker(
         Job job,
         File jobFile,
-        Mapper<Frame, File> frameFileMapper,
+        Mapper<Extraction, File> extractionFileMapper,
         Serializer<Job> jobSerializer,
-        Serializer<Frame> frameSerializer,
+        Serializer<Extraction> extractionSerializer,
         int maxQueueSize)
     {
         this.job = job;
         this.jobFile = jobFile;
-        this.frameFileMapper = frameFileMapper;
+        this.extractionFileMapper = extractionFileMapper;
         this.jobSerializer = jobSerializer;
-        this.frameSerializer = frameSerializer;
+        this.extractionSerializer = extractionSerializer;
         this.maxQueueSize = maxQueueSize;
     }
 
     /**
-     * Queue a frame for persistence.
+     * Queue an extraction for persistence.
      *
-     * @param frame the frame to be persisted
+     * @param extraction the extraction to be persisted
      *
-     * @throws PersistenceWorkerException if the worker accepts no more frames
-     *   because it's about to terminate
+     * @throws PersistenceWorkerException if the worker accepts no more
+     *   extractions because it's about to terminate
      */
-    public void queueFrame(Frame frame)
+    public void queueExtraction(Extraction extraction)
         throws PersistenceWorkerException
     {
         if (shouldTerminate()) {
-            throw new PersistenceWorkerException("can not acception more frames");
+            throw new PersistenceWorkerException("can not accept more extractions");
         }
-        frames.add(frame);
+        extractions.add(extraction);
     }
 
     @Override
@@ -79,8 +79,8 @@ public class PersistenceWorker extends Worker {
         boolean persistJob = false;
 
         while (!shouldTerminate()) {
-            while (frames.size() > maxQueueSize) {
-                persistFrame(frames.remove());
+            while (extractions.size() > maxQueueSize) {
+                persistExtraction(extractions.remove());
                 persistJob = true;
             }
 
@@ -93,39 +93,39 @@ public class PersistenceWorker extends Worker {
             }
         }
 
-        // Persist all remaining frames.
-        while (!frames.isEmpty()) {
-            persistFrame(frames.remove());
+        // Persist all remaining extractions.
+        while (!extractions.isEmpty()) {
+            persistExtraction(extractions.remove());
             persistJob = true;
         }
 
-        // Persist the job only if at least one frame has been persisted.
+        // Persist the job only if at least one extraction has been persisted.
         if (persistJob) {
             persistJob();
         }
     }
 
-    private void persistFrame(Frame frame)
+    private void persistExtraction(Extraction extraction)
         throws PersistenceWorkerException
     {
-        File frameFile;
+        File extractionFile;
         try {
-            frameFile = frameFileMapper.map(frame);
+            extractionFile = extractionFileMapper.map(extraction);
         } catch (MapperException ex) {
-            throw new PersistenceWorkerException("could not map frame to file", ex);
+            throw new PersistenceWorkerException("could not map extraction to file", ex);
         }
 
         FileOutputStream out;
         try {
-            out = new FileOutputStream(frameFile);
+            out = new FileOutputStream(extractionFile);
         } catch (FileNotFoundException ex) {
-            throw new PersistenceWorkerException("chould not open frame file", ex);
+            throw new PersistenceWorkerException("chould not open extraction file", ex);
         }
 
         try {
-            frameSerializer.serialize(frame, out);
+            extractionSerializer.serialize(extraction, out);
         } catch (SerializerException ex) {
-            throw new PersistenceWorkerException("chould not serializer frame", ex);
+            throw new PersistenceWorkerException("chould not serializer extraction", ex);
         }
     }
 
