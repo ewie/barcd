@@ -903,11 +903,11 @@ beginfig(116);
     Region,
     F);
 
-  leftToRight(10)(
+  leftToRight(20)(
     Barcode,
     ConvexPolygon);
 
-  leftToRight(10)(
+  leftToRight(20)(
     AxisAlignedRectangle,
     OrientedRectangle);
 
@@ -918,10 +918,10 @@ beginfig(116);
 
   link(aggregation)(pathVertical(Barcode.n, Region.bottom));
   link(aggregation)(pathVertical(ConvexPolygon.n, Region.bottom));
-  link(associationUni)(rpathVertical(AxisAlignedRectangle.n + (-23, 0), Region.bottom));
+  link(associationUni)(rpathVertical(AxisAlignedRectangle.n + (-8, 0), Region.bottom));
   link(associationUni)(rpathVertical(OrientedRectangle.n + (20, 0), Region.bottom));
 
-  item(iAssoc)("creates")(obj.nw = AxisAlignedRectangle.n + (-23, 50));
+  item(iAssoc)("creates")(obj.nw = AxisAlignedRectangle.n + (-8, 50));
   item(iAssoc)("creates")(obj.nw = OrientedRectangle.n + (20, 50));
 
   item(iAssoc)("0..1")(obj.se = Barcode.n);
