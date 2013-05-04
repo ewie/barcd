@@ -5,7 +5,7 @@
 %%CreationDate: [STRIPPED]
 %%Pages: 1
 %*Font: ptmr8r 9.96265 9.96265 20:80e800206244aa147fcfbec
-%*Font: ptmr8r 6.97382 9.96265 3c:a0000000044472c
+%*Font: ptmr8r 6.97382 9.96265 2a:80002800000001111cb
 %%BeginProlog
 %%EndProlog
 %%Page: 1 1
@@ -187,15 +187,20 @@ newpath 152.73396 -118.24191 moveto
 159.23396 -113.24191 moveto
 (BarcodeType) ptmr8r 9.96265 fshow
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
-newpath 105.71355 -73.75916 moveto
-105.71355 -86.12328 lineto stroke
-newpath 105.71355 -86.12328 moveto
-105.71355 -98.62325 lineto stroke
- 0 0.5 dtransform truncate idtransform setlinewidth pop
 newpath 105.71355 -98.62325 moveto
-110.71355 -86.12328 lineto stroke
-newpath 105.71355 -98.62325 moveto
-100.71355 -86.12328 lineto stroke
+105.71355 -86.25912 lineto stroke
+ 1 1 1 setrgbcolor
+newpath 105.71355 -86.25912 moveto
+100.71355 -80.00914 lineto
+105.71355 -73.75916 lineto
+110.71355 -80.00914 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+newpath 105.71355 -86.25912 moveto
+100.71355 -80.00914 lineto
+105.71355 -73.75916 lineto
+110.71355 -80.00914 lineto
+ closepath stroke
  0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
 newpath 186.06816 -73.75916 moveto
 186.06816 -83.25928 lineto stroke
@@ -206,5 +211,7 @@ newpath 186.06816 -95.75916 moveto
 191.06816 -83.25928 lineto stroke
 newpath 186.06816 -95.75916 moveto
 181.06816 -83.25928 lineto stroke
+107.71355 -96.62325 moveto
+(*) ptmr8r 6.97382 fshow
 showpage
 %%EOF

@@ -425,8 +425,10 @@ beginfig(101);
     Barcode,
     G);
 
-  link(associationUni)(rpathVertical(Point.n, Barcode.bottom));
+  link(aggregation)(pathVertical(Point.n, Barcode.bottom));
   link(associationUni)(rpathVertical(BarcodeType.n, Barcode.bottom));
+
+  item(iAssoc)("*")(obj.sw = Point.n);
 endfig;
 
 beginfig(102);
