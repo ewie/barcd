@@ -745,7 +745,7 @@ beginfig(110);
   Class.Extraction("Extraction")
     ()
     ("+Extraction(frameNumber: int)",
-     "+Extraction(frameNumber: int, regions: Region[*], barcodes: Barcode[*])",
+     "+Extraction(frameNumber: int, regions: Region[*], regionlessBarcodes: Barcode[*])",
      "+addRegion(region: Region)",
      "+addRegionlessBarcode(barcode: Barcode)",
      "+getBarcodes(): Barcode[*]",
