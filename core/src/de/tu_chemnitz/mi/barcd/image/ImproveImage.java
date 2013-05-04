@@ -14,7 +14,6 @@ import java.awt.image.BufferedImage;
 public class ImproveImage {
 
     ImageProcessing ipNew = new ImageProcessing();
-    BufferedImage biNew;
     
     
     /**
@@ -27,17 +26,15 @@ public class ImproveImage {
      */
     public BufferedImage checkBrightness(BufferedImage biPrep){
         
-        biNew = new BufferedImage(biPrep.getWidth(), biPrep.getHeight(), BufferedImage.TYPE_INT_RGB);
-        biNew = biPrep;
         // brighten image up a bit to normalize it
         // this also might help with a little bit blurry images and pictures where the color difference is not big enough
-        int iBrightness = ipNew.isDark(biNew);
+        int iBrightness = ipNew.isDark(biPrep);
         if (iBrightness < 128){
             float fRescale = (float)115 / iBrightness;
-            biNew = ipNew.brightenBufferedImage_linear(biNew, fRescale);
+            biPrep = ipNew.brighten_linear(biPrep, fRescale);
         }
         
-        return biNew;
+        return biPrep;
     }
 
     
@@ -53,20 +50,16 @@ public class ImproveImage {
      */
     public BufferedImage checkBlur(BufferedImage biBlur){
         
-        biNew = new BufferedImage(biBlur.getWidth(), biBlur.getHeight(), BufferedImage.TYPE_INT_RGB);
-        
         int iBlur = ipNew.isBlurry(biBlur);
         if (iBlur > 200) {
             // if 5 times is not enough then it will most likely never be
             int iRun = 0;
             while ( (iBlur > 200) && (iRun < 5) ){
                 iRun++;
-                biNew = ipNew.sharpenBufferedImage(biBlur);
+                biBlur = ipNew.sharpen(biBlur);
             }
-            return biNew;
-        }else{
-            return biBlur;
         }
+        return biBlur;
         
     }
 
@@ -83,16 +76,15 @@ public class ImproveImage {
      */
     public BufferedImage checkRotation(BufferedImage biRot){
         
-        biNew = new BufferedImage(biRot.getWidth(), biRot.getHeight(), BufferedImage.TYPE_INT_RGB);
         
         // circle the image in a readable position
         // as it will never be a perfect image/angle always rotate the image
-        biNew = ipNew.rotateBufferedImage(biRot, -(ipNew.isRotated(biRot)));
+        biRot = ipNew.rotate(biRot, -(ipNew.isRotated(biRot)));
         
         // do it two times and 90 degree will be found too but takes longer
         //biNew = ipNew.rotateBufferedImage(biRot, -(ipNew.isRotated(biRot)));
         
-        return biNew;
+        return biRot;
     }
     
     
@@ -107,16 +99,12 @@ public class ImproveImage {
      * @return          The image without shadows.
      */
     public BufferedImage checkShadow(BufferedImage biShadow){
-        
-        biNew = new BufferedImage(biShadow.getWidth(), biShadow.getHeight(), BufferedImage.TYPE_INT_RGB);
-        
+                
         // check if shadow is there and clear it if necessary
         if (ipNew.hasShade(biShadow, 3)){
-            biNew  = ipNew.findShades(biShadow);
-            return biNew;
-        }else{
-            return biShadow;
+            biShadow  = ipNew.findShades(biShadow);
         }
+        return biShadow;
     }
     
     
@@ -132,13 +120,11 @@ public class ImproveImage {
      */
     public BufferedImage checkImage(BufferedImage biWhole){
         
-        biNew = new BufferedImage(biWhole.getWidth(), biWhole.getHeight(), BufferedImage.TYPE_INT_RGB);
+        biWhole = checkBrightness(biWhole);
+        biWhole = checkShadow(biWhole);
+        biWhole = checkRotation(biWhole);
+        biWhole = checkBlur(biWhole);
         
-        biNew = checkBrightness(biWhole);
-        biNew = checkShadow(biNew);
-        biNew = checkRotation(biNew);
-        biNew = checkBlur(biNew);
-        
-        return biNew;
+        return biWhole;
     }
 }

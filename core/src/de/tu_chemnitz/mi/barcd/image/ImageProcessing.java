@@ -328,7 +328,7 @@ public Integer isSlope(BufferedImage biSlope){
  * @param biBlur        The image to blur.
  * @return              The blurred image.
  */
-public BufferedImage blurBufferedImage_gaussian(BufferedImage biBlur){
+public BufferedImage blur_gaussian(BufferedImage biBlur){
       //normalized Gauss filter matrix
       float data[] = { 
               0.0000f,  0.0182f,  0.0364f,  0.0182f,  0.0000f,
@@ -358,7 +358,7 @@ public BufferedImage blurBufferedImage_gaussian(BufferedImage biBlur){
 * @param biBlur         The image to blur.
 * @return               The blurred image.
 */
-public BufferedImage blurBufferedImage_mean(BufferedImage biBlur){
+public BufferedImage blur_mean(BufferedImage biBlur){
     
     ImagePlus iplNew = new ImagePlus("NewImagePlus", biBlur);
     ImageProcessor iprNew = iplNew.getProcessor().duplicate();
@@ -382,7 +382,7 @@ public BufferedImage blurBufferedImage_mean(BufferedImage biBlur){
  * @param fBrightness   Brightening/Darkening Factor.
  * @return              The brightened/darkened image.
  */
-public BufferedImage brightenBufferedImage_linear(BufferedImage biBright, float fBrightness){
+public BufferedImage brighten_linear(BufferedImage biBright, float fBrightness){
       int iWidth = biBright.getWidth();
       int iHeight = biBright.getHeight();
       
@@ -409,7 +409,7 @@ public BufferedImage brightenBufferedImage_linear(BufferedImage biBright, float 
  * @param biBright      The image to blur.
  * @return              The brightened/darkened image.
  */
-public BufferedImage brightenBufferedImage_quadratic(BufferedImage biBright){
+public BufferedImage brighten_quadratic(BufferedImage biBright){
     //assign new values to old ones
     short[] rootBrighten = new short[256];
     for (int i = 0; i < 256; i++)
@@ -440,7 +440,7 @@ public BufferedImage brightenBufferedImage_quadratic(BufferedImage biBright){
  * @param iHeightCut    Height of the cut from the starting point.
  * @return              The cut-off-image.
  */
-public BufferedImage cutoffRectangleBufferedImage(BufferedImage biCut, int iStartX, int iStartY, int iWidthCut, int iHeightCut){
+public BufferedImage cutoffRectangle(BufferedImage biCut, int iStartX, int iStartY, int iWidthCut, int iHeightCut){
     if ( (iStartX < 0) || (iStartX > (biCut.getWidth()-1)) || ((iStartX+iWidthCut) > biCut.getWidth()) ||
          (iStartY < 0) || (iStartY > (biCut.getHeight()-1)) || ((iStartY+iHeightCut) > biCut.getHeight())
     ){
@@ -462,7 +462,7 @@ public BufferedImage cutoffRectangleBufferedImage(BufferedImage biCut, int iStar
  * @param biEdge        The image to show the edges on.
  * @return              The image of the edges.
  */
-public BufferedImage edgeDetectBufferedImage(BufferedImage biEdge){
+public BufferedImage edgeDetect(BufferedImage biEdge){
     
       ImagePlus iplNew = new ImagePlus("NewImagePlus", biEdge);
       ImageProcessor iprNew = iplNew.getProcessor().duplicate().convertToFloat();
@@ -617,7 +617,7 @@ public BufferedImage giveHistogram(BufferedImage biHisto){
  * @param brightness    The brightening factor.
  * @return              The image with a brightened rectangular part.
  */
-public BufferedImage interpolateBufferedImage(BufferedImage biSplit, Point pPoints[], float brightness){
+public BufferedImage interpolate(BufferedImage biSplit, Point pPoints[], float brightness){
 //improvement: use Polygon object and find boundaries with getBounds in a Rectangle
 //improvement could be 2 sets of edges/points for the left way from the highest to the lowest and the right way
       int iWidthMax = biSplit.getWidth();
@@ -666,7 +666,7 @@ public BufferedImage interpolateBufferedImage(BufferedImage biSplit, Point pPoin
       int[] iPixelsSplitBrighter = new int[iWidthCut*iHeightCut];
       BufferedImage biBright = new BufferedImage(iWidthCut, iHeightCut, BufferedImage.TYPE_INT_RGB);
       biBright = biSplit.getSubimage(iStartX, iStartY, iWidthCut, iHeightCut);
-      biBright = brightenBufferedImage_linear(biBright, brightness);
+      biBright = brighten_linear(biBright, brightness);
       biBright.getRGB(0, 0, iWidthCut, iHeightCut, iPixelsSplitBrighter, 0, iWidthCut);
       
       //only works for quadrangles where within the vertical order the new edge changes sites every time
@@ -733,7 +733,7 @@ public BufferedImage interpolateBufferedImage(BufferedImage biSplit, Point pPoin
  * @param biNegativ     The image to filter.
  * @return              The negative image of the input image.
  */
-public BufferedImage negativBufferedImage(BufferedImage biNegativ){
+public BufferedImage negativ(BufferedImage biNegativ){
       //calculate opposite color
       short[] invert = new short[256];
       for (int i = 0; i < 256; i++) 
@@ -764,7 +764,7 @@ public BufferedImage negativBufferedImage(BufferedImage biNegativ){
  * @param iAngle        The rotation angle.
  * @return              The rotated image of the input image.
  */
-public BufferedImage rotateBufferedImage(BufferedImage biRotate, int iAngle){  
+public BufferedImage rotate(BufferedImage biRotate, int iAngle){  
 //improvement: the image frame is not calculated efficiently
       int iWidth = biRotate.getWidth();  
       int iHeight = biRotate.getHeight();
@@ -804,7 +804,7 @@ public BufferedImage rotateBufferedImage(BufferedImage biRotate, int iAngle){
 //          System.out.println(iCount); System.out.println((!((iMinX != 0) && (iMinY != 0) && (iMaxX != 0) && (iMaxY != 0))));
           iCount++;
       }
-     biResult = cutoffRectangleBufferedImage(biResult, iMinX, iMinY, (iMaxX-iMinX), (iMaxY-iMinY));
+     biResult = cutoffRectangle(biResult, iMinX, iMinY, (iMaxX-iMinX), (iMaxY-iMinY));
       
      return biResult;
   }
@@ -820,7 +820,7 @@ public BufferedImage rotateBufferedImage(BufferedImage biRotate, int iAngle){
  * @param biSharp       The image to sharpen.
  * @return              The sharpened image.
  */
-public BufferedImage sharpenBufferedImage(BufferedImage biSharp){
+public BufferedImage sharpen(BufferedImage biSharp){
       //create ImageProcessor, convert it to float and make a snapshot
       ImagePlus iplNew = new ImagePlus("New", biSharp);
       ImageProcessor iprNew = iplNew.getProcessor().duplicate().convertToFloat();
