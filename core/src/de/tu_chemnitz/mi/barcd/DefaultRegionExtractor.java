@@ -158,10 +158,16 @@ public class DefaultRegionExtractor implements RegionExtractor {
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
                 int label = labels[x + y * width];
-                if (label == 0) continue;
+
+                // Skip background components.
+                if (label == ConnectedComponentLabeler.BACKGROUND_LABEL) {
+                    continue;
+                }
+
                 if (!labelPointsMap.containsKey(label)) {
                     labelPointsMap.put(label, new LinkedList<Point>());
                 }
+
                 // Get the correct coordinates by applying the scaling factor.
                 Point p = new Point(x * scalingFactor, y * scalingFactor);
                 labelPointsMap.get(label).add(p);

@@ -12,6 +12,8 @@ import de.tu_chemnitz.mi.barcd.util.UnionFind;
 public class ConnectedComponentLabeler {
     private static final int BACKGROUND_VALUE = 0;
 
+    public static final int BACKGROUND_LABEL = 0;
+
     /**
      * Perform connected-component-labeling on the given image data. Assigns all
      * pixels that belong to the background (value 0) the same label (0).
@@ -29,8 +31,8 @@ public class ConnectedComponentLabeler {
     }
 
     /**
-     * Perform connected-component-labeling on the given image data. Assigns all
-     * pixels that belong to the background the same label (0).
+     * Perform connected-component-labeling on the given image data. Assigns the
+     * same label (0) to all background pixels.
      *
      * @param pixels the pixels in row-major order with at least {@code
      *   width * height} elements
@@ -42,7 +44,8 @@ public class ConnectedComponentLabeler {
      *   the pixels
      */
     public int[] process(int[] pixels, int width, int height, int backgroundValue) {
-        // The labels are automatically initialized to zero.
+        // The labels are automatically initialized to zero. So every pixel is
+        // initially labeled as background.
         int[] labels = new int[width * height];
 
         // The value of the next label. Increment manually. Value 0 is used
