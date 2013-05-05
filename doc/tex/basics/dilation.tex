@@ -3,12 +3,12 @@
 % Erosion und Dilation, Öffnen und Schliessen
 % aus Voss & Süße 1991
 Die Dilatation ist eine morphologische Operation um Strukturen eines Bildes zu vergrößern.
-Bei die Dilation eines Grauwertbildes wird jedem Pixel der Maximalwert aller Pixel innerhalb einer gewissen Umgebung zugewiesen \cite[3.5]{steinmueller2008}.
+Bei die Dilation eines Grauwertbildes wird jedem Pixel der Maximalwert aller Pixel innerhalb einer gewissen Umgebung zugewiesen \cite[Kapitel~3.5]{steinmueller2008}.
 Zur Beschreibung der Umgebung dient ein Strukturelement~$X$ fester Größe und Form (z.B. ein 3$\times$3-Quadrat), welches mit seinem Mittelpunkt~$(0,0)$ über dem betrachteten Pixel platziert wird.
 \begin{equation}
   (I\oplus X)(x,y)= \max \left\{ I(x+u,y+v) \;\middle|\; (u,v) \in X \right\} \quad X \subseteq \mathbb{Z}^2
 \end{equation}
-Eine Dilation findet Anwendung um Bildstrukturen zu verstärken und zusammenzufassen \cite[3.1]{steinmueller2008}.
+Eine Dilation findet Anwendung um Bildstrukturen zu verstärken und zusammenzufassen \cite[Kapitel~3.1]{steinmueller2008}.
 Es können aber nur Bildstrukturen zusammengefasst werden sofern das Strukturelement groß genug ist um Zwischenräume zu überbrücken.
 
 \begin{figure}[H]

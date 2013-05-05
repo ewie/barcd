@@ -54,14 +54,14 @@ Die Berechnung und Anwendung eines Schwellwertes ist nicht auf das Gesamtbild be
 
 \subsubsection*{Statisches Thresholding}
 Der Schwellwert wird für das gesamte Bild einmalig berechnet und auf alle Bildpunkte angewandt.
-Die Verwendung eines einzelnen Schwellwertes für das gesamte Bild funkioniert nur sofern das Bild gleichmäßig belichtet ist \cite[Kap.~4.3]{davies2012}.
+Die Verwendung eines einzelnen Schwellwertes für das gesamte Bild funkioniert nur sofern das Bild gleichmäßig belichtet ist \cite[Kapitel~4.3]{davies2012}.
 Ansonsten kann es vorkommen, zu dunkle Bildteile, aufgrund zu geringer Belichtung, als Hintergrund zu klassifizieren da diese unterhalb des Schwellwertes liegen.
 
 \subsubsection*{Dynamisches Thresholding}
 Adaptives Thresholding ermöglicht es Bilder mit ungleichmäßiger Beleuchtung besser zu Segmentieren.
-Eine Möglichkeit ist es das Bild in Rechtecke zu unterteilen und auf jede Region das statische Thresholding anzuwenden \cite[Kap.~4.4,~S.~88--89]{davies2012}.
+Eine Möglichkeit ist es das Bild in Rechtecke zu unterteilen und auf jede Region das statische Thresholding anzuwenden \cite[S.~88--89]{davies2012}.
 Dabei kann es an den Regionsgrenzen zu unterschiedlichen Klassifikationen kommen.
-Ein besseres Verfahren stellt die Berechnung eines individuellen Schwellwertes für jeden Bildpunkt, unter Betrachtung seiner Umgebung, dar \cite[Kap.~4.4.2]{davies2012}.
+Ein besseres Verfahren stellt die Berechnung eines individuellen Schwellwertes für jeden Bildpunkt, unter Betrachtung seiner Umgebung, dar \cite[Kapitel~4.4.2]{davies2012}.
 
 \begin{figure}[H]
   \label{fig:segmentation}
