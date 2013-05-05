@@ -122,6 +122,19 @@
 }
 \makeatother
 
+\newcommand{\code}[1]{\mbox{\texttt{#1}}}
+
+\newlength{\elasticfigurewidth}
+\newcommand{\elasticfigure}[2]{%
+  \begin{figure}[H]%
+    \centering%
+    \settowidth{\elasticfigurewidth}{\includegraphics{#1}}%
+    \setlength{\elasticfigurewidth}{\minof{\elasticfigurewidth}{\textwidth}}%
+    \includegraphics[width=\elasticfigurewidth]{#1}%
+    \caption{#2}%
+  \end{figure}%
+}
+
 \hyphenation{
   Hell-ig-keits-ver-teil-ung
   Scan-line-ver-fahr-ens
