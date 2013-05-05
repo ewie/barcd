@@ -665,6 +665,7 @@ beginfig(109);
     ImageEnhancer,
     RegionExtractor,
     Filter,
+    ExtractionHandler,
     G,
     F,
     Job;
@@ -688,6 +689,7 @@ beginfig(109);
   ClassName.ImageEnhancer("ImageEnhancer");
   ClassName.RegionExtractor("RegionExtractor");
   ClassName.Filter("Filter");
+  ClassName.ExtractionHandler("ExtractionHandler");
 
   classStereotypes.BarcodeReader("<<interface>>");
   BarcodeReader.info.iName.top := 0;
@@ -704,23 +706,27 @@ beginfig(109);
   classStereotypes.Filter("<<interface>>");
   Filter.info.iName.top := 0;
 
+  classStereotypes.ExtractionHandler("<<interface>>");
+  ExtractionHandler.info.iName.top := 0;
+
   ClassTemplate.FilterTemplate("T")(Filter);
 
   Group.G(BarcodeReader, Grayscaler, ImageEnhancer);
-  Group.F(Job, RegionExtractor, Filter);
+  Group.F(Job, RegionExtractor, Filter, ExtractionHandler);
 
-  leftToRight(30)(Extractor, G);
-  topToBottom(30)(Extractor, F);
+  leftToRight.top(30)(Extractor, G);
+  topToBottom.left(30)(Extractor, F);
 
   topToBottom(20)(
     BarcodeReader,
     Grayscaler,
     ImageEnhancer);
 
-  leftToRight(20)(
+  leftToRight(10)(
     Job,
     RegionExtractor,
-    Filter);
+    Filter,
+    ExtractionHandler);
 
   drawObjects(
     Extractor,
@@ -733,11 +739,12 @@ beginfig(109);
   link(associationUni)(rpathHorizontal(Grayscaler.w, Extractor.right));
   link(associationUni)(rpathHorizontal(ImageEnhancer.w, Extractor.right));
   link(associationUni)(rpathVertical(RegionExtractor.n, Extractor.bottom));
-  link(associationUni)(rpathVertical(Filter.n, Extractor.bottom));
-  link(associationUni)(rpathVertical(Job.n, Extractor.bottom));
+  link(associationUni)(rpathVertical(Filter.n + (-10, 0), Extractor.bottom));
+  link(aggregation)(pathVertical(Job.n, Extractor.bottom));
+  link(associationUni)(rpathVertical(ExtractionHandler.n + (-30, 0), Extractor.bottom));
 
-  item(iStereo)("<<bind>>")(obj.sw = Filter.n + (0, 20));
-  item(iStereo)("<T -> Region>")(obj.nw = Filter.n + (0, 20));
+  item(iStereo)("<<bind>>")(obj.sw = Filter.n + (-10, 20));
+  item(iStereo)("<T -> Region>")(obj.nw = Filter.n + (-10, 20));
 endfig;
 
 beginfig(110);
