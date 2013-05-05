@@ -92,13 +92,13 @@ public class OrientedRectangle extends Rectangle {
         double invAngle = 0;
 
         // Compute the minimum area enclosing rectangle using an approach
-        // similar to rotation calipers. But in contrast to rotation a set of
-        // calipers around the polygon we rotate the polygon for each edge so
-        // the current edge coincides with the x-axis. We then compute the
-        // axis-aligned bounding rectangle and remember it as the (rotated)
-        // minimum are rectangle. Because the polygons are usually made up of
-        // just a few (empirical evidence: ~20 vertices) vertices this method is
-        // efficient enough.
+        // similar to rotating calipers but much simpler. In contrast to
+        // rotating a set of calipers around the polygon we rotate the polygon
+        // for each edge so the current edge coincides with the x-axis. We then
+        // compute the axis-aligned bounding rectangle and remember it as the
+        // (rotated) minimum are rectangle. Because the polygons are usually
+        // made up of just a few vertices (empirical evidence: ~20 vertices)
+        // this method is efficient enough.
         for (int i = 0; i < hull.length; ++i) {
             Point p = hull[i];
             Point q = hull[(i+1) % hull.length];
