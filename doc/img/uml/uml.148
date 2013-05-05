@@ -1,0 +1,129 @@
+%!PS
+%%BoundingBox: -1 -89 261 1 
+%%HiResBoundingBox: -0.25 -88.74649 260.88675 0.25 
+%%Creator: MetaPost 1.208
+%%CreationDate: [STRIPPED]
+%%Pages: 1
+%*Font: ptmr8r 6.97382 9.96265 20:80e2002a284420145f4fbca
+%*Font: ptmro8r 9.96265 9.96265 42:bf06c001f77eeb8
+%*Font: ptmr8r 9.96265 9.96265 20:80c00020294008005f4f3e4
+%%BeginProlog
+%%EndProlog
+%%Page: 1 1
+ 0.7 0.7 0.7 setrgbcolor
+newpath 1 -1 moveto
+260.88675 -1 lineto
+260.88675 -36.98734 lineto
+1 -36.98734 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 0 0 moveto
+259.88675 0 lineto
+259.88675 -35.98734 lineto
+0 -35.98734 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+ [] 0 setdash 1 setlinejoin 10 setmiterlimit
+newpath 0 0 moveto
+259.88675 0 lineto
+259.88675 -35.98734 lineto
+0 -35.98734 lineto
+ closepath stroke
+ 0 setlinecap
+newpath 0 -21.48276 moveto
+259.88675 -21.48276 lineto stroke
+newpath 0 -21.48276 moveto
+259.88675 -21.48276 lineto stroke
+113.38002 -7.72818 moveto
+(<<interface>>) ptmr8r 6.97382 fshow
+108.36954 -18.48276 moveto
+(Grayscaler) ptmro8r 9.96265 fshow
+13 -31.98734 moveto
+(convertToGrayscale\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+ 9.96265 fshow
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -29.28738 moveto
+7.95004 -29.28738 lineto
+7.95004 -31.98734 lineto
+2 -31.98734 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -31.98734 moveto
+9 -30.93738 lineto
+9 -28.23743 lineto
+7.95004 -29.28738 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -29.28738 moveto
+9 -28.23743 lineto
+3.04996 -28.23743 lineto
+2 -29.28738 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 1 -56.98734 moveto
+260.88675 -56.98734 lineto
+260.88675 -88.74649 lineto
+1 -88.74649 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 0 -55.98734 moveto
+259.88675 -55.98734 lineto
+259.88675 -87.74649 lineto
+0 -87.74649 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 0 -55.98734 moveto
+259.88675 -55.98734 lineto
+259.88675 -87.74649 lineto
+0 -87.74649 lineto
+ closepath stroke
+newpath 0 -68.74191 moveto
+259.88675 -68.74191 lineto stroke
+newpath 0 -73.24191 moveto
+259.88675 -73.24191 lineto stroke
+93.43076 -65.74191 moveto
+(DefaultGrayscaler) ptmr8r 9.96265 fshow
+13 -83.74649 moveto
+(convertToGrayscale\(image:\040BufferedImage\):\040BufferedImage) ptmr8r
+ 9.96265 fshow
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -81.04654 moveto
+7.95004 -81.04654 lineto
+7.95004 -83.74649 lineto
+2 -83.74649 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -83.74649 moveto
+9 -82.69653 lineto
+9 -79.99658 lineto
+7.95004 -81.04654 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -81.04654 moveto
+9 -79.99658 lineto
+3.04996 -79.99658 lineto
+2 -81.04654 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0.5
+ 0 dtransform exch truncate exch idtransform pop setlinewidth
+ [3 3 ] 0 setdash
+newpath 129.94337 -55.98755 moveto
+129.94337 -48.48705 lineto stroke
+ 1 1 1 setrgbcolor
+newpath 129.94337 -48.48705 moveto
+124.94337 -48.48705 lineto
+129.94337 -35.98708 lineto
+134.94337 -48.48705 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+ [] 0 setdash
+newpath 129.94337 -48.48705 moveto
+124.94337 -48.48705 lineto stroke
+newpath 129.94337 -48.48705 moveto
+134.94337 -48.48705 lineto stroke
+newpath 129.94337 -35.98708 moveto
+124.94337 -48.48705 lineto stroke
+newpath 129.94337 -35.98708 moveto
+134.94337 -48.48705 lineto stroke
+showpage
+%%EOF

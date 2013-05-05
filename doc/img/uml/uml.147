@@ -1,0 +1,246 @@
+%!PS
+%%BoundingBox: -1 -110 378 1 
+%%HiResBoundingBox: -0.25 -109.74649 377.84747 0.25 
+%%Creator: MetaPost 1.208
+%%CreationDate: [STRIPPED]
+%%Pages: 1
+%*Font: ptmr8r 6.97382 9.96265 20:80e8002a2c4120145fcfbd8
+%*Font: ptmro8r 9.96265 9.96265 42:bf06c001f77eeb8
+%*Font: ptmr8r 9.96265 9.96265 20:80e20020284420145f4fbca
+%%BeginProlog
+%%EndProlog
+%%Page: 1 1
+ 0.7 0.7 0.7 setrgbcolor
+newpath 1 -1 moveto
+253.15561 -1 lineto
+253.15561 -47.48734 lineto
+1 -47.48734 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 0 0 moveto
+252.15561 0 lineto
+252.15561 -46.48734 lineto
+0 -46.48734 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+ [] 0 setdash 1 setlinejoin 10 setmiterlimit
+newpath 0 0 moveto
+252.15561 0 lineto
+252.15561 -46.48734 lineto
+0 -46.48734 lineto
+ closepath stroke
+ 0 setlinecap
+newpath 0 -21.48276 moveto
+252.15561 -21.48276 lineto stroke
+newpath 0 -21.48276 moveto
+252.15561 -21.48276 lineto stroke
+109.51445 -7.72818 moveto
+(<<interface>>) ptmr8r 6.97382 fshow
+95.37323 -18.48276 moveto
+(BarcodeReader) ptmro8r 9.96265 fshow
+13 -31.98734 moveto
+(readBarcode\(image:\040BufferedImage\):\040Barcode) ptmr8r 9.96265 fshow
+13 -42.48734 moveto
+(readMultipleBarcodes\(image:\040BufferedImage\):\040Barcode[*]) ptmr8r
+ 9.96265 fshow
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -29.28738 moveto
+7.95004 -29.28738 lineto
+7.95004 -31.98734 lineto
+2 -31.98734 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -31.98734 moveto
+9 -30.93738 lineto
+9 -28.23743 lineto
+7.95004 -29.28738 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -29.28738 moveto
+9 -28.23743 lineto
+3.04996 -28.23743 lineto
+2 -29.28738 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -39.78738 moveto
+7.95004 -39.78738 lineto
+7.95004 -42.48734 lineto
+2 -42.48734 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -42.48734 moveto
+9 -41.43738 lineto
+9 -38.73743 lineto
+7.95004 -39.78738 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -39.78738 moveto
+9 -38.73743 lineto
+3.04996 -38.73743 lineto
+2 -39.78738 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 303.15561 -15.86638 moveto
+349.35085 -15.86638 lineto
+349.35085 -32.62096 lineto
+303.15561 -32.62096 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 302.15561 -14.86638 moveto
+348.35085 -14.86638 lineto
+348.35085 -31.62096 lineto
+302.15561 -31.62096 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 302.15561 -14.86638 moveto
+348.35085 -14.86638 lineto
+348.35085 -31.62096 lineto
+302.15561 -31.62096 lineto
+ closepath stroke
+newpath 302.15561 -31.62096 moveto
+348.35085 -31.62096 lineto stroke
+newpath 302.15561 -31.62096 moveto
+348.35085 -31.62096 lineto stroke
+308.65561 -26.62096 moveto
+(Barcode) ptmr8r 9.96265 fshow
+ 0.7 0.7 0.7 setrgbcolor
+newpath 1 -67.48734 moveto
+253.15561 -67.48734 lineto
+253.15561 -109.74649 lineto
+1 -109.74649 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 0 -66.48734 moveto
+252.15561 -66.48734 lineto
+252.15561 -108.74649 lineto
+0 -108.74649 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 0 -66.48734 moveto
+252.15561 -66.48734 lineto
+252.15561 -108.74649 lineto
+0 -108.74649 lineto
+ closepath stroke
+newpath 0 -79.24191 moveto
+252.15561 -79.24191 lineto stroke
+newpath 0 -83.74191 moveto
+252.15561 -83.74191 lineto stroke
+80.43443 -76.24191 moveto
+(DefaultBarcodeReader) ptmr8r 9.96265 fshow
+13 -94.24649 moveto
+(readBarcode\(image:\040BufferedImage\):\040Barcode) ptmr8r 9.96265 fshow
+13 -104.74649 moveto
+(readMultipleBarcodes\(image:\040BufferedImage\):\040Barcode[*]) ptmr8r
+ 9.96265 fshow
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -91.54654 moveto
+7.95004 -91.54654 lineto
+7.95004 -94.24649 lineto
+2 -94.24649 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -94.24649 moveto
+9 -93.19653 lineto
+9 -90.49658 lineto
+7.95004 -91.54654 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -91.54654 moveto
+9 -90.49658 lineto
+3.04996 -90.49658 lineto
+2 -91.54654 lineto
+ closepath fill
+ 0.4 0.4 0.4 setrgbcolor
+newpath 2 -102.04654 moveto
+7.95004 -102.04654 lineto
+7.95004 -104.74649 lineto
+2 -104.74649 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 7.95004 -104.74649 moveto
+9 -103.69653 lineto
+9 -100.99658 lineto
+7.95004 -102.04654 lineto
+ closepath fill
+ 0.6 0.6 0.6 setrgbcolor
+newpath 7.95004 -102.04654 moveto
+9 -100.99658 lineto
+3.04996 -100.99658 lineto
+2 -102.04654 lineto
+ closepath fill
+ 0.7 0.7 0.7 setrgbcolor
+newpath 377.84747 -79.23962 moveto
+273.15561 -79.23962 lineto
+273.15561 -97.9942 lineto
+377.84747 -97.9942 lineto
+ closepath fill
+ 0.9 0.9 0.9 setrgbcolor
+newpath 376.84747 -78.23962 moveto
+272.15561 -78.23962 lineto
+272.15561 -96.9942 lineto
+376.84747 -96.9942 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 376.84747 -78.23962 moveto
+272.15561 -78.23962 lineto
+272.15561 -96.9942 lineto
+376.84747 -96.9942 lineto
+ closepath stroke
+ 0.9 0.9 0.9 setrgbcolor
+newpath 272.15561 -78.23962 moveto
+272.15561 -68.23962 lineto
+324.50154 -68.23962 lineto
+324.50154 -78.23962 lineto
+ closepath fill
+ 0 0 0 setrgbcolor
+newpath 272.15561 -78.23962 moveto
+272.15561 -68.23962 lineto
+324.50154 -68.23962 lineto
+324.50154 -78.23962 lineto
+ closepath stroke
+278.15561 -90.9942 moveto
+(com.google.code.zxing) ptmr8r 9.96265 fshow
+ 0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
+ [3 3 ] 0 setdash
+newpath 126.0778 -66.48755 moveto
+126.0778 -58.98755 lineto stroke
+ 1 1 1 setrgbcolor
+newpath 126.0778 -58.98755 moveto
+121.0778 -58.98755 lineto
+126.0778 -46.48753 lineto
+131.0778 -58.98755 lineto
+ closepath fill
+ 0 0 0 setrgbcolor 0 0.5 dtransform truncate idtransform setlinewidth pop
+ [] 0 setdash
+newpath 126.0778 -58.98755 moveto
+121.0778 -58.98755 lineto stroke
+newpath 126.0778 -58.98755 moveto
+131.0778 -58.98755 lineto stroke
+newpath 126.0778 -46.48753 moveto
+121.0778 -58.98755 lineto stroke
+newpath 126.0778 -46.48753 moveto
+131.0778 -58.98755 lineto stroke
+ [3 3 ] 0 setdash
+newpath 252.15497 -23.24367 moveto
+289.65552 -23.24367 lineto stroke
+ [] 0 setdash
+newpath 289.65552 -23.24367 moveto
+302.15572 -23.24367 lineto stroke
+newpath 302.15572 -23.24367 moveto
+289.65552 -18.24367 lineto stroke
+newpath 302.15572 -23.24367 moveto
+289.65552 -28.24367 lineto stroke
+ [3 3 ] 0 setdash
+newpath 252.15451 -87.61691 moveto
+259.65547 -87.61691 lineto stroke
+ [] 0 setdash
+newpath 259.65547 -87.61691 moveto
+272.15549 -87.61691 lineto stroke
+newpath 272.15549 -87.61691 moveto
+259.65547 -82.61691 lineto stroke
+newpath 272.15549 -87.61691 moveto
+259.65547 -92.61691 lineto stroke
+254.15561 -21.24367 moveto
+(<<create>>) ptmr8r 6.97382 fshow
+showpage
+%%EOF

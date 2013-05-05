@@ -1807,5 +1807,155 @@ beginfig(145);
   drawObjects(DilationOperator);
 endfig;
 
+beginfig(146);
+  save
+    RegionExtractor,
+    DefaultRegionExtractor,
+    Region,
+    DilationOperator;
+
+  Interface.RegionExtractor("RegionExtractor")
+    ("+extractRegions(image: BufferedImage): Region[*]");
+
+  Class.DefaultRegionExtractor("DefaultRegionExtractor")
+    ()
+    ("+DefaultRegionExtractor(dilationOperator: DilationOperator)",
+     "+extractRegions(image: BufferedImage): Region[*]");
+
+  Interface.DilationOperator("DilationOperator")
+    ("+dilate(pixels: int[*], width: int, height: int): int[*]");
+
+  ClassName.Region("Region");
+
+  classStereotypes.RegionExtractor("<<interface>>");
+  classStereotypes.DilationOperator("<<interface>>");
+
+  topToBottom(20)(
+    RegionExtractor,
+    DefaultRegionExtractor,
+    DilationOperator);
+
+  leftToRight(50)(
+    RegionExtractor,
+    Region);
+
+  drawObjects(
+    RegionExtractor,
+    DefaultRegionExtractor,
+    Region,
+    DilationOperator);
+
+  clink(realization)(DefaultRegionExtractor, RegionExtractor);
+  clink(dependency)(DefaultRegionExtractor, DilationOperator);
+  clink(dependency)(RegionExtractor, Region);
+
+  item(iStereo)("<<create>>")(obj.sw = RegionExtractor.e);
+endfig;
+
+beginfig(147);
+  save
+    BarcodeReader,
+    DefaultBarcodeReader,
+    Barcode,
+    ZXing;
+
+  Interface.BarcodeReader("BarcodeReader")
+    ("+readBarcode(image: BufferedImage): Barcode",
+     "+readMultipleBarcodes(image: BufferedImage): Barcode[*]");
+
+  Class.DefaultBarcodeReader("DefaultBarcodeReader")
+    ()
+    ("+readBarcode(image: BufferedImage): Barcode",
+     "+readMultipleBarcodes(image: BufferedImage): Barcode[*]");
+
+  ClassName.Barcode("Barcode");
+  Package.ZXing("com.google.code.zxing")();
+
+  classStereotypes.BarcodeReader("<<interface>>");
+
+  topToBottom(20)(
+    BarcodeReader,
+    DefaultBarcodeReader);
+
+  leftToRight(50)(
+    BarcodeReader,
+    Barcode);
+
+  leftToRight(20)(
+    DefaultBarcodeReader,
+    ZXing);
+
+  drawObjects(
+    BarcodeReader,
+    Barcode,
+    DefaultBarcodeReader,
+    ZXing);
+
+  clink(realization)(DefaultBarcodeReader, BarcodeReader);
+  clink(dependency)(BarcodeReader, Barcode);
+  clink(dependency)(DefaultBarcodeReader, ZXing);
+
+  item(iStereo)("<<create>>")(obj.sw = BarcodeReader.e);
+endfig;
+
+beginfig(148);
+  save
+    Grayscaler,
+    DefaultGrayscaler;
+
+  Interface.Grayscaler("Grayscaler")
+    ("+convertToGrayscale(image: BufferedImage): BufferedImage");
+
+  Class.DefaultGrayscaler("DefaultGrayscaler")
+    ()
+    ("+convertToGrayscale(image: BufferedImage): BufferedImage");
+
+  classStereotypes.Grayscaler("<<interface>>");
+
+  topToBottom(20)(
+    Grayscaler,
+    DefaultGrayscaler);
+
+  drawObjects(
+    Grayscaler,
+    DefaultGrayscaler);
+
+  clink(realization)(DefaultGrayscaler, Grayscaler);
+endfig;
+
+beginfig(149);
+  save
+    ImageEnhancer,
+    DefaultImageEnhancer,
+    ImproveImage;
+
+  Interface.ImageEnhancer("ImageEnhancer")
+    ("+enhanceImage(image: BufferedImage): BufferedImage");
+
+  Class.DefaultImageEnhancer("DefaultImageEnhancer")
+    ()
+    ("+enhanceImage(image: BufferedImage): BufferedImage");
+
+  ClassName.ImproveImage("ImproveImage");
+
+  classStereotypes.ImageEnhancer("<<interface>>");
+
+  topToBottom(20)(
+    ImageEnhancer,
+    DefaultImageEnhancer);
+
+  leftToRight(30)(
+    DefaultImageEnhancer,
+    ImproveImage);
+
+  drawObjects(
+    ImageEnhancer,
+    DefaultImageEnhancer,
+    ImproveImage);
+
+  clink(realization)(DefaultImageEnhancer, ImageEnhancer);
+  clink(dependency)(DefaultImageEnhancer, ImproveImage);
+endfig;
+
 end
 
