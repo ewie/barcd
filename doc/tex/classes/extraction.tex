@@ -1,0 +1,11 @@
+\section{Klasse \code{Extraction}}
+Eine Instanz der Klasse \code{Extraction} kapselt alle Regionen~(\code{getRegions()}) und Barcodes~(\code{getBarcodes()}) die aus genau einem Bild extrahiert wurden.
+Jede Instanz trägt, beginnend bei 0, die Nummer des entsprechenden Frames des Quellmaterials~(\code{getFrameNumber()}).
+Die Barcodes einer Extraction sind in zwei Kategorien unterteilt.
+\begin{itemize}
+  \item gebundene Barcodes~(\code{getRegionBarcodes()}), die von einer Region erfasst sind
+  \item ungebundene Barcodes~(\code{getRegionlessBarcodes()}), die von keiner Region erfasst sind
+\end{itemize}
+
+\elasticfigure{img/uml/uml.110}{Klassendiagramm von \code{Extraction}}
+

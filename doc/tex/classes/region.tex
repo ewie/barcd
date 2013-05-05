@@ -1,0 +1,9 @@
+\section{Klasse \code{Region}}
+Instanzen der Klasse \code{Region} beschreiben Bildregionen.
+Als Grundlagen dienen z.B. die zusammenhängenden Komponenten eines Bild.
+Eine Region ist durch ein konvexes Polygon~(\code{getConvexPolygon()}) und einen Deckungsgrad~(\code{getCoverage()}) beschrieben.
+Die Methode \code{getOrientedRectangle()} erzeugt aus dem konvexen Polygon das umschließende Rechteck mit minimaler Fläche.
+Im Gegensatz dazu erzeugt \code{getAxisAlignedRectangle()} das achsenparallele Rechteck.
+
+\elasticfigure{img/uml/uml.116}{Klassendiagramm von \code{Region}}
+

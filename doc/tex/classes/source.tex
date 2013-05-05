@@ -1,0 +1,28 @@
+\section{Klasse \code{Source}}
+Das Klasse \code{Source} stellt eine Bildquelle dar, die ein Objekt erzeugen kann welches Bilder bereitstellt~(\code{createImageProvider()}).
+Eine konkrete Bildquelle kapselt dazu die Informationen die zur Erzeugung einer Bildquelle nötig sind (z.B. die URL einer Videoresource).
+
+\elasticfigure{img/uml/uml.119}{Klassendiagramm von \code{Source}}
+
+\subsection*{Konkrete Implementierungen}
+Insgesamt existieren 6 Realisierungen von \code{Source} die sich im Laufe der Entwicklung als sinnvoll erwiesen haben.
+
+{
+\setlength{\leftmargini}{1.5em}
+\setlength{\labelsep}{\textwidth}
+\begin{description}
+  \item[\code{BufferedImageSource}]
+    verwendet eine Liste von \code{BufferedImage}
+  \item[\code{ImageCollectionSource}]
+    verwendet eine Liste von URLs um Bilder zu laden
+  \item[\code{ImageSequenceSource}]
+    verwendet eine URL um durchnummerierte Bilder zu laden
+  \item[\code{ImageSnapshotServiceSource}]
+    verwendet eine URL für einen Webservice, der bei jedem Request ein neues Bild liefert (z.B. eine Webcam)
+  \item[\code{VideoDeviceSource}]
+    verwendet, wie auch OpenCV, eine Zahl beginnend bei 0, welche die zu verwendente Kamera identifiziert
+  \item[\code{VideoFileSource}]
+    verwendet eine URL um ein Video zu laden
+\end{description}
+}
+

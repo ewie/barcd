@@ -1,0 +1,7 @@
+\section{Klasse \code{Job}}
+Die Klasse \code{Job} kapselt die Bildquelle~(\code{getSource()}) und erzeugt fortlaufend nummerierte Extractions~(\code{createExtraction()}).
+Zudem stellt es für die Extractions ein URL Template~(\code{getExtractionUrlTemplate()}) zur Verfügung um jeder Extraction eine URL zuzuordnen die zur Speicherung der Extraction nötig ist.
+Durch die Initialisierung eines Jobs mit einer optionalen Framenummer~\code{initialFrameNumber} ist es möglich die Verarbeitung eines Jobs an einer gewünschten Stelle wieder aufzunehmen.
+
+\elasticfigure{img/uml/uml.115}{Klassendiagramm von \code{Job}}
+
