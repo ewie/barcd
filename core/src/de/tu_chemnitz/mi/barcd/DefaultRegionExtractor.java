@@ -47,45 +47,6 @@ public class DefaultRegionExtractor implements RegionExtractor {
              0, 1,
             -1, 0
         }));
-
-        // Sobel operator
-//        edgeOperatorX = new ConvolveOp(new Kernel(3, 3, new float[] {
-//            -1, -2, -1,
-//             0,  0,  0,
-//             1,  2,  1
-//        }));
-//
-//        edgeOperatorY = new ConvolveOp(new Kernel(3, 3, new float[] {
-//             -1, 0, 1,
-//             -2, 0, 2,
-//             -1, 0, 1
-//        }));
-
-        // Scharr operator
-//        edgeOperatorX = new ConvolveOp(new Kernel(3, 3, new float[] {
-//            -3, -10, -3,
-//             0,   0,  0,
-//             3,  10,  3
-//        }));
-//
-//        edgeOperatorY = new ConvolveOp(new Kernel(3, 3, new float[] {
-//             -3, 0,  3,
-//            -10, 0, 10,
-//             -3, 0,  3
-//        }));
-
-        // Prewitt operator
-//        edgeOperatorX = new ConvolveOp(new Kernel(3, 3, new float[] {
-//            -1, -1, -1,
-//             0,  0,  0,
-//             1,  1,  1
-//        }));
-//
-//        edgeOperatorY = new ConvolveOp(new Kernel(3, 3, new float[] {
-//             -1, 0, 1,
-//             -1, 0, 1,
-//             -1, 0, 1
-//        }));
     }
 
     /**
@@ -128,8 +89,6 @@ public class DefaultRegionExtractor implements RegionExtractor {
         int[] pxy = new int[px.length];
 
         for (int i = 0; i < px.length; ++i) {
-            // TODO evaluate how to combine both gradient images
-            //pxy[i] = Math.max(px[i], py[i]);
             pxy[i] = Math.min(px[i] + py[i], 255);
         }
 
