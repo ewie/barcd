@@ -1957,5 +1957,76 @@ beginfig(149);
   clink(dependency)(DefaultImageEnhancer, ImproveImage);
 endfig;
 
+beginfig(150);
+  save
+    Serializer,
+    SerializerTemplate,
+    XmlSerializer,
+    XmlSerializerTemplate,
+    XML,
+    DOM,
+    G;
+
+  Interface.Serializer("Serializer")
+    ("+serialize(model: T, out: OutputWriter)",
+     "+serialize(model: T, out: Writer)",
+     "+unserialize(in: InputStream): T",
+     "+unserialize(in: Reader): T");
+
+  Class.XmlSerializer("XmlSerializer {abstract}")
+    ()
+    ("+XmlSerializer(contextPath: string)",
+     "+appendTo(model: T, node: Node)",
+     "#createRootElement(model: T): JAXBElement<E> {abstract}",
+     "+extractFrom(node: Node): T",
+     "+getIncludeSchemaLocation(): boolean",
+     "+getIncludeXmlDeclaration(): boolean",
+     "+getPretty(): boolean",
+     "+getSchema(): Schema",
+     "+getSchemaLocation(): URL",
+     "+getUrlContext(): URL",
+     "+getValidate(): boolean",
+     "#restoreModel(element: JAXBElement<E>): T {abstract}",
+     "+serialize(model: T, out: OutputStream)",
+     "+serialize(model: T, out: Writer)",
+     "+setIncludeSchemaLocation(include: boolean)",
+     "+setIncludeXmlDeclaration(include: boolean)",
+     "+setPretty(pretty: boolean)",
+     "+setSchema(schema: Schema)",
+     "+setSchemaLocation(url: URL, useSchema: boolean = true)",
+     "+setUrlContext(context: URL)",
+     "+setValidate(validate: boolean)",
+     "+unserialize(in: InputStream): T",
+     "+unserialize(in: Reader): T");
+
+  ClassTemplate.SerializerTemplate("T")(Serializer);
+  ClassTemplate.XmlSerializerTemplate("T, E")(XmlSerializer);
+
+  Package.XML("javax.xml")();
+  Package.DOM("org.w3c.dom")();
+
+  Group.G(XML, DOM);
+
+  topToBottom(20)(
+    Serializer,
+    XmlSerializer,
+    G);
+
+  leftToRight(30)(
+    XML,
+    DOM);
+
+  drawObjects(
+    Serializer,
+    SerializerTemplate,
+    XmlSerializer,
+    XmlSerializerTemplate,
+    G);
+
+  clink(realization)(XmlSerializer, Serializer);
+  link(dependency)(rpathVertical(XML.n, XmlSerializer.bottom));
+  link(dependency)(rpathVertical(DOM.n, XmlSerializer.bottom));
+endfig;
+
 end
 

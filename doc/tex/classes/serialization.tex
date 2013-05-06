@@ -1,0 +1,18 @@
+\section{Serialisierung}
+Um Jobs und Extractions speichern und zwischen Anwendungen austauschen zu können ist eine Serialisierung, d.h. die Übersetzung von Objekten in eine maschinenlesbare Form sowie die Wiederherstellung jener Objekte, erforderlich.
+
+XML stellt für diesen Zweck die ideale Lösung dar, da es ein weit verbreiteter Standard zur externen Repräsentierung von Daten darstellt.
+Zudem wird an der Professur Medieninformatik im Bereich Informationretrieval bereits die XML-Datenbank eXist\footnote{\url{http://www.exist-db.org/}} eingesetzt wodurch eine XML-Lösung naheliegend erscheint.
+Zusammen mit einem XML Schema (siehe \autoref{annex:xml-schema}) ist es möglich die Serialisierung weitesgehend zu automatisieren, da Werkzeuge existieren (z.B. JAXB für Java) die aus einem XML Schema Quellcode erzeugen, der die Serialisierung realisiert.
+
+Die Grundlage der XML-Serialisierung bildet die abstrakte Klasse \code{XmlSerialzer}, die wiederum eine Realisierung des Interface \code{Serializer} ist.
+Konkrete Serialisierer wie z.B. \code{XmlJobSerializer} für \code{Job} und \code{XmlExtractionSerializer} für \code{Extraction} müssen ein Objekt des entsprechenden Typs auf ein XML-Element abbilden (Methode \code{createRootElement}) bzw. aus einem XML-Element ein Objekt wieder herstellen (Methode \code{restoreModel}).
+Neben Zeichenketten und Bytestreams als Ein- und Ausgabe bietet \code{XmlSerializer} zusätzlich DOM-Knoten als Quelle und Ausgabe.
+
+Optional kann \code{XmlSerializer} die Eingabe bzw. Ausgabe validieren, indem mit der Methode \code{setSchema} das XML Schema gesetzt wird.
+Das Schema kann auch über eine URL mittels der Methode \code{setSchemaLocation} verwendet werden.
+Ist die URL des Schemas bekannt, so kann diese bei der Serialisierung mit ausgegeben\footnote{\url{http://www.w3.org/TR/xmlschema-1/\#xsi_schemaLocation}} werden.
+Die Methode \code{setUrlContext} setzt den URL-Kontext um relative URLs (z.B. relative Dateipfade) auflösen zu können.
+
+\elasticfigure{img/uml/uml.150}{Klassendiagram von \code{XmlSerialzer}}
+
