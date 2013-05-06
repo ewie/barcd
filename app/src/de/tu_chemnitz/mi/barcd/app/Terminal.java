@@ -22,7 +22,7 @@ public class Terminal extends Worker {
     /**
      * The pattern to extract a command's name and arguments.
      */
-    private static final Pattern COMMAND_LINE_PATTERN = Pattern.compile("^\\s*([^\\s]+)+(.*)$");
+    private static final Pattern COMMAND_LINE_PATTERN = Pattern.compile("^\\s*([^\\s]+)(.*)$");
 
     /**
      * Map command names to the respective commands.
