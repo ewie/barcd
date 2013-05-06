@@ -17,5 +17,5 @@ public interface DilationOperator {
      * @return the dilated pixel data in row-major order
      *   ({@code width * height} elements)
      */
-    public abstract int[] apply(int[] pixels, int width, int height);
+    public abstract int[] dilate(int[] pixels, int width, int height);
 }

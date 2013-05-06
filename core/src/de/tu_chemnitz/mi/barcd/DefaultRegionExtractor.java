@@ -137,7 +137,7 @@ public class DefaultRegionExtractor implements RegionExtractor {
     }
 
     private int[] performSegmentation(int[] in, int w, int h) {
-        int[] p = dilationOperator.apply(in, w, h);
+        int[] p = dilationOperator.dilate(in, w, h);
 
         long mean = 0;
         for (int i = 0; i < p.length; ++i) {

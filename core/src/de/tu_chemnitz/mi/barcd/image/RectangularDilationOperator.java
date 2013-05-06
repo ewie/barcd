@@ -49,7 +49,7 @@ public class RectangularDilationOperator implements DilationOperator {
     }
 
     @Override
-    public int[] apply(int[] pixels, int width, int height) {
+    public int[] dilate(int[] pixels, int width, int height) {
         // Border padding depending on the window size.
         int a = windowWidth - windowWidth / 2 - 1;
         int b = windowHeight - windowHeight / 2 - 1;
