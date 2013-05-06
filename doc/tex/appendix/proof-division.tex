@@ -27,7 +27,7 @@ und der Rechtsshift von $b$ um $k$ Bits sei wie folgt definiert (alle Bits werde
       \tag*{Anwendung von \eqref{eq:bin} auf $b$ und $r$} \\
     &= \sum_{i=0}^{n-1} b_i 2^i 2^{-k} - \sum_{i=0}^{k-1} r_i 2^i 2^{-k} \\
     &= \sum_{i=0}^{n-1} b_i 2^{i-k} - \sum_{i=0}^{k-1} r_i 2^{i-k} \\
-    &= \sum_{i=k}^{n-1} b_i 2^{i-k} + \underbrace{\sum_{i=0}^{k-1} b_i 2^{i-k} - \sum_{i=0}^{k-1} r_i 2^{i-k}}_{\text{Null, da}~ r_i = b_i~\forall i \in [0,k)} \\
+    &= \sum_{i=k}^{n-1} b_i 2^{i-k} + \underbrace{\sum_{i=0}^{k-1} b_i 2^{i-k} - \sum_{i=0}^{k-1} r_i 2^{i-k}}_{\text{Null, da}~r_i=b_i~\forall i} \\
     &= \sum_{i=k}^{n-1} b_i 2^{i-k}
       \tag*{entspricht der Definition des Rechtsshifts \eqref{eq:rsh}}
 \end{align*}
