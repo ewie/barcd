@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2012-2013 Erik Wienhold & René Richter
+ * Licensed under the BSD 3-Clause License.
+ */
 package de.tu_chemnitz.mi.barcd.video;
 
 import java.net.URL;

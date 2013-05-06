@@ -1,8 +1,12 @@
+/*
+ * Copyright (c) 2012-2013 Erik Wienhold & René Richter
+ * Licensed under the BSD 3-Clause License.
+ */
 package de.tu_chemnitz.mi.barcd.app;
 
+import de.tu_chemnitz.mi.barcd.ExtractionHandler;
 import de.tu_chemnitz.mi.barcd.Extractor;
 import de.tu_chemnitz.mi.barcd.ExtractorException;
-import de.tu_chemnitz.mi.barcd.ExtractionHandler;
 
 /**
  * @author Erik Wienhold <ewie@hrz.tu-chemnitz.de>

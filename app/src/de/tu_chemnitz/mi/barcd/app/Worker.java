@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2012-2013 Erik Wienhold & René Richter
+ * Licensed under the BSD 3-Clause License.
+ */
 package de.tu_chemnitz.mi.barcd.app;
 
 /**
@@ -58,8 +62,6 @@ public abstract class Worker implements Runnable {
      * Implements the actual worker routine.
      *
      * @throws Exception
-     *
-     * @see Runnable#run
      */
     protected abstract void work() throws Exception;
 

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2012-2013 Erik Wienhold & René Richter
+ * Licensed under the BSD 3-Clause License.
+ */
 package de.tu_chemnitz.mi.barcd.app;
 
 import java.awt.Color;
@@ -16,10 +20,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
-import de.tu_chemnitz.mi.barcd.Extractor;
-import de.tu_chemnitz.mi.barcd.ExtractorException;
 import de.tu_chemnitz.mi.barcd.Extraction;
 import de.tu_chemnitz.mi.barcd.ExtractionHandler;
+import de.tu_chemnitz.mi.barcd.Extractor;
+import de.tu_chemnitz.mi.barcd.ExtractorException;
 import de.tu_chemnitz.mi.barcd.Job;
 import de.tu_chemnitz.mi.barcd.Region;
 import de.tu_chemnitz.mi.barcd.app.Terminal.BoundCommand;

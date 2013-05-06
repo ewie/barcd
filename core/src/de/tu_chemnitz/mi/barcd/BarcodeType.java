@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2012-2013 Erik Wienhold & René Richter
+ * Licensed under the BSD 3-Clause License.
+ */
 package de.tu_chemnitz.mi.barcd;
 
 /**
@@ -20,7 +24,7 @@ public enum BarcodeType {
     QR_CODE("qr-code"),
     UPC_A("upc-a"),
     UPC_E("upc-e"),
-    
+
     UNKNOWN("unknown");
 
     private final String value;
