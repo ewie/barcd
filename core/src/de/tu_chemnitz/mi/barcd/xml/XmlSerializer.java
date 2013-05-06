@@ -102,7 +102,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     public void serialize(T model, OutputStream out)
         throws XmlSerializerException
     {
-        marshal(model, out);
+        marshal(model, new OutputStreamMarshallingWrapper(out));
     }
 
     /**
@@ -115,7 +115,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     public void serialize(T model, Writer out)
         throws XmlSerializerException
     {
-        marshal(model, out);
+        marshal(model, new WriterMarshallingWrapper(out));
     }
 
     /**
@@ -129,7 +129,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     public void appendTo(T model, Node node)
         throws XmlSerializerException
     {
-        marshal(model, node);
+        marshal(model, new NodeMarshallingWrapper(node));
     }
 
     /**
@@ -143,7 +143,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     public T unserialize(InputStream in)
         throws XmlSerializerException
     {
-        return unmarshal(in);
+        return unmarshal(new InputStreamUnmarshallingWrapper(in));
     }
 
     /**
@@ -157,7 +157,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     public T unserialize(Reader in)
         throws XmlSerializerException
     {
-        return unmarshal(in);
+        return unmarshal(new ReaderUnmarshallingWrapper(in));
     }
 
     /**
@@ -170,7 +170,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     public T extractFrom(Node node)
         throws XmlSerializerException
     {
-        return unmarshal(node);
+        return unmarshal(new NodeUnmarshallingWrapper(node));
     }
 
     /**
@@ -409,13 +409,13 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
     /**
      * Unmarshall a model from an XML representation.
      *
-     * @param source an object providing XML data
+     * @param source
      *
      * @return the unmarshalled model
      *
      * @throws XmlSerializerException
      */
-    private T unmarshal(Object source)
+    private T unmarshal(UnmarshallingWrapper source)
         throws XmlSerializerException
     {
         Unmarshaller u = createUnmarshaller();
@@ -432,19 +432,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
         JAXBElement<?> e;
 
         try {
-            Object o;
-            // XXX Not very pretty but the only way without resorting to code
-            // duplication.
-            if (source instanceof InputStream) {
-                o = u.unmarshal((InputStream) source);
-            } else if (source instanceof Reader) {
-                o = u.unmarshal((Reader) source);
-            } else if (source instanceof Node) {
-                o = u.unmarshal((Node) source);
-            } else {
-                throw new RuntimeException();
-            }
-            e = (JAXBElement<?>) o;
+            e = source.unmarshall(u);
         } catch (UnmarshalException ex) {
             throw new XmlSerializerValidationException(translateValidationErrors(v), ex);
         } catch (JAXBException ex) {
@@ -458,11 +446,11 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
      * Marshall a model to an XML representation.
      *
      * @param model the model to marshall
-     * @param target an object receiving the XML data
+     * @param target
      *
      * @throws XmlSerializerException
      */
-    private void marshal(T model, Object target)
+    private void marshal(T model, MarshallingWrapper target)
         throws XmlSerializerException
     {
         JAXBElement<?> e = createRootElement(model);
@@ -478,17 +466,7 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
         }
 
         try {
-            // XXX Not very pretty but the only way without resorting to code
-            // duplication.
-            if (target instanceof Writer) {
-                m.marshal(e, (Writer) target);
-            } else if (target instanceof OutputStream) {
-                m.marshal(e, (OutputStream) target);
-            } else if (target instanceof Node) {
-                m.marshal(e, (Node) target);
-            } else {
-                throw new RuntimeException();
-            }
+            target.marshall(m, e);
         } catch (MarshalException ex) {
             throw new XmlSerializerValidationException(translateValidationErrors(v), ex);
         } catch (JAXBException ex) {
@@ -563,5 +541,104 @@ public abstract class XmlSerializer<T extends Object> implements Serializer<T> {
             errors[i] = e;
         }
         return Arrays.asList(errors);
+    }
+
+
+    private static interface MarshallingWrapper {
+        public void marshall(Marshaller m, JAXBElement<?> e) throws JAXBException;
+    }
+
+    private static interface UnmarshallingWrapper {
+        public JAXBElement<?> unmarshall(Unmarshaller u) throws JAXBException;
+    }
+
+    private static class OutputStreamMarshallingWrapper implements MarshallingWrapper {
+        private OutputStream output;
+
+        public OutputStreamMarshallingWrapper(OutputStream output) {
+            this.output = output;
+        }
+
+        @Override
+        public void marshall(Marshaller m, JAXBElement<?> e)
+            throws JAXBException
+        {
+            m.marshal(e, output);
+        }
+    }
+
+    private static class WriterMarshallingWrapper implements MarshallingWrapper {
+        private Writer writer;
+
+        public WriterMarshallingWrapper(Writer writer) {
+            this.writer = writer;
+        }
+
+        @Override
+        public void marshall(Marshaller m, JAXBElement<?> e)
+            throws JAXBException
+        {
+            m.marshal(e, writer);
+        }
+    }
+
+    private static class NodeMarshallingWrapper implements MarshallingWrapper {
+        private Node node;
+
+        public NodeMarshallingWrapper(Node node) {
+            this.node = node;
+        }
+
+        @Override
+        public void marshall(Marshaller m, JAXBElement<?> e)
+            throws JAXBException
+        {
+            m.marshal(e, node);
+        }
+    }
+
+    private static class InputStreamUnmarshallingWrapper implements UnmarshallingWrapper {
+        private InputStream input;
+
+        public InputStreamUnmarshallingWrapper(InputStream input) {
+            this.input = input;
+        }
+
+        @Override
+        public JAXBElement<?> unmarshall(Unmarshaller u)
+            throws JAXBException
+        {
+            return (JAXBElement<?>) u.unmarshal(input);
+        }
+    }
+
+    private static class ReaderUnmarshallingWrapper implements UnmarshallingWrapper {
+        private Reader reader;
+
+        public ReaderUnmarshallingWrapper(Reader reader) {
+            this.reader = reader;
+        }
+
+        @Override
+        public JAXBElement<?> unmarshall(Unmarshaller u)
+            throws JAXBException
+        {
+            return (JAXBElement<?>) u.unmarshal(reader);
+        }
+    }
+
+    private static class NodeUnmarshallingWrapper implements UnmarshallingWrapper {
+        private Node node;
+
+        public NodeUnmarshallingWrapper(Node node) {
+            this.node = node;
+        }
+
+        @Override
+        public JAXBElement<?> unmarshall(Unmarshaller u)
+            throws JAXBException
+        {
+            return (JAXBElement<?>) u.unmarshal(node);
+        }
     }
 }
