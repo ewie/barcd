@@ -3,16 +3,15 @@
 % normale
 Strichcodes sind sich im Allgemeinen sehr ähnlich und unterscheiden sich maximal durch die Strichbreite und -länge. Die Länge ist allerdings für die aktuelle Untersuchung nicht von Interesse, denn diese bietet maximal eine leichte Fehlertoleranz, aber keinen Unterschied in der Erkennungsleistung. Die Strichbreite dagegen ermöglicht eine höhere Robustheit in der Erkennung. Daher untersuchen wir, wie in Abbildung \ref*{fig:eannormal} Bild 1 und 2 zu sehen ist, nur 2 unterschiedliche Strichstärken. 
 
-Strichcodes besitzen keine große Fehlertoleranz, wie z.B. QR-Codes, aber sie besitzen nichtsdestotrotz einen großen Vorteil, nämlich dass eine gute Scanline für die Erkennung ausreicht, wie z.B. in Abbildung \ref*{fig:eannormal} Bild 3.
+Strichcodes besitzen keine große Fehlertoleranz, wie z.B. QR-Codes, aber sie besitzen trotzdem einen großen Vorteil, nämlich dass eine gute Scanline für die Erkennung ausreicht, wie z.B. in Abbildung \ref*{fig:eannormal} Bild 3.
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.30\textwidth]{img/EAN13/perfect_01.jpg}
   \includegraphics[width=0.35\textwidth]{img/EAN13/perfect_02.jpg}
   \includegraphics[width=0.30\textwidth]{img/EAN13/compensation_01.jpg}
-  \caption{Normale Größe, groß, mit enthaltenem Bild}
+  \caption{Normale und kleine Größe, partieller Code}
   \label{fig:eannormal}
 \end{figure}
-% \textbf{Bilder einfügen, (klein), normal, groß, (real), (dreckig), mit Bild}
 
 % unscharfe
 Bei unscharfen Bildern macht sich die Strichbreite sofort bemerkbar, denn für die normale Breite ist bereits eine leichte Unschärfe (Abbildung \ref*{fig:eanblurry} Bild 1) inakzeptabel. Bei den breiteren Strichen allerdings ist selbst bei einer mehr als 4 mal so hohen Unschärfe noch eine Dekodierung möglich.
@@ -23,38 +22,36 @@ Bei unscharfen Bildern macht sich die Strichbreite sofort bemerkbar, denn für d
   \caption{Gaußscher Weichzeichner mit 0,7 Pixeln und 3,0 Pixeln Radius}
   \label{fig:eanblurry}
 \end{figure}
-% \textbf{Bilder einfügen, blurry3, blurry35}
 
 % rotierte
-\todo{Rotiert Beschreibung}
+Das Problem von um $\alpha$ rotierten 1D Strichcodes ist, dass durch die Pixelbilder nie glatte Kanten entstehen können und somit keine sinnvolle Scanline gefunden werden kann oder sogar eine falsche erhalten wird(Abbildung \ref*{fig:eanrotate} Bild 3). Das zeigt sich vor allem bei Codes mit kürzeren Strichen, da dann weniger Platz für eine mögliche Scanline vorhanden ist, die zufällig die richtigen Entfernung erhalten hat. Daher kann auch der Beispielcode mit den längeren Strichen weiter gedreht werden, wie in Abbildung \ref*{fig:eanrotate} zu sehen ist. Außerdem kann dort zusätzlich die Symmetrie der Erkennung von 1D Strichcodes bemerkt werden, da Codes auch bei $180^\circ \pm \alpha$ lesbar sind, wenn sie es bei $\alpha$ sind.
+
+Bei rotierten Codes wirkt sich die unschärfe der Bilder nicht wesentlich auf die Erkennung aus, der Unschärfegrad ist genauso hoch möglich, wie ohne Drehung.
 \begin{figure}[H]
   \centering
-  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/rotate_01_35.jpg}}
-  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/rotate_01_145.jpg}}
-  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/rotate_02_10.jpg}}
-  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/rotate_02_11f.jpg}}
-  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/rotate_02_170.jpg}}
-  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/blurryrotate_01_07_35.jpg}}
-  \fbox{\includegraphics[width=0.3\textwidth]{img/EAN13/blurryrotate_02_4_10.jpg}}
-  \caption{Drehwinkel von 35$^\circ$, 145$^\circ$, 10$^\circ$, 11$^\circ$, 170$^\circ$, 35$^\circ$ und 10$^\circ$}
+  \setlength{\fboxrule}{1pt}
+  \fbox{\includegraphics[height=4cm]{img/EAN13/rotate_01_35.jpg}}
+  \fbox{\includegraphics[height=4cm]{img/EAN13/rotate_01_145.jpg}}\\
+  \fbox{\includegraphics[height=1.9cm]{img/EAN13/rotate_02_10.jpg}}
+  \fbox{\includegraphics[height=1.9cm]{img/EAN13/rotate_02_11f.jpg}}
+  \fbox{\includegraphics[height=1.9cm]{img/EAN13/rotate_02_170.jpg}}
+  \fbox{\includegraphics[height=4cm]{img/EAN13/blurryrotate_01_07_35.jpg}}
+  \fbox{\includegraphics[height=1.9cm]{img/EAN13/blurryrotate_02_4_10.jpg}}
+  \caption{Drehwinkel von 35$^\circ$, 145$^\circ$, 10$^\circ$(falsch erkannt), 11$^\circ$, 170$^\circ$, 35$^\circ$(unscharf) und 10$^\circ$(unscharf)}
   \label{fig:eanrotate}
 \end{figure}
-%\textbf{Bilder einfügen, rotate45, rotateface25, rotateface27f, rotateblurry35, rotateblurry40 }
 
 % dunkle
-\todo{Dunkel Beschreibung}
+Die Abdunkelung der Bilder hat keinen starken negativen Effekt auf die Erkennungsleistung, solange der Kontrast hoch genug bleibt. So können scharfe, unrotierte Strichcodes bis zu 90\% und selbst unscharfe, rotierte Bilder bis zu 80\% abgedunkelt werden (Abbildung \ref*{fig:eandark}).
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.30\textwidth]{img/EAN13/dark_01_90.jpg}
   \includegraphics[width=0.35\textwidth]{img/EAN13/dark_02_90.jpg}
   \includegraphics[width=0.35\textwidth]{img/EAN13/blurrydarkrotate_01_07_80_35.jpg}
-  \caption{Dunkle Bilder}
+  \caption{Bilder, die zu 90\%, 90\%und 80\% abgedunkelt sind.}
   \label{fig:eandark}
 \end{figure}
-%\textbf{Bilder einfügen, dark98, dark99f, darkface90, darkface95f, blurrydark75, blurrydark80f, blurrydarkrotate90, blurrydarkrotate95f }
 
 % schatten
 \todo{Schatten + Bilder}
-
-% schräg
-%SCHRÄG

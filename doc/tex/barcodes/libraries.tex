@@ -1,41 +1,37 @@
 \section{Strichcode Bibliotheken}
 \writtenby{\dcauthornameriren}%
-Im Internet existieren viele verschiedene Bibliotheken zur Generierung und Dekodierung von Strichcodes aller Arten.
-
-Hier werden einige aufgeführt und ZXing, die im Programm genutzte, wird etwas näher erläutert.
-
-Außerdem wird darauf eingegangen, warum ZXing genutzt wird.
+Im Internet existieren viele verschiedene Bibliotheken zur Generierung und Dekodierung von Strichcodes aller Arten. Deshalb werden hier einige davon aufgeführt und es wird darauf eingegangen, warum ZXing genutzt wird.
 
 
-\subsection*{Open-Source Barcode Generatoren}
+\subsection*{Open-Source Strichcode Generatoren}
+Um die Strichcodeerkenner testen zu können, ist es nötig einige Strichcodes zu erstellen, um den Funktionsumfang zu überprüfen. Dazu wurden einige Strichcode Generatoren ausgewählt und diese werden hier, für mögliche weitere Tests, kurz vorgestellt.
 
-\paragraph*{Barcode Writer}
-Der Barcode Writer ist in PostScript geschrieben und kann angeblich alle Formate erstellen. Er untersteht der 'MIT/X-Consortium License'. Man findet ihn unter: \url{https://code.google.com/p/postscriptbarcode}
+\paragraph*{Der Barcode Writer}
+Der Barcode Writer ist in PostScript geschrieben und kann alle Codeformate erstellen. Er untersteht dabei der 'MIT/X-Consortium License' und kann hier gefunden werden:\\ \url{https://code.google.com/p/postscriptbarcode}
 
 \paragraph*{Barcode4J}
-Barcode4J ist in Java geschrieben und kann sehr viele Strichcodes generieren. Barcode4J untersteht der 'Apache Licence v2.0'. Genaueres erfährt man hier: \url{http://barcode4j.sourceforge.net/index.html}
-
-\paragraph*{www.barcoding.com}
-Unter \url{http://www.barcoding.com/upc} kann man viele 1D Codes online erstellen und als jpg-Dateien herunterladen.
+Barcode4J ist in Java geschrieben und kann auch sehr viele Strichcodes generieren, wenn auch nicht so viele wie der Barcode Writer. Barcode4J untersteht dabei der 'Apache Licence v2.0' und genaueres erfährt man hier:\\
+\url{http://barcode4j.sourceforge.net/index.html}
 
 \paragraph*{www.terryburton.co.uk}
-Unter \url{http://www.terryburton.co.uk/barcodewriter/generator} kann man online jegliche Art von Strichcode generieren und in verschiedenen Dateiformaten (jpg, png, eps) herunterladen.
+Unter \url{http://www.terryburton.co.uk/barcodewriter/generator} kann man online jegliche Art von Strichcode generieren und in verschiedenen Dateiformaten (jpg, png, eps) herunterladen, wodurch man die Installation, oder sogar Kompilierung, eines extra Programmes umgehen kann.
+
 
 
 \subsection*{Open-source Barcode Scanner}
+Für die Erkennung von Strichcodes gibt es einige gute Open-Source Bibliotheken, wobei hier nur die vom genannten Funktionsumfang größten kurz untersucht werden.
+
+\paragraph*{ZXing('Zebra Crossing')}
+Die Bibliothek ZXing('Zebra Crossing') besitzt einen riesigen Funktionsumfang, unter den durch sie unterstützten Codes sind z.B. UPC-A/UPC-E, EAN-8/EAN-13, Code 39, Code 128, ITF, Codabar, RSS-14(alle Varianten), QR Code und Data Matrix. Zusätzlich können diese Strichcodes auch mit ZXing generiert werden. Weiter Pluspunkte sind, dass ZXing in Java geschrieben ist und unter der 'Apache License v2.0' zur Verfügung gestellt wird. Dadurch lässt sie sich nahtlos in die Software der Professur Medieninformatik integrieren. Ihr Quellcode kann hier gefunden werden:\\
+\url{http://code.google.com/p/zxing}
 
 \paragraph*{ZBar}
-ZBar ist betriebssystemunabhängig in C geschrieben, besitzt aber Schnittstellen zu C++, Perl und Python. Es erkennt mindestens die wichtigsten Strichcodes und steht unter der 'GNU LGPL 2.1'. Mehr Informationen findet man unter \url{http://zbar.sourceforge.net}.
+ZBar erkennt auch einen großen Anteil an Strichcodes und ist betriebssystemunabhängig in C geschrieben, wobei es sogar Schnittstellen zu C++, Perl und Python besitzt. Einige der erkannten Codes sind z.B. EAN-13/UPC-A, UPC-E, EAN-8, Code 128, Code 39, Interleaved 2 of 5 and QR Code. ZBar steht unter der 'GNU LGPL 2.1' und mehr Informationen findet man unter:\\
+\url{http://zbar.sourceforge.net}.
 
 \paragraph*{BarBara Barcode Library}
-BarBara ist ein Strichcodescanner in VB6, VB.NET und PHP5. Viele Strichcodes werden unterstützt und die Bibliothek ist unter der 'GNU LGPL' verfügbar. Weitere Informationen kann man hier finden: \url{http://sourceforge.net/projects/barbara}
+BarBara ist ein Strichcodescanner in VB6, VB.NET und PHP5, der ebenso sehr viele Strichcodes unterstützt, wie z.B. Code39, UPC, MSI, 2of5 und Codeabar. Diese Bibliothek ist dabei unter der 'GNU LGPL' verfügbar und weitere Informationen kann man hier finden:\\
+\url{http://sourceforge.net/projects/barbara}
 
-
-\subsection*{ZXing('Zebra Crossing')}
-ZXing ist eine Open-Source Bibliothek in Java zum lesen von vielen unterschiedlichen 1D/2D Strichcodes. Sie ist eigentlich auf Codeerkennung auf Handys spezialisiert, kann aber ohne Probleme auch als Dekodierungsbibliothek genutzt werden.
-
-Einige der unterstützten Codes sind: UPC-A/UPC-E, EAN-8/EAN-13, Code 39, Code 128, ITF, Codabar, RSS-14(all variants), QR Code und Data Matrix.
-
-ZXing wird unter der Apache License v2.0 zur Verfügung gestellt und weitere Informationen kann man unter folgender Adresse finden: \url{http://code.google.com/p/zxing}
-
-Die Entscheidung für ZXing ist vor allem dadurch zu begründen, dass es bereits in Java geschrieben ist und jeglichen Strichcode erkennt. Darüber hinaus ist die Bibliothek auch einfach einzubinden.
+\paragraph*{Bewertung}
+Die Bibliotheken wurden empirisch getestet und erfüllten alle funktionalen Anforderungen, wodurch die Integration in das Auswertungsprogramm und die Nutzung nach Lizenz die wichtigsten Auswahlkriterien werden. Da ZXing in Java geschrieben ist und unter der 'Apache License v2.0' verfügbar ist, wurde ZXing am Ende als optimal ausgewählt.

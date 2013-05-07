@@ -1,43 +1,34 @@
 \section{Klasse ImproveImage}
 \writtenby{\dcauthornameriren}%
-Das Ziel dieser Klasse ist es, einzelne Eigenschaften von Strichcodebilder so aufzuwerten, dass der enthaltene Strichode auf jeden Fall von der Bibliothek ZXing erkannt werden kann.
-
+Das Ziel dieser Klasse ist es, einzelne Eigenschaften von Strichcodebilder so aufzuwerten, dass der enthaltene Strichode besser von der Bibliothek ZXing erkannt werden kann.
 Dabei werden die einzelnen Methoden aus der Klasse ImageProcessing zusammen genutzt, um eine optimale Verbesserung der Bilder zu erreichen.
 
+\elasticfigure{img/uml/uml.126}{Klassendiagramm von \code{ImproveImage}}
 
 \subsection*{Methode checkBrightness}
 Diese Methode erhält ein Eingabebild, überprüft ob es zu dunkel ist und hellt es wenn nötig auf.
-
 Durch die Methode 'isDark', aus ImageProcessing, wird die Helligkeit des Bildes bestimmt und wenn diese unter der Hälfte der maximalen Helligkeit ist, dann wird sie bis dorthin, durch 'brightenBufferedImage\_linear', aufgehellt.
-
 Nach der Aufhellung werden einige, nur leicht unscharfe, Bilder bereits nutzbar und der Kontrast wird für die spätere Verarbeitung verstärkt.
 
 
 \subsection*{Methode checkBlur}
 Diese Methode erhält ein Eingabebild, überprüft ob es zu unscharf ist und schärft es wenn nötig.
-
 Durch die Methode 'isBlurry', aus ImageProcessing, wird die Schärfe des Bildes bestimmt und wenn diese unter 200 ist, dann wird sie durch 'sharpenBufferedImage' geschärft.
 
 
 \subsection*{Methode checkRotation}
 Diese Methode erhält ein Eingabebild, überprüft wie stark der enthaltene Strichcode gedreht ist und rotiert ihn wieder in eine lesbare Position.
-
 Durch die Methode 'isRotated', aus ImageProcessing, wird der Rotationswinkel des Strichcodes bestimmt und dann wird das Bild durch 'rotateBufferedImage' gedreht.
 
 
 \subsection*{Methode checkShadow}
 Diese Methode erhält ein Eingabebild, überprüft ob Schatten enthalten sind und wenn ja, entfernt diese aus dem Bild.
-
 Durch die Methode 'hasShade', aus ImageProcessing, wird überprüft, ob das Bild Schatten enthält und entfernt sie, wenn nötig, durch 'findShades' aus dem Bild.
  
 
 \subsection*{Methode checkImage}
 Diese Methode erhält ein Eingabebild und verbessert es so gut es geht.
-
 Dabei wird als erstes die Helligkeit überprüft('checkBrightness'), da sie nur positive Auswirkungen auf die folgenden Untersuchungen hat.
-
 Darauf folgt die Untersuchung auf Schatten('checkShadow'), da diese schlecht auf Umgebungen um den Strichcode reagiert und durch die Rotation möglicherweise ein Rahmen entstehen kann.
-
 Als nächstes wird das Bild rotiert('checkRotation'), weil dies vor dem Schärfen passieren muss, da das Bild durch die Rotation immer etwas unschärfer wird.
-
 Der letzte Punkt ist dann die Schärfung('checkBlur').
