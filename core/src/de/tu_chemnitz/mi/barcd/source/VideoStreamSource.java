@@ -37,7 +37,7 @@ public class VideoStreamSource extends Source {
             fr.setFrameNumber(initialFrameNumber);
             return new VideoImageProvider(fr);
         } catch (FrameReaderException ex) {
-            throw new ImageProviderException(ex);
+            throw new ImageProviderException("could not create video image provider", ex);
         }
     }
 }

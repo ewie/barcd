@@ -36,7 +36,7 @@ public class VideoDeviceSource extends Source {
             FrameReader fr = OpenCvDeviceFrameReader.open(deviceNumber);
             return new VideoImageProvider(fr);
         } catch (FrameReaderException ex) {
-            throw new ImageProviderException("cannot create image provider", ex);
+            throw new ImageProviderException("cannot create video image provider", ex);
         }
     }
 }
