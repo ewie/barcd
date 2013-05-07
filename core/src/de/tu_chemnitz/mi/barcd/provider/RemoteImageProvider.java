@@ -42,7 +42,7 @@ public class RemoteImageProvider implements ImageProvider {
         try {
             return ImageIO.read(urls.next());
         } catch (IOException ex) {
-            throw new ImageProviderException(ex);
+            throw new ImageProviderException("could not open next image", ex);
         }
     }
 }

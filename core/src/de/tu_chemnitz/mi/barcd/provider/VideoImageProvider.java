@@ -38,7 +38,7 @@ public class VideoImageProvider implements ImageProvider {
         try {
             return frameReader.getNextFrame();
         } catch (FrameReaderException ex) {
-            throw new ImageProviderException(ex);
+            throw new ImageProviderException("could not consume next video frame", ex);
         }
     }
 }
