@@ -65,7 +65,14 @@ public abstract class Worker implements Runnable {
      */
     protected abstract void work() throws Exception;
 
-    private void handleException(Exception exception) {
+    /**
+     * Handle an exception by passing it to the set exception handler.
+     *
+     * @param exception the exception to handle
+     *
+     * @throws WorkerException if no exception handler is set
+     */
+    protected void handleException(Exception exception) {
         if (exceptionHandler == null) {
             throw new WorkerException(exception);
         }

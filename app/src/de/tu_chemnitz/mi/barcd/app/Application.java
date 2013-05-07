@@ -89,15 +89,16 @@ public class Application extends Worker {
     }
 
     private void handleWorkerException(Exception ex) {
-        terminalWorker.println(ex.getMessage());
+        terminalWorker.printf("error encountered, stopping...\n\n");
         BoundCommand command = terminalWorker.getBoundCommand("stop");
         command.execute("");
+        handleException(ex);
     }
 
     private void stop() {
+        terminalWorker.terminate();
         extractionWorker.terminate();
         persistenceWorker.terminate();
-        terminalWorker.terminate();
         display.dispose();
     }
 
@@ -128,7 +129,7 @@ public class Application extends Worker {
         extractionWorker.setExceptionHandler(new WorkerExceptionHandler() {
             @Override
             public void handleException(Worker worker, Exception ex) {
-                handleWorkerException(ex);
+                Application.this.handleWorkerException(ex);
             }
         });
 

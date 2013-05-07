@@ -19,13 +19,29 @@ public class Main {
     }
 
     private static void createAndRunApplication(Options options) {
+        Application app = null;
+
         try {
-            Application app = new Application(options);
-            app.run();
-        } catch (WorkerException ex) {
-            System.err.println(ex.getMessage());
+            app = new Application(options);
         } catch (ApplicationException ex) {
-            System.err.println(ex.getMessage());
+            printErrorTrace(ex);
+            System.exit(1);
+        }
+
+        ExceptionHandler exh = new ExceptionHandler();
+
+        app.setExceptionHandler(exh);
+
+        app.run();
+
+        System.exit(exh.anyErrors() ? 1 : 0);
+    }
+
+    private static void printErrorTrace(Exception exception) {
+        Throwable cause = exception;
+        while (cause != null) {
+            System.err.println("[ERROR] " + cause.getMessage());
+            cause = cause.getCause();
         }
     }
 
@@ -36,5 +52,19 @@ public class Main {
 
     private static void printCopyrightNotice() {
         System.out.println(COPYRIGHT_NOTICE);
+    }
+
+    private static class ExceptionHandler implements WorkerExceptionHandler {
+        private boolean anyErrors = false;
+
+        @Override
+        public void handleException(Worker worker, Exception exception) {
+            anyErrors  = true;
+            printErrorTrace(exception);
+        }
+
+        public boolean anyErrors() {
+            return anyErrors;
+        }
     }
 }
