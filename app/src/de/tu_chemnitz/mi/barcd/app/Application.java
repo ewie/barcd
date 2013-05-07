@@ -88,18 +88,18 @@ public class Application extends Worker {
         terminalThread.start();
     }
 
-    private void handleWorkerException(Exception ex) {
-        terminalWorker.printf("error encountered, stopping...\n\n");
-        BoundCommand command = terminalWorker.getBoundCommand("stop");
-        command.execute("");
-        handleException(ex);
-    }
-
     private void stop() {
         terminalWorker.terminate();
         extractionWorker.terminate();
         persistenceWorker.terminate();
         display.dispose();
+    }
+
+    private void handleWorkerException(Exception ex) {
+        terminalWorker.printf("error encountered, stopping...\n\n");
+        BoundCommand command = terminalWorker.getBoundCommand("stop");
+        command.execute("");
+        handleException(ex);
     }
 
     private ExtractionWorker createExtractionWorker()
