@@ -24,25 +24,26 @@ public class Main {
         try {
             app = new Application(options);
         } catch (ApplicationException ex) {
-            printErrorTrace(ex);
-            System.exit(1);
+            printErrorAndExit(ex);
         }
 
-        ExceptionHandler exh = new ExceptionHandler();
-
-        app.setExceptionHandler(exh);
+        app.setExceptionHandler(new WorkerExceptionHandler() {
+            @Override
+            public void handleException(Worker worker, Exception exception) {
+                printErrorAndExit(exception);
+            }
+        });
 
         app.run();
-
-        System.exit(exh.anyErrors() ? 1 : 0);
     }
 
-    private static void printErrorTrace(Exception exception) {
+    private static void printErrorAndExit(Exception exception) {
         Throwable cause = exception;
         while (cause != null) {
             System.err.println("[ERROR] " + cause.getMessage());
             cause = cause.getCause();
         }
+        System.exit(1);
     }
 
     private static Options parseCommandLineArguments(String[] args) {
@@ -52,19 +53,5 @@ public class Main {
 
     private static void printCopyrightNotice() {
         System.out.println(COPYRIGHT_NOTICE);
-    }
-
-    private static class ExceptionHandler implements WorkerExceptionHandler {
-        private boolean anyErrors = false;
-
-        @Override
-        public void handleException(Worker worker, Exception exception) {
-            anyErrors  = true;
-            printErrorTrace(exception);
-        }
-
-        public boolean anyErrors() {
-            return anyErrors;
-        }
     }
 }
