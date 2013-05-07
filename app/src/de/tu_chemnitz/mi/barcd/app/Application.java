@@ -280,14 +280,14 @@ public class Application extends Worker {
 
         sj.setUrlContext(contextUrl);
 
-        try {
-            URL schemaUrl = options.getXmlSchemaUrl();
-            if (schemaUrl != null) {
-                sj.setSchemaLocation(options.getXmlSchemaUrl());
+        URL schemaUrl = options.getXmlSchemaUrl();
+        if (schemaUrl != null) {
+            try {
+                sj.setSchemaLocation(schemaUrl);
                 sj.setValidate(true);
+            } catch (XmlSerializerException ex) {
+                throw new ApplicationException("could not set XML schema location", ex);
             }
-        } catch (XmlSerializerException ex) {
-            throw new ApplicationException("could not set XML schema location", ex);
         }
 
         FileInputStream fin;
