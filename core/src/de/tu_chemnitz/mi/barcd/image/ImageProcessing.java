@@ -1,16 +1,4 @@
-/*
- * Copyright (c) 2012-2013 Erik Wienhold & René Richter
- * Licensed under the BSD 3-Clause License.
- */
 package de.tu_chemnitz.mi.barcd.image;
-
-import ij.ImagePlus;
-import ij.plugin.filter.BackgroundSubtracter;
-import ij.plugin.filter.Mexican_Hat_Filter;
-import ij.plugin.filter.UnsharpMask;
-import ij.process.FloatProcessor;
-import ij.process.ImageProcessor;
-
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
@@ -26,17 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import ij.*;
+import ij.plugin.filter.*;
+import ij.process.FloatProcessor;
+import ij.process.ImageProcessor;
 
 /**
  * A class to improve the quality of images who contain barcodes.
- *
- * @author      René Richter
+ * 
+ * @author      Ren� Richter
  * @version     1.0
  * @since       2013-04-01
  *
  */
 class ImageProcessing extends JFrame  {
-
+  
     private static final long serialVersionUID = 1L;
 
 
@@ -44,8 +36,8 @@ class ImageProcessing extends JFrame  {
 
 /**
  * Calculates the brightness on basis of the RGB colors.
- *
- * @param c     color from which the brightness shall be calculated
+ * 
+ * @param c     color from which the brightness shall be calculated 
  * @return      gives back the brightness between 0(dark) and 255(bright)
  */
 private static int getBrightness(Color c){
@@ -55,11 +47,11 @@ private static int getBrightness(Color c){
               c.getBlue()   * c.getBlue()   * .068);
   }
 
-
+  
 
 /**
  * Checks if there is a shadow partly darkening the image.
- *
+ * 
  * Method checks for the gradient difference on the edges.
  * <p>
  * It is only reliable if the input image has only the barcode
@@ -67,7 +59,7 @@ private static int getBrightness(Color c){
  * surroundings will produce a different gradient.
  * <p>
  * Image has to be 20x20 at least or a ArrayIndexOutOfBoundsException is thrown.
- *
+ * 
  * @param biShade       The image to inspect.
  * @param iExactness    Describes the number of pixels to check on every edge ( 1 <= iExactness <= Minimum(ImageWidth, ImageHeight) )
  * @return              True if a shadow was found, false if not.
@@ -78,15 +70,15 @@ public Boolean hasShade(BufferedImage biShade, int iExactness){
       int iWidth = biShade.getWidth();
       int iHeight = biShade.getHeight();
       if ( (iWidth<20) || (iHeight<20) ) throw new IllegalArgumentException( "Image must be at least 20x20 pixel big." );
-
+      
       //check around the barcode with iWidthPart(vertical) or iHeightPart(horizontal) away from the limits of the image
       int iWidthPart = (int)(iWidth/(float)iExactness);
       int iHeightPart = (int)(iHeight/(float)iExactness);
-
+      
       //first line is upper horizontal line in image, second is lower horizontal line
       //third is left vertical line, fourth is right vertical line
       int[] iBrightnessGrid = new int[iExactness*4];
-
+      
       //check out the brightness of pixels in the area around the barcode
       for (int i = 0; i < iExactness; i++){
           iBrightnessGrid[i] = getBrightness(new Color(
@@ -98,7 +90,7 @@ public Boolean hasShade(BufferedImage biShade, int iExactness){
           iBrightnessGrid[i+(iExactness*3)] = getBrightness(new Color(
                   biShade.getRGB( (iWidth-(int)(iWidth/20.0f)), (int)((i+0.5f)*iHeightPart))  ));
       }
-
+      
       //calculate the maximum brightness difference of all pixels
       int iMin = 255, iMax = 0, iDifference = 0;
       for (int i = 0; i < (iExactness*4); i++){
@@ -106,7 +98,7 @@ public Boolean hasShade(BufferedImage biShade, int iExactness){
           if (iMax < iBrightnessGrid[i]) iMax = iBrightnessGrid[i];
       }
       iDifference = iMax - iMin;
-
+      
       //if the brightness difference is bigger than 100 there is (most likely) a real/problematic shade
       if (iDifference > 100){
           return true;
@@ -115,18 +107,18 @@ public Boolean hasShade(BufferedImage biShade, int iExactness){
       }
   }
 
-
+  
 
 
 /**
  * Checks how blurry an image is.
- *
+ * 
  * Uses a ImageJ plug-in for the calculation of the Mexican-Hat-Filter
  * /Laplacian-of-Gaussian-Filter and then simply
  * takes the maximum brightness from all pixels.
  * <p>
  * As a image gets more blurry a higher number is returned.
- *
+ * 
  * @param biBlurry      The image to inspect.
  * @return              How blurry is the image as an Integer(higher is more blurry).
  */
@@ -139,36 +131,36 @@ public int isBlurry(BufferedImage biBlurry){
 
     //calculate LoG filter
     Mexican_Hat_Filter mhfNew = new Mexican_Hat_Filter();
-    mhfNew.run(iprNew);
+    mhfNew.run((FloatProcessor)iprNew);
     int[] iPixels = new int[iWidth*iHeight];
     iprNew.getBufferedImage().getRGB(0, 0, iWidth, iHeight, iPixels, 0, iWidth);
-
+    
     //look for brightest pixel
     int iBright = 0, iMaxBright = 0;
     for(int i = 0; i < (iWidth*iHeight); i++){
         iBright = getBrightness(new Color(iPixels[0]));
         if (iBright > iMaxBright) iMaxBright = iBright;
     }
-    //System.out.println(iMaxBright);
-
+    //System.out.println(iMaxBright);    
+    
     return iMaxBright;
   }
 
-
+  
 
 
 /**
  * Checks how dark an image is.
- *
+ * 
  * Uses ImageJ to get the histogram and calculates the average brightness of all pixels.
- *
+ * 
  * @param biDark        The image to inspect.
  * @return              How dark is the image as an Integer(smaller is darker).
  */
 public int isDark(BufferedImage biDark){
     int iWidth = biDark.getWidth();
     int iHeight = biDark.getHeight();
-
+    
     //get histogram
     ImagePlus iplNew = new ImagePlus("NewImagePlus", biDark);
     ImageProcessor iprNew = iplNew.getProcessor();
@@ -184,15 +176,15 @@ public int isDark(BufferedImage biDark){
     return iHistoAverage;
   }
 
-
+  
 /**
  * Checks how much the barcode in the image is rotated.
- *
+ * 
  * Checks for a big brightness difference in scanlines from the left edge.
  * Tries to find the longest line of darker pixels and calculates the angle to the y-axis.
  * <p>
  * The image needs to be at least 30 pixel high.
- *
+ * 
  * @param biRotate      The image to inspect.
  * @return              Angle of rotation.
  */
@@ -207,19 +199,19 @@ public int isRotated(BufferedImage biRotate){
     int[] iPixelsGrid = new int[iWidth*iHeight];
     biRotate.getRGB(0, 0, iWidth, iHeight, iPixels, 0, iWidth);
     iPixelsGrid = iPixels;
-
+    
     int iBrightNow = 0, iBrightLast = 0; // actual pixel's brightness and last pixel's brightness
-    int iLineGrid = iHeight/30; // distance between lines to check
+    int iLineGrid = (int)(iHeight/30); // distance between lines to check
     int iColumnGrid = 3; // Pixel jump in a line
     int iRun = 0; // Running variable
-
+    
     // create array for the first pixel in every line who is much darker
-    int[] iLineCoordinates = new int[iHeight/iLineGrid];
+    int[] iLineCoordinates = new int[(int)(iHeight/iLineGrid)];
     for (int i = 0; i < iLineCoordinates.length; i++){
         iLineCoordinates[i] = iWidth+1;
     }
-
-
+        
+    
     //check the gradient for every line
     for (int j = iLineGrid; j < (iHeight-iLineGrid); j+=iLineGrid){
             //check pixels in one line
@@ -228,35 +220,35 @@ public int isRotated(BufferedImage biRotate){
                 iRun = iColumnGrid-k;
                 iBrightNow = getBrightness(new Color(iPixels[iRun+(j*iWidth)]));
                 iBrightLast = iBrightNow;
-
+            
                 // if color difference to big, stop
                 while ( (iBrightNow+30 > (iBrightLast)) && (iRun < (iWidth-iColumnGrid)) ){
-                    iRun += iColumnGrid;
+                    iRun += iColumnGrid; 
                     iBrightLast = iBrightNow;
                     iBrightNow = getBrightness(new Color(iPixels[iRun+(j*iWidth)]));
                 }
                 // is the actual last Point more left than the last one from that line
-                if ( (iLineCoordinates[j/iLineGrid] > iRun) )
-                    iLineCoordinates[j/iLineGrid] = iRun;
+                if ( (iLineCoordinates[(int)(j/iLineGrid)] > iRun) ) 
+                    iLineCoordinates[(int)(j/iLineGrid)] = iRun;
             }
     }
 
-
+        
     // calculate start and end point of one edge
     int[] iPointGroup = new int[iLineCoordinates.length];
     int iGroupNumber = 0;
     int iGroupMembers = 0, iBiggestGroup = 0, iMaxMembers = 0;
     int iSafetyMargin = 20; // if image is blurry the line could be not exact straight and this sets a number of pixels around to still accept the line
     int iPredictedX = 0, iLastSlope = 0, iLastN = 0;
-
+    
     // first point
     iPointGroup[0] = iGroupNumber;
     iBiggestGroup = iGroupNumber;
     iGroupMembers = 1;
-    for (int i = 1; i < (iHeight/iLineGrid); i++){
+    for (int i = 1; i < ((int)(iHeight/iLineGrid)); i++){
         // calculations use a 90 degree rotated image for y = mx+n
         // if last line was in the other direction as the actual points direct
-        iPredictedX = i * iLastSlope + iLastN;
+        iPredictedX = i * iLastSlope + iLastN; 
         if ( (iLineCoordinates[i] < (iPredictedX - iSafetyMargin) ) ||
              (iLineCoordinates[i] > (iPredictedX + iSafetyMargin) ) ||
              (iLineCoordinates[i] > (iHeight-10)) ){
@@ -268,18 +260,18 @@ public int isRotated(BufferedImage biRotate){
             iGroupMembers = 0;
         }
         iPointGroup[i] = iGroupNumber;
-        iGroupMembers++;
-        iLastSlope = (iLineCoordinates[i] - iLineCoordinates[i-1]) / iLineGrid;
+        iGroupMembers++;        
+        iLastSlope = (int)((iLineCoordinates[i] - iLineCoordinates[i-1]) / iLineGrid);
         iLastN = (iLineCoordinates[i-1]) - (iLastSlope * (i-1)*iLineGrid);
     }
-
+    
     // check out first an last points of the biggest group
     int iEdgeStart = 0;
     int iEdgeEnd = 0;
     int iAngle = 0;
     int iHelp = 0;
     iRun = 0;
-
+    
     while ( (iPointGroup[iRun] != iBiggestGroup) && (iRun < iPointGroup.length) ) {
         iRun++;
     }
@@ -289,12 +281,12 @@ public int isRotated(BufferedImage biRotate){
     }
     iEdgeEnd = iRun;
     //take 2 points more in the middle to make sure they are on the edge
-    iHelp = (iEdgeEnd-iEdgeStart)/3;
+    iHelp = (int)((iEdgeEnd-iEdgeStart)/3);
     iEdgeStart = iEdgeStart + iHelp;
     iEdgeEnd = iEdgeEnd - iHelp;
     if (iEdgeStart == iEdgeEnd) iEdgeEnd++;
-
-
+    
+    
     // calculate angle with pythagoras and trigonometry
     double a,b,c;
     a = (iEdgeEnd * iLineGrid) - (iEdgeStart * iLineGrid);
@@ -302,7 +294,7 @@ public int isRotated(BufferedImage biRotate){
     c = Math.sqrt((Math.pow(a, 2) + Math.pow(b, 2)));
     iAngle = (int) Math.toDegrees(Math.asin(b/c));
     if ((iLineCoordinates[iEdgeStart] - iLineCoordinates[iEdgeEnd]) < 0) iAngle = - iAngle;
-
+        
     biRotate.setRGB(0, 0, iWidth, iHeight, iPixelsGrid, 0, iWidth);
 
     return iAngle;
@@ -310,81 +302,80 @@ public int isRotated(BufferedImage biRotate){
 
 
 
-
+  
 /**
  * Checks for the angle of a possible slope.
- *
+ * 
  * Not yet implmented.
- *
+ * 
  * @param biSlope       The image to inspect.
- * @return              Angle of slope.
+ * @return              Angle of slope. 
  */
 public Integer isSlope(BufferedImage biSlope){
 
       return 0;
   }
 
-
+  
 
 
 /**
  * Blurs a image with a 5x5-Gaussian-Filter.
- *
+ * 
  * Convolves the image with a normalized filter matrix with gaussian values.
- *
+ * 
  * @param biBlur        The image to blur.
  * @return              The blurred image.
  */
 public BufferedImage blur_gaussian(BufferedImage biBlur){
-      //normalized Gauss filter matrix
-      float data[] = {
-              0.0000f,  0.0182f,  0.0364f,  0.0182f,  0.0000f,
-              0.0182f,  0.0545f,  0.0909f,  0.0545f,  0.0182f,
-              0.0364f,  0.0909f,  0.1636f,  0.0909f,  0.0364f,
-              0.0182f,  0.0545f,  0.0909f,  0.0545f,  0.0182f,
-              0.0000f,  0.0182f,  0.0364f,  0.0182f,  0.0000f };
-
+    //normalized Gauss filter matrix
+    float data[] = { 
+            0.0000f,  0.0182f,  0.0364f,  0.0182f,  0.0000f,
+            0.0182f,  0.0545f,  0.0909f,  0.0545f,  0.0182f,
+            0.0364f,  0.0909f,  0.1636f,  0.0909f,  0.0364f,
+            0.0182f,  0.0545f,  0.0909f,  0.0545f,  0.0182f,
+            0.0000f,  0.0182f,  0.0364f,  0.0182f,  0.0000f };
       //create filter with matrix
       Kernel kernel = new Kernel(5, 5, data);
       ConvolveOp convolve = new ConvolveOp(kernel, ConvolveOp.EDGE_NO_OP, null);
-
+            
       //use filter on original image to create new blurred image
-      BufferedImage biResult = new BufferedImage(biBlur.getWidth(), biBlur.getHeight(), BufferedImage.TYPE_INT_RGB);
+      BufferedImage biResult = new BufferedImage(biBlur.getWidth(), biBlur.getHeight(), BufferedImage.TYPE_INT_RGB); 
       convolve.filter(biBlur, biResult);
       return biResult;
   }
-
+  
 
 
 
 /**
 * Blurs a image with a Mean-Filter.
-*
+* 
 * Uses the Median-Filter from ImageJ
-*
+* 
 * @param biBlur         The image to blur.
 * @return               The blurred image.
 */
 public BufferedImage blur_mean(BufferedImage biBlur){
-
+   
     ImagePlus iplNew = new ImagePlus("NewImagePlus", biBlur);
     ImageProcessor iprNew = iplNew.getProcessor().duplicate();
     iprNew.medianFilter();
     return iprNew.getBufferedImage();
 }
 
-
+  
 
 
 /**
  * Brightens up a image with a linear filter.
- *
+ * 
  * With the linear filter everything in the image is brightened up evenly.
  * <p>
  * The normal image has a value of fBrighness = 1.0.
  * Everything above brightens the image, everything under it darkens it.
  * The most useful interval is between 0.0 and 5.0 .
- *
+ * 
  * @param biBright      The image to blur.
  * @param fBrightness   Brightening/Darkening Factor.
  * @return              The brightened/darkened image.
@@ -392,27 +383,27 @@ public BufferedImage blur_mean(BufferedImage biBlur){
 public BufferedImage brighten_linear(BufferedImage biBright, float fBrightness){
       int iWidth = biBright.getWidth();
       int iHeight = biBright.getHeight();
-
+      
       BufferedImage biResult = new BufferedImage(iWidth, iHeight, BufferedImage.TYPE_INT_RGB);
       RescaleOp rescaleOp = new RescaleOp(fBrightness, 15, null);
       rescaleOp.filter(biBright, biResult);
-
+      
       return biResult;
   }
 
-
+  
 
 
 /**
  * Brightens up a image with a quadratic filter.
- *
+ * 
  * Brightens every pixel dependent on how dark they are (dark spots become bright faster).
  * <p>
  * The old color value is set to the new 'brighter' one.
  * ( colorNew = (colorOld/255)*(colorOld/255)* 255 )
  * <p>
  * Realistic brightening process.
- *
+ * 
  * @param biBright      The image to blur.
  * @return              The brightened/darkened image.
  */
@@ -420,26 +411,26 @@ public BufferedImage brighten_quadratic(BufferedImage biBright){
     //assign new values to old ones
     short[] rootBrighten = new short[256];
     for (int i = 0; i < 256; i++)
-        rootBrighten[i] = (short)(Math.sqrt(i/255.0) * 255.0);
-
+        rootBrighten[i] = (short)(Math.sqrt((double)i/255.0) * 255.0);
+    
     //set lookup table for exchange
     LookupTable table = new ShortLookupTable(0, rootBrighten);
     LookupOp invertOp = new LookupOp(table, null);
-
+    
     //exchanges values from pixel colors with LookupTable counterpart
     BufferedImage biResult = new BufferedImage(biBright.getWidth(), biBright.getHeight(), BufferedImage.TYPE_INT_RGB);
     invertOp.filter(biBright, biResult);
     return biResult;
   }
-
+   
 
 
 
 /**
  * Cuts out a partial image of the whole.
- *
+ * 
  * Copies a sub-image to a new image and returns it.
- *
+ * 
  * @param biCut         The image to take a cut from.
  * @param iStartX       x variable of the starting point.
  * @param iStartY       y variable of the starting point.
@@ -453,39 +444,39 @@ public BufferedImage cutoffRectangle(BufferedImage biCut, int iStartX, int iStar
     ){
         throw new IllegalArgumentException( "Sub-image goes out of the image." );
     }
-
-
+    
+    
     return biCut.getSubimage(iStartX, iStartY, iWidthCut, iHeightCut);
   }
-
-
+  
+  
 
 
 /**
  * Shows Edges in a image.
- *
+ * 
  * Uses the edge detection of ImageJ.
- *
+ * 
  * @param biEdge        The image to show the edges on.
  * @return              The image of the edges.
  */
 public BufferedImage edgeDetect(BufferedImage biEdge){
-
+    
       ImagePlus iplNew = new ImagePlus("NewImagePlus", biEdge);
       ImageProcessor iprNew = iplNew.getProcessor().duplicate().convertToFloat();
       iprNew.findEdges();
 
       return iprNew.getBufferedImage();
   }
-
-
+  
+  
 
 
 /**
  * Searches for the shadows in a image and takes them out.
- *
+ * 
  * Uses the BackgroundSubtracter from ImageJ.
- *
+ * 
  * @param biShade       The image to find the shadows in.
  * @return              The image without the shadows.
  */
@@ -495,20 +486,20 @@ public BufferedImage findShades(BufferedImage biShade){
       int iHeight = biShade.getHeight();
       //check every (iPixelDistance*iPixelDistance) border pixel and calculate big changes to find shade
       //maybe improvement over case-by-case-analysis over 3 pixels
-//
+//      
 //      //get pixels from image
 //      int[] iPixels = new int[iWidth*iHeight];
 //      int[] iPixelsGrid = new int[iWidth*iHeight];
 //      biShade.getRGB(0, 0, iWidth, iHeight, iPixels, 0, iWidth);
 //      iPixelsGrid = iPixels;
-//
+//      
 //      float fAverage = 0.0f;
 //      int iMax = 0, iMin = 255;
 //      int iBrightNow = 0, iBrightLast = 0;
 //      int iGrid = iPixelDistance;
 //      //only use 10% from every site
 //      int iMargin = (int)Math.round(iWidth*0.1f);
-//
+//      
 //      //check the gradient for every line
 //      for (int j = iGrid; j < iMargin; j+=iGrid){
 //          //check pixels in one line
@@ -517,18 +508,18 @@ public BufferedImage findShades(BufferedImage biShade){
 //              //get brightness of current pixel and check if its the first
 //              iBrightNow = getBrightness(new Color(iPixels[j+(i*iWidth)]));
 //              if (iBrightLast == 0) iBrightLast = iBrightNow;
-//
+//              
 //              //color pixels red for not much color difference, blue for a bit and light blue for much
 //              if (iBrightNow+30 < iBrightLast) iBrightNow = iBrightLast;
 //              if ((iBrightNow+10 < (iBrightLast)) && (iBrightNow+30 > (iBrightLast))) iPixelsGrid[j+(i*iWidth)] = 0xff0000ff;
 //              else if (iBrightNow+30 < (iBrightLast)) iPixelsGrid[j+(i*iWidth)] = 0xff00ffff;
 //              else iPixelsGrid[j+(i*iWidth)] = 0xffff0000;
-//
+//              
 //              //calculate average and minimum/maximum
 //              fAverage += iBrightNow;
 //              if (iBrightNow < iMin) iMin = iBrightNow;
 //              else if (iBrightNow > iMax) iMax = iBrightNow;
-//
+//              
 //              iBrightLast = iBrightNow;
 //          }}
 //      iBrightNow = 0;
@@ -540,45 +531,45 @@ public BufferedImage findShades(BufferedImage biShade){
 //      //frame the shade
       BufferedImage biResult = new BufferedImage(iWidth, iHeight, BufferedImage.TYPE_INT_RGB);
 
-
+      
 
       ImagePlus iplNew = new ImagePlus("NewImagePlus", biShade);
       ImageProcessor iprNew = iplNew.getProcessor();
       //iprNew.smooth();
-
+            
       BackgroundSubtracter bsNew = new BackgroundSubtracter();
       bsNew.rollingBallBackground(iprNew, 30, false, true, false, false, false);
       //bsNew.run(iprNew);
-
+      
       biResult = iprNew.getBufferedImage();
-
-
-
+      
+      
+      
 //      biResult.setRGB(0, 0, iWidth, iHeight, iPixelsGrid, 0, iWidth);
 
       return biResult;
   }
 
-
+  
 
 
 /**
  * Gives back the histogram of a image.
- *
+ * 
  * ImageJ is used to calculate the histogram.
- *
+ * 
  * @param biHisto       The image to make the histogram from.
  * @return              The image with the histogram at the left edge.
  */
 public BufferedImage giveHistogram(BufferedImage biHisto){
       int iWidth = biHisto.getWidth();
       int iHeight = biHisto.getHeight();
-
+      
       //get histogram
       ImagePlus iplNew = new ImagePlus("NewImagePlus", biHisto);
       ImageProcessor iprNew = iplNew.getProcessor();
       int[] iHistogram = iprNew.getHistogram();
-
+      
       //calculate which brightness has the most pixel
       int iHistoMax = 0;
       for (int k = 0; k < iHistogram.length; k++){
@@ -604,21 +595,21 @@ public BufferedImage giveHistogram(BufferedImage biHisto){
       biResult.setRGB(0, 0, iWidth, iMore, iPixels, 0, iWidth);
       return biResult;
   }
-
-
+  
+  
 
 
 /**
  * Brightens a rectangle constructed from the pPoints.
- *
+ * 
  * (still developed)
  * Takes a part of the image that contains the pPoints
  * and brightens all the pixels within the theoretical rectangle.
  *<p>
- * The number of points is not checked as it should work with any number of points.
+ * The number of points is not checked as it should work with any number of points. 
  * <p>
  * Does not work for concave rectangles or if the points are in one line.
- *
+ * 
  * @param biSplit       The image to brighten partially.
  * @param pPoints       The points of the rectangle.
  * @param brightness    The brightening factor.
@@ -630,7 +621,7 @@ public BufferedImage interpolate(BufferedImage biSplit, Point pPoints[], float b
       int iWidthMax = biSplit.getWidth();
       int iHeightMax = biSplit.getHeight();
       int iNumberP = pPoints.length;
-
+      
       //start point and distances for cut
       int iStartX = iWidthMax;
       int iStartY = iHeightMax;
@@ -638,11 +629,11 @@ public BufferedImage interpolate(BufferedImage biSplit, Point pPoints[], float b
       int iEndY = 0;
       int iWidthCut = 0;
       int iHeightCut = 0;
-
+      
       //set the points in a vertical order
       List<Integer> qOrderedPointsY = new ArrayList<Integer>();
 
-
+      
       //are all points within the boundaries and what is the minimum x/y + how long is the cut
       for (int i = 0; i < iNumberP; i++){
           if ((pPoints[i].x < 0) | (pPoints[i].y < 0) | (pPoints[i].x > biSplit.getWidth()) | (pPoints[i].y > biSplit.getHeight())){
@@ -659,44 +650,44 @@ public BufferedImage interpolate(BufferedImage biSplit, Point pPoints[], float b
           while ((iListSize > iCurrent) && (pPoints[qOrderedPointsY.get(iCurrent)].y <= pPoints[i].y)){
               iCurrent++;
           }
-          qOrderedPointsY.add(iCurrent, i);
+          qOrderedPointsY.add(iCurrent, i);          
       }
       iWidthCut = iEndX-iStartX;
       iHeightCut = iEndY-iStartY;
 
-
+     
       //take pixels from old BufferedImage(with shade)
       int[] iPixelsSplitOriginal = new int[iWidthCut*iHeightCut];
       biSplit.getRGB(iStartX, iStartY, iWidthCut, iHeightCut, iPixelsSplitOriginal, 0, iWidthCut);
-
+            
       //get sub-image of old BufferedImage in new one and brighten it up, than take pixels
       int[] iPixelsSplitBrighter = new int[iWidthCut*iHeightCut];
       BufferedImage biBright = new BufferedImage(iWidthCut, iHeightCut, BufferedImage.TYPE_INT_RGB);
       biBright = biSplit.getSubimage(iStartX, iStartY, iWidthCut, iHeightCut);
       biBright = brighten_linear(biBright, brightness);
       biBright.getRGB(0, 0, iWidthCut, iHeightCut, iPixelsSplitBrighter, 0, iWidthCut);
-
+      
       //only works for quadrangles where within the vertical order the new edge changes sites every time
       //set first edge in order of the vertical points
       float m[] = new float[iNumberP], n[] = new float[iNumberP];
       int iNow = qOrderedPointsY.get(0);
       int iNext = qOrderedPointsY.get(1);
       m[0] = (float)(pPoints[iNext].y - pPoints[iNow].y) / (float)(pPoints[iNext].x - pPoints[iNow].x);
-      n[0] = pPoints[iNext].y - (pPoints[iNext].x * m[0]);
+      n[0] = (float)pPoints[iNext].y - ((float)pPoints[iNext].x * m[0]);
       //set second to next to last edges
       for (int i = 0; i < iNumberP-2; i++){
           iNow = qOrderedPointsY.get(i);
           iNext = qOrderedPointsY.get(i+2);
           m[i+1] = (float)(pPoints[iNext].y - pPoints[iNow].y) / (float)(pPoints[iNext].x - pPoints[iNow].x);
-          n[i+1] = pPoints[iNext].y - (pPoints[iNext].x * m[i+1]);
+          n[i+1] = (float)pPoints[iNext].y - ((float)pPoints[iNext].x * m[i+1]);
      }
       //set last edge
       iNow = qOrderedPointsY.get(iNumberP-2);
       iNext = qOrderedPointsY.get(iNumberP-1);
       m[iNumberP-1] = (float)(pPoints[iNext].y - pPoints[iNow].y) / (float)(pPoints[iNext].x - pPoints[iNow].x);
-      n[iNumberP-1] = pPoints[iNext].y - (pPoints[iNext].x * m[iNumberP-1]);
+      n[iNumberP-1] = (float)pPoints[iNext].y - ((float)pPoints[iNext].x * m[iNumberP-1]);
 
-
+      
       int iX1 = 0, iX2 = 0;
       iNow = 0;
       iNext = 1;
@@ -706,8 +697,8 @@ public BufferedImage interpolate(BufferedImage biSplit, Point pPoints[], float b
           iNext = qOrderedPointsY.get(k+1);
           System.out.print( iNow );System.out.print( ", " );System.out.print( iNext );System.out.println( ", " );
           for (int i = pPoints[iNow].y; i < pPoints[iNext].y; i++){
-              iX1 = Math.round((i - n[k])/m[k]) - iStartX;
-              iX2 = Math.round((i - n[k+1])/m[k+1]) - iStartX;
+              iX1 = (int)Math.round(((float)i - n[k])/m[k]) - iStartX;
+              iX2 = (int)Math.round(((float)i - n[k+1])/m[k+1]) - iStartX;
               System.out.print( iX1 );System.out.print( ", " );System.out.print( iX2 );System.out.println( ", " );
               //if sites are wrong nothing would be copied
               //could be better with two sets of edges for each site
@@ -722,7 +713,7 @@ public BufferedImage interpolate(BufferedImage biSplit, Point pPoints[], float b
               }
           }
       }
-
+      
       //take new part and put it in old BufferedImage
       //biBright.getRGB(0, 0, iWidthCut, iHeightCut, iPixelsSplitOriginal, 0, iWidthCut);
       biSplit.setRGB(iStartX, iStartY, iWidthCut, iHeightCut, iPixelsSplitOriginal, 0, iWidthCut);
@@ -731,25 +722,25 @@ public BufferedImage interpolate(BufferedImage biSplit, Point pPoints[], float b
 
 
 
-
+  
 /**
  * Replaces the image with it's negative.
- *
+ * 
  * Replaces every pixels colors with their negatives ( colorNew = 255 - colorOld ).
- *
+ * 
  * @param biNegativ     The image to filter.
  * @return              The negative image of the input image.
  */
 public BufferedImage negativ(BufferedImage biNegativ){
       //calculate opposite color
       short[] invert = new short[256];
-      for (int i = 0; i < 256; i++)
+      for (int i = 0; i < 256; i++) 
           invert[i] = (short)(255 - i);
-
+      
       //create LookupTable for the filter operation
       LookupTable table = new ShortLookupTable(0, invert);
       LookupOp invertOp = new LookupOp(table, null);
-
+      
       //make new BufferedImage and replace old ones with new ones
       BufferedImage biResult = new BufferedImage(biNegativ.getWidth(), biNegativ.getHeight(), BufferedImage.TYPE_INT_RGB);
       invertOp.filter(biNegativ, biResult);
@@ -758,35 +749,35 @@ public BufferedImage negativ(BufferedImage biNegativ){
 
 
 
-
+  
 /**
  * Rotates the image clockwise for iAngle degrees.
- *
+ * 
  * The image is rotated with a affine transformation and
  * the frame is adjusted afterwards.
  * <p>
  * The image gets a bit blurry with every turn.
- *
+ * 
  * @param biRotate      The image to rotate.
  * @param iAngle        The rotation angle.
  * @return              The rotated image of the input image.
  */
-public BufferedImage rotate(BufferedImage biRotate, int iAngle){
+public BufferedImage rotate(BufferedImage biRotate, int iAngle){  
 //improvement: the image frame is not calculated efficiently
-      int iWidth = biRotate.getWidth();
+      int iWidth = biRotate.getWidth();  
       int iHeight = biRotate.getHeight();
-      int iCenterX = iWidth/2;
-      int iCenterY = iHeight/2;
+      int iCenterX = (int) iWidth/2;
+      int iCenterY = (int) iHeight/2;
       int iNewSide = Math.round( (float)(Math.sqrt( (Math.pow(iWidth, 2) + Math.pow(iHeight, 2)) )) );
 //      System.out.print(iWidth);System.out.print(", ");System.out.print(iHeight);System.out.print(", ");System.out.println(iNewSide);
       double dRadians = iAngle*Math.PI/180;
-
+            
       //rotates with affine transformation back to the center of image
       AffineTransform transform = new AffineTransform();
-      transform.translate(iNewSide/2, iNewSide/2);
+      transform.translate((int)(iNewSide/2), (int)(iNewSide/2));
       transform.rotate(dRadians);
       transform.translate(-iCenterX, -iCenterY);
-
+            
       AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
       BufferedImage biResult = new BufferedImage(iNewSide, iNewSide, BufferedImage.TYPE_INT_RGB);
       op.filter(biRotate, biResult);
@@ -812,18 +803,18 @@ public BufferedImage rotate(BufferedImage biRotate, int iAngle){
           iCount++;
       }
      biResult = cutoffRectangle(biResult, iMinX, iMinY, (iMaxX-iMinX), (iMaxY-iMinY));
-
+      
      return biResult;
   }
-
-
+  
+  
 
 
 /**
  * Sharpens an image.
- *
+ * 
  * Uses the Unsharp-Mask-Filter from ImageJ.
- *
+ * 
  * @param biSharp       The image to sharpen.
  * @return              The sharpened image.
  */
@@ -832,14 +823,82 @@ public BufferedImage sharpen(BufferedImage biSharp){
       ImagePlus iplNew = new ImagePlus("New", biSharp);
       ImageProcessor iprNew = iplNew.getProcessor().duplicate().convertToFloat();
       iprNew.snapshot();
-
+      
       //create UnsharpMask and use it with the ImageProcessor to sharpen its image
       UnsharpMask usmNew = new UnsharpMask();
       double dGaussSigma = 2.0;
       float fAngle = 0.6f;
-      usmNew.sharpenFloat((FloatProcessor) iprNew, dGaussSigma, fAngle);
-
+      usmNew.sharpenFloat((FloatProcessor) iprNew, dGaussSigma, fAngle); 
+      
       return iprNew.getBufferedImage();
   }
 
+
+
+
+/**
+ * Sharpens an image.
+ * 
+ * Uses the Unsharp-Mask-Filter with a 5x5 Gaussian.
+ * 
+ * @param biUnsharp     The image to sharpen.
+ * @return              The sharpened image.
+ */
+public BufferedImage unsharpMask(BufferedImage biUnsharp){
+      int iWidth = biUnsharp.getWidth();
+      int iHeight = biUnsharp.getHeight();
+      float data[] = { 
+            0.0625f,  0.1250f,  0.0625f,
+            0.1250f,  0.2500f,  0.1250f,
+            0.0625f,  0.1250f,  0.0625f };
+      //create filter with matrix
+      Kernel kernel = new Kernel(3, 3, data);
+      ConvolveOp convolve = new ConvolveOp(kernel, ConvolveOp.EDGE_NO_OP, null);
+            
+      //use filter on original image to create new blurred image
+      BufferedImage biResult = new BufferedImage(iWidth, iHeight, BufferedImage.TYPE_INT_RGB); 
+      convolve.filter(biUnsharp, biResult);
+      
+      int[] iPixelsOriginal = new int[iWidth*iHeight];
+      biUnsharp.getRGB(0, 0, iWidth, iHeight, iPixelsOriginal, 0, iWidth);
+      int[] iPixelsUnsharp = new int[iWidth*iHeight];
+      biResult.getRGB(0, 0, iWidth, iHeight, iPixelsUnsharp, 0, iWidth);
+      
+      int iOrgRed, iOrgGreen, iOrgBlue, iBlurredRed, iBlurredGreen, iBlurredBlue, iOrigPixel, iBlurredPixel;
+      int iAmount = 3;
+      float fThreshold = 0.6f;
+      for (int i = 0; i < (iHeight-1); i++){
+          for (int j = 0; j < (iWidth-1); j++){
+              iOrigPixel = iPixelsOriginal[((i*iWidth)+j)];
+              iBlurredPixel = iPixelsUnsharp[((i*iWidth)+j)];
+              
+              //get colorvalues
+              iOrgRed = ((iOrigPixel >> 16) & 0xff);
+              iOrgGreen = ((iOrigPixel >> 8 ) & 0xff);
+              iOrgBlue = (iOrigPixel & 0xff);
+              iBlurredRed = ((iBlurredPixel >> 16) & 0xff);
+              iBlurredGreen = ((iBlurredPixel >> 8 ) & 0xff);
+              iBlurredBlue = (iBlurredPixel & 0xff);
+              
+              //if color difference big enough than use unsharp mask filtering
+              if (Math.abs(iOrgRed - iBlurredRed) >= fThreshold) {
+                  iOrgRed = (int) (iAmount * (iOrgRed - iBlurredRed) + iOrgRed);
+                  iOrgRed = iOrgRed > 255 ? 255 : iOrgRed < 0 ? 0 : iOrgRed;
+              }
+              if (Math.abs(iOrgGreen - iBlurredGreen) >= fThreshold) {
+                  iOrgGreen = (int) (iAmount * (iOrgGreen - iBlurredGreen) + iOrgGreen);
+                  iOrgGreen = iOrgGreen > 255 ? 255 : iOrgGreen < 0 ? 0 : iOrgGreen;
+              }
+              if (Math.abs(iOrgBlue - iBlurredBlue) >= fThreshold) {
+                  iOrgBlue = (int) (iAmount * (iOrgBlue - iBlurredBlue) + iOrgBlue);
+                  iOrgBlue = iOrgBlue > 255 ? 255 : iOrgBlue < 0 ? 0 : iOrgBlue;
+              }
+              iPixelsUnsharp[((i*iWidth)+j)] = (0xFF000000 | (iOrgRed << 16) | (iOrgGreen << 8 ) | iOrgBlue);
+          }
+      }
+      
+      biResult.setRGB(0, 0, iWidth, iHeight, iPixelsUnsharp, 0, iWidth);
+     
+      return biResult;
+}
 }
