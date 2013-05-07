@@ -6,23 +6,28 @@ Eine konkrete Bildquelle kapselt dazu die Informationen die zur Erzeugung einer 
 
 \subsection*{Konkrete Implementierungen}
 Insgesamt existieren 6 Realisierungen von \code{Source} die sich im Laufe der Entwicklung als sinnvoll erwiesen haben.
+Die Klasse \code{SourceFactory} stellt Factory-Methoden zu Verfügung um die hier gelisteten Implementierungen zu erzeugen.
 
 {
 \setlength{\leftmargini}{1.5em}
 \setlength{\labelsep}{\textwidth}
 \begin{description}
   \item[\code{BufferedImageSource}]
-    verwendet eine Liste von \code{BufferedImage}
+    Verwendet eine geordnete Sammlung von \code{BufferedImage}-Instanzen.
+    Diese Klasse ist sinnvoll wenn die Bilder bereits von einer Anwendung geladen sind.
   \item[\code{ImageCollectionSource}]
-    verwendet eine Liste von URLs um Bilder zu laden
+    Verwendet eine Liste von URLs um Bilder lokal oder aus einem Netzwerk (z.B. über HTTP) zu laden.
   \item[\code{ImageSequenceSource}]
-    verwendet eine URL um durchnummerierte Bilder zu laden
+    Verwendet eine URL um durchnummerierte Bilder (ebenfalls lokal oder aus einem Netzwerk) zu laden.
+    Ein Anwendungsfall ist z.B. Bilder die zuvor bereits aus einem Video extrahiert wurden und daher durchnummeriert vorliegen.
   \item[\code{ImageSnapshotServiceSource}]
-    verwendet eine URL für einen Webservice, der bei jedem Request ein neues Bild liefert (z.B. eine Webcam)
+    Verwendet eine URL für einen Webservice, der bei jedem Request ein neues Bild liefert (z.B. eine Netzwerkwebcam).
   \item[\code{VideoDeviceSource}]
-    verwendet, wie auch OpenCV, eine Zahl beginnend bei 0, welche die zu verwendente Kamera identifiziert
+    Nutzt eine Videogerät, welches über eine Zahl, beginnend bei 0, identifiziert wird.
+    Zum Lesen der Videodaten dient JavaCV\footnote{\url{http://code.google.com/p/javacv/}} um auf die C/C++-API von OpenCV\footnote{\url{http://opencv.org}} zugreifen zu können.
   \item[\code{VideoFileSource}]
-    verwendet eine URL um ein Video zu laden
+    Verwendet eine URL zum laden eines Videos, welches lokal aber auch in einem Netzwerk (Zugriff über HTTP) vorliegen kann.
+    Nutzt ebenfalls JavaCV zum Lesen der Daten.
 \end{description}
 }
 
