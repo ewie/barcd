@@ -40,6 +40,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{ifthen}
 \usepackage[utf8]{inputenc}
 \usepackage{mdwlist}
 \usepackage[numbers]{natbib}
@@ -125,13 +126,16 @@
 \newcommand{\code}[1]{\mbox{\texttt{#1}}}
 
 \newlength{\elasticfigurewidth}
-\newcommand{\elasticfigure}[2]{%
+\newcommand{\elasticfigure}[3][]{%
   \begin{figure}[H]%
     \centering%
-    \settowidth{\elasticfigurewidth}{\includegraphics{#1}}%
+    \settowidth{\elasticfigurewidth}{\includegraphics{#2}}%
     \setlength{\elasticfigurewidth}{\minof{\elasticfigurewidth}{\textwidth}}%
-    \includegraphics[width=\elasticfigurewidth]{#1}%
-    \caption{#2}%
+    \includegraphics[width=\elasticfigurewidth]{#2}%
+    \caption{#3}%
+    \ifthenelse{\equal{#1}{}}%
+      {}%
+      {\label{#1}}%
   \end{figure}%
 }
 
