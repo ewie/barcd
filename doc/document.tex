@@ -125,18 +125,22 @@
 
 \newcommand{\code}[1]{\mbox{\texttt{#1}}}
 
-\newlength{\elasticfigurewidth}
 \newcommand{\elasticfigure}[3][]{%
   \begin{figure}[H]%
     \centering%
-    \settowidth{\elasticfigurewidth}{\includegraphics{#2}}%
-    \setlength{\elasticfigurewidth}{\minof{\elasticfigurewidth}{\textwidth}}%
-    \includegraphics[width=\elasticfigurewidth]{#2}%
+    \elasticgraphic{#2}%
     \caption{#3}%
     \ifthenelse{\equal{#1}{}}%
       {}%
       {\label{#1}}%
   \end{figure}%
+}
+
+\newlength{\elasticgraphicwidth}
+\newcommand{\elasticgraphic}[2][\textwidth]{%
+  \settowidth{\elasticgraphicwidth}{\includegraphics{#2}}%
+  \setlength{\elasticgraphicwidth}{\minof{\elasticgraphicwidth}{#1}}%
+  \includegraphics[width=\elasticgraphicwidth]{#2}%
 }
 
 \newcommand{\unit}[1]{\ensuremath{\,\mathrm{#1}}}

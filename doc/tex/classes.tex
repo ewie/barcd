@@ -5,7 +5,13 @@ Dazu ist nicht jede einzelne Funktion aufgeführt, sondern nur die wichtigsten, 
 Das Diagramm in \autoref{fig:uml0} zeigt die Beziehungen zwischen den zentralen Komponenten der Implementierung, auf die im Folgenden einzeln eingegangen wird.
 Aus Platzgründen sind die Klassendiagramme nur auf öffentliche sowie geschützte Methoden beschränkt.
 Klassen, die lediglich eine Abhängigkeit darstellen und nicht Bestandteil einer Bibliothek sind, werden nur mit ihrem Namen dargestellt.
-\elasticfigure[fig:uml0]{img/uml/uml.0}{zentrale Komponenten der Implementierung und deren Beziehungen untereinander}
+
+\begin{figure}[H]
+  \centering
+  \elasticgraphic{img/uml/uml.0}
+  \caption[zentrale Komponenten der Implementierung]{zentrale Komponenten der Implementierung und deren Beziehungen untereinander}
+  \label{fig:uml0}
+\end{figure}
 
 \input{tex/classes/job}
 \input{tex/classes/extraction}
