@@ -236,7 +236,6 @@ public class Terminal extends Worker {
          * Create a recordable command with its description set to null.
          *
          * @param name the command's name
-         * @param routine the command's routine
          */
         public Command(String name) {
             this(name, null);
@@ -310,7 +309,7 @@ public class Terminal extends Worker {
                 } catch (IOException ex) {
                     return null;
                 }
-                
+
                 // Handle CR LF and LF CR as a single unit of line break to
                 // avoid empty lines being reported. Return null if the current
                 // character is the last part in CR LF or LF CR.
@@ -321,7 +320,7 @@ public class Terminal extends Worker {
                 }
                 wasCR = cr;
                 wasLF = lf;
-                
+
                 boolean complete = lf || cr;
                 if (!complete) {
                     lineBuffer.append((char) c);
