@@ -14,9 +14,8 @@ Dies ermöglicht es, in Schritt~(1) nicht erfasste, Barcodes mit ins Ergebnis ei
 %
 Zum besseren Verständnis sei im Folgenden der Ablauf in Form eines Pseudocodes gegeben.
 %
-\vspace{1em}
-\hrule
-\vspace{0.5em}
+\begin{algorithm}
+\caption{Extrahieren von Regionen und Barcodes}
 \begin{algorithmic}
 \Require Graustufenbild $I$
 \Ensure Menge $X$ mit Barcode-Region-Paaren
@@ -37,6 +36,5 @@ Zum besseren Verständnis sei im Folgenden der Ablauf in Form eines Pseudocodes 
 \EndFor
 \State\Return $X$
 \end{algorithmic}
-\vspace{0.5em}
-\hrule
-\vspace{1em}
+\end{algorithm}
+
