@@ -3,14 +3,15 @@ Der \code{Extractor} stellt die Implementierung des in \autoref{sec:extraction} 
 Als Eingabe dient eine Instanz von \code{Job}.
 Die Verarbeitung der Bilder erfolgt sequentiell durch wiederholten Aufruf der Methode \code{processNextImage}.
 Dem, mit der Methode \code{setExtractionHandler} gesetzten, \code{ExtractionHandler} werden nach jedem verarbeiteten Bild die erzeugte \code{Extraction}-Instanz sowie das entsprechende Bild übergeben.
-\elasticfigure{img/uml/uml.109}{Klassendiagramm von \code{Extractor}}
-\noindent
+
 Die einzelnen Verarbeitungsschritte des Extractors sind über Interfaces realisiert, wodurch es möglich ist das Verfahren durch alternative Implementierungen anzupassen.
 Das Grauwertbild wird mittels eines \code{Grayscaler}~(Methode \code{setGrayscaler}) bestimmt.
 \code{RegionExtractor}~(Methode \code{setRegionExtractor}) ist für das Auffinden von Regionen zuständig.
 Mit \code{Filter<Region>}~(Methode \code{setRegionFilter}) ist es möglich Regionen nach bestimmten Kriterien~(Größe, etc.) auszuwählen.
 Für jede gewählte Region wird mit einem \code{ImageEnhancer}~(Methode \code{setImageEnhancer}) der entsprechende Bildausschnitt bildtechnisch aufbereitet.
-Abschließend erfolgt unter Verwendung eines \code{BarcodeReader}~(Methode \code{setBarcodeReader}) das Lesen des Barcodes im n Bildausschnitt einer jeden Region sowie im gesamten Bild.
+Abschließend erfolgt unter Verwendung eines \code{BarcodeReader}~(Methode \code{setBarcodeReader}) das Lesen des Barcodes im Bildausschnitt einer jeden Region sowie im gesamten Bild.
+
+\elasticfigure{img/uml/uml.109}{Klassendiagramm von \code{Extractor}}
 
 \input{tex/classes/extractor/grayscaler}
 \input{tex/classes/extractor/regionextractor}

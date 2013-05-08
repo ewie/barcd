@@ -1,6 +1,6 @@
 \section{Klasse \code{Barcode}}
 Die Klasse \code{Barcode} dient der Beschriebung erfolgreich gelesener Barcodes.
-Ein Barcode besteht aus seinem Typ~(\code{getType()}), dem kodierten Text~(\code{getText()}), den Binärdaten~(\code{getBytes()}) sowie mehreren Punkten~(\code{getAnchorPoints()}), die zum Lesen des Barcodes dienten.
+Ein Barcode besteht aus seinem Typ~(Methode \code{getType}), dem kodierten Text~Methode (\code{getText}), den Binärdaten~(Methode \code{getBytes}) sowie mehreren Punkten~(Methode \code{getAnchorPoints}), die zum Lesen des Barcodes dienten.
 Die Punkte können z.B. der Start- und Endpunkt der Scanline für einen eindimensionalen Barcode sein oder die Mittelpunkte der Marker bei einem zweidimensionalen Barcode~(z.B. QR Code).
 
 \elasticfigure{img/uml/uml.101}{Klassendiagramm von \code{Barcode}}

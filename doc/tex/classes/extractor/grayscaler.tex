@@ -3,7 +3,7 @@ Der \code{Grayscaler} berechnen das Grauwertbild eines Bildes.
 Aus Performancegründen setzt die Implementierung \code{DefaultGrayscaler} keines der in \autoref{sec:grayscale} vorgestellten Verfahren um.
 Stattdessen wird das Eingabebild in das, nur einen Farbkanal besitzenden, Ausgabebild gezeichnet\footnote{\href{http://docs.oracle.com/javase/6/docs/api/java/awt/Graphics2D.html\#drawImage(java.awt.image.BufferedImage, java.awt.image.BufferedImageOp, int, int)}{java.awt.Graphics2D\#drawImage()}}.
 
-Eine Messung der Zeit, die zur Konvertierung von mehreren Bildern mit einer Größe von 1920$\times$1080 Pixel (Bildmaterial eines Full-HD-Videos) nötig ist, zeigte, dass eine Implementierung nach \autoref{sec:grayscaling} rund $100\unit{ms}$ pro Bild benötigt.
+Eine Messung der Zeit, die zur Konvertierung von mehreren Bildern mit einer Größe von 1920$\times$1080 Pixel (Bildmaterial eines Full-HD-Videos) nötig ist, zeigte, dass eine Implementierung nach \autoref{sec:grayscale} rund $100\unit{ms}$ pro Bild benötigt.
 Wohingegen die Implementierung des \code{DefaultGrayscaler} mit einer Laufzeit von etwa $0\unit{ms}$ pro Bild nicht messbar war.
 \elasticfigure{img/uml/uml.148}{Klassendiagramm von \code{DefaultGrayscaler}}
 
