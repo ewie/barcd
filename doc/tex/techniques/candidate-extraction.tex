@@ -3,25 +3,25 @@
 \writtenby{\dcauthornameewie}%
 Um maschinell lesbar zu sein, zeichnen sich Barcodes durch einen, im Vergleich zur ihrer Umgebung, hohen Helligkeitskontrast aus.
 Das im Folgenden beschriebene Verfahren macht sich diesen Umstand zu nutze um Bildregionen zu identifizieren, die mit höherer Wahrscheinlichkeit Barcodes enthalten.
-Das Verfahren arbeitet mit einem Graustufenbild \autoref{sec:grayscaling}, das die Helligkeit der Pixel kodiert.
+Das Verfahren arbeitet mit einem Graustufenbild, das die Helligkeit der Pixel kodiert.
 
 \begin{enumerate}[(1)]
 \item \textbf{Kantenbild bestimmen}
 Das Kantenbild wird gemäß \autoref{sec:edge-detection} ermittelt.
-Der \textsc{Roberts}-Operator erweist sich am geeignetsten da er Bildrauschen weniger stark erfasst als z.B. der \textsc{Sobel}-Operator.
+Der \textsc{Roberts}-Operator erweist sich am geeignetsten, da er Bildrauschen weniger stark erfasst als z.B. der \textsc{Sobel}-Operator.
 
 \item \textbf{Kanten verstärken}
 Die Kanten werden mit einem $5\times5$ Strukturelement mittels Dilation verstärkt.
-Dadurch wird erreicht, dass nah beieinander liegende Kanten (wie es bei Strichcodes der Fall ist) eine möglichst geschloßene Fläche bilden.
+Um zu erreichen, dass nah beieinander liegende Kanten~(wie es bei Strichcodes der Fall ist) eine möglichst geschloßene Fläche bilden.
 Hierbei ist die Wahl der Größe des Strukturelements entscheidend.
 Ist es zu klein, bleiben zu große Löcher übrig.
-Ist es zu groß kann es vorkommen, dass Barcodes mit geringem Abstand zueinander zu einer Fläsche verschmelzen (trotz vorhandener Ruhezone).
+Ist es zu groß kann es vorkommen, dass Barcodes mit geringem Abstand zueinander zu einer Fläsche verschmelzen~(trotz vorhandener Ruhezone).
 
 \item \textbf{Segmentierung}
 Die Segmentierung erfolgt mittels Thresholding.
 Als Schwellwert dient der Mittelwert der Helligkeit aller Bildpunkte.
 Die Verwendung des Mittelwertes ist ideal, da sich Kantenpixel durch ihren Gradienten bereits deutlich vom Hintergrund abzeichnen.
-Das Resultat ist ein Binärbild mit Hintergrund in schwarz (0\%) und Bildelementen in weiß (100\%).
+Das Resultat ist ein Binärbild mit Hintergrund in schwarz~(0\%) und Bildelementen in weiß~(100\%).
 
 \item \textbf{Komponenten extrahieren}
 Wie in \autoref{sec:connected-components} beschrieben, werden die zusammenhängenden Komponenten der Bildelemente extrahiert.
@@ -32,19 +32,20 @@ Die extrahierten Komponenten beschreiben bisher nur Bildelemente mit erhöhtem K
 Darunter fallen, neben den erwünschten Barcodes, auch Elemente wie z.B. Schrift und Symbole.
 Um alle potentiellen Barcodes auszuwählen sind alle Komponente, die nicht als Barcode in Frage kommen, herauszufiltern.
 
-Es hat sich gezeigt, dass Regionen, denen Barcodes entsprechen, sich dadurch auszeichnen, dass deren Komponenten deutlich geschloßener sind (d.h. weniger Löcher besitzen) als andere falsch-positive Regionen und deren Flächen besser abdecken.
-Als Maß für die Abdeckung~$\gamma$ dient das Verhältnis der Anzahl der Pixel einer Komponente~$C$ und der Fläche~$A$ \cite{braden1986} ihrer konvexen Hülle.
+Es hat sich gezeigt, dass Regionen, denen Barcodes entsprechen, sich dadurch auszeichnen, dass deren Komponenten deutlich geschloßener sind~(d.h. weniger Löcher aufweisen) als andere falsch-positive Regionen und deren Flächen somit besser abdecken.
+Als Maß für die Abdeckung~$\gamma$ dient das Verhältnis der Anzahl der Pixel einer Komponente~$C$ und der Fläche~$A$ ihrer konvexen Hülle.
 \begin{align}
   \gamma &= \frac{|C|}{A} \in [0,1] \\
        A &= \frac{1}{2} \sum_{i=0}^{n-1}{\hat x_i (\hat y_{i+1} - \hat y_{i-1})}
-         & \hat z_i = z_{i \bmod n}
+         & \hat z_i = z_{i \bmod n} \quad \cite{braden1986}
 \end{align}
 Der Wertebereich $\gamma\in[0,1]$ ergibt sich aus der Definition der konvexen Hülle, dass diese alle Punkte einschließt über denen sie konstruiert ist.
 
 Neben der Abdeckung ist die Größe einer Region sinnvoll um Regionen ausschließen zu können die zu klein sind um einen lesbaren Barcode zu enthalten.
-Unter der Annahme, dass Barcodes rechteckig sind (ShotCode stellt dabei eine Außnahme dar), ist es möglich Breite und Höhe über ein, die konvexe Hülle umschließendes, Rechteck mit minimaler Fläche zu bestimmen.
+Unter der Annahme, dass Barcodes rechteckig sind~(ShotCode stellt dabei eine Außnahme dar), ist es möglich Breite und Höhe über ein, die konvexe Hülle umschließendes, Rechteck mit minimaler Fläche zu bestimmen.
 Dieses Rechteck, auch "`minimum area enclosing rectangle"' genannt, lässt sich mittels Rotating Calipers berechnen~\cite{arnon1983}.
-Da die meisten Barcodes breiter als hoch sind (Ausnahmen sind quadratische Barcodes wie z.B. QR Code oder Data Matrix), ist es möglich die Orientierung anhand dieses Rechtecks zu bestimmen.
+Da die meisten Barcodes breiter als hoch sind~(Ausnahmen sind quadratische Barcodes wie z.B. QR Code oder Data Matrix), ist es möglich die Orientierung anhand dieses Rechtecks zu bestimmen.
+Zum Beispiel als Winkel zwischen $x$-Achse und einer Kante des Rechtecks entlang seiner Breite.
 \end{enumerate}
 
 %\renewcommand{\thesubfigure}{\scriptsize\alph{subfigure}}
@@ -54,12 +55,12 @@ Da die meisten Barcodes breiter als hoch sind (Ausnahmen sind quadratische Barco
   \begin{subfigure}[t]{.32\columnwidth}
     \centering
     \includegraphics[width=\columnwidth]{img/techniques/candidate-extraction/grayscale}
-    \caption{\scriptsize Grauwerte}
+    \caption{\scriptsize Grauwerte~(700$\times$463 Pixel)}
   \end{subfigure}
   \begin{subfigure}[t]{.32\columnwidth}
     \centering
     \includegraphics[width=\columnwidth]{img/techniques/candidate-extraction/edges}
-    \caption{\scriptsize Kantenbild unter Verwendung des \textsc{Roberts}-Operator}
+    \caption{\scriptsize Kantenbild unter Verwendung des \surname{Roberts}-Operator}
   \end{subfigure}
   \begin{subfigure}[t]{.32\columnwidth}
     \centering
@@ -79,11 +80,11 @@ Da die meisten Barcodes breiter als hoch sind (Ausnahmen sind quadratische Barco
   \begin{subfigure}[t]{.32\columnwidth}
     \centering
     \includegraphics[width=\columnwidth]{img/techniques/candidate-extraction/candidates}
-    \caption{\scriptsize ermittelte Regionen (rot) mit umschließendem Rechteck minimaler Fläche (blau)}
+    \caption{\scriptsize ermittelte Regionen~(rot) mit umschließendem Rechteck minimaler Fläche~(blau)}
   \end{subfigure}
   \caption[Einzelschritte beim Auffinden potentieller Barcodes]{
     Einzelschritte beim Auffinden potentieller Barcodes in einem Bild\protect\footnotemark.
-    Bild (f) zeigt deutlich, dass das Verfahren auch Text erfasst.}
+    Bild~(f) zeigt deutlich, dass das Verfahren auch Text erfasst.}
 \end{figure}
 
 \footnotetext{\url{http://commons.wikimedia.org/wiki/File:Drahtb\%C3\%BCgeltasche_A6.jpg}}
