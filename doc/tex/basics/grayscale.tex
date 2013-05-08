@@ -2,18 +2,18 @@
 \label{sec:grayscale}
 \writtenby{\dcauthornameewie}%
 Im Allgemeinen liegen Bilddaten in Farbe vor.
-Sind für die Analyse jedoch Strukturen entscheidend, welche sich durch Helligkeitunterschiede ergeben, so ist es nötig diese Helligkeitsinformation aus den Farbbildern zu extrahieren.
-Zunächst ist es entscheiden, in welchem Format die Bilder vorliegen, d.h. wie die Farbinformation kodiert ist.
+Sind für die Analyse jedoch Bildstrukturen entscheidend, welche sich durch Helligkeitunterschiede ergeben, so ist es nötig diese Helligkeitsinformation aus den Farbbildern zu extrahieren.
 
+Zunächst ist es entscheiden, in welchem Format die Bilder vorliegen, d.h. wie die Farbinformation kodiert ist.
 Die zwei gängigsten Formate sind RGB und YCbCr.
-RGB kodiert Farbwerte mit 3 Komponenten die den Farbkanälen Rot~(R), Grün~(G), und Blau~(B) entsprechen.
-Im Gegensatz dazu stellt YCbCr die Farbinformation mit den 3 Komponenten Helligkeit~(Y), Blau-Gelb-Chrominanz~(Cb), sowie Rot-Grün-Chrominanz~(Cr).
+RGB kodiert Farbwerte mit 3 Komponenten die den Farbkanälen Rot~(R), Grün~(G) und Blau~(B) entsprechen.
+Im Gegensatz dazu stellt YCbCr die Farbinformation mit den 3 Komponenten Helligkeit~(Y), Blau-Gelb-Chrominanz~(Cb) sowie Rot-Grün-Chrominanz~(Cr).
 YCbCr findet Anwendung in JPEG/JFIF \cite{jfif} zur Farbkodierung.
 
-Liegen die Bilddaten in YCbCr vor, da z.B. mit Videos in MPEG gearbeitet wird, bietet es sich an die kodierte Helligkeit~$Y$ direkt zu verwenden, da diese sich an der menschlichen Helligkeitswahrnehmung orientiert.
+Liegen die Bilddaten in YCbCr vor, da z.B. mit Videos in MPEG gearbeitet wird, bietet es sich an die kodierte Helligkeit~$Y$ direkt zu verwenden, da diese sich an der Helligkeitswahrnehmung des menschlichen Auges orientiert.
 
 Liegt jedoch RGB vor, so muss die Helligkeit explizit ermittelt werden.
-Zum einen kann~$Y$ nach der Formel folgender Formel \cite[2.5.1]{itu/rec/601} berechnet werden.
+Zum einen kann~$Y$ nach folgender Formel \cite[2.5.1]{itu/rec/601} berechnet werden.
 \begin{equation}
   Y = K_R R + (1 - K_R - K_B) G + K_B B
 \end{equation}
