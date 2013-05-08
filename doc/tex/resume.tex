@@ -1,5 +1,9 @@
 \chapter{Zusammenfassung und Ausblick}
+Durch die Bildaufbereitung kann die Erkennungsrate der Barcodes erhöht werden.
+Jedoch verursacht die Aufbereitung auch deutliche Performanceeinbußen.
+Für ein HD-Video (1920$\times$1080 Pixel) können ohne Aufbereitung 5--6 Frames pro Sekunde verarbeit werden.
+Mit Aufbereitung sind $1,\!3\unit{s}$ bis $1,\!8\unit{s}$ pro Bild nötig.
 
-Die Strichcodeerkennungsrate konnte gut erhöht werden und das Auffinden von Codes in Bildern und Videos funktioniert sehr gut.
+Die Implementierung ist derart gestaltet, dass zentrale Verfahren wie das Auffinden von Strichcodekandidaten, die Bildaufbereitung die Grauwertberechnung sowie das Lesen der Barcodes austauschbar sind.
+Dadurch ist es möglich den Extrahierungsvorgang der Eingabe anzupassen, indem geeignetere Verfahren implementiert werden, um bessere Ergebnisse zu erzielen.
 
-Für die Zukunft sind sicher noch Verbesserungen möglich, aber die Verarbeitungszeit leidet stark darunter.
