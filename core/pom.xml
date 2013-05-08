@@ -50,6 +50,11 @@
 	  <id>javacv repo</id>
 	  <url>http://maven2.javacv.googlecode.com/git/</url>
 	</repository>
+    <repository>
+      <id>lib</id>
+      <url>file://${project.basedir}/lib</url>
+      <layout>default</layout>
+    </repository>
   </repositories>
   <dependencies>
   	<dependency>
@@ -83,8 +88,6 @@
 	    <groupId>gov.nih.imagej</groupId>
 	    <artifactId>imagej</artifactId>
 	    <version>1.47a</version>
-	    <scope>system</scope>
-	    <systemPath>${project.basedir}/lib/ij.jar</systemPath>
     </dependency>
   </dependencies>
 </project>

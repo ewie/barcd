@@ -12,12 +12,9 @@ import java.awt.image.BufferedImage;
  * @author René Richter
  * @version     1.0
  * @since       2013-04-01
- *
  */
 public class ImproveImage {
-
     ImageProcessing ipNew = new ImageProcessing();
-
 
     /**
      * Normalizes an images brightness.
@@ -39,9 +36,6 @@ public class ImproveImage {
 
         return biPrep;
     }
-
-
-
 
     /**
      * Sharpens an image if needed.
@@ -66,9 +60,6 @@ public class ImproveImage {
 
     }
 
-
-
-
     /**
      * Rotates an image.
      *
@@ -90,9 +81,6 @@ public class ImproveImage {
         return biRot;
     }
 
-
-
-
     /**
      * Removes the shadows in an image.
      *
@@ -109,9 +97,6 @@ public class ImproveImage {
         }
         return biShadow;
     }
-
-
-
 
     /**
      * Improves the quality of a image with a barcode inside.

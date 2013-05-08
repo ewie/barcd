@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>gov.nih.imagej</groupId>
+  <artifactId>imagej</artifactId>
+  <version>1.47a</version>
+  <versioning>
+    <versions>
+      <version>1.47a</version>
+    </versions>
+    <lastUpdated>20130508000239</lastUpdated>
+  </versioning>
+</metadata>
