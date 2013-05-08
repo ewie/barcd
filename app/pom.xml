@@ -31,7 +31,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>de.tu_chemnitz.mi.barcd.app.Application</mainClass>
+              <mainClass>de.tu_chemnitz.mi.barcd.app.Main</mainClass>
             </manifest>
           </archive>
         </configuration>
