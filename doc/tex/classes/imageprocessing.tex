@@ -1,4 +1,4 @@
-\section{Klasse ImageProcessing}
+\section{Klasse \code{ImageProcessing}}
 \writtenby{\dcauthornameriren}%
 Das Ziel dieser Klasse ist es, einzelne Eigenschaften von Strichcodebilder so aufzuwerten, dass der enthaltene Strichode besser von der Bibliothek ZXing erkannt werden kann.
 Zusätzlich sind auch noch einige weitere Funktionen implementiert, die teilweise andere Varianten oder einfach zusätzliche Funktionen darstellen. Auf diese wird hier aber nicht näher eingegangen, da sie keinen direkten Bezug zur aktuellen Implementation haben. Sie wurden aber nicht aus der Klasse entfernt, um die mögliche spätere Weiterentwicklung zu erleichtern.
@@ -7,58 +7,58 @@ Die Bildverarbeitung erfolgt mittels ImageJ\footnote{\url{http://rsbweb.nih.gov/
 
 \elasticfigure{img/uml/uml.127}{Klassendiagramm von \code{ImageProcessing}}
 
-\subsection*{Methode hasShade}
+\subsection*{Methode \code{hasShade}}
 Diese Methode erhält ein Eingabebild, überprüft ob es Schatten enthält und gibt einen Wahrheitswert als Antwort zurück.
 Die möglichen Schatten werden über den weißen Rand der Strichcodes gesucht. Wenn dort ein ausreichend großer Helligkeitsunterschied auftritt, wird angenommen, dass es einen Schatten gibt, der nicht mehr von ZXing erkannt werden kann.
 Um die Erkennung möglichst variabel zu gestalten, wurde zusätzlich ein Faktor für die Genauigkeit der Erkennung eingeführt. Er bestimmt die Anzahl an Pixeln, die, pro Seite, in die Untersuchung aufgenommen werden.
 Die Voraussetzung für die korrekte Funktionsweise der Methode ist, dass die Ruhezone, um den Strichcode, nicht überlagert wird. Die Schattenerkennung wäre durch andere Objekte in dieser Zone korrumpiert, da durch diese definitiv die Helligkeitsunterschiede in diesem Bereich zu stark beeinflusst würden.
 
 
-\subsection*{Methode isBlurry}
+\subsection*{Methode \code{isBlurry}}
 Diese Methode erhält ein Eingabebild und gibt einen Grad an Unschärfe für dieses zurück.
-Das Bild wird dafür mit einem Laplacian-of-Gaußian-Filter bearbeitet und dadurch wird ein Bild erhalten, indem, wie in Kapitel \ref*{sec:LoG} beschrieben, der größte Wert die Schärfe der Abbildung repräsentiert.
+Das Bild wird dafür mit einem Laplacian-of-Gaußian-Filter bearbeitet und dadurch wird ein Bild erhalten, indem, wie in Kapitel \ref{sec:LoG} beschrieben, der größte Wert die Schärfe der Abbildung repräsentiert.
 Der Ausgabewert ist allerdings abhängig von der allgemeinen Helligkeit des Bildes, daher sollte ein bereits normalisiertes Bild als Eingabe dienen.
 
 
-\subsection*{Methode isDark}
+\subsection*{Methode \code{isDark}}
 Diese Methode erhält ein Eingabebild und errechnet die ungefähre Helligkeit des Eingabebildes.
 Die Helligkeit wird durch ein Histogramm bestimmt, indem aus ihm der Durchschnittswert (wo die Hälfte aller Pixel heller bzw. dunkler sind) berechnet wird. Dabei entsprechen kleinere Werte mehr dunklen Pixeln.
 
 
-\subsection*{Methode isRotated}
+\subsection*{Methode \code{isRotated}}
 Diese Methode erhält ein Eingabebild und gibt den Rotationswinkel des enthalten\-en Strichcodes zurück.
 Um den Winkel zu bestimmten, werden vom linken Rand aus starke Helligkeitsunterschiede gesucht und diese gefundenen Punkte werden, von oben nach unten, in einem Array gespeichert. Danach wird überprüft, ob eine Gerade, durch zwei hintereinander liegende Punkte, auch relativ nah an einem dritten, darauf folgenden Punkt vorbei geht. Wenn ja, dann werden weitere Punkte mit dieser Geraden überprüft und so die Anzahl an Punkten auf ihr bestimmt. Die Gerade mit der maximalen Anzahl an Punkten sollte theoretisch dem Anfangs- oder Endstrich des Codes entsprechen.
 Diese Methode ist zwar für 1D Strichcodes konzipiert, funktioniert aber nichtsdestotrotz auch für 2D Codes, da immer eine längere Linie am Rand gefunden werden kann.
 Dieser Winkelbestimmung ist nicht exakt, aber reicht für die Erkennung durch die Bibliothek ZXing vollkommen aus, da Abweichungen von maximal 2$^\circ $ nicht ins Gewicht fallen.
  
 
-\subsection*{Methode brightenBufferedImage\_linear}
+\subsection*{Methode \code{brighten\_linear}}
 Diese Methode erhält ein Eingabebild und einen Aufhellungsfaktor, der die Verstärkung der Beleuchtung angibt. Dadurch wird eine hellere bzw. dunklere Variante vom Bild zurückgegeben.
-Zum Aufhellen oder entsprechenden Verdunkeln wird ein 'RescaleOp'-Filter genutzt, der entsprechend der pixelbasierten Bildverbesserung funktioniert. Durch ihn wird das Bild vom Normalzustand (Helligkeit=1.0) in einen aufgehellten (Helligkeit>1.0) bzw. abgedunkelten (Helligkeit<1.0) Zustand überführt (plus einem Offset von 15).
+Zum Aufhellen oder entsprechenden Verdunkeln wird ein \code{RescaleOp}-Filter genutzt, der entsprechend der pixelbasierten Bildverbesserung funktioniert. Durch ihn wird das Bild vom Normalzustand~(Helligkeit=1.0) in einen aufgehellten~(Helligkeit>1.0) bzw. abgedunkelten~(Helligkeit<1.0) Zustand überführt~(plus einem Offset von 15).
 Dadurch entsteht eine gleichmäßige Aufhellung des ganzen Bildes.
-Eine zweite, realistischere, Variante kann mit einem 'LookupTable'-Filter erzeugt werden, durch den das Bild vom Normalzustand durch eine Helligkeitszuweisung
-($newPixelColor = ((oldPixelColor/255.0) * 255.0)^2$)zu jedem Pixel aufgehellt wird.
-Dadurch entsteht eine realistische Aufhellung, da dunkle Pixel schneller hell werden. Dies entspricht aber nicht den Anforderungen, da die dunklen Teile für die Erkennung am wichtigsten sind. (Diese Funktion ist trotzdem für mögliche spätere Nutzung als brightenBufferedImage\_quadratic implementiert)
+Eine zweite, realistischere, Variante kann mit einem \code{LookupTable}-Filter erzeugt werden, durch den das Bild vom Normalzustand durch eine Helligkeitszuweisung~($newPixelColor = ((oldPixelColor/255.0) * 255.0)^2$) zu jedem Pixel aufgehellt wird.
+Dadurch entsteht eine realistische Aufhellung, da dunkle Pixel schneller hell werden. Dies entspricht aber nicht den Anforderungen, da die dunklen Teile für die Erkennung am wichtigsten sind. Diese Funktion ist trotzdem für mögliche spätere Nutzung als \code{brighten\_quadratic} implementiert.
 
 
-\subsection*{Methode findShades}
+\subsection*{Methode \code{findShades}}
 Diese Methode erhält ein Eingabebild und gibt das von möglichst allen Schatten befreite Bild zurück.
 Die grundsätzliche Idee ist, die Kanten von Schatten zu finden und dann entsprechend den eingerahmten Bereich entsprechend aufzuhellen.
-Nach der Implementierung ist allerdings klar geworden, dass der 'BackgroundSubtracter' von ImageJ dies bereits sehr gut tut.
+Nach der Implementierung ist allerdings klar geworden, dass der \code{BackgroundSubtracter} von ImageJ dies bereits sehr gut tut.
 Es wurde auch der Canny-Edge-Detector probiert, allerdings werden dabei zu viele mögliche Kanten erkannt. Also müsste für jedes Bild ein Schwellwert eingestellt werden, wodurch er sich als nutzlos erwies.
 
 
-%\subsection*{Methode interpolateBufferedImage}
-%Diese Methode erhält ein 'BufferedImage' und hellt einen viereckigen Bereich im Bild auf, welcher dann in einem anderen 'BufferedImage' zurückgegeben wird.
+%\subsection*{Methode \code{interpolate}}
+%Diese Methode erhält ein \code{BufferedImage} und hellt einen viereckigen Bereich im Bild auf, welcher dann in einem anderen \code{BufferedImage} zurückgegeben wird.
 %
 %Hellt einen Vier-/(Viel-)eckigen Teilbereich auf
 
 
-\subsection*{Methode rotateBufferedImage}
+\subsection*{Methode \code{rotate}}
 Diese Methode erhält ein Eingabebild und gibt eine, um den angegebenen Winkel, gedrehte Variante davon zurück.
 Das Bild wird über eine affine Transformation gedreht und dann der darzustellende Bereich angepasst.
 
 
-\subsection*{Methode sharpenBufferedImage}
+\subsection*{Methode \code{sharpen}}
 Diese Methode erhält ein Eingabebild und gibt eine schärfere Variante davon zurück.
-Für die Schärfung wird die Methode der unscharfen Maskierung genutzt, wie sie in Kapitel \ref*{sec:unsharp} beschrieben wird.
+Für die Schärfung wird die Methode der unscharfen Maskierung genutzt, wie sie in Kapitel \ref{sec:unsharp} beschrieben wird.
+
