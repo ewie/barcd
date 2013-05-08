@@ -26,10 +26,10 @@ Die Helligkeit wird durch ein Histogramm bestimmt, indem aus ihm der Durchschnit
 
 
 \subsection*{Methode isRotated}
-Diese Methode erhält ein Eingabebild und gibt den Rotationswinkel des enthaltenen Strichcodes zurück.
+Diese Methode erhält ein Eingabebild und gibt den Rotationswinkel des enthalten\-en Strichcodes zurück.
 Um den Winkel zu bestimmten, werden vom linken Rand aus starke Helligkeitsunterschiede gesucht und diese gefundenen Punkte werden, von oben nach unten, in einem Array gespeichert. Danach wird überprüft, ob eine Gerade, durch zwei hintereinander liegende Punkte, auch relativ nah an einem dritten, darauf folgenden Punkt vorbei geht. Wenn ja, dann werden weitere Punkte mit dieser Geraden überprüft und so die Anzahl an Punkten auf ihr bestimmt. Die Gerade mit der maximalen Anzahl an Punkten sollte theoretisch dem Anfangs- oder Endstrich des Codes entsprechen.
 Diese Methode ist zwar für 1D Strichcodes konzipiert, funktioniert aber nichtsdestotrotz auch für 2D Codes, da immer eine längere Linie am Rand gefunden werden kann.
-Dieser Winkelbestimmung ist nicht exakt, aber reicht für die Erkennung durch die Bibliothek ZXing vollkommen aus, da Abweichungen von maximal 2$ \circ $ nicht ins Gewicht fallen.
+Dieser Winkelbestimmung ist nicht exakt, aber reicht für die Erkennung durch die Bibliothek ZXing vollkommen aus, da Abweichungen von maximal 2$^\circ $ nicht ins Gewicht fallen.
  
 
 \subsection*{Methode brightenBufferedImage\_linear}

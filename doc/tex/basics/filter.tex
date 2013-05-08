@@ -19,7 +19,7 @@ So kann das Bild z.B. aufgehellt und der Kontrast verstärkt werden.
 \subsection*{Faltungsfilter}
 Faltungsfilter, auch lineare Filter genannt, machen sich das Prinzip der Faltung zu Nutzen, das bereits im Abschnitt der "`Kantenerkennung"' beschrieben ist.
 
-Im Fall der Bildbearbeitung gibt es weitere Anwendungsmöglichkeiten für entsprechende Faltungsmatrizen, z.B. für die Schärfung des Bildes oder der Ausgleich von Rauschen.
+Im Fall der Bildbearbeitung gibt es weitere Anwendungsmöglichkeiten für ent\-sprechende Faltungsmatrizen, z.B. für die Schärfung des Bildes oder der Ausgleich von Rauschen.
 Für den Rauschausgleich gibt es eine Spezialform dieser Faltungsfilter, die \surname{Gauß}-Filter genannt wird, und bei der die Faltungsmatrix den Werten einer \surname{Gauß}-Glocke, mit dem Maximum in der Mitte der Matrix, entspricht.
 Dadurch erreicht man eine ausgleichende Wirkung auf verrauschte Bilder, denn alle Pixel werden an ihre umgebenden Pixel angepasst, was aber zusätzlich den Effekt hat, dass das Bild unschärfer wird.
 
@@ -90,7 +90,7 @@ Für eine schnellere Berechnung können aber auch 2 angenäherte Faltungsmatrize
   \includegraphics[height=4cm]{img/QR/perfect_03.jpg}
   \includegraphics[height=4cm]{img/QR/qr-laplace.jpg}
   \caption[Beispiel \surname{Laplace}-Filter]{Original mit \surname{Laplace}-Filter~($K_8$)}
-  \label{fig:sharpgauss}
+  \label{fig:laplace}
 \end{figure}
 %Quelle Tönnies2005 S 182
 
@@ -110,7 +110,7 @@ Diesen Filter kann man sich noch auf andere Weise zu nutzen machen, denn die pos
   \includegraphics[height=4cm]{img/QR/perfect_03.jpg}
   \includegraphics[height=4cm]{img/QR/qr-LoG.jpg}
   \caption[Beispiel Laplacian-of-Gaussian-FIlter]{Original mit Laplacian-of-Gaussian-Filter}
-  \label{fig:sharpgauss}
+  \label{fig:LoG}
 \end{figure}
 %Quelle Tönnies2005 S 183
 
