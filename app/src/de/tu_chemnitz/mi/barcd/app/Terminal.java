@@ -275,6 +275,8 @@ public class Terminal extends Worker {
     private static class LineReader {
         private final BufferedReader reader;
         private StringBuilder lineBuffer;
+		private boolean wasCR = false;
+		private boolean wasLF = false;
 
         /**
          * @param reader the underlying reader
@@ -308,7 +310,19 @@ public class Terminal extends Worker {
                 } catch (IOException ex) {
                     return null;
                 }
-                boolean complete = c == '\n' || c == '\r';
+                
+                // Handle CR LF and LF CR as a single unit of line break to
+                // avoid empty lines being reported. Return null if the current
+                // character is the last part in CR LF or LF CR.
+                boolean lf = c == '\n';
+                boolean cr = c == '\r';
+                if (lf && wasCR || cr && wasLF) {
+                	return null;
+                }
+                wasCR = cr;
+                wasLF = lf;
+                
+                boolean complete = lf || cr;
                 if (!complete) {
                     lineBuffer.append((char) c);
                 }
