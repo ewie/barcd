@@ -6,7 +6,7 @@ Die zur Bildverbesserung benutzen Filter, werden hier kurz erläutert.
 \subsection*{Pixelbasierte Bildverbesserung}
 Bei der pixelbasierten Bildverbesserung wird jeder Pixelfarbwert einzeln berechnet, ohne auf die Umgebung dieses Pixels Rücksicht zu nehmen.
 Die so neu entstandenen Werte ersetzen die alten Farbwerte des Pixels.
-So kann das Bild z.B. aufgehellt und der Kontrast verstärkt werden.
+So kann das Bild z.B. aufgehellt und der Kontrast verstärkt werden.~\cite{Toennies2005}
 \begin{figure}[H]
   \centering
   \includegraphics[height=4cm]{img/QR/perfect_real_01.jpg}
@@ -14,14 +14,14 @@ So kann das Bild z.B. aufgehellt und der Kontrast verstärkt werden.
   \caption{Pixelbasierte Bildverbesserung.}
   \label{fig:pixelbright}
 \end{figure}
-%Quelle Tönnies2005
+
 
 \subsection*{Faltungsfilter}
 Faltungsfilter, auch lineare Filter genannt, machen sich das Prinzip der Faltung zu Nutzen, das bereits im Abschnitt der "`Kantenerkennung"' beschrieben ist.
 
 Im Fall der Bildbearbeitung gibt es weitere Anwendungsmöglichkeiten für ent\-sprechende Faltungsmatrizen, z.B. für die Schärfung des Bildes oder der Ausgleich von Rauschen.
 Für den Rauschausgleich gibt es eine Spezialform dieser Faltungsfilter, die \surname{Gauß}-Filter genannt wird, und bei der die Faltungsmatrix den Werten einer \surname{Gauß}-Glocke, mit dem Maximum in der Mitte der Matrix, entspricht.
-Dadurch erreicht man eine ausgleichende Wirkung auf verrauschte Bilder, denn alle Pixel werden an ihre umgebenden Pixel angepasst, was aber zusätzlich den Effekt hat, dass das Bild unschärfer wird.
+Dadurch erreicht man eine ausgleichende Wirkung auf verrauschte Bilder, denn alle Pixel werden an ihre umgebenden Pixel angepasst, was aber zusätzlich den Effekt hat, dass das Bild unschärfer wird.~\cite{Toennies2005}
 
 \begin{equation}
   K_{sharpen} = \begin{vmatrix}
@@ -44,14 +44,13 @@ Dadurch erreicht man eine ausgleichende Wirkung auf verrauschte Bilder, denn all
   \caption[Beispiel \surname{Gauss}-Filter]{Original, Anwendung von \surname{Gauss}-Filter und anschließender Schärfefilterung}
   \label{fig:sharpgauss}
 \end{figure}
-%Quelle Tönnies2005
 
 \subsection*{Unscharfes Maskieren}
 \label{sec:unsharp}
 %sharpenimage
 Beim unscharfen Maskieren, wird ein Originalbild verdreifacht und eine Version davon, mit z.B. einem \surname{Gauß}-Filter, unscharf gemacht.
 Danach wird dieses unscharfe Bild von der zweiten Version abgezogen, insofern ein Schwellwert überschritten ist, und so ein Bild mit hervorgehobenen Kanten erhalten.
-Dieses wird zum dritten Bild addiert und in diesem dadurch die Kanten verstärkt, was einer Schärfung des Originalbildes entspricht.
+Dieses wird zum dritten Bild addiert und in diesem dadurch die Kanten verstärkt, was einer Schärfung des Originalbildes entspricht.~\cite{Pratt1991}
 \begin{figure}[H]
   \centering
   \includegraphics[height=4cm]{img/QR/blurry_03_3.jpg}
@@ -66,12 +65,12 @@ Dieses wird zum dritten Bild addiert und in diesem dadurch die Kanten verstärkt
 %isBlurry
 Den Verlauf von Kanten kann man auch durch die zweite Ableitung über den Pixelwerten des Bildes erhalten.
 Denn dort wo diese von positiven zu negativen Werten wechselt, besitzt die erste Ableitung ein Maximum und somit an dieser Stelle einen sehr starken Helligkeitsunterschied im Bild, welcher auf eine Kante hindeutet.
-Dieser Vorzeichenwechsel wird auch als Nulldurchgang bezeichnet.
+Dieser Vorzeichenwechsel wird auch als Nulldurchgang bezeichnet.~\cite{Toennies2005}
 Der \surname{Laplace}-Operator berechnet sich mit
 \begin{equation}
   \nabla^2 f(x,y) = \frac{\partial^2 f}{\partial x^2}(x,y) + \frac{\partial^2 f}{\partial y^2}(x,y) + \frac{\partial^2 f}{\partial x \partial y}(x,y) + \frac{\partial^2 f}{\partial y \partial x}(x,y)
 \end{equation}
-Für eine schnellere Berechnung können aber auch 2 angenäherte Faltungsmatrizen genutzt werden.
+Für eine schnellere Berechnung können aber auch 2 angenäherte Faltungsmatrizen genutzt werden:
 \begin{equation}
   K_4 = \begin{vmatrix}
      0 & -1 &  0 \\
@@ -92,7 +91,6 @@ Für eine schnellere Berechnung können aber auch 2 angenäherte Faltungsmatrize
   \caption[Beispiel \surname{Laplace}-Filter]{Original mit \surname{Laplace}-Filter~($K_8$)}
   \label{fig:laplace}
 \end{figure}
-%Quelle Tönnies2005 S 182
 
 
 
@@ -104,7 +102,7 @@ Durch diese Kombination wird das Rauschen abgeschwächt, aber die Reaktivität a
 \begin{equation}
   LoG(x,y) = -\frac{1}{\pi \sigma^4}(1-\frac{x^2 + y^2}{2\sigma^2}) exp(-\frac{x^2 + y^2}{2\sigma^2})
 \end{equation}
-Diesen Filter kann man sich noch auf andere Weise zu nutzen machen, denn die positiven Werte des \surname{Laplace}-Operators repräsentieren, wie stark die erste Ableitung ansteigt und damit wie stark die Veränderungen von Pixelpaar zu Pixelpaar ist. Somit ergibt sich daraus ein Wert für die Unschärfe des Bildes, der maximale Wert im aktuellen Bild beschreibt diese zum Beispiel. Um so größer er ist, um so schärfer ist das Bild und wenn er kleiner ist, ist auch das Bild unschärfer.
+Diesen Filter kann man sich noch auf andere Weise zu nutzen machen, denn die positiven Werte des \surname{Laplace}-Operators repräsentieren, wie stark die erste Ableitung ansteigt und damit wie stark die Veränderungen von Pixelpaar zu Pixelpaar ist. Somit ergibt sich daraus ein Wert für die Unschärfe des Bildes, der maximale Wert im aktuellen Bild beschreibt diese zum Beispiel. Um so größer er ist, um so schärfer ist das Bild und wenn er kleiner ist, ist auch das Bild unschärfer.~\cite{Toennies2005}
 \begin{figure}[H]
   \centering
   \includegraphics[height=4cm]{img/QR/perfect_03.jpg}
@@ -112,5 +110,4 @@ Diesen Filter kann man sich noch auf andere Weise zu nutzen machen, denn die pos
   \caption[Beispiel Laplacian-of-Gaussian-FIlter]{Original mit Laplacian-of-Gaussian-Filter}
   \label{fig:LoG}
 \end{figure}
-%Quelle Tönnies2005 S 183
 
