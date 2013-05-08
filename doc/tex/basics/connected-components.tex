@@ -1,15 +1,19 @@
-\section{Connected Components Labeling}
+\section{Connected-Components-Labeling}
 \label{sec:connected-components}
 \writtenby{\dcauthornameewie}%
-Um zusammenhängende Bildstrukturen zu erfassen verwendet man dass sogenannte Connected Components Labeling.
+Um zusammenhängende Bildstrukturen zu erfassen verwendet man das sogenannte Connected-Components-Labeling.
 Dabei wird jeder Bildpunkt genau einer Menge zugeordnet welche je eine Komponente zusammenhängenger Bildpunkte repräsentiert.
 Zwei Bildpunkte hängen zusammen, wenn diese benachbart sind und den gleichen Wert besitzen.
 Für die Nachbarschaft gibt es verschiedene Modelle.
 %
+{
+\setlength{\labelsep}{\textwidth}
+\setlength{\leftmargini}{1.5em}
 \begin{description}
-\item[4-Konnektivität] betrachtet für ein Pixel $(x,y)$ die 4 Pixel $(x\pm1,y)$ und $(x,y\pm1)$
-\item[8-Konnektivität] betrachtet für ein Pixel $(x,y)$ neben den 4 Pixel der 4-Konnektivität zusätzlich noch die 4 Pixel $(x\pm1,y\pm1)$
+\item[4-Konnektivität] betrachtet für ein Pixel~$(x,y)$ die 4 Pixel~$(x\pm1,y)$ und~$(x,y\pm1)$
+\item[8-Konnektivität] betrachtet für ein Pixel~$(x,y)$ neben den 4 Pixel der 4-Konnektivität zusätzlich noch die 4 Pixel~$(x\pm1,y\pm1)$
 \end{description}
+}
 %
 \begin{figure}[H]
   \centering
@@ -28,13 +32,13 @@ Für die Nachbarschaft gibt es verschiedene Modelle.
 %
 Je mehr Pixel als Nachbarschaft herangezogen werden, desto größer können die zusammenhängenden Komponenten ausfallen, da es mehr Möglichkeiten gibt in denen zwei Pixel als verbunden gelten.
 
-Das Connected Component Labeling ist realisierbar mittels eines Scanlineverfahrens \cite[S.~69--75]{compvis2001}, d.h. jede Bildzeile wird, mit der oberen Zeile ($y=0$) beginnend, pixelweise von links ($x=0$) nach rechts verarbeitet.
-Jedes Pixel wird auf Verbundenheit mit seinen Nachbarn (4-Konnektivität) oberhalb ($y-1$) und links ($x-1$) geprüft.
+Das Connected-Component-Labeling ist realisierbar mittels eines Scanlineverfahrens~\cite[S.~69--75]{compvis2001}, d.h. jede Bildzeile wird, mit der oberen Zeile~($y=0$) beginnend, pixelweise von links~($x=0$) nach rechts verarbeitet.
+Jedes Pixel wird auf Verbundenheit mit seinen Nachbarn~(4-Konnektivität) oberhalb~($y-1$) und links~($x-1$) geprüft.
 Unterscheidet sich der Wert des aktuellen Pixels von den betrachteten Nachbarn so wird diesem ein neues Label zugewiesen.
 Besitzt das Pixel hingegen den Wert mindestens eines Nachbarn so wird das Label des Nachbarn zugewiesen.
 Besitzen mehrere Nachbarn den gleichen Wert aber unterschiedliche Label, so werden diese Label als äquivalent markiert.
 Die erste Bildzeile und -spalte müssen gesondert initialisert werden, da diese keine Nachbarn oberhalb bzw. links besitzen.
-Sind alle Pixel verarbeitet, müssen Labeläquivalenzen aufgelöst werden, sodass Pixeln mit äquivalenten Label ein gemeinsames Label zugewiesen werden kann. Zum Erfassen der Äquivalenzen eignet sich die \emph{UnionFind} Datenstruktur.
+Sind alle Pixel verarbeitet, müssen Labeläquivalenzen aufgelöst werden, sodass Pixeln mit äquivalenten Label ein gemeinsames Label zugewiesen werden kann. Zum Erfassen der Äquivalenzen eignet sich die UnionFind-Datenstruktur.
 %
 \begin{figure}[H]
   \centering
@@ -53,5 +57,5 @@ Sind alle Pixel verarbeitet, müssen Labeläquivalenzen aufgelöst werden, sodas
     \includegraphics[width=\columnwidth]{img/basics/connected-compontents/labeling-3}
     \caption{Äquivalenzen auflösen}
   \end{subfigure}
-  \caption[Ablauf Connected Components Labeling]{Ablauf des Connected Components Labeling mit 4-Konnektivität.}
+  \caption[Ablauf des Connected-Components-Labeling]{Ablauf des Connected-Components-Labeling mit 4-Konnektivität.}
 \end{figure}
