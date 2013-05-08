@@ -43,7 +43,6 @@ Bei rotierten Codes wirkt sich die unschärfe der Bilder nicht wesentlich auf di
 
 % dunkle
 Die Abdunkelung der Bilder hat keinen starken negativen Effekt auf die Erkennungsleistung, solange der Kontrast hoch genug bleibt. So können scharfe, unrotierte Strichcodes bis zu 90\% und selbst unscharfe, rotierte Bilder bis zu 80\% abgedunkelt werden (Abbildung \ref*{fig:eandark}).
-
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.30\textwidth]{img/EAN13/dark_01_90.jpg}
@@ -54,4 +53,12 @@ Die Abdunkelung der Bilder hat keinen starken negativen Effekt auf die Erkennung
 \end{figure}
 
 % schatten
-\todo{Schatten + Bilder}
+Da Schatten sich stark auf den Kontrast auswirken, können nur Strichcodes gelesen werden wo der Schatten nur um bis zu 20\% den Bildabschnitt verdunkelt und somit der Kontrast noch ausreichend hoch ist. In diesem Fall ist es auch ohne Bedeutung wie viel Fläche der Schatten überdeckt. Wenn allerdings eine lesbare Scanline zwischen den Schatten erhalten bleibt, dann ist der Code immer lesbar. Sich überlagernde Schatten, sind als jeweils einzelne Schatten anzusehen und können auch als solche bearbeitet werden.
+\begin{figure}[H]
+  \centering
+  \includegraphics[height=3cm]{img/EAN13/shade_01_2x50+50.jpg}
+  \includegraphics[height=3cm]{img/EAN13/shade_01_20+50.jpg}
+  \includegraphics[height=3cm]{img/EAN13/shade_01_20+s30.jpg}
+  \caption{Schatten die jeweils um 20\% abdunkeln}
+  \label{fig:eandark}
+\end{figure}
