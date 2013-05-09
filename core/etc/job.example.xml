@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2013 Erik Wienhold & René Richter
+  Licensed under the BSD 3-Clause License.
+-->
+<job xmlns="http://www.tu-chemnitz.de/informatik/mi/barcd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.tu-chemnitz.de/informatik/mi/barcd barcd.xsd">
+  <source>
+    <sequence>
+      <template tag="@" padding="5">./images/i@.jpg</template>
+      <range start="1" end="12345"/>
+    </sequence>
+
+    <!--
+    <video url="http://example.org/video.mp4"/>
+    -->
+
+    <!--
+    <device number="0"/>
+    -->
+
+    <!--
+    <images>
+      <image url="./images/i00001.jpg"/>
+      <image url="./images/i00002.jpg"/>
+      <image url="./images/i00003.jpg"/>
+      <image url="./images/i00004.jpg"/>
+      <image url="./images/i00005.jpg"/>
+    </images>
+    -->
+
+    <!--
+    <snapshot url="http://example.org/snapshots"/>
+    -->
+  </source>
+  <extractions tag="@" padding="5">./extractions/x@.xml</extractions>
+</job>
