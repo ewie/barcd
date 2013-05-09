@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.tu_chemnitz.mi.barcd</groupId>
   <artifactId>barcd-core</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <name>barcd-core</name>
   <description>Barcode extraction from images and videos.</description>
   <build>

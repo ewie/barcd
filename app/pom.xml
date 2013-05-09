@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.tu_chemnitz.mi.barcd</groupId>
   <artifactId>barcd-app</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <name>barcd-app</name>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -47,7 +47,7 @@
   	<dependency>
   		<groupId>de.tu_chemnitz.mi.barcd</groupId>
   		<artifactId>barcd-core</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
+  		<version>1.0</version>
   	</dependency>
   </dependencies>
 </project>
