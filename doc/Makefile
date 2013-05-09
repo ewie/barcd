@@ -5,7 +5,7 @@ UML = uml
 
 all: $(UML) $(MAIN)
 
-$(MAIN): $(MAIN).tex
+$(MAIN): $(MAIN).tex bibtex
 	pdflatex $<
 
 $(UML):
@@ -16,6 +16,9 @@ $(UML):
 		sed -i -E 's/(%%CreationDate:).*/\1 [STRIPPED]/' $$file; \
 	done; \
 	cd -
+
+bibtex: $(MAIN)
+	bibtex $(MAIN).aux
 
 cleanaux:
 	rm -f $(MAIN).aux

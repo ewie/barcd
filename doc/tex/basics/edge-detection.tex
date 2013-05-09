@@ -1,7 +1,8 @@
 \section{Kantenerkennung}
 \label{sec:edge-detection}
 \writtenby{\dcauthornameewie}%
-Kanten in einem Bild zeigen sich durch abrupte Helligkeitsänderungen zwischen benachbarten Pixeln.Um die Helligkeitsänderung für jedes Pixel zu bestimmen muss der Gradient der Helligkeitsfunktion~$\nabla I$ eines Bildes berechnet werden.
+Kanten in einem Bild zeigen sich durch abrupte Helligkeitsänderungen zwischen benachbarten Pixeln.
+Um die Helligkeitsänderung für jedes Pixel zu bestimmen muss der Gradient der Helligkeitsfunktion~$\nabla I$ eines Bildes berechnet werden.
 Das gängigste Verfahren zur Bestimmung des Gradienten ist dessen Annäherung durch Faltung des Bildes~$I$ mit einer Faltungsmatrix~$K$~(in diesem Zusammenhang auch Kantenoperator genannt).
 \begin{equation}
   (I\circ K)(x,y) =
@@ -100,3 +101,4 @@ Der \surname{Scharr}-Operator~\cite[Kapitel~9.3]{scharr2000} ist eine Weiterentw
 \end{figure}
 
 \footnotetext{\url{http://www.publicdomainpictures.net/view-image.php?image=1816}}
+

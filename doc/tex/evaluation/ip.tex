@@ -1,17 +1,17 @@
 \section{Nach der Bildaufbereitung}
 \writtenby{\dcauthornameriren}%
-Trotzdem die Bibliothek ZXing bereits einen großen Funktionsumfang bereitstellt, enthält sie Schwachpunkte. Diese werden vor allem bei starker Unschärfe, starken Rotationen und Schatten sichtbar.
+Trotz dessen, dass die Bibliothek ZXing bereits einen großen Funktionsumfang bereitstellt, enthält sie Schwachpunkte. Diese werden vor allem bei starker Unschärfe, starken Rotationen und Schatten sichtbar.
 Bei der Aufbereitung der Codes wurde daher auf diese Punkte ein besonderes Augenmerk gelegt.
 
 
 \subsection*{Rotation}
 Da die Rotation von Strichcodes sich als großes Problem für den Dekodierer herausgestellt hat, wurden Funktionen zur Berechnung des Drehwinkels und der Rotation des Bildes erstellt. Durch diese können alle Strichcodes auf einen erkennbaren Winkel rotiert und so mit Sicherheit erkannt werden.
 Da aber vor der Erkennung nicht klar ist, um welche Art von Code es sich handelt, wird einfach jeder Code rotiert, da die Funktionen auch ausreichend gut für andere Codes funktionieren und z.B für QR-Codes die Rotation, bei zu starker Verschmutzung oder Bildern im Code, auch wichtig sein kann.
-Problematisch ist es nur, wenn ein Strichcode um 90$ \circ $ gedreht ist, da dann keine durchgehende Gerade für den Start oder Ende des Codes wahrnehmbar ist. Allerdings gibt es da die Möglichkeit zwei Durchläufe der Funktionen durchzuführen, da dann erst ein beliebiger anderer Winkel erzeugt wird und beim zweiten Mal richtig rotiert wird.
+Problematisch ist es nur, wenn ein Strichcode um $90^\circ$ gedreht ist, da dann keine durchgehende Gerade für den Start oder Ende des Codes wahrnehmbar ist. Allerdings gibt es da die Möglichkeit zwei Durchläufe der Funktionen durchzuführen, da dann erst ein beliebiger anderer Winkel erzeugt wird und beim zweiten Mal richtig rotiert wird.
 
 
 \subsection*{Unschärfe}
-Da das Schärfen von Bildern immer mit der Verstärkung von ungewollten Eigenschaften zusammen fällt, ist dieser Prozess nicht so erfolgreich wie die Rotation. 1D Strichcodes sind stärker für solche Veränderungen anfällig, da durch sie immer gleich die Strichstärke verändert wird und somit die Eindeutigkeit der Scanlines. Dagegen wirkt sich die Verschärfung von QR-Codes solange besser aus, bis die Verbesserung des Bildes schwächer ist, als die Verstärkung der schlechten Eigenschaften. 
+Da das Schärfen von Bildern immer mit der Verstärkung von ungewollten Eigenschaften zusammen fällt, ist dieser Prozess nicht so erfolgreich wie die Rotation. 1D-Strichcodes sind stärker für solche Veränderungen anfällig, da durch sie immer gleich die Strichstärke verändert wird und somit die Eindeutigkeit der Scanlines. Dagegen wirkt sich die Verschärfung von QR-Codes solange besser aus, bis die Verbesserung des Bildes schwächer ist, als die Verstärkung der schlechten Eigenschaften. 
 
 
 \subsection*{Schatten}
